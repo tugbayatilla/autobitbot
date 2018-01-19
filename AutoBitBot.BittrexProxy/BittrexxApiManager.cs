@@ -1,5 +1,4 @@
-﻿using ArchPM.Data.Api;
-using AutoBitBot.BittrexProxy.Models;
+﻿using AutoBitBot.BittrexProxy.Models;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -9,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using AutoBitBot.Infrastructure;
+using ArchPM.Core.Api;
 
 namespace AutoBitBot.BittrexProxy
 {
@@ -35,7 +35,7 @@ namespace AutoBitBot.BittrexProxy
             IApiResponse<T> result = null;
             try
             {
-                setDefaultHeaders();
+                SetDefaultHeaders();
                 beforeCallFunction?.Invoke();
                 var response = await httpClient.GetAsync(url);
                 response.EnsureSuccessStatusCode();
@@ -105,8 +105,8 @@ namespace AutoBitBot.BittrexProxy
             return await __handler<List<BittrexBalanceModel>>(url, () =>
             {
                 System.Threading.Thread.Sleep(3000);
-                var apiSign = createApiSign(url, apiKeyModel.SecretKey);
-                setApiSign(apiSign);
+                var apiSign = CreateApiSign(url, apiKeyModel.SecretKey);
+                SetApiSign(apiSign);
             });
         }
 
@@ -115,8 +115,8 @@ namespace AutoBitBot.BittrexProxy
             var url = BittrexApiUrls.AccountApiUrl.GetBalance(apiKeyModel.ApiKey, apiKeyModel.Nonce, currency);
             return await __handler<BittrexBalanceModel>(url, () =>
             {
-                var apiSign = createApiSign(url, apiKeyModel.SecretKey);
-                setApiSign(apiSign);
+                var apiSign = CreateApiSign(url, apiKeyModel.SecretKey);
+                SetApiSign(apiSign);
             });
         }
 
@@ -125,8 +125,8 @@ namespace AutoBitBot.BittrexProxy
             var url = BittrexApiUrls.AccountApiUrl.GetOrderHistory(apiKeyModel.ApiKey, apiKeyModel.Nonce, market);
             return await __handler<List<BittrexOrderHistoryModel>>(url, () =>
             {
-                var apiSign = createApiSign(url, apiKeyModel.SecretKey);
-                setApiSign(apiSign);
+                var apiSign = CreateApiSign(url, apiKeyModel.SecretKey);
+                SetApiSign(apiSign);
             });
         }
 
@@ -135,8 +135,8 @@ namespace AutoBitBot.BittrexProxy
             var url = BittrexApiUrls.AccountApiUrl.GetOrder(apiKeyModel.ApiKey, apiKeyModel.Nonce, uuid);
             return await __handler<BittrexOrderModel>(url, () =>
             {
-                var apiSign = createApiSign(url, apiKeyModel.SecretKey);
-                setApiSign(apiSign);
+                var apiSign = CreateApiSign(url, apiKeyModel.SecretKey);
+                SetApiSign(apiSign);
             });
         }
 
@@ -145,8 +145,8 @@ namespace AutoBitBot.BittrexProxy
             var url = BittrexApiUrls.MarketApiUrl.BuyLimit(apiKeyModel.ApiKey, apiKeyModel.Nonce, args.Market, args.Quantity, args.Rate);
             return await __handler<BittrexLimitModel>(url, () =>
             {
-                var apiSign = createApiSign(url, apiKeyModel.SecretKey);
-                setApiSign(apiSign);
+                var apiSign = CreateApiSign(url, apiKeyModel.SecretKey);
+                SetApiSign(apiSign);
             });
         }
 
@@ -155,14 +155,14 @@ namespace AutoBitBot.BittrexProxy
             var url = BittrexApiUrls.MarketApiUrl.SellLimit(apiKeyModel.ApiKey, apiKeyModel.Nonce, args.Market, args.Quantity, args.Rate);
             return await __handler<BittrexLimitModel>(url, () =>
             {
-                var apiSign = createApiSign(url, apiKeyModel.SecretKey);
-                setApiSign(apiSign);
+                var apiSign = CreateApiSign(url, apiKeyModel.SecretKey);
+                SetApiSign(apiSign);
             });
         }
 
 
 
-        String createApiSign(String url, String secretKey)
+        String CreateApiSign(String url, String secretKey)
         {
             byte[] key = Encoding.UTF8.GetBytes(secretKey);
             byte[] urlBytes = Encoding.UTF8.GetBytes(url);
@@ -181,12 +181,12 @@ namespace AutoBitBot.BittrexProxy
 
             return result;
         }
-        internal void setDefaultHeaders()
+        internal void SetDefaultHeaders()
         {
             httpClient.DefaultRequestHeaders.Clear();
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));//ACCEPT header
         }
-        internal void setApiSign(String apiSign)
+        internal void SetApiSign(String apiSign)
         {
             httpClient.DefaultRequestHeaders.Add("apisign", apiSign);
         }

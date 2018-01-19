@@ -30,8 +30,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ArchPM.Core, Version=0.0.14.25515, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ArchPM.Core.0.0.14\lib\net45\ArchPM.Core.dll</HintPath>
+    <Reference Include="ArchPM.Core, Version=0.0.15.22638, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ArchPM.Core.0.0.15\lib\net45\ArchPM.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -46,27 +49,25 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AABServer.cs" />
-    <Compile Include="BitTaskExecutionCompletedEventArgs.cs" />
+    <Compile Include="BitTasks\BittrexBuyAndSellLimitTask.cs" />
+    <Compile Include="BitTasks\BittrexSellLimitCompletedTask.cs" />
+    <Compile Include="BitTasks\BittrexSellLimitTask.cs" />
+    <Compile Include="EventArgs\BitTaskExecutedEventArgs.cs" />
+    <Compile Include="EventArgs\BitTaskExecutionCompletedEventArgs.cs" />
     <Compile Include="BitTaskResult.cs" />
-    <Compile Include="BitTaskScheduler.cs" />
+    <Compile Include="Server.cs" />
     <Compile Include="BitTask.cs" />
     <Compile Include="BitTaskStatus.cs" />
     <Compile Include="ConfigItem.cs" />
-    <Compile Include="BitTasks\OneTimeWorkerTask.cs" />
-    <Compile Include="BitTasks\BuySellBitTask.cs" />
-    <Compile Include="BitTasks\LongRunningBitTask.cs" />
-    <Compile Include="BitTasks\BalanceBitTask.cs" />
-    <Compile Include="BitTasks\MarketTickerBitTask.cs" />
+    <Compile Include="BitTasks\BittrexBuyLimitTask.cs" />
+    <Compile Include="BitTasks\BittrexBuyLimitCompletedTask.cs" />
+    <Compile Include="BitTasks\BittrexGetBalanceTask.cs" />
+    <Compile Include="BitTasks\BittrexGetTickerTask.cs" />
     <Compile Include="IBitTask.cs" />
     <Compile Include="PumpDumpPredictor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\ArchPM-Framework\ArchPM.Data\ArchPM.Data.csproj">
-      <Project>{860a1505-8866-4513-83cc-0b4d8af332ac}</Project>
-      <Name>ArchPM.Data</Name>
-    </ProjectReference>
     <ProjectReference Include="..\AutoBitBot.BittrexProxy\AutoBitBot.BittrexProxy.csproj">
       <Project>{cf48750d-7fc6-4271-be14-6f34f0b966ee}</Project>
       <Name>AutoBitBot.BittrexProxy</Name>
@@ -77,6 +78,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -29,10 +29,12 @@ namespace AutoBitBot.MainApp
 
             var output = OutputControl.FindName("Output") as RichTextBox;
 
-            var ctx = new BitTaskSchedulerViewModel(App.Current.Dispatcher, output)
+            var ctx = new MainViewModel(App.Current.Dispatcher, output)
             {
-                ImmediatelySellAfterBuyCommand = new ImmediatelySellAfterBuyCommand(),
+                OpenBuyAndSellCommand = new OpenBuyAndSellCommand(),
             };
+            ctx.Init();
+
             this.DataContext = ctx;
 
         }

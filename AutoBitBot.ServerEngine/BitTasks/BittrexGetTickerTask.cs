@@ -9,19 +9,19 @@ using System.Threading.Tasks;
 
 namespace AutoBitBot.ServerEngine.BitTasks
 {
-    public class MarketTickerBitTask : BitTask
+    public class BittrexGetTickerTask : BitTask
     {
         readonly String market;
-        public MarketTickerBitTask(String market)
+        public BittrexGetTickerTask(String market)
         {
             this.market = market;
         }
 
         public override long ExecuteAtEvery => 5000;
 
-        public override string Name => "MarketTickerBitTask";
+        public override string Name => "BittrexGetTickerTask";
 
-        public override BitTaskExecutionTypes ExecutionType => BitTaskExecutionTypes.Permenant;
+        public override BitTaskExecutionTypes ExecutionType => BitTaskExecutionTypes.Permanent;
 
         protected override async Task<Object> ExecuteAction(Object parameter)
         {
@@ -30,7 +30,7 @@ namespace AutoBitBot.ServerEngine.BitTasks
             var result = await manager.GetTicker(market);
             if (result.Result)
             {
-                Notification.NotifyAsync($"{market} :: Ask:{result.Data.Ask} | Bid:{result.Data.Bid} | Last:{result.Data.Last}", NotificationLocations.Console | NotificationLocations.File);
+                Notification.NotifyAsync($"[{Name}] {market} :: Ask:{result.Data.Ask} | Bid:{result.Data.Bid} | Last:{result.Data.Last}", NotificationLocations.Console | NotificationLocations.File);
             }
 
             return result.Data;

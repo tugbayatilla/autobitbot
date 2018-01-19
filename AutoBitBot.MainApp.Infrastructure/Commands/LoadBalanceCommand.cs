@@ -1,4 +1,5 @@
 ﻿using AutoBitBot.BittrexProxy.Models;
+using AutoBitBot.MainApp.Infrastructure.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Threading;
 
-namespace AutoBitBot.MainApp.Commands
+namespace AutoBitBot.MainApp.Infrastructure.Commands
 {
     public class LoadBalanceCommand : ICommand
     {

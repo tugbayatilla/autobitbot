@@ -1,5 +1,4 @@
 ﻿using AutoBitBot.BittrexProxy;
-using AutoBitBot.Infrastructure;
 using AutoBitBot.MainApp.Infrastructure.DTO;
 using AutoBitBot.MainApp.Infrastructure.ViewModels;
 using AutoBitBot.ServerEngine.BitTasks;
@@ -9,12 +8,20 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace AutoBitBot.MainApp.Commands
+namespace AutoBitBot.MainApp.Infrastructure.Commands
 {
     public class ImmediatelySellAfterBuyCommand : ICommand
     {
+        readonly UserControl userControl;
+        public ImmediatelySellAfterBuyCommand(UserControl userControl)
+        {
+            this.userControl = userControl;
+        }
+
         public event EventHandler CanExecuteChanged = delegate { };
 
         public bool CanExecute(object parameter)
@@ -26,8 +33,17 @@ namespace AutoBitBot.MainApp.Commands
         {
             var model = parameter as BitTaskSchedulerViewModel;
 
-            var task = new BuySellBitTask();
-            model.taskScheduler.RegisterInstanceAndExecute(task, model.ImmediatelySellAfterBuy);
+            Window window = new Window
+            {
+                Title = "My User Control Dialog",
+                Content = userControl
+            };
+
+            window.ShowDialog();
+
+
+            //var task = new BittrexBuyLimitTask();
+            //model.taskScheduler.RegisterInstanceAndExecute(task, model.ImmediatelySellAfterBuy);
 
 
             //var model = parameter as ImmediatelySellAfterBuyDTO;

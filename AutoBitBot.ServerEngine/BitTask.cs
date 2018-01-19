@@ -19,7 +19,7 @@ namespace AutoBitBot.ServerEngine
     public abstract class BitTask : INotifyPropertyChanged, IDisposable
     {
         public event EventHandler<BitTaskExecutionCompletedEventArgs> ExecutionCompleted = delegate { };
-        public event EventHandler<BitTaskExecutionCompletedEventArgs> Executed = delegate { };
+        public event EventHandler<BitTaskExecutedEventArgs> Executed = delegate { };
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
         /// <summary>
@@ -37,9 +37,10 @@ namespace AutoBitBot.ServerEngine
             this.Status = BitTaskStatus.Waiting;
             this.ExecutionId = Guid.NewGuid();
             this.ElapsedTime = 0;
+            this.InterruptExecution = false;
         }
 
-        public BitTaskScheduler Scheduler { get; set; }
+        public Server Scheduler { get; set; }
 
         #region Properties
 
@@ -159,10 +160,19 @@ namespace AutoBitBot.ServerEngine
         /// <returns>
         ///   <c>true</c> if this instance can execute; otherwise, <c>false</c>.
         /// </returns>
-        public virtual Boolean CanExecute()
+        protected virtual Boolean CanExecute()
         {
             return DateTime.Now >= NextExecutionTime && Status == BitTaskStatus.Waiting;
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [interrupt execution].
+        /// Prematurely interrupts the execution. Default value is false.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [interrupt execution]; otherwise, <c>false</c>.
+        /// </value>
+        protected Boolean InterruptExecution { get; set; }
 
         /// <summary>
         /// Executes the specified execution identifier.
@@ -195,7 +205,12 @@ namespace AutoBitBot.ServerEngine
                     this.ElapsedTime = stopWatch.ElapsedMilliseconds;
 
                     Notification.NotifyAsync(ToString());
-                    Executed(this, new BitTaskExecutionCompletedEventArgs() { Data = data, BitTask = this });
+                    Notification.NotifyAsync($"[{Name}] {Newtonsoft.Json.JsonConvert.SerializeObject(data)}");
+                    Executed(this, new BitTaskExecutedEventArgs() { Data = data, BitTask = this });
+
+                    //prematurely interrupts the execution
+                    if (InterruptExecution)
+                        break;
 
                     if (this.ExecutionType == BitTaskExecutionTypes.OneTime)
                         break;
@@ -209,6 +224,7 @@ namespace AutoBitBot.ServerEngine
                     }
                 }
 
+                Notification.NotifyAsync($"[{Name}] {Newtonsoft.Json.JsonConvert.SerializeObject(this.LastResult)}", NotificationLocations.Log);
                 ExecutionCompleted(this, new BitTaskExecutionCompletedEventArgs() { BitTask = this });
 
                 this.Scheduler.Unregister(this);

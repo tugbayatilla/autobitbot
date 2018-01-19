@@ -11,18 +11,19 @@ using System.Threading.Tasks;
 
 namespace AutoBitBot.ServerEngine.BitTasks
 {
-    public class LongRunningBitTask : BitTask
+    public class BittrexSellLimitCompletedTask : BitTask
     {
         public override long ExecuteAtEvery => 1000;
 
-        public override string Name => "LongRunningBitTask";
+        public override string Name => "BittrexSellLimitCompletedTask";
 
-        public override BitTaskExecutionTypes ExecutionType => BitTaskExecutionTypes.Permenant;
+        public override BitTaskExecutionTypes ExecutionType => BitTaskExecutionTypes.Permanent;
 
         protected override async Task<Object> ExecuteAction(Object parameter)
         {
             return await Task.Factory.StartNew<Boolean>(() => { 
                 Thread.Sleep(20000);
+                this.InterruptExecution = true;
                 return true;
             });
         }

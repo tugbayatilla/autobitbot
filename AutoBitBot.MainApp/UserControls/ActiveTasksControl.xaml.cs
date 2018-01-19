@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AutoBitBot.MainApp
+namespace AutoBitBot.MainApp.UserControls
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for BitTaskSchedulerControl.xaml
     /// </summary>
-    public partial class MainWindow_dummy : Window
+    public partial class ActiveTasksControl : UserControl
     {
-        public MainWindow_dummy()
+        public ActiveTasksControl()
         {
             InitializeComponent();
         }

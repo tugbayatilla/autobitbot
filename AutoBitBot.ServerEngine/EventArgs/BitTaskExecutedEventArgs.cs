@@ -6,16 +6,9 @@ using System.Threading.Tasks;
 
 namespace AutoBitBot.ServerEngine
 {
-    public enum BitTaskStatus
+    public class BitTaskExecutedEventArgs : EventArgs
     {
-        Waiting,
-        Executing,
-        Executed
-    }
-
-    public enum BitTaskExecutionTypes
-    {
-        OneTime,
-        Permanent
+        public BitTask BitTask { get; set; }
+        public Object Data { get; set; }
     }
 }

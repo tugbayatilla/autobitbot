@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace AutoBitBot.MainApp.UserControls
 {
     /// <summary>
-    /// Interaction logic for ImmediatelySellAfterBuyControl.xaml
+    /// Interaction logic for MarketTicksControl.xaml
     /// </summary>
-    public partial class ImmediatelySellAfterBuyControl : UserControl
+    public partial class TickerControl : UserControl
     {
-        public ImmediatelySellAfterBuyControl()
+        public TickerControl()
         {
             InitializeComponent();
         }

@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 
 namespace AutoBitBot.ServerEngine.BitTasks
 {
-    public class BalanceBitTask : BitTask
+    public class BittrexGetBalanceTask : BitTask
     {
         public override long ExecuteAtEvery => 10000;
 
-        public override string Name => "BalanceBitTask";
+        public override string Name => "BittrexGetBalanceTask";
 
-        public override BitTaskExecutionTypes ExecutionType => BitTaskExecutionTypes.Permenant;
+        public override BitTaskExecutionTypes ExecutionType => BitTaskExecutionTypes.Permanent;
 
         protected override async Task<Object> ExecuteAction(Object parameter)
         {

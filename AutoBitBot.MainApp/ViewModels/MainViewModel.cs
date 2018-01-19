@@ -1,8 +1,8 @@
 ﻿using ArchPM.Core.Notifications;
 using ArchPM.Core.Notifications.Notifiers;
 using AutoBitBot.BittrexProxy.Models;
-using AutoBitBot.MainApp.Infrastructure.DTO;
-using AutoBitBot.MainApp.Infrastructure.Notifiers;
+using AutoBitBot.MainApp.DTO;
+using AutoBitBot.MainApp.Notifiers;
 using AutoBitBot.ServerEngine;
 using AutoBitBot.ServerEngine.BitTasks;
 using System;
@@ -20,22 +20,22 @@ using System.Windows.Threading;
 
 namespace AutoBitBot.MainApp.Infrastructure.ViewModels
 {
-    public class BitTaskSchedulerViewModel : INotifyPropertyChanged
+    public class MainViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
-        public Server taskScheduler; //todo: boktan
+        public Server server; //todo: boktan
         readonly RichTextBox outputRichTextBox;
         readonly Dispatcher dispatcher;
 
-        public BitTaskSchedulerViewModel(Dispatcher dispatcher, RichTextBox outputRichTextBox)
+        public MainViewModel(Dispatcher dispatcher, RichTextBox outputRichTextBox)
         {
             this.dispatcher = dispatcher;
             this.outputRichTextBox = outputRichTextBox;
 
             this.Messages = new ObservableCollection<string>();
             this.Balances = new ObservableCollection<BalanceDTO>();
-            this.ImmediatelySellAfterBuy = new ImmediatelySellAfterBuyDTO();
+            this.BuyAndSell = new BuyAndSellDTO();
             this.MarketTicker = new MarketTickerDTO();
         }
 
@@ -56,15 +56,18 @@ namespace AutoBitBot.MainApp.Infrastructure.ViewModels
 
             var bittrexManager = BittrexProxy.BittrexApiManagerFactory.Instance.Create();
 
-            taskScheduler = new Server(notification);
-            taskScheduler.TaskExecutionCompleted += TaskScheduler_BitTaskExecutionCompleted;
-            taskScheduler.TaskExecuted += TaskScheduler_TaskExecuted;
-            taskScheduler.RegisterInstance(new BittrexGetTickerTask("BTC-XRP"));
-            taskScheduler.RegisterInstance(new BittrexGetBalanceTask());
+            server = new Server(notification);
+            server.TaskExecutionCompleted += TaskScheduler_BitTaskExecutionCompleted;
+            server.TaskExecuted += TaskScheduler_TaskExecuted;
+            server.RegisterInstance(new BittrexGetTickerTask("BTC-XRP"));
+            server.RegisterInstance(new BittrexGetBalanceTask());
 
-            taskScheduler.Config.Add(new ConfigItem(typeof(BittrexBuyLimitTask), typeof(BittrexBuyLimitCompletedTask)));
+            server.Config.Add(new ConfigItem(typeof(BittrexBuyAndSellLimitTask), 
+                typeof(BittrexBuyLimitCompletedTask), 
+                typeof(BittrexSellLimitTask), 
+                typeof(BittrexSellLimitCompletedTask)));
 
-            taskScheduler.RunAllRegisteredTasksAsync();
+            server.RunAllRegisteredTasksAsync();
         }
 
         private void TaskScheduler_TaskExecuted(object sender, BitTaskExecutedEventArgs e)
@@ -75,6 +78,9 @@ namespace AutoBitBot.MainApp.Infrastructure.ViewModels
                 this.MarketTicker.Ask = model.Ask;
                 this.MarketTicker.Bid = model.Bid;
                 this.MarketTicker.Last = model.Last;
+
+                this.BuyAndSell.Price = model.Ask;
+                PropertyChanged(this, new PropertyChangedEventArgs(nameof(BuyAndSell)));
             }
 
             if (e.Data is List<BittrexBalanceModel>)
@@ -102,12 +108,12 @@ namespace AutoBitBot.MainApp.Infrastructure.ViewModels
 
         }
 
-        public IEnumerable<BitTask> Tasks => taskScheduler.ActiveTasks;
+        public IEnumerable<BitTask> Tasks => server.ActiveTasks;
         public ObservableCollection<String> Messages { get; private set; }
         public MarketTickerDTO MarketTicker { get; set; }
         public ObservableCollection<BalanceDTO> Balances { get; set; }
-        public ImmediatelySellAfterBuyDTO ImmediatelySellAfterBuy { get; set; }
-        public ICommand ImmediatelySellAfterBuyCommand { get; set; }
+        public BuyAndSellDTO BuyAndSell { get; set; }
+        public ICommand OpenBuyAndSellCommand { get; set; }
 
     }
 }

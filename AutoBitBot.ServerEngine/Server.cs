@@ -14,18 +14,17 @@ using System.Windows.Threading;
 
 namespace AutoBitBot.ServerEngine
 {
-
-    public class BitTaskScheduler : INotifyPropertyChanged
+    public class Server : INotifyPropertyChanged
     {
         public event EventHandler<BitTaskExecutionCompletedEventArgs> TaskExecutionCompleted = delegate { };
-        public event EventHandler<BitTaskExecutionCompletedEventArgs> TaskExecuted = delegate { };
+        public event EventHandler<BitTaskExecutedEventArgs> TaskExecuted = delegate { };
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
         readonly ObservableCollection<BitTask> activeTasks;
         static Object _lock = new Object();
         readonly INotificationAsync notification;
 
-        public BitTaskScheduler(INotificationAsync notification)
+        public Server(INotificationAsync notification)
         {
             this.Config = new List<ConfigItem>();
             this.activeTasks = new ObservableCollection<BitTask>();
@@ -65,7 +64,7 @@ namespace AutoBitBot.ServerEngine
             }
         }
 
-        private void BitTask_Executed(object sender, BitTaskExecutionCompletedEventArgs e)
+        private void BitTask_Executed(object sender, BitTaskExecutedEventArgs e)
         {
             TaskExecuted(this, e);
         }
@@ -103,7 +102,7 @@ namespace AutoBitBot.ServerEngine
         }
 
 
-        public Task RunAsync()
+        public Task RunAllRegisteredTasksAsync()
         {
             lock (_lock)
             {

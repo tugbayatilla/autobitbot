@@ -30,8 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ArchPM.Core, Version=0.0.14.25515, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ArchPM.Core.0.0.14\lib\net45\ArchPM.Core.dll</HintPath>
+    <Reference Include="ArchPM.Core, Version=0.0.15.22638, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ArchPM.Core.0.0.15\lib\net45\ArchPM.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -51,12 +51,6 @@
     <Compile Include="SourceNames.cs" />
     <Compile Include="TransactionOperationType.cs" />
     <Compile Include="Utils.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\ArchPM-Framework\ArchPM.Data\ArchPM.Data.csproj">
-      <Project>{860A1505-8866-4513-83CC-0B4D8AF332AC}</Project>
-      <Name>ArchPM.Data</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

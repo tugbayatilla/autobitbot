@@ -32,8 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ArchPM.Core, Version=0.0.14.25515, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ArchPM.Core.0.0.14\lib\net45\ArchPM.Core.dll</HintPath>
+    <Reference Include="ArchPM.Core, Version=0.0.15.22638, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ArchPM.Core.0.0.15\lib\net45\ArchPM.Core.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -58,10 +58,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\ArchPM-Framework\ArchPM.Data\ArchPM.Data.csproj">
-      <Project>{860a1505-8866-4513-83cc-0b4d8af332ac}</Project>
-      <Name>ArchPM.Data</Name>
-    </ProjectReference>
     <ProjectReference Include="..\AutoBitBot.BittrexProxy\AutoBitBot.BittrexProxy.csproj">
       <Project>{cf48750d-7fc6-4271-be14-6f34f0b966ee}</Project>
       <Name>AutoBitBot.BittrexProxy</Name>
@@ -73,10 +69,6 @@
     <ProjectReference Include="..\AutoBitBot.Infrastructure\AutoBitBot.Infrastructure.csproj">
       <Project>{588870FF-1117-4DD7-AF92-E5EB653F93BF}</Project>
       <Name>AutoBitBot.Infrastructure</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AutoBitBot.MainApp.Infrastructure\AutoBitBot.MainApp.Infrastructure.csproj">
-      <Project>{3B546EF3-E7CE-4E10-8768-8D64B4EDD3A5}</Project>
-      <Name>AutoBitBot.MainApp.Infrastructure</Name>
     </ProjectReference>
     <ProjectReference Include="..\AutoBitBot.MainApp\AutoBitBot.MainApp.csproj">
       <Project>{fe497ff5-377c-41aa-8aef-e4e9665be57b}</Project>

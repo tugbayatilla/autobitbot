@@ -9,6 +9,6 @@
     <Grid>
         <RichTextBox VerticalScrollBarVisibility="Visible" x:Name="Output" 
                      HorizontalScrollBarVisibility="Visible" 
-                     IsReadOnly="True" MaxHeight="400"></RichTextBox>
+                     IsReadOnly="True" MaxHeight="300"></RichTextBox>
     </Grid>
 </UserControl>

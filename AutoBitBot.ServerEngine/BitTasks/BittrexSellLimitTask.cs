@@ -12,11 +12,11 @@ using System.Threading.Tasks;
 
 namespace AutoBitBot.ServerEngine.BitTasks
 {
-    public class BuySellBitTask : BitTask
+    public class BittrexSellLimitTask : BitTask
     {
-        public override long ExecuteAtEvery => 10000;
+        public override long ExecuteAtEvery => 0;
 
-        public override string Name => "BuySellBitTask";
+        public override string Name => "BittrexSellLimitTask";
 
         public override BitTaskExecutionTypes ExecutionType => BitTaskExecutionTypes.OneTime;
 
@@ -33,7 +33,7 @@ namespace AutoBitBot.ServerEngine.BitTasks
 
             Thread.Sleep(2000);
 
-            Notification.NotifyAsync("[BuySellBitTask] executed. go to next one!");
+            Notification.NotifyAsync($"[{Name}] executed. go to next one!");
 
             return Guid.NewGuid();
 

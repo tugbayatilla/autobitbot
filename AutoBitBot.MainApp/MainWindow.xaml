@@ -6,16 +6,24 @@
         xmlns:uc="clr-namespace:AutoBitBot.MainApp.UserControls"
         xmlns:models="clr-namespace:AutoBitBot.MainApp.Infrastructure.ViewModels;assembly=AutoBitBot.MainApp.Infrastructure"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="800">
+        Title="MainWindow" Height="600" Width="800">
     <!--<Window.DataContext>
         <models:BitTaskSchedulerViewModel />
     </Window.DataContext>-->
 
     <StackPanel>
-        <Button CommandParameter="{Binding}" Command="{Binding Path=ImmediatelySellAfterBuyCommand}">SellBuy Command</Button>
-        <uc:BitTaskSchedulerControl />
-        <uc:MarketTickerControl />
+
+        <StackPanel Orientation="Horizontal">
+            <Button CommandParameter="{Binding}" Command="{Binding Path=OpenBuyAndSellCommand}" >Open BuyAndSell</Button>
+        </StackPanel>
+        <Separator/>
+        <uc:ActiveTasksControl />
+        <Separator/>
+        <uc:TickerControl />
+        <Separator/>
         <uc:BalanceControl />
+        <Separator/>
         <uc:OutputControl x:Name="OutputControl" />
+        <Separator/>
     </StackPanel>
 </Window>
