@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="AutoBitBot.MainApp.UserControls.MarketTickerControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AutoBitBot.MainApp.UserControls"
+             xmlns:converters="clr-namespace:AutoBitBot.MainApp.Infrastructure.Converters;assembly=AutoBitBot.MainApp.Infrastructure"
+             mc:Ignorable="d" 
+             d:DesignHeight="76" d:DesignWidth="300">
+    <UserControl.Resources>
+        <Style TargetType="Label" x:Key="TickerDataLabel">
+            <Setter Property="Width" Value="Auto"></Setter>
+        </Style>
+        <Style TargetType="Label" x:Key="TickerLabel">
+            <Setter Property="Width" Value="30"></Setter>
+        </Style>
+        <converters:DateTimeToStringConverter x:Key="DateTimeToString" />
+        <converters:CoinPriceStringValueConverter x:Key="CoinPriceStringValueConverter" />
+    </UserControl.Resources>
+    <StackPanel>
+        <Label Foreground="Blue" Margin="5,5,5,0">MARKET TICKER</Label>
+
+        <StackPanel Orientation="Horizontal">
+            <Label Content="Bid" Style="{StaticResource TickerLabel}"/>
+            <Label Content="{Binding MarketTicker.Bid, Converter={StaticResource CoinPriceStringValueConverter}}" Style="{StaticResource TickerDataLabel}" />
+            <Label Content="Ask" Style="{StaticResource TickerLabel}"/>
+            <Label Content="{Binding MarketTicker.Ask, Converter={StaticResource CoinPriceStringValueConverter}}" Style="{StaticResource TickerDataLabel}"/>
+            <Label Content="Last" Style="{StaticResource TickerLabel}"/>
+            <Label Content="{Binding MarketTicker.Last, Converter={StaticResource CoinPriceStringValueConverter}}" Style="{StaticResource TickerDataLabel}"/>
+            <Label Content="Last Update" />
+            <Label Content="{Binding MarketTicker.LastUpdateTime, Converter={StaticResource DateTimeToString}}" Style="{StaticResource TickerDataLabel}"/>
+        </StackPanel>
+    </StackPanel>
+   
+</UserControl>

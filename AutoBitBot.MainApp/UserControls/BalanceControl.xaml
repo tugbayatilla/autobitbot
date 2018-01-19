@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="AutoBitBot.MainApp.UserControls.BalanceControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AutoBitBot.MainApp.UserControls"
+             xmlns:converters="clr-namespace:AutoBitBot.MainApp.Infrastructure.Converters;assembly=AutoBitBot.MainApp.Infrastructure"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+
+    <UserControl.Resources>
+        <converters:DateTimeToStringConverter x:Key="DateTimeToStringConverter" />
+    </UserControl.Resources>
+        
+    
+    <StackPanel>
+        <Label >
+            <ContentControl>
+                <StackPanel Orientation="Horizontal">
+                <Label>BALANCE</Label>
+                    <Label Content="{Binding Balances[0].LastUpdateTime, Converter={StaticResource DateTimeToStringConverter}}"></Label>
+                </StackPanel>
+            </ContentControl>
+        </Label>
+        <DataGrid ItemsSource="{Binding Balances}" AutoGenerateColumns="False" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Currency" Binding="{Binding Name}" />
+                <DataGridTextColumn Header="Price" Binding="{Binding Value}" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+    </StackPanel>
+</UserControl>
