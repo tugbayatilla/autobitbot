@@ -9,5 +9,6 @@
     <StackPanel Orientation="Horizontal">
         <Button CommandParameter="{Binding}" Command="{Binding Path=OpenBuyAndSellCommand}" Style="{DynamicResource GlassButton}">Open BuyAndSell</Button>
         <Button CommandParameter="{Binding}" Command="{Binding Path=OpenMarketsCommand}" Style="{DynamicResource GlassButton}">Open Markets</Button>
+        <Button CommandParameter="{Binding}" Command="{Binding Path=OpenKilledTasksCommand}" Style="{DynamicResource GlassButton}">Open Killed Tasks</Button>
     </StackPanel>
 </UserControl>

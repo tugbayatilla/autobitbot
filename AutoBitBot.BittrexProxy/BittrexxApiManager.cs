@@ -92,6 +92,14 @@ namespace AutoBitBot.BittrexProxy
             return await __handler<BittrexTickerModel>(url);
         }
 
+        public async Task<IApiResponse<List<BittrexMarketSummaryModel>>> GetMarketSummary(String market)
+        {
+            var url = BittrexApiUrls.PublicApiUrl.GetMarketSummary(market);
+
+            return await __handler<List<BittrexMarketSummaryModel>>(url);
+        }
+
+
         public async Task<IApiResponse<List<BittrexCurrencyModel>>> GetCurrencies()
         {
             var url = BittrexApiUrls.PublicApiUrl.GetCurrencies();

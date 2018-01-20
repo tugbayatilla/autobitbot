@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="AutoBitBot.MainApp.UserControls.ActiveTasksControl"
+﻿<UserControl x:Class="AutoBitBot.MainApp.UserControls.KilledTasksControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -11,8 +11,8 @@
         <converters:DateTimeToStringConverter x:Key="DateTimeToString" />
     </UserControl.Resources>
     <StackPanel >
-        <Label Foreground="Blue" Margin="5,5,5,0">ACTIVE TASKS</Label>
-        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding ActiveTasks}" >
+        <Label Foreground="Blue" Margin="5,5,5,0">KILLED TASKS</Label>
+        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding}" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
                 <DataGridTextColumn Header="Status" Binding="{Binding Status}" />

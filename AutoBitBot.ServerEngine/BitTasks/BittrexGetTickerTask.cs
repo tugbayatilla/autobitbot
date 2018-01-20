@@ -30,7 +30,7 @@ namespace AutoBitBot.ServerEngine.BitTasks
             var result = await manager.GetTicker(market);
             if (!result.Result)
             {
-                Notification.NotifyAsync(result.Message);
+                Notification.NotifyAsync($"[{Name}] {result.Message}");
             }
 
             return result.Data;

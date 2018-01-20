@@ -227,7 +227,7 @@ namespace AutoBitBot.ServerEngine
                 Notification.NotifyAsync($"[{Name}] {Newtonsoft.Json.JsonConvert.SerializeObject(this.LastResult)}", NotificationLocations.Log);
                 ExecutionCompleted(this, new BitTaskExecutionCompletedEventArgs() { BitTask = this });
 
-                this.Scheduler.Unregister(this);
+                this.Scheduler.Kill(this);
 
             });
 

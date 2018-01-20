@@ -36,9 +36,11 @@ namespace AutoBitBot.MainApp.Infrastructure.ViewModels
 
             this.Messages = new ObservableCollection<string>();
             this.Balances = new ObservableCollection<BalanceDTO>();
+            this.Markets = new ObservableCollection<MarketDTO>();
+
             this.BuyAndSell = new BuyAndSellDTO();
             this.MarketTicker = new MarketTickerDTO();
-            this.Markets = new ObservableCollection<MarketDTO>();
+            this.MarketSummary = new MarketSummaryDTO();
         }
 
         public void Init()
@@ -61,9 +63,10 @@ namespace AutoBitBot.MainApp.Infrastructure.ViewModels
             server = new Server(notification);
             server.TaskExecutionCompleted += TaskScheduler_BitTaskExecutionCompleted;
             server.TaskExecuted += TaskScheduler_TaskExecuted;
-            server.RegisterInstance(new BittrexGetTickerTask("BTC-XRP"));
-            server.RegisterInstance(new BittrexGetBalanceTask());
+            //server.RegisterInstance(new BittrexGetTickerTask("BTC-XRP"));
+            //server.RegisterInstance(new BittrexGetBalanceTask());
             server.RegisterInstance(new BittrexGetMarketsTask());
+            //server.RegisterInstance(new BittrexGetMarketSummaryTask("BTC-XRP"));
 
             server.Config.Add(new ConfigItem(typeof(BittrexBuyAndSellLimitTask),
                 typeof(BittrexBuyLimitCompletedTask),
@@ -127,6 +130,21 @@ namespace AutoBitBot.MainApp.Infrastructure.ViewModels
                 });
 
             }
+
+            if (e.Data is BittrexMarketSummaryModel)
+            {
+                var model = e.Data as BittrexMarketSummaryModel;
+
+                this.MarketSummary.Ask = model.Ask;
+                this.MarketSummary.Bid = model.Bid;
+                this.MarketSummary.High = model.High;
+                this.MarketSummary.Last = model.Last;
+                this.MarketSummary.Low = model.Low;
+                this.MarketSummary.MarketName = model.MarketName;
+                this.MarketSummary.Volume = model.Volume;
+
+                PropertyChanged(this, new PropertyChangedEventArgs(nameof(MarketSummary)));
+            }
         }
 
         private void TaskScheduler_BitTaskExecutionCompleted(object sender, BitTaskExecutionCompletedEventArgs e)
@@ -134,7 +152,8 @@ namespace AutoBitBot.MainApp.Infrastructure.ViewModels
 
         }
 
-        public ObservableCollection<BitTask> Tasks => server.ActiveTasks;
+        public ObservableCollection<BitTask> ActiveTasks => server.ActiveTasks;
+        public ObservableCollection<BitTask> KilledTasks => server.KilledTasks;
         public ObservableCollection<String> Messages { get; private set; }
         public ObservableCollection<MarketDTO> Markets { get; set; }
         public ObservableCollection<BalanceDTO> Balances { get; set; }
@@ -142,11 +161,13 @@ namespace AutoBitBot.MainApp.Infrastructure.ViewModels
 
         public MarketTickerDTO MarketTicker { get; set; }
         public BuyAndSellDTO BuyAndSell { get; set; }
+        public MarketSummaryDTO MarketSummary { get; set; }
 
 
 
         public ICommand OpenBuyAndSellCommand => new OpenBuyAndSellCommand();
         public ICommand OpenMarketsCommand => new OpenMarketsCommand();
+        public ICommand OpenKilledTasksCommand => new OpenKilledTasksCommand();
 
     }
 }

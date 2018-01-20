@@ -23,6 +23,9 @@ namespace AutoBitBot.MainApp.Notifiers
         {
             this.dispatcher = dispatcher;
             this.richTextBox = richTextBox;
+
+            //BrushConverter bc = new BrushConverter();
+            //TextRange tr = new TextRange(richTextBox.Document.ContentEnd, richTextBox.Document.ContentEnd);
         }
 
         public Task Notify(NotificationMessage notificationMessage)
@@ -51,8 +54,7 @@ namespace AutoBitBot.MainApp.Notifiers
 
         public void AppendText(string text, string color)
         {
-            //BrushConverter bc = new BrushConverter();
-            //TextRange tr = new TextRange(richTextBox.Document.ContentEnd, richTextBox.Document.ContentEnd);
+            
             dispatcher.Invoke((Action)delegate {
                 //tr.Text = text;
                 //try

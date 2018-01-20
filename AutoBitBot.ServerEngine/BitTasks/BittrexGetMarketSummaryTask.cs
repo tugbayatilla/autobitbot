@@ -7,15 +7,22 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AutoBitBot.ServerEngine.BitTasks
 {
-    public class BittrexGetBalanceTask : BitTask
+    public class BittrexGetMarketSummaryTask : BitTask
     {
-        public override long ExecuteAtEvery => 10000;
+        readonly String market;
+        public BittrexGetMarketSummaryTask(String market)
+        {
+            this.market = market;
+        }
 
-        public override string Name => "BittrexGetBalanceTask";
+        public override long ExecuteAtEvery => 5000;
+
+        public override string Name => "BittrexGetMarketSummaryTask";
 
         public override BitTaskExecutionTypes ExecutionType => BitTaskExecutionTypes.Permanent;
 
@@ -24,19 +31,14 @@ namespace AutoBitBot.ServerEngine.BitTasks
             //fistan: merkezi yap
             var manager = BittrexApiManagerFactory.Instance.Create();
 
-            var result = await manager.GetBalances(new ApiKeyModel()
-            {
-                ApiKey = ConfigurationManager.AppSettings["BittrexApiKey"],
-                SecretKey = ConfigurationManager.AppSettings["BittrexApiSecret"]
-            });
+            var result = await manager.GetMarketSummary(market);
 
             if (!result.Result)
             {
                 Notification.NotifyAsync($"[{Name}] {result.Message}");
             }
 
-            return result.Data;
-
+            return result.Data.FirstOrDefault();
         }
     }
 }

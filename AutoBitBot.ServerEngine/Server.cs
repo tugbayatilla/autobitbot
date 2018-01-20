@@ -21,6 +21,7 @@ namespace AutoBitBot.ServerEngine
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
         readonly ObservableCollection<BitTask> activeTasks;
+        readonly ObservableCollection<BitTask> killedTasks;
         static Object _lock = new Object();
         readonly INotificationAsync notification;
 
@@ -28,6 +29,7 @@ namespace AutoBitBot.ServerEngine
         {
             this.Config = new List<ConfigItem>();
             this.activeTasks = new ObservableCollection<BitTask>();
+            this.killedTasks = new ObservableCollection<BitTask>();
             this.notification = notification;
 
             BindingOperations.EnableCollectionSynchronization(this.ActiveTasks, _lock);
@@ -36,6 +38,11 @@ namespace AutoBitBot.ServerEngine
         public ObservableCollection<BitTask> ActiveTasks
         {
             get { return activeTasks; }
+        }
+
+        public ObservableCollection<BitTask> KilledTasks
+        {
+            get { return killedTasks; }
         }
 
         public List<ConfigItem> Config { get; set; }
@@ -69,7 +76,7 @@ namespace AutoBitBot.ServerEngine
             TaskExecuted(this, e);
         }
 
-        public void Unregister(BitTask bitTask)
+        public void Kill(BitTask bitTask)
         {
             lock (_lock)
             {
@@ -77,6 +84,7 @@ namespace AutoBitBot.ServerEngine
                 bitTask.ExecutionCompleted -= BitTask_ExecutionCompleted;
                 bitTask.Dispose();
 
+                killedTasks.Add(bitTask);
                 //PropertyChanged(this, new PropertyChangedEventArgs(nameof(ActiveTasks)));
             }
 

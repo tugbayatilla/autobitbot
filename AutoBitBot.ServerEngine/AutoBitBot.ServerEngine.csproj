@@ -49,6 +49,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BitTasks\BittrexGetMarketSummaryTask.cs" />
     <Compile Include="BitTasks\BittrexBuyAndSellLimitTask.cs" />
     <Compile Include="BitTasks\BittrexGetMarketsTask.cs" />
     <Compile Include="BitTasks\BittrexSellLimitCompletedTask.cs" />
