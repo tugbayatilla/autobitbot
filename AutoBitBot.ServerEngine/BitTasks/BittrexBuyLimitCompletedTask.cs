@@ -21,8 +21,8 @@ namespace AutoBitBot.ServerEngine.BitTasks
 
         protected override async Task<Object> ExecuteAction(Object parameter)
         {
-            return await Task.Factory.StartNew<Boolean>(() => { 
-                Thread.Sleep(20000);
+            return await Task.Factory.StartNew<Boolean>(() => {
+                Thread.Sleep(5000);
                 this.InterruptExecution = true;
                 return true;
             });

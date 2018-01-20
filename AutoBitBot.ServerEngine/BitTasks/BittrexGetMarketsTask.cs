@@ -1,33 +1,30 @@
 ﻿using ArchPM.Core.Notifications;
 using AutoBitBot.BittrexProxy;
 using AutoBitBot.BittrexProxy.Models;
+using AutoBitBot.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace AutoBitBot.ServerEngine.BitTasks
 {
-    public class BittrexGetTickerTask : BitTask
+    public class BittrexGetMarketsTask : BitTask
     {
-        readonly String market;
-        public BittrexGetTickerTask(String market)
-        {
-            this.market = market;
-        }
+        public override long ExecuteAtEvery => 0;
 
-        public override long ExecuteAtEvery => 5000;
+        public override string Name => "BittrexGetMarketsTask";
 
-        public override string Name => "BittrexGetTickerTask";
-
-        public override BitTaskExecutionTypes ExecutionType => BitTaskExecutionTypes.Permanent;
+        public override BitTaskExecutionTypes ExecutionType => BitTaskExecutionTypes.OneTime;
 
         protected override async Task<Object> ExecuteAction(Object parameter)
         {
+            //fistan: merkezi yap
             var manager = BittrexApiManagerFactory.Instance.Create();
 
-            var result = await manager.GetTicker(market);
+            var result = await manager.GetMarkets();
             if (!result.Result)
             {
                 Notification.NotifyAsync(result.Message);

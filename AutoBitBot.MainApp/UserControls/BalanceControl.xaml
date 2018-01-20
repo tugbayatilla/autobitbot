@@ -14,18 +14,13 @@
         
     
     <StackPanel>
-        <Label >
-            <ContentControl>
-                <StackPanel Orientation="Horizontal">
-                <Label>BALANCE</Label>
-                    <Label Content="{Binding Balances[0].LastUpdateTime, Converter={StaticResource DateTimeToStringConverter}}"></Label>
-                </StackPanel>
-            </ContentControl>
-        </Label>
+        <Label Foreground="Blue" Margin="5,5,5,0">BALANCES</Label>
+
         <DataGrid ItemsSource="{Binding Balances}" AutoGenerateColumns="False" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Currency" Binding="{Binding Name}" />
                 <DataGridTextColumn Header="Price" Binding="{Binding Value}" />
+                <DataGridTextColumn Header="LastUpdateTime" Binding="{Binding LastUpdateTime}" />
             </DataGrid.Columns>
         </DataGrid>
 

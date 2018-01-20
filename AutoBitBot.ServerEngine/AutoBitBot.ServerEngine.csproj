@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BitTasks\BittrexBuyAndSellLimitTask.cs" />
+    <Compile Include="BitTasks\BittrexGetMarketsTask.cs" />
     <Compile Include="BitTasks\BittrexSellLimitCompletedTask.cs" />
     <Compile Include="BitTasks\BittrexSellLimitTask.cs" />
     <Compile Include="EventArgs\BitTaskExecutedEventArgs.cs" />

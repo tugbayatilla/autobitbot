@@ -1,6 +1,7 @@
 ﻿using ArchPM.Core.Notifications;
 using ArchPM.Core.Notifications.Notifiers;
 using AutoBitBot.BittrexProxy.Models;
+using AutoBitBot.MainApp.Commands;
 using AutoBitBot.MainApp.DTO;
 using AutoBitBot.MainApp.Notifiers;
 using AutoBitBot.ServerEngine;
@@ -37,6 +38,7 @@ namespace AutoBitBot.MainApp.Infrastructure.ViewModels
             this.Balances = new ObservableCollection<BalanceDTO>();
             this.BuyAndSell = new BuyAndSellDTO();
             this.MarketTicker = new MarketTickerDTO();
+            this.Markets = new ObservableCollection<MarketDTO>();
         }
 
         public void Init()
@@ -61,10 +63,11 @@ namespace AutoBitBot.MainApp.Infrastructure.ViewModels
             server.TaskExecuted += TaskScheduler_TaskExecuted;
             server.RegisterInstance(new BittrexGetTickerTask("BTC-XRP"));
             server.RegisterInstance(new BittrexGetBalanceTask());
+            server.RegisterInstance(new BittrexGetMarketsTask());
 
-            server.Config.Add(new ConfigItem(typeof(BittrexBuyAndSellLimitTask), 
-                typeof(BittrexBuyLimitCompletedTask), 
-                typeof(BittrexSellLimitTask), 
+            server.Config.Add(new ConfigItem(typeof(BittrexBuyAndSellLimitTask),
+                typeof(BittrexBuyLimitCompletedTask),
+                typeof(BittrexSellLimitTask),
                 typeof(BittrexSellLimitCompletedTask)));
 
             server.RunAllRegisteredTasksAsync();
@@ -101,6 +104,29 @@ namespace AutoBitBot.MainApp.Infrastructure.ViewModels
                     });
                 });
             }
+
+            if (e.Data is List<BittrexMarketModel>)
+            {
+                var model = e.Data as List<BittrexMarketModel>;
+
+                this.dispatcher.Invoke(() =>
+                {
+                    model.ForEach(p =>
+                    {
+                        this.Markets.Add(new MarketDTO()
+                        {
+                            BaseCurrency = p.BaseCurrency,
+                            BaseCurrencyLong = p.BaseCurrencyLong,
+                            IsActive = p.IsActive,
+                            MarketCurrency = p.MarketCurrency,
+                            MarketCurrencyLong = p.MarketCurrencyLong,
+                            MarketName = p.MarketName,
+                            MinTradeSize = p.MinTradeSize
+                        });
+                    });
+                });
+
+            }
         }
 
         private void TaskScheduler_BitTaskExecutionCompleted(object sender, BitTaskExecutionCompletedEventArgs e)
@@ -108,12 +134,19 @@ namespace AutoBitBot.MainApp.Infrastructure.ViewModels
 
         }
 
-        public IEnumerable<BitTask> Tasks => server.ActiveTasks;
+        public ObservableCollection<BitTask> Tasks => server.ActiveTasks;
         public ObservableCollection<String> Messages { get; private set; }
-        public MarketTickerDTO MarketTicker { get; set; }
+        public ObservableCollection<MarketDTO> Markets { get; set; }
         public ObservableCollection<BalanceDTO> Balances { get; set; }
+
+
+        public MarketTickerDTO MarketTicker { get; set; }
         public BuyAndSellDTO BuyAndSell { get; set; }
-        public ICommand OpenBuyAndSellCommand { get; set; }
+
+
+
+        public ICommand OpenBuyAndSellCommand => new OpenBuyAndSellCommand();
+        public ICommand OpenMarketsCommand => new OpenMarketsCommand();
 
     }
 }

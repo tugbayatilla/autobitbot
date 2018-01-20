@@ -31,7 +31,7 @@ namespace AutoBitBot.ServerEngine.BitTasks
             //    SecretKey = ConfigurationManager.AppSettings["BittrexApiSecret"]
             //});
 
-            Thread.Sleep(2000);
+            //Thread.Sleep(2000);
 
             Notification.NotifyAsync($"[{Name}] executed. go to next one!");
 

@@ -30,13 +30,7 @@ namespace AutoBitBot.ServerEngine.BitTasks
                 SecretKey = ConfigurationManager.AppSettings["BittrexApiSecret"]
             });
 
-            if (result.Result)
-            {
-                StringBuilder sb = new StringBuilder();
-                result.Data.ForEach(p => sb.Append($"{p.Currency}:{p.Balance} | "));
-                Notification.NotifyAsync(sb.ToString());
-            }
-            else
+            if (!result.Result)
             {
                 Notification.NotifyAsync(result.Message);
             }

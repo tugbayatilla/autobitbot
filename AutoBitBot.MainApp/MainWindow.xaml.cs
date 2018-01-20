@@ -28,11 +28,7 @@ namespace AutoBitBot.MainApp
             InitializeComponent();
 
             var output = OutputControl.FindName("Output") as RichTextBox;
-
-            var ctx = new MainViewModel(App.Current.Dispatcher, output)
-            {
-                OpenBuyAndSellCommand = new OpenBuyAndSellCommand(),
-            };
+            var ctx = new MainViewModel(App.Current.Dispatcher, output);
             ctx.Init();
 
             this.DataContext = ctx;

@@ -18,7 +18,7 @@
         <converters:CoinPriceStringValueConverter x:Key="CoinPriceStringValueConverter" />
     </UserControl.Resources>
     <StackPanel>
-        <Label Foreground="Blue" Margin="5,5,5,0">MARKET TICKER</Label>
+        <Label Foreground="Blue" Margin="5,5,5,0">TICKER</Label>
 
         <StackPanel Orientation="Horizontal">
             <Label Content="Bid" Style="{StaticResource TickerLabel}"/>
