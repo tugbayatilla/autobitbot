@@ -11,6 +11,7 @@ namespace AutoBitBot.MainApp.DTO
     {
         Decimal high, low, volume, last, bid, ask;
         String marketName;
+        Int32 openBuyOrders, openSellOrders;
 
         public String MarketName
         {
@@ -102,5 +103,32 @@ namespace AutoBitBot.MainApp.DTO
 
             }
         }
+        public Int32 OpenBuyOrders
+        {
+            get
+            {
+                return openBuyOrders;
+            }
+            set
+            {
+                openBuyOrders = value;
+                OnPropertyChanged(nameof(OpenBuyOrders));
+
+            }
+        }
+        public Int32 OpenSellOrders
+        {
+            get
+            {
+                return openSellOrders;
+            }
+            set
+            {
+                openSellOrders = value;
+                OnPropertyChanged(nameof(OpenSellOrders));
+
+            }
+        }
+
     }
 }

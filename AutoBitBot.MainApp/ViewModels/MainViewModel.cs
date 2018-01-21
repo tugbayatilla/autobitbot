@@ -37,6 +37,7 @@ namespace AutoBitBot.MainApp.Infrastructure.ViewModels
             this.Messages = new ObservableCollection<string>();
             this.Balances = new ObservableCollection<BalanceDTO>();
             this.Markets = new ObservableCollection<MarketDTO>();
+            this.OpenOrders = new ObservableCollection<BittrexOpenOrdersModel>();
 
             this.BuyAndSell = new BuyAndSellDTO();
             this.MarketTicker = new MarketTickerDTO();
@@ -63,10 +64,11 @@ namespace AutoBitBot.MainApp.Infrastructure.ViewModels
             server = new Server(notification);
             server.TaskExecutionCompleted += TaskScheduler_BitTaskExecutionCompleted;
             server.TaskExecuted += TaskScheduler_TaskExecuted;
-            //server.RegisterInstance(new BittrexGetTickerTask("BTC-XRP"));
-            //server.RegisterInstance(new BittrexGetBalanceTask());
+            server.RegisterInstance(new BittrexGetTickerTask("BTC-XRP"));
+            server.RegisterInstance(new BittrexGetBalanceTask());
             server.RegisterInstance(new BittrexGetMarketsTask());
-            //server.RegisterInstance(new BittrexGetMarketSummaryTask("BTC-XRP"));
+            server.RegisterInstance(new BittrexGetMarketSummaryTask("BTC-XRP"));
+            server.RegisterInstance(new BittrexGetOpenOrdersTask("BTC-XRP"));
 
             server.Config.Add(new ConfigItem(typeof(BittrexBuyAndSellLimitTask),
                 typeof(BittrexBuyLimitCompletedTask),
@@ -142,8 +144,20 @@ namespace AutoBitBot.MainApp.Infrastructure.ViewModels
                 this.MarketSummary.Low = model.Low;
                 this.MarketSummary.MarketName = model.MarketName;
                 this.MarketSummary.Volume = model.Volume;
+                this.MarketSummary.OpenBuyOrders = model.OpenBuyOrders;
+                this.MarketSummary.OpenSellOrders = model.OpenSellOrders;
 
                 PropertyChanged(this, new PropertyChangedEventArgs(nameof(MarketSummary)));
+            }
+
+            if (e.Data is List<BittrexOpenOrdersModel>)
+            {
+                var model = e.Data as List<BittrexOpenOrdersModel>;
+                this.dispatcher.Invoke(() =>
+                {
+                    this.OpenOrders = new ObservableCollection<BittrexOpenOrdersModel>(model);
+                });
+                PropertyChanged(this, new PropertyChangedEventArgs(nameof(OpenOrders)));
             }
         }
 
@@ -157,6 +171,7 @@ namespace AutoBitBot.MainApp.Infrastructure.ViewModels
         public ObservableCollection<String> Messages { get; private set; }
         public ObservableCollection<MarketDTO> Markets { get; set; }
         public ObservableCollection<BalanceDTO> Balances { get; set; }
+        public ObservableCollection<BittrexOpenOrdersModel> OpenOrders { get; set; }
 
 
         public MarketTickerDTO MarketTicker { get; set; }

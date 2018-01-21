@@ -22,6 +22,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         
         <!--TOP ROW - ALL ROW-->
@@ -35,7 +36,9 @@
         <uc:TickerControl Grid.Row="2" Grid.Column="0"/>
         <uc:MarketSummaryControl Grid.Row="2" Grid.Column="2"/>
 
+        <uc:OpenOrdersControl Grid.Row="3" Grid.ColumnSpan="3" />
+
         <!--FINAL ROW - OUTPUT-->
-        <uc:OutputControl x:Name="OutputControl" Grid.Row="3" Grid.ColumnSpan="3" />
+        <uc:OutputControl x:Name="OutputControl" Grid.Row="4" Grid.ColumnSpan="3" />
     </Grid>
 </Window>

@@ -53,6 +53,7 @@
     <Compile Include="BittrexxBuyLimitArgs.cs" />
     <Compile Include="BittrexxSellLimitArgs.cs" />
     <Compile Include="Models\BittrexMarketSummaryModel.cs" />
+    <Compile Include="Models\BittrexOpenOrdersModel.cs" />
     <Compile Include="Models\BittrexxMarketHistoryModel.cs" />
     <Compile Include="Models\BittrexxBalanceModel.cs" />
     <Compile Include="Models\BittrexxCurrencyModel.cs" />

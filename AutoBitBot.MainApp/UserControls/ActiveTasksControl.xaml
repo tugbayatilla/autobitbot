@@ -16,6 +16,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
                 <DataGridTextColumn Header="Status" Binding="{Binding Status}" />
+                <DataGridTextColumn Header="ElapsedTime" Binding="{Binding ElapsedTime}" />
                 <DataGridTextColumn Header="NextExecutionTime" Binding="{Binding NextExecutionTime, Converter={StaticResource DateTimeToString}}" />
                 <DataGridTextColumn Header="LastExecutionTime" Binding="{Binding LastExecutionTime, Converter={StaticResource DateTimeToString}}" />
                 <DataGridTextColumn Header="ExecuteAtEvery" Binding="{Binding ExecuteAtEvery}" />
