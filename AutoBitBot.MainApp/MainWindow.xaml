@@ -35,12 +35,11 @@
         <uc:BalanceControl Grid.Row="1" Grid.Column="3"/>
         
         <!--2ND ROW - 2 PARTS-->
-        <uc:TickerControl Grid.Row="2" Grid.Column="0"/>
+        <uc:TickerControl Grid.Row="2" Grid.Column="0" Margin="0,0,130,95"/>
         <uc:MarketSummaryControl Grid.Row="2" Grid.Column="2"/>
 
         <uc:OpenOrdersControl Grid.Row="3" Grid.ColumnSpan="3" />
 
-        <uc:OrderHistoryControl Grid.Row="4" Grid.ColumnSpan="3" />
 
         <!--FINAL ROW - OUTPUT-->
         <uc:OutputControl x:Name="OutputControl" Grid.Row="5" Grid.ColumnSpan="3" />

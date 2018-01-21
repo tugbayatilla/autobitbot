@@ -172,7 +172,7 @@ namespace AutoBitBot.ServerEngine
         /// <value>
         ///   <c>true</c> if [interrupt execution]; otherwise, <c>false</c>.
         /// </value>
-        protected Boolean InterruptExecution { get; set; }
+        public Boolean InterruptExecution { get; set; }
 
         /// <summary>
         /// Executes the specified execution identifier.

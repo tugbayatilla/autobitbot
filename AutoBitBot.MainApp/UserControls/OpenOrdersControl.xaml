@@ -10,6 +10,7 @@
 
     <UserControl.Resources>
         <converters:DateTimeToStringConverter x:Key="DateTimeToStringConverter" />
+        <converters:CoinPriceStringValueConverter x:Key="CoinPriceStringValueConverter"/>
     </UserControl.Resources>
 
 
@@ -28,11 +29,11 @@
                     <DataGridTextColumn Header="OrderUuid" Binding="{Binding OrderUuid}" />
                     <DataGridTextColumn Header="Exchange" Binding="{Binding Exchange}" />
                     <DataGridTextColumn Header="OrderType" Binding="{Binding OrderType}" />
-                    <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" />
+                    <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity, Converter={StaticResource CoinPriceStringValueConverter}}" />
                     <DataGridTextColumn Header="QuantityRemaining" Binding="{Binding QuantityRemaining}" />
-                    <DataGridTextColumn Header="Limit" Binding="{Binding Limit}" />
+                    <DataGridTextColumn Header="Limit" Binding="{Binding Limit, Converter={StaticResource CoinPriceStringValueConverter}}" />
                     <DataGridTextColumn Header="CommissionPaid" Binding="{Binding CommissionPaid}" />
-                    <DataGridTextColumn Header="Price" Binding="{Binding Price}" />
+                    <DataGridTextColumn Header="Price" Binding="{Binding Price, Converter={StaticResource CoinPriceStringValueConverter}}" />
                     <DataGridTextColumn Header="Opened" Binding="{Binding Opened}" />
                     <DataGridTextColumn Header="CancelInitiated" Binding="{Binding CancelInitiated}" />
                     <DataGridTextColumn Header="ImmediateOrCancel" Binding="{Binding ImmediateOrCancel}" />

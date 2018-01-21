@@ -70,7 +70,6 @@ namespace AutoBitBot.MainApp.Infrastructure.ViewModels
             server.RegisterInstance(new BittrexGetMarketsTask());
             server.RegisterInstance(new BittrexGetMarketSummaryTask("BTC-XRP"));
             server.RegisterInstance(new BittrexGetOpenOrdersTask("BTC-XRP"));
-            server.RegisterInstance(new BittrexGetOrderHistoryTask("BTC-XRP"));
 
             server.Config.Add(new ConfigItem(typeof(BittrexBuyAndSellLimitTask),
                 typeof(BittrexBuyLimitCompletedTask),
@@ -196,6 +195,7 @@ namespace AutoBitBot.MainApp.Infrastructure.ViewModels
         public ICommand OpenBuyAndSellCommand => new OpenBuyAndSellCommand();
         public ICommand OpenMarketsCommand => new OpenMarketsCommand();
         public ICommand OpenKilledTasksCommand => new OpenKilledTasksCommand();
+        public ICommand OpenOrderHistoryCommand => new OpenOrderHistoryCommand();
 
     }
 }

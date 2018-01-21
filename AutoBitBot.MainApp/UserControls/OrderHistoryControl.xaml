@@ -10,6 +10,7 @@
 
     <UserControl.Resources>
         <converters:DateTimeToStringConverter x:Key="DateTimeToStringConverter" />
+        <converters:CoinPriceStringValueConverter x:Key="CoinPriceStringValueConverter"/>
     </UserControl.Resources>
 
 
@@ -28,11 +29,11 @@
                     <DataGridTextColumn Header="Exchange" Binding="{Binding Exchange}" />
                     <DataGridTextColumn Header="TimeStamp" Binding="{Binding TimeStamp, Converter={StaticResource DateTimeToStringConverter}}" />
                     <DataGridTextColumn Header="OrderType" Binding="{Binding OrderType}" />
-                    <DataGridTextColumn Header="Limit" Binding="{Binding Limit}" />
-                    <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" />
-                    <DataGridTextColumn Header="QuantityRemaining" Binding="{Binding QuantityRemaining}" />
-                    <DataGridTextColumn Header="Commission" Binding="{Binding Commission}" />
-                    <DataGridTextColumn Header="Price" Binding="{Binding Price}" />
+                    <DataGridTextColumn Header="Limit" Binding="{Binding Limit, Converter={StaticResource CoinPriceStringValueConverter}}" />
+                    <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity, Converter={StaticResource CoinPriceStringValueConverter}}" />
+                    <DataGridTextColumn Header="QuantityRemaining" Binding="{Binding QuantityRemaining, Converter={StaticResource CoinPriceStringValueConverter}}" />
+                    <DataGridTextColumn Header="Commission" Binding="{Binding Commission, Converter={StaticResource CoinPriceStringValueConverter}}" />
+                    <DataGridTextColumn Header="Price" Binding="{Binding Price, Converter={StaticResource CoinPriceStringValueConverter}}" />
                     <DataGridTextColumn Header="PricePerUnit" Binding="{Binding PricePerUnit}" />
                     <DataGridTextColumn Header="IsConditional" Binding="{Binding IsConditional}" />
                     <DataGridTextColumn Header="ImmediateOrCancel" Binding="{Binding ImmediateOrCancel}" />

@@ -10,6 +10,7 @@
 
     <UserControl.Resources>
         <converters:DateTimeToStringConverter x:Key="DateTimeToStringConverter" />
+        <converters:CoinPriceStringValueConverter x:Key="CoinPriceStringValueConverter"/>
     </UserControl.Resources>
 
 
@@ -26,7 +27,7 @@
                       VirtualizingPanel.ScrollUnit="Item">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Name" Binding="{Binding MarketName}" />
-                    <DataGridTextColumn Header="MinTradeSize" Binding="{Binding MinTradeSize}" />
+                    <DataGridTextColumn Header="MinTradeSize" Binding="{Binding MinTradeSize, Converter={StaticResource CoinPriceStringValueConverter}}" />
                     <DataGridTextColumn Header="LastUpdateTime" Binding="{Binding LastUpdateTime, Converter={StaticResource DateTimeToStringConverter}}" />
                 </DataGrid.Columns>
             </DataGrid>

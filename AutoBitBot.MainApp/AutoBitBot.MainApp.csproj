@@ -64,6 +64,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\OpenKilledTasksCommand.cs" />
+    <Compile Include="Commands\OpenOrderHistoryCommand.cs" />
     <Compile Include="Commands\OpenMarketsCommand.cs" />
     <Compile Include="Commands\OpenBuyAndSellCommand.cs" />
     <Compile Include="Commands\LoadBalanceCommand.cs" />

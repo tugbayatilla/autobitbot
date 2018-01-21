@@ -10,6 +10,7 @@
 
     <UserControl.Resources>
         <converters:DateTimeToStringConverter x:Key="DateTimeToStringConverter" />
+        <converters:CoinPriceStringValueConverter x:Key="CoinPriceStringValueConverter"/>
     </UserControl.Resources>
         
     
@@ -19,8 +20,8 @@
         <DataGrid ItemsSource="{Binding Balances}" AutoGenerateColumns="False" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Currency" Binding="{Binding Name}" />
-                <DataGridTextColumn Header="Price" Binding="{Binding Value}" />
-                <DataGridTextColumn Header="LastUpdateTime" Binding="{Binding LastUpdateTime}" />
+                <DataGridTextColumn Header="Price" Binding="{Binding Value, Converter={StaticResource CoinPriceStringValueConverter}}" />
+                <DataGridTextColumn Header="LastUpdateTime" Binding="{Binding LastUpdateTime, Converter={StaticResource DateTimeToStringConverter}}" />
             </DataGrid.Columns>
         </DataGrid>
 

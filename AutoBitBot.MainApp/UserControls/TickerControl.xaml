@@ -6,30 +6,46 @@
              xmlns:local="clr-namespace:AutoBitBot.MainApp.UserControls"
              xmlns:converters="clr-namespace:AutoBitBot.MainApp.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="76" d:DesignWidth="300">
+             d:DesignHeight="150" d:DesignWidth="250" Width="250" Height="150">
     <UserControl.Resources>
+        <converters:DateTimeToStringConverter x:Key="DateTimeToStringConverter" />
+        <converters:CoinPriceStringValueConverter x:Key="CoinPriceStringValueConverter"/>
         <Style TargetType="Label" x:Key="TickerDataLabel">
             <Setter Property="Width" Value="Auto"></Setter>
         </Style>
         <Style TargetType="Label" x:Key="TickerLabel">
             <Setter Property="Width" Value="30"></Setter>
         </Style>
-        <converters:DateTimeToStringConverter x:Key="DateTimeToString" />
-        <converters:CoinPriceStringValueConverter x:Key="CoinPriceStringValueConverter" />
     </UserControl.Resources>
-    <StackPanel>
-        <Label Foreground="Blue" Margin="5,5,5,0">TICKER</Label>
 
-        <StackPanel Orientation="Horizontal">
-            <Label Content="Bid" Style="{StaticResource TickerLabel}"/>
-            <Label Content="{Binding MarketTicker.Bid, Converter={StaticResource CoinPriceStringValueConverter}}" Style="{StaticResource TickerDataLabel}" />
-            <Label Content="Ask" Style="{StaticResource TickerLabel}"/>
-            <Label Content="{Binding MarketTicker.Ask, Converter={StaticResource CoinPriceStringValueConverter}}" Style="{StaticResource TickerDataLabel}"/>
-            <Label Content="Last" Style="{StaticResource TickerLabel}"/>
-            <Label Content="{Binding MarketTicker.Last, Converter={StaticResource CoinPriceStringValueConverter}}" Style="{StaticResource TickerDataLabel}"/>
-            <Label Content="Last Update" />
-            <Label Content="{Binding MarketTicker.LastUpdateTime, Converter={StaticResource DateTimeToString}}" Style="{StaticResource TickerDataLabel}"/>
-        </StackPanel>
-    </StackPanel>
-   
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="75" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions >
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Label Foreground="Blue" Grid.ColumnSpan="2">TICKER</Label>
+        <Label Content="Bid" Grid.Row="1" Grid.Column="0" />
+        <Label Content="Ask" Grid.Row="2" Grid.Column="0"/>
+        <Label Content="Last" Grid.Row="3" Grid.Column="0"/>
+        <Label Content="Last Update" Grid.Row="4" Grid.Column="0"/>
+
+        <Label Content="{Binding MarketTicker.Bid, Converter={StaticResource CoinPriceStringValueConverter}}" Style="{StaticResource TickerDataLabel}" Grid.Row="1" Grid.Column="1" />
+        <Label Content="{Binding MarketTicker.Ask, Converter={StaticResource CoinPriceStringValueConverter}}" Style="{StaticResource TickerDataLabel}" Grid.Row="2" Grid.Column="1"/>
+        <Label Content="{Binding MarketTicker.Last, Converter={StaticResource CoinPriceStringValueConverter}}" Style="{StaticResource TickerDataLabel}" Grid.Row="3" Grid.Column="1"/>
+        <Label Content="{Binding MarketTicker.LastUpdateTime, Converter={StaticResource DateTimeToStringConverter}}" Style="{StaticResource TickerDataLabel}" Grid.Row="4" Grid.Column="1"/>
+
+    </Grid>
+
+
+
 </UserControl>
