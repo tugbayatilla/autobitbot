@@ -85,6 +85,9 @@
     <Compile Include="UserControls\KilledTasksControl.xaml.cs">
       <DependentUpon>KilledTasksControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\OrderHistoryControl.xaml.cs">
+      <DependentUpon>OrderHistoryControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\OpenOrdersControl.xaml.cs">
       <DependentUpon>OpenOrdersControl.xaml</DependentUpon>
     </Compile>
@@ -146,6 +149,10 @@
     <Page Include="UserControls\BuyAndSellControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\OrderHistoryControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControls\OpenOrdersControl.xaml">
       <Generator>MSBuild:Compile</Generator>

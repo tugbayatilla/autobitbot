@@ -38,6 +38,7 @@ namespace AutoBitBot.MainApp.Infrastructure.ViewModels
             this.Balances = new ObservableCollection<BalanceDTO>();
             this.Markets = new ObservableCollection<MarketDTO>();
             this.OpenOrders = new ObservableCollection<BittrexOpenOrdersModel>();
+            this.OrderHistory = new ObservableCollection<BittrexOrderHistoryModel>();
 
             this.BuyAndSell = new BuyAndSellDTO();
             this.MarketTicker = new MarketTickerDTO();
@@ -69,6 +70,7 @@ namespace AutoBitBot.MainApp.Infrastructure.ViewModels
             server.RegisterInstance(new BittrexGetMarketsTask());
             server.RegisterInstance(new BittrexGetMarketSummaryTask("BTC-XRP"));
             server.RegisterInstance(new BittrexGetOpenOrdersTask("BTC-XRP"));
+            server.RegisterInstance(new BittrexGetOrderHistoryTask("BTC-XRP"));
 
             server.Config.Add(new ConfigItem(typeof(BittrexBuyAndSellLimitTask),
                 typeof(BittrexBuyLimitCompletedTask),
@@ -159,6 +161,16 @@ namespace AutoBitBot.MainApp.Infrastructure.ViewModels
                 });
                 PropertyChanged(this, new PropertyChangedEventArgs(nameof(OpenOrders)));
             }
+
+            if (e.Data is List<BittrexOrderHistoryModel>)
+            {
+                var model = e.Data as List<BittrexOrderHistoryModel>;
+                this.dispatcher.Invoke(() =>
+                {
+                    this.OrderHistory = new ObservableCollection<BittrexOrderHistoryModel>(model);
+                });
+                PropertyChanged(this, new PropertyChangedEventArgs(nameof(OrderHistory)));
+            }
         }
 
         private void TaskScheduler_BitTaskExecutionCompleted(object sender, BitTaskExecutionCompletedEventArgs e)
@@ -172,6 +184,7 @@ namespace AutoBitBot.MainApp.Infrastructure.ViewModels
         public ObservableCollection<MarketDTO> Markets { get; set; }
         public ObservableCollection<BalanceDTO> Balances { get; set; }
         public ObservableCollection<BittrexOpenOrdersModel> OpenOrders { get; set; }
+        public ObservableCollection<BittrexOrderHistoryModel> OrderHistory { get; set; }
 
 
         public MarketTickerDTO MarketTicker { get; set; }
