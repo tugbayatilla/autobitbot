@@ -8,7 +8,7 @@ using System.Windows.Data;
 
 namespace AutoBitBot.MainApp.Converters
 {
-    public class CoinPriceStringValueConverter : IValueConverter
+    public class DecimalStringValueConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

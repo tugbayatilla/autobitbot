@@ -68,7 +68,9 @@
     <Compile Include="Commands\OpenMarketsCommand.cs" />
     <Compile Include="Commands\OpenBuyAndSellCommand.cs" />
     <Compile Include="Commands\LoadBalanceCommand.cs" />
-    <Compile Include="Converters\CoinPriceStringValueConverter.cs" />
+    <Compile Include="Converters\ForegroundBitTaskStatusChangedValueConverter.cs" />
+    <Compile Include="Converters\ForegroundOldNewPairValueConverter.cs" />
+    <Compile Include="Converters\DecimalStringValueConverter.cs" />
     <Compile Include="Converters\DateTimeToStringConverter.cs" />
     <Compile Include="DTO\MarketDTO.cs" />
     <Compile Include="DTO\MarketSummaryDTO.cs" />
@@ -127,6 +129,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Resources\DatagridStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\DatagridStyle_Black.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\GlassButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

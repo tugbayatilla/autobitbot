@@ -71,10 +71,11 @@ namespace AutoBitBot.MainApp.Infrastructure.ViewModels
             server.RegisterInstance(new BittrexGetMarketSummaryTask("BTC-XRP"));
             server.RegisterInstance(new BittrexGetOpenOrdersTask("BTC-XRP"));
 
-            server.Config.Add(new ConfigItem(typeof(BittrexBuyAndSellLimitTask),
-                typeof(BittrexBuyLimitCompletedTask),
-                typeof(BittrexSellLimitTask),
-                typeof(BittrexSellLimitCompletedTask)));
+
+            server.Config.Add(new ConfigItem(typeof(BittrexGetTickerTask),
+                new ConfigItem(typeof(BittrexBuyLimitCompletedTask)) { ExecutionTime = ConfigExecutionTimes.AfterExecution },
+                new ConfigItem(typeof(BittrexSellLimitTask)) { ExecutionTime = ConfigExecutionTimes.AfterExecution }, //todo: execute onetime can be set here
+                new ConfigItem(typeof(BittrexSellLimitCompletedTask))));
 
             server.RunAllRegisteredTasksAsync();
         }
@@ -84,9 +85,9 @@ namespace AutoBitBot.MainApp.Infrastructure.ViewModels
             if (e.Data is BittrexTickerModel)
             {
                 var model = e.Data as BittrexTickerModel;
-                this.MarketTicker.Ask = model.Ask;
-                this.MarketTicker.Bid = model.Bid;
-                this.MarketTicker.Last = model.Last;
+                this.MarketTicker.Ask.NewValue = model.Ask;
+                this.MarketTicker.Bid.NewValue = model.Bid;
+                this.MarketTicker.Last.NewValue = model.Last;
 
                 this.BuyAndSell.Price = model.Ask;
                 PropertyChanged(this, new PropertyChangedEventArgs(nameof(BuyAndSell)));
@@ -138,10 +139,11 @@ namespace AutoBitBot.MainApp.Infrastructure.ViewModels
             {
                 var model = e.Data as BittrexMarketSummaryModel;
 
-                this.MarketSummary.Ask = model.Ask;
-                this.MarketSummary.Bid = model.Bid;
+                this.MarketSummary.Ask.NewValue = model.Ask;
+                this.MarketSummary.Bid.NewValue = model.Bid;
                 this.MarketSummary.High = model.High;
-                this.MarketSummary.Last = model.Last;
+                this.MarketSummary.Last.NewValue = model.Last;
+                //this.MarketSummary.SetLastNewValue(model.Last);
                 this.MarketSummary.Low = model.Low;
                 this.MarketSummary.MarketName = model.MarketName;
                 this.MarketSummary.Volume = model.Volume;

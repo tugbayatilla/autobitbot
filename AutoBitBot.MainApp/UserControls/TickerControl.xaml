@@ -9,13 +9,15 @@
              d:DesignHeight="150" d:DesignWidth="250" Width="250" Height="150">
     <UserControl.Resources>
         <converters:DateTimeToStringConverter x:Key="DateTimeToStringConverter" />
-        <converters:CoinPriceStringValueConverter x:Key="CoinPriceStringValueConverter"/>
-        <Style TargetType="Label" x:Key="TickerDataLabel">
+        <converters:DecimalStringValueConverter x:Key="CoinPriceStringValueConverter"/>
+        <converters:ForegroundOldNewPairValueConverter x:Key="ForegroundOldNewPairValueConverter"/>
+
+        <!--<Style TargetType="Label" x:Key="TickerDataLabel">
             <Setter Property="Width" Value="Auto"></Setter>
         </Style>
         <Style TargetType="Label" x:Key="TickerLabel">
             <Setter Property="Width" Value="30"></Setter>
-        </Style>
+        </Style>-->
     </UserControl.Resources>
 
     <Grid>
@@ -39,10 +41,10 @@
         <Label Content="Last" Grid.Row="3" Grid.Column="0"/>
         <Label Content="Last Update" Grid.Row="4" Grid.Column="0"/>
 
-        <Label Content="{Binding MarketTicker.Bid, Converter={StaticResource CoinPriceStringValueConverter}}" Style="{StaticResource TickerDataLabel}" Grid.Row="1" Grid.Column="1" />
-        <Label Content="{Binding MarketTicker.Ask, Converter={StaticResource CoinPriceStringValueConverter}}" Style="{StaticResource TickerDataLabel}" Grid.Row="2" Grid.Column="1"/>
-        <Label Content="{Binding MarketTicker.Last, Converter={StaticResource CoinPriceStringValueConverter}}" Style="{StaticResource TickerDataLabel}" Grid.Row="3" Grid.Column="1"/>
-        <Label Content="{Binding MarketTicker.LastUpdateTime, Converter={StaticResource DateTimeToStringConverter}}" Style="{StaticResource TickerDataLabel}" Grid.Row="4" Grid.Column="1"/>
+        <Label Content="{Binding MarketTicker.Bid.NewValue, Converter={StaticResource CoinPriceStringValueConverter}}" Foreground="{Binding MarketTicker.Bid, Converter={StaticResource ForegroundOldNewPairValueConverter}}"  Grid.Row="1" Grid.Column="1" />
+        <Label Content="{Binding MarketTicker.Ask.NewValue, Converter={StaticResource CoinPriceStringValueConverter}}"  Foreground="{Binding MarketTicker.Ask, Converter={StaticResource ForegroundOldNewPairValueConverter}}" Grid.Row="2" Grid.Column="1"/>
+        <Label Content="{Binding MarketTicker.Last.NewValue, Converter={StaticResource CoinPriceStringValueConverter}}"  Foreground="{Binding MarketTicker.Last, Converter={StaticResource ForegroundOldNewPairValueConverter}}" Grid.Row="3" Grid.Column="1"/>
+        <Label Content="{Binding MarketTicker.LastUpdateTime, Converter={StaticResource DateTimeToStringConverter}}" Grid.Row="4" Grid.Column="1"/>
 
     </Grid>
 

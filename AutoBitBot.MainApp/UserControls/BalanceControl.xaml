@@ -10,7 +10,7 @@
 
     <UserControl.Resources>
         <converters:DateTimeToStringConverter x:Key="DateTimeToStringConverter" />
-        <converters:CoinPriceStringValueConverter x:Key="CoinPriceStringValueConverter"/>
+        <converters:DecimalStringValueConverter x:Key="CoinPriceStringValueConverter"/>
     </UserControl.Resources>
         
     

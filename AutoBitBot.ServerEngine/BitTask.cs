@@ -40,7 +40,7 @@ namespace AutoBitBot.ServerEngine
             this.InterruptExecution = false;
         }
 
-        public Server Scheduler { get; set; }
+        public Server Server { get; set; }
 
         #region Properties
 
@@ -208,6 +208,13 @@ namespace AutoBitBot.ServerEngine
                     Notification.NotifyAsync($"[{Name}] {Newtonsoft.Json.JsonConvert.SerializeObject(data)}");
                     Executed(this, new BitTaskExecutedEventArgs() { Data = data, BitTask = this });
 
+                    //fistan: dikkat!!!
+                    var list = this.Server.Config.Where(p => p.Task == this.GetType() && p.ExecutionTime == ConfigExecutionTimes.AfterExecution);
+                    list.ForEach(p=> {
+                        var task = this.Server.RegisterInstanceAndExecute(p.Task, data);
+                        task.ExecutionId = this.ExecutionId;
+                    });
+
                     //prematurely interrupts the execution
                     if (InterruptExecution)
                         break;
@@ -227,7 +234,7 @@ namespace AutoBitBot.ServerEngine
                 Notification.NotifyAsync($"[{Name}] {Newtonsoft.Json.JsonConvert.SerializeObject(this.LastResult)}", NotificationLocations.Log);
                 ExecutionCompleted(this, new BitTaskExecutionCompletedEventArgs() { BitTask = this });
 
-                this.Scheduler.Kill(this);
+                this.Server.Kill(this);
 
             });
 

@@ -9,9 +9,17 @@ namespace AutoBitBot.MainApp.DTO
 {
     public class MarketSummaryDTO : ObservableObject
     {
-        Decimal high, low, volume, last, bid, ask;
+        Decimal high, low, volume;
+        OldNewPair<Decimal> last, bid, ask;
         String marketName;
         Int32 openBuyOrders, openSellOrders;
+
+        public MarketSummaryDTO()
+        {
+            this.Last = new OldNewPair<Decimal>();
+            this.Bid = new OldNewPair<decimal>();
+            this.Ask = new OldNewPair<decimal>();
+        }
 
         public String MarketName
         {
@@ -64,20 +72,25 @@ namespace AutoBitBot.MainApp.DTO
 
             }
         }
-        public Decimal Last
+        public OldNewPair<Decimal> Last
         {
             get
             {
                 return last;
             }
-            set
+            private set
             {
                 last = value;
                 OnPropertyChanged(nameof(Last));
-
+                last.PropertyNotify = () => {
+                    OnPropertyChanged(nameof(Last));
+                };
             }
         }
-        public Decimal Bid
+
+       
+
+        public OldNewPair<Decimal> Bid
         {
             get
             {
@@ -87,10 +100,13 @@ namespace AutoBitBot.MainApp.DTO
             {
                 bid = value;
                 OnPropertyChanged(nameof(Bid));
+                bid.PropertyNotify = () => {
+                    OnPropertyChanged(nameof(Bid));
+                };
 
             }
         }
-        public Decimal Ask
+        public OldNewPair<Decimal> Ask
         {
             get
             {
@@ -100,6 +116,9 @@ namespace AutoBitBot.MainApp.DTO
             {
                 ask = value;
                 OnPropertyChanged(nameof(Ask));
+                ask.PropertyNotify = () => {
+                    OnPropertyChanged(nameof(Ask));
+                };
 
             }
         }
@@ -130,5 +149,30 @@ namespace AutoBitBot.MainApp.DTO
             }
         }
 
+    }
+
+    public class OldNewPair<T> : ObservableObject
+    {
+        T oldValue, newValue;
+
+        public Action PropertyNotify;
+
+        public T NewValue
+        {
+            get
+            {
+                return newValue;
+            }
+            set
+            {
+                oldValue = newValue;
+                newValue = value;
+                OnPropertyChanged(nameof(NewValue));
+                OnPropertyChanged(nameof(OldValue));
+
+                PropertyNotify?.Invoke();
+            }
+        }
+        public T OldValue => oldValue;
     }
 }

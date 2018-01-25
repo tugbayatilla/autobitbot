@@ -9,13 +9,26 @@
              d:DesignHeight="150" d:DesignWidth="700">
     <UserControl.Resources>
         <converters:DateTimeToStringConverter x:Key="DateTimeToString" />
+        <converters:ForegroundBitTaskStatusChangedValueConverter x:Key="ForegroundBitTaskStatusChangedValueConverter"/>
+
+
     </UserControl.Resources>
     <StackPanel >
         <Label Foreground="Blue" Margin="5,5,5,0">ACTIVE TASKS</Label>
         <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding ActiveTasks}" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
-                <DataGridTextColumn Header="Status" Binding="{Binding Status}" />
+                <DataGridTextColumn Header="Status" Binding="{Binding Status}" >
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="{x:Type DataGridCell}">
+                            <Setter Property="Foreground">
+                                <Setter.Value>
+                                    <Binding Path="Status" Converter="{StaticResource ForegroundBitTaskStatusChangedValueConverter}"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
                 <DataGridTextColumn Header="ElapsedTime" Binding="{Binding ElapsedTime}" />
                 <DataGridTextColumn Header="NextExecutionTime" Binding="{Binding NextExecutionTime, Converter={StaticResource DateTimeToString}}" />
                 <DataGridTextColumn Header="LastExecutionTime" Binding="{Binding LastExecutionTime, Converter={StaticResource DateTimeToString}}" />

@@ -10,7 +10,8 @@
 
     <UserControl.Resources>
         <converters:DateTimeToStringConverter x:Key="DateTimeToStringConverter" />
-        <converters:CoinPriceStringValueConverter x:Key="CoinPriceStringValueConverter"/>
+        <converters:DecimalStringValueConverter x:Key="DecimalStringValueConverter"/>
+        <converters:ForegroundOldNewPairValueConverter x:Key="ForegroundOldNewPairValueConverter" />
     </UserControl.Resources>
 
     <Grid DataContext="{Binding MarketSummary}">
@@ -43,12 +44,17 @@
         <Label Grid.Row="8" Grid.Column="0">OPEN SELL ORDERS</Label>
         <Label Grid.Row="9" Grid.Column="0">LAST UPDATE TIME</Label>
 
-        <Label Grid.Row="1" Grid.Column="1" Content="{Binding Last, Converter={StaticResource CoinPriceStringValueConverter}}"/>
-        <Label Grid.Row="2" Grid.Column="1" Content="{Binding Volume, Converter={StaticResource CoinPriceStringValueConverter}}"/>
-        <Label Grid.Row="3" Grid.Column="1" Content="{Binding Bid, Converter={StaticResource CoinPriceStringValueConverter}}"/>
-        <Label Grid.Row="4" Grid.Column="1" Content="{Binding Ask, Converter={StaticResource CoinPriceStringValueConverter}}"/>
-        <Label Grid.Row="5" Grid.Column="1" Content="{Binding High, Converter={StaticResource CoinPriceStringValueConverter}}"/>
-        <Label Grid.Row="6" Grid.Column="1" Content="{Binding Low, Converter={StaticResource CoinPriceStringValueConverter}}"/>
+        <Label Grid.Row="1" 
+               Grid.Column="1" 
+               Content="{Binding Last.NewValue, Converter={StaticResource DecimalStringValueConverter}}" 
+               Foreground="{Binding Last, Converter={StaticResource ForegroundOldNewPairValueConverter}}" />
+
+
+        <Label Grid.Row="2" Grid.Column="1" Content="{Binding Volume, Converter={StaticResource DecimalStringValueConverter}}" />
+        <Label Grid.Row="3" Grid.Column="1" Content="{Binding Bid.NewValue, Converter={StaticResource DecimalStringValueConverter}}" Foreground="{Binding Bid, Converter={StaticResource ForegroundOldNewPairValueConverter}}" />
+        <Label Grid.Row="4" Grid.Column="1" Content="{Binding Ask.NewValue, Converter={StaticResource DecimalStringValueConverter}}" Foreground="{Binding Ask, Converter={StaticResource ForegroundOldNewPairValueConverter}}" />
+        <Label Grid.Row="5" Grid.Column="1" Content="{Binding High, Converter={StaticResource DecimalStringValueConverter}}" />
+        <Label Grid.Row="6" Grid.Column="1" Content="{Binding Low, Converter={StaticResource DecimalStringValueConverter}}" />
         <Label Grid.Row="7" Grid.Column="1" Content="{Binding OpenBuyOrders}"/>
         <Label Grid.Row="8" Grid.Column="1" Content="{Binding OpenSellOrders}"/>
         <Label Grid.Row="9" Grid.Column="1" Content="{Binding LastUpdateTime, Converter={StaticResource DateTimeToStringConverter}}"/>

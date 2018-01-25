@@ -10,23 +10,30 @@ namespace AutoBitBot.MainApp.DTO
 {
     public class MarketTickerDTO : ObservableObject
     {
-        Decimal bid, ask, last;
+        OldNewPair<Decimal> bid, ask, last;
 
-        public Decimal Bid
+        public MarketTickerDTO()
+        {
+            this.Bid = new OldNewPair<decimal>();
+            this.Ask = new OldNewPair<decimal>();
+            this.Last = new OldNewPair<decimal>();
+        }
+
+        public OldNewPair<Decimal> Bid
         {
             get { return bid; }
-            set { bid = value; OnPropertyChanged(nameof(Bid)); }
+            set { bid = value; OnPropertyChanged(nameof(Bid)); bid.PropertyNotify = () => { OnPropertyChanged(nameof(Bid)); }; }
         }
 
-        public Decimal Ask
+        public OldNewPair<Decimal> Ask
         {
             get { return ask; }
-            set { ask = value; OnPropertyChanged(nameof(Ask)); }
+            set { ask = value; OnPropertyChanged(nameof(Ask)); ask.PropertyNotify = () => { OnPropertyChanged(nameof(Ask)); }; }
         }
-        public Decimal Last
+        public OldNewPair<Decimal> Last
         {
             get { return last; }
-            set { last = value; OnPropertyChanged(nameof(Last)); }
+            set { last = value; OnPropertyChanged(nameof(Last)); last.PropertyNotify = () => { OnPropertyChanged(nameof(Last)); }; }
         }
     }
 }

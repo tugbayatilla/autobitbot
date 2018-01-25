@@ -55,7 +55,7 @@ namespace AutoBitBot.ServerEngine
                 bitTask.Notification = this.notification;
                 bitTask.ExecutionCompleted += BitTask_ExecutionCompleted;
                 bitTask.Executed += BitTask_Executed;
-                bitTask.Scheduler = this;
+                bitTask.Server = this;
                 this.activeTasks.Add(bitTask);
 
                 //PropertyChanged(this, new PropertyChangedEventArgs(nameof(ActiveTasks)));
@@ -65,10 +65,17 @@ namespace AutoBitBot.ServerEngine
         public void RegisterInstanceAndExecute(BitTask bitTask, Object parameter)
         {
             RegisterInstance(bitTask);
-            lock(_lock)
+            lock (_lock)
             {
                 bitTask.Execute(parameter);
             }
+        }
+
+        public BitTask RegisterInstanceAndExecute(Type bitTaskType, Object parameter)
+        {
+            var item = (BitTask)Activator.CreateInstance(bitTaskType);
+            RegisterInstanceAndExecute(item, parameter);
+            return item;
         }
 
         private void BitTask_Executed(object sender, BitTaskExecutedEventArgs e)
@@ -93,12 +100,12 @@ namespace AutoBitBot.ServerEngine
             var wfItem = Config.FirstOrDefault(p => p.Task == bitTask.GetType());
             if (wfItem != null)
             {
-                wfItem.NextItems.ForEach(p =>
-                {
-                    var item = (BitTask)Activator.CreateInstance(p);
-                    item.ExecutionId = bitTask.ExecutionId;
-                    RegisterInstanceAndExecute(item, bitTask.LastResult);
-                });
+                wfItem.NextItems.Where(p => p.ExecutionTime == ConfigExecutionTimes.AfterKill).ForEach(p =>
+                  {
+                      var item = (BitTask)Activator.CreateInstance(p.Task);
+                      item.ExecutionId = bitTask.ExecutionId;
+                      RegisterInstanceAndExecute(item, bitTask.LastResult);
+                  });
             }
         }
 

@@ -4,6 +4,11 @@
              xmlns:local="clr-namespace:AutoBitBot.MainApp"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <ResourceDictionary Source="Resources/GlassButton.xaml" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/GlassButton.xaml" />
+                <ResourceDictionary Source="Resources/DatagridStyle_Black.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
