@@ -27,13 +27,13 @@ namespace AutoBitBot.UI.MainApp.Converters
             switch (status)
             {
                 case BitTaskStatus.Waiting:
-                    return "Yellow";
+                    return "Orange";
                 case BitTaskStatus.Executing:
                     return "Lime";
                 case BitTaskStatus.Executed:
                     return "Red";
                 default:
-                    return "White";
+                    return "Black";
             }
 
         }

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoBitBot.UI.App
+namespace AutoBitBot.UI.MainApp
 {
     public class SampleFormViewModel
         : NotifyPropertyChanged, IDataErrorInfo

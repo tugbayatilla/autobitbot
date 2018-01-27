@@ -19,7 +19,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
 
-namespace AutoBitBot.UI.MainApp.Infrastructure.ViewModels
+namespace AutoBitBot.UI.MainApp.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {
@@ -48,11 +48,11 @@ namespace AutoBitBot.UI.MainApp.Infrastructure.ViewModels
         public void Init()
         {
             var notification = new NotificationAsyncManager();
-            //var notifierOutput = new RichTextBoxNotifier(this.dispatcher, outputRichTextBox);
+            var notifierOutput = new RichTextBoxNotifier(this.dispatcher, outputRichTextBox);
             var notifierFile = new LogNotifier();
-            //notification.RegisterNotifier(NotificationLocations.Console, notifierOutput);
+            notification.RegisterNotifier(NotificationLocations.Console, notifierOutput);
             notification.RegisterNotifier(NotificationLocations.Console, notifierFile);
-            //notification.RegisterNotifier(NotificationLocations.EventLog, notifierOutput);
+            notification.RegisterNotifier(NotificationLocations.EventLog, notifierOutput);
             notification.RegisterNotifier(NotificationLocations.EventLog, notifierFile);
             notification.RegisterNotifier(NotificationLocations.Log,
                 new LogNotifier(new ArchPM.Core.IO.LogToFileManager()

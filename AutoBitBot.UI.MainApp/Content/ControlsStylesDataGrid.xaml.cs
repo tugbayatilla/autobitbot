@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AutoBitBot.UI.App.Content
+namespace AutoBitBot.UI.MainApp.Content
 {
     // taken from MSDN (http://msdn.microsoft.com/en-us/library/system.windows.controls.datagrid.aspx)
     public enum OrderStatus { None, New, Processing, Shipped, Received };

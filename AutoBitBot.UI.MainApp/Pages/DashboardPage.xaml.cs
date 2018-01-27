@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AutoBitBot.UI.App.Pages
+namespace AutoBitBot.UI.MainApp.Pages
 {
     /// <summary>
-    /// Interaction logic for Navigation.xaml
+    /// Interaction logic for Introduction.xaml
     /// </summary>
-    public partial class Navigation : UserControl
+    public partial class DashboardPage : UserControl
     {
-        public Navigation()
+        public DashboardPage()
         {
             InitializeComponent();
         }

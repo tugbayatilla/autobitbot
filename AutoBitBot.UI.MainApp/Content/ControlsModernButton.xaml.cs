@@ -15,7 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml.Linq;
 
-namespace AutoBitBot.UI.App.Content
+namespace AutoBitBot.UI.MainApp.Content
 {
     /// <summary>
     /// Interaction logic for ControlsModernButton.xaml
@@ -29,7 +29,7 @@ namespace AutoBitBot.UI.App.Content
             // find all embedded XAML icon files
             var assembly = GetType().Assembly;
             var iconResourceNames = from name in assembly.GetManifestResourceNames()
-                                    where name.StartsWith("AutoBitBot.UI.App.Assets.appbar.")
+                                    where name.StartsWith("AutoBitBot.UI.MainApp.Assets.appbar.")
                                     select name;
 
 

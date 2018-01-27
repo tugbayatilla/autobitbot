@@ -1,5 +1,4 @@
 ﻿using AutoBitBot.UI.MainApp.DTO;
-using AutoBitBot.UI.MainApp.Infrastructure.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

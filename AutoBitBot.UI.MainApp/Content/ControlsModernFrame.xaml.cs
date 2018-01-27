@@ -14,7 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace AutoBitBot.UI.App.Content
+namespace AutoBitBot.UI.MainApp.Content
 {
     /// <summary>
     /// Interaction logic for ControlsModernFrame.xaml

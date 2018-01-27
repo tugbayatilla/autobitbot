@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace AutoBitBot.UI.App
+namespace AutoBitBot.UI.MainApp
 {
     /// <summary>
     /// Interaction logic for App.xaml

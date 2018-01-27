@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AutoBitBot.UI.App.Content
+namespace AutoBitBot.UI.MainApp.Content
 {
     /// <summary>
     /// Interaction logic for ContentLoaderImages.xaml
@@ -30,18 +30,19 @@ namespace AutoBitBot.UI.App.Content
 
         private async void LoadImageLinks()
         {
-            var loader = (FlickrImageLoader)Tab.ContentLoader;
+            //    var loader = (FlickrImageLoader)Tab.ContentLoader;
 
-            try {
-                // load image links and assign to tab list
-                this.Tab.Links = await loader.GetInterestingnessListAsync();
+            //    try {
+            //        // load image links and assign to tab list
+            //        this.Tab.Links = await loader.GetInterestingnessListAsync();
 
-                // select first link
-                this.Tab.SelectedSource = this.Tab.Links.Select(l => l.Source).FirstOrDefault();
-            }
-            catch (Exception e) {
-                ModernDialog.ShowMessage(e.Message, "Failure", MessageBoxButton.OK);
-            }
+            //        // select first link
+            //        this.Tab.SelectedSource = this.Tab.Links.Select(l => l.Source).FirstOrDefault();
+            //    }
+            //    catch (Exception e) {
+            //        ModernDialog.ShowMessage(e.Message, "Failure", MessageBoxButton.OK);
+            //    }
+            //}
         }
     }
 }

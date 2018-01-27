@@ -12,6 +12,9 @@ using ArchPM.Core.Api;
 
 namespace AutoBitBot.BittrexProxy
 {
+    //fistan:apiKeyModel key'ler gelmezse exception throw et. 
+    //manager initialize olurken key'leri al
+
     /// <summary>
     /// 
     /// </summary>
@@ -27,6 +30,9 @@ namespace AutoBitBot.BittrexProxy
         {
             this.httpClient = httpClient;
             this.apiResponseLog = apiResponseLog;
+
+            SetDefaultHeaders();
+
         }
 
         async Task<IApiResponse<T>> __handler<T>(String url, Action beforeCallFunction = null)
@@ -35,7 +41,6 @@ namespace AutoBitBot.BittrexProxy
             IApiResponse<T> result = null;
             try
             {
-                SetDefaultHeaders();
                 beforeCallFunction?.Invoke();
                 var response = await httpClient.GetAsync(url);
                 response.EnsureSuccessStatusCode();
@@ -201,6 +206,7 @@ namespace AutoBitBot.BittrexProxy
         internal void SetDefaultHeaders()
         {
             httpClient.DefaultRequestHeaders.Clear();
+            httpClient.DefaultRequestHeaders.Accept.Clear();
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));//ACCEPT header
         }
         internal void SetApiSign(String apiSign)

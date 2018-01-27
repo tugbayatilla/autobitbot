@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AutoBitBot.UI.App.Pages
+namespace AutoBitBot.UI.MainApp.Pages
 {
     /// <summary>
     /// Interaction logic for LayoutList.xaml

@@ -17,8 +17,7 @@ namespace AutoBitBot.UI.Windows.Controls
     /// <summary>
     /// Represents a Modern UI styled window.
     /// </summary>
-    public class ModernWindow
-        : Window
+    public class ModernWindow : Window
     {
         /// <summary>
         /// Identifies the BackgroundContent dependency property.
@@ -52,6 +51,7 @@ namespace AutoBitBot.UI.Windows.Controls
         /// Identifies the LinkNavigator dependency property.
         /// </summary>
         public static DependencyProperty LinkNavigatorProperty = DependencyProperty.Register("LinkNavigator", typeof(ILinkNavigator), typeof(ModernWindow), new PropertyMetadata(new DefaultLinkNavigator()));
+
 
         private Storyboard backgroundAnimation;
 
@@ -98,11 +98,12 @@ namespace AutoBitBot.UI.Windows.Controls
             base.OnApplyTemplate();
 
             // retrieve BackgroundAnimation storyboard
-            var border = GetTemplateChild("WindowBorder") as Border;
-            if (border != null) {
+            if (GetTemplateChild("WindowBorder") is Border border)
+            {
                 this.backgroundAnimation = border.Resources["BackgroundAnimation"] as Storyboard;
 
-                if (this.backgroundAnimation != null) {
+                if (this.backgroundAnimation != null)
+                {
                     this.backgroundAnimation.Begin();
                 }
             }
@@ -111,7 +112,8 @@ namespace AutoBitBot.UI.Windows.Controls
         private void OnAppearanceManagerPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             // start background animation if theme has changed
-            if (e.PropertyName == "ThemeSource" && this.backgroundAnimation != null) {
+            if (e.PropertyName == "ThemeSource" && this.backgroundAnimation != null)
+            {
                 this.backgroundAnimation.Begin();
             }
         }
@@ -121,16 +123,16 @@ namespace AutoBitBot.UI.Windows.Controls
             // true by default
             e.CanExecute = true;
 
-            if (this.LinkNavigator != null && this.LinkNavigator.Commands != null) {
+            if (this.LinkNavigator != null && this.LinkNavigator.Commands != null)
+            {
                 // in case of command uri, check if ICommand.CanExecute is true
-                Uri uri;
-                string parameter;
-                string targetName;
 
                 // TODO: CanNavigate is invoked a lot, which means a lot of parsing. need improvements??
-                if (NavigationHelper.TryParseUriWithParameters(e.Parameter, out uri, out parameter, out targetName)) {
+                if (NavigationHelper.TryParseUriWithParameters(e.Parameter, out Uri uri, out String parameter, out String targetName))
+                {
                     ICommand command;
-                    if (this.LinkNavigator.Commands.TryGetValue(uri, out command)) {
+                    if (this.LinkNavigator.Commands.TryGetValue(uri, out command))
+                    {
                         e.CanExecute = command.CanExecute(parameter);
                     }
                 }
@@ -139,12 +141,11 @@ namespace AutoBitBot.UI.Windows.Controls
 
         private void OnNavigateLink(object sender, ExecutedRoutedEventArgs e)
         {
-            if (this.LinkNavigator != null) {
-                 Uri uri;
-                string parameter;
-                string targetName;
+            if (this.LinkNavigator != null)
+            {
 
-                if (NavigationHelper.TryParseUriWithParameters(e.Parameter, out uri, out parameter, out targetName)) {
+                if (NavigationHelper.TryParseUriWithParameters(e.Parameter, out Uri uri, out String parameter, out String targetName))
+                {
                     this.LinkNavigator.Navigate(uri, e.Source as FrameworkElement, parameter);
                 }
             }
@@ -252,5 +253,7 @@ namespace AutoBitBot.UI.Windows.Controls
             get { return (ILinkNavigator)GetValue(LinkNavigatorProperty); }
             set { SetValue(LinkNavigatorProperty, value); }
         }
+
+        
     }
 }

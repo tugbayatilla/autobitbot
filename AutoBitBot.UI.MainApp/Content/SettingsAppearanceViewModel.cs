@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace AutoBitBot.UI.App.Content
+namespace AutoBitBot.UI.MainApp.Content
 {
     /// <summary>
     /// A simple view model for configuring theme, font and accent colors.

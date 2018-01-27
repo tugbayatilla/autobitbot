@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace AutoBitBot.UI.App
+namespace AutoBitBot.UI.MainApp
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -23,6 +23,20 @@ namespace AutoBitBot.UI.App
         public MainWindow()
         {
             InitializeComponent();
+
+
+            
+        }
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+
+            RichTextBox output = (RichTextBox)Template.FindName("Output", this);
+
+            ViewModels.MainViewModel model = new ViewModels.MainViewModel(this.Dispatcher, output);
+            model.Init();
+            this.DataContext = model;
         }
     }
 }

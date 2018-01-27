@@ -16,7 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace AutoBitBot.UI.App.Content.ModernFrame
+namespace AutoBitBot.UI.MainApp.Content.ModernFrame
 {
     /// <summary>
     /// Interaction logic for CancelNavigateSample.xaml

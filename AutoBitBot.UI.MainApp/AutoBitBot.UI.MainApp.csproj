@@ -34,7 +34,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>AutoBitBot.UI.App.App</StartupObject>
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ArchPM.Core, Version=0.0.16.26102, Culture=neutral, processorArchitecture=MSIL">
@@ -82,10 +83,20 @@
     <Compile Include="Infrastructure\ObservableObject.cs" />
     <Compile Include="Infrastructure\TextConverter.cs" />
     <Compile Include="Notifiers\RichTextBoxNotifier.cs" />
-    <Compile Include="SampleDisabledCommand.cs" />
-    <Compile Include="SampleFormViewModel.cs" />
-    <Compile Include="SampleMsgBoxCommand.cs" />
-    <Compile Include="SampleParameterCommand.cs" />
+    <Compile Include="Pages\MarketsPage.xaml.cs">
+      <DependentUpon>MarketsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Messages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Messages.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Titles.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Titles.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\SampleFormViewModel.cs" />
     <Compile Include="UserControls\ActionButtonsControl.xaml.cs">
       <DependentUpon>ActionButtonsControl.xaml</DependentUpon>
     </Compile>
@@ -121,79 +132,63 @@
     </Compile>
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Presenter.cs" />
-    <Page Include="Assets\appbar.add.xaml">
+    <Page Include="Assets\Icons\appbar.add.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Assets\appbar.adobe.bridge.xaml">
+    <Page Include="Assets\Icons\appbar.adobe.bridge.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Assets\appbar.arrow.collapsed.xaml">
+    <Page Include="Assets\Icons\appbar.arrow.collapsed.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Assets\appbar.arrow.corner.up.right.xaml">
+    <Page Include="Assets\Icons\appbar.arrow.corner.up.right.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Assets\appbar.arrow.down.xaml">
+    <Page Include="Assets\Icons\appbar.arrow.down.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Assets\appbar.arrow.expand.xaml">
+    <Page Include="Assets\Icons\appbar.arrow.expand.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Assets\appbar.box.xaml">
+    <Page Include="Assets\Icons\appbar.box.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Assets\appbar.camera.flash.off.xaml">
+    <Page Include="Assets\Icons\appbar.camera.flash.off.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Assets\appbar.camera.flash.xaml">
+    <Page Include="Assets\Icons\appbar.camera.flash.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Assets\appbar.camera.xaml">
+    <Page Include="Assets\Icons\appbar.camera.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Assets\appbar.cards.club.xaml">
+    <Page Include="Assets\Icons\appbar.cards.club.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Assets\appbar.cards.diamond.xaml">
+    <Page Include="Assets\Icons\appbar.cards.diamond.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Assets\appbar.cards.heart.xaml">
+    <Page Include="Assets\Icons\appbar.cards.heart.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Assets\appbar.cards.spade.xaml">
+    <Page Include="Assets\Icons\appbar.cards.spade.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Assets\appbar.check.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Assets\ModernUI.BingImage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Assets\ModernUI.HelloKitty.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Assets\ModernUI.Love.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Assets\ModernUI.Snowflakes.xaml">
+    <Page Include="Assets\Icons\appbar.check.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -301,7 +296,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="BingImage.cs" />
     <Compile Include="Content\ContentLoaderImages.xaml.cs">
       <DependentUpon>ContentLoaderImages.xaml</DependentUpon>
     </Compile>
@@ -375,8 +369,6 @@
       <DependentUpon>SettingsAppearance.xaml</DependentUpon>
     </Compile>
     <Compile Include="Content\SettingsAppearanceViewModel.cs" />
-    <Compile Include="FlickrImageLoader.cs" />
-    <Compile Include="LoremIpsumLoader.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -393,7 +385,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\Introduction.xaml">
+    <Page Include="Pages\MarketsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\DashboardPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -417,35 +413,31 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\Navigation.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Pages\Settings.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\Dictionary1.xaml">
+    <Page Include="Assets\Dictionary1.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\GlassButtonStyle.xaml">
+    <Page Include="Assets\GlassButtonStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\GlobalDatagridStyle.xaml">
+    <Page Include="Assets\GlobalDatagridStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\GlobalDatagridStyle_Black.xaml">
+    <Page Include="Assets\GlobalDatagridStyle_Black.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\MetroButtonStyle.xaml">
+    <Page Include="Assets\MetroButtonStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\Windows10ButtonStyle.xaml">
+    <Page Include="Assets\Windows10ButtonStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -504,8 +496,8 @@
     <Compile Include="Pages\ControlsStyles.xaml.cs">
       <DependentUpon>ControlsStyles.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Introduction.xaml.cs">
-      <DependentUpon>Introduction.xaml</DependentUpon>
+    <Compile Include="Pages\DashboardPage.xaml.cs">
+      <DependentUpon>DashboardPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\LayoutBasic.xaml.cs">
       <DependentUpon>LayoutBasic.xaml</DependentUpon>
@@ -521,9 +513,6 @@
     </Compile>
     <Compile Include="Pages\LayoutWireframe.xaml.cs">
       <DependentUpon>LayoutWireframe.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Navigation.xaml.cs">
-      <DependentUpon>Navigation.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
@@ -545,6 +534,14 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Messages.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Messages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Titles.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Titles.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -555,9 +552,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\background.kitty.png" />
-    <Resource Include="Assets\background.love.jpg" />
-    <Resource Include="Assets\background.snowflakes.jpg" />
+    <Resource Include="Assets\Icons\background.kitty.png" />
+    <Resource Include="Assets\Icons\background.love.jpg" />
+    <Resource Include="Assets\Icons\background.snowflakes.jpg" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AutoBitBot.BittrexProxy\AutoBitBot.BittrexProxy.csproj">

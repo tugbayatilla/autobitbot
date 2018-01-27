@@ -1,6 +1,6 @@
 ﻿using AutoBitBot.BittrexProxy;
-using AutoBitBot.UI.MainApp.Infrastructure.ViewModels;
 using AutoBitBot.ServerEngine.BitTasks;
+using AutoBitBot.UI.MainApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
