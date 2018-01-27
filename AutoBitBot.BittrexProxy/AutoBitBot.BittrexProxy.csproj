@@ -30,8 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ArchPM.Core, Version=0.0.15.22638, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ArchPM.Core.0.0.15\lib\net45\ArchPM.Core.dll</HintPath>
+    <Reference Include="ArchPM.Core, Version=0.0.16.26102, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ArchPM.Core.0.0.16\lib\net45\ArchPM.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

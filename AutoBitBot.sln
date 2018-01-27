@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2020
+VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoBitBot.MainApp", "AutoBitBot.MainApp\AutoBitBot.MainApp.csproj", "{FE497FF5-377C-41AA-8AEF-E4E9665BE57B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoBitBot.ConsoleApp", "AutoBitBot.ConsoleApp\AutoBitBot.ConsoleApp.csproj", "{83CD028E-660E-46CF-BD9B-19090203ED20}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoBitBot.UI.MainApp", "AutoBitBot.UI.MainApp\AutoBitBot.UI.MainApp.csproj", "{FE497FF5-377C-41AA-8AEF-E4E9665BE57B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoBitBot.Infrastructure", "AutoBitBot.Infrastructure\AutoBitBot.Infrastructure.csproj", "{588870FF-1117-4DD7-AF92-E5EB653F93BF}"
 EndProject
@@ -17,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoBitBot.Data", "AutoBitB
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TEMP", "TEMP", "{C5F66F52-FC3E-4220-9416-226EACCAA474}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoBitBot.UI", "AutoBitBot.UI\AutoBitBot.UI.csproj", "{67F1C60E-11D1-49A4-822E-4B4B30212F90}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,10 +27,6 @@ Global
 		{FE497FF5-377C-41AA-8AEF-E4E9665BE57B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE497FF5-377C-41AA-8AEF-E4E9665BE57B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE497FF5-377C-41AA-8AEF-E4E9665BE57B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{83CD028E-660E-46CF-BD9B-19090203ED20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{83CD028E-660E-46CF-BD9B-19090203ED20}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{83CD028E-660E-46CF-BD9B-19090203ED20}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{83CD028E-660E-46CF-BD9B-19090203ED20}.Release|Any CPU.Build.0 = Release|Any CPU
 		{588870FF-1117-4DD7-AF92-E5EB653F93BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{588870FF-1117-4DD7-AF92-E5EB653F93BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{588870FF-1117-4DD7-AF92-E5EB653F93BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -47,13 +43,18 @@ Global
 		{EA04E750-1BC4-475D-A801-EA03DB3E9291}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA04E750-1BC4-475D-A801-EA03DB3E9291}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA04E750-1BC4-475D-A801-EA03DB3E9291}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67F1C60E-11D1-49A4-822E-4B4B30212F90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67F1C60E-11D1-49A4-822E-4B4B30212F90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67F1C60E-11D1-49A4-822E-4B4B30212F90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67F1C60E-11D1-49A4-822E-4B4B30212F90}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{83CD028E-660E-46CF-BD9B-19090203ED20} = {C5F66F52-FC3E-4220-9416-226EACCAA474}
 		{588870FF-1117-4DD7-AF92-E5EB653F93BF} = {C5F66F52-FC3E-4220-9416-226EACCAA474}
+		{CF48750D-7FC6-4271-BE14-6F34F0B966EE} = {C5F66F52-FC3E-4220-9416-226EACCAA474}
+		{90A542CD-1F99-4F3A-9052-496546349799} = {C5F66F52-FC3E-4220-9416-226EACCAA474}
 		{EA04E750-1BC4-475D-A801-EA03DB3E9291} = {C5F66F52-FC3E-4220-9416-226EACCAA474}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

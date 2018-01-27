@@ -1,0 +1,588 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{29A6CD8A-27BE-45B2-88E3-67FF3B7F03B9}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>AutoBitBot.UI.MainApp</RootNamespace>
+    <AssemblyName>AutoBitBot.UI.MainApp</AssemblyName>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>AutoBitBot.UI.App.App</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ArchPM.Core, Version=0.0.16.26102, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ArchPM.Core.0.0.16\lib\net45\ArchPM.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Commands\LoadBalanceCommand.cs" />
+    <Compile Include="Commands\OpenBuyAndSellCommand.cs" />
+    <Compile Include="Commands\OpenKilledTasksCommand.cs" />
+    <Compile Include="Commands\OpenMarketsCommand.cs" />
+    <Compile Include="Commands\OpenOrderHistoryCommand.cs" />
+    <Compile Include="Commands\SampleDisabledCommand.cs" />
+    <Compile Include="Commands\SampleMsgBoxCommand.cs" />
+    <Compile Include="Commands\SampleParameterCommand.cs" />
+    <Compile Include="Converters\DateTimeToStringConverter.cs" />
+    <Compile Include="Converters\DecimalStringValueConverter.cs" />
+    <Compile Include="Converters\ForegroundBitTaskStatusChangedValueConverter.cs" />
+    <Compile Include="Converters\ForegroundOldNewPairValueConverter.cs" />
+    <Compile Include="DTO\BalanceDTO.cs" />
+    <Compile Include="DTO\BitTaskDTO.cs" />
+    <Compile Include="DTO\BuyAndSellDTO.cs" />
+    <Compile Include="DTO\MarketDTO.cs" />
+    <Compile Include="DTO\MarketSummaryDTO.cs" />
+    <Compile Include="DTO\MarketTickerDTO.cs" />
+    <Compile Include="Infrastructure\DelegateCommand.cs" />
+    <Compile Include="Infrastructure\ObservableObject.cs" />
+    <Compile Include="Infrastructure\TextConverter.cs" />
+    <Compile Include="Notifiers\RichTextBoxNotifier.cs" />
+    <Compile Include="SampleDisabledCommand.cs" />
+    <Compile Include="SampleFormViewModel.cs" />
+    <Compile Include="SampleMsgBoxCommand.cs" />
+    <Compile Include="SampleParameterCommand.cs" />
+    <Compile Include="UserControls\ActionButtonsControl.xaml.cs">
+      <DependentUpon>ActionButtonsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\ActiveTasksControl.xaml.cs">
+      <DependentUpon>ActiveTasksControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\BalanceControl.xaml.cs">
+      <DependentUpon>BalanceControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\BuyAndSellControl.xaml.cs">
+      <DependentUpon>BuyAndSellControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\KilledTasksControl.xaml.cs">
+      <DependentUpon>KilledTasksControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\MarketsControl.xaml.cs">
+      <DependentUpon>MarketsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\MarketSummaryControl.xaml.cs">
+      <DependentUpon>MarketSummaryControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\OpenOrdersControl.xaml.cs">
+      <DependentUpon>OpenOrdersControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\OrderHistoryControl.xaml.cs">
+      <DependentUpon>OrderHistoryControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\OutputControl.xaml.cs">
+      <DependentUpon>OutputControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\TickerControl.xaml.cs">
+      <DependentUpon>TickerControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\Presenter.cs" />
+    <Page Include="Assets\appbar.add.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Assets\appbar.adobe.bridge.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Assets\appbar.arrow.collapsed.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Assets\appbar.arrow.corner.up.right.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Assets\appbar.arrow.down.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Assets\appbar.arrow.expand.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Assets\appbar.box.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Assets\appbar.camera.flash.off.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Assets\appbar.camera.flash.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Assets\appbar.camera.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Assets\appbar.cards.club.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Assets\appbar.cards.diamond.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Assets\appbar.cards.heart.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Assets\appbar.cards.spade.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Assets\appbar.check.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Assets\ModernUI.BingImage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Assets\ModernUI.HelloKitty.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Assets\ModernUI.Love.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Assets\ModernUI.Snowflakes.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Content\ContentLoaderImages.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Content\ContentLoaderIntro.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Content\ControlsModernBBCodeBlock.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Content\ControlsModernButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Content\ControlsModernDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Content\ControlsModernFrame.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Content\ControlsModernMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Content\ControlsModernProgressRing.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Content\ControlsModernWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Content\ControlsStylesButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Content\ControlsStylesDataGrid.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Content\ControlsStylesDate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Content\ControlsStylesItemsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Content\ControlsStylesProgressBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Content\ControlsStylesSampleForm.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Content\ControlsStylesSlider.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Content\ControlsStylesText.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Content\LoremIpsum.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Content\LoremIpsumList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Content\LoremIpsumSplit.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Content\ModernFrame\CancelNavigateSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Content\ModernFrame\ErrorSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Content\ModernFrame\Sample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Content\SettingsAppearance.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BingImage.cs" />
+    <Compile Include="Content\ContentLoaderImages.xaml.cs">
+      <DependentUpon>ContentLoaderImages.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Content\ContentLoaderIntro.xaml.cs">
+      <DependentUpon>ContentLoaderIntro.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Content\ControlsModernBBCodeBlock.xaml.cs">
+      <DependentUpon>ControlsModernBBCodeBlock.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Content\ControlsModernButton.xaml.cs">
+      <DependentUpon>ControlsModernButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Content\ControlsModernDialog.xaml.cs">
+      <DependentUpon>ControlsModernDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Content\ControlsModernFrame.xaml.cs">
+      <DependentUpon>ControlsModernFrame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Content\ControlsModernMenu.xaml.cs">
+      <DependentUpon>ControlsModernMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Content\ControlsModernProgressRing.xaml.cs">
+      <DependentUpon>ControlsModernProgressRing.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Content\ControlsModernWindow.xaml.cs">
+      <DependentUpon>ControlsModernWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Content\ControlsStylesButton.xaml.cs">
+      <DependentUpon>ControlsStylesButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Content\ControlsStylesDataGrid.xaml.cs">
+      <DependentUpon>ControlsStylesDataGrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Content\ControlsStylesDate.xaml.cs">
+      <DependentUpon>ControlsStylesDate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Content\ControlsStylesItemsControl.xaml.cs">
+      <DependentUpon>ControlsStylesItemsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Content\ControlsStylesProgressBar.xaml.cs">
+      <DependentUpon>ControlsStylesProgressBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Content\ControlsStylesSampleForm.xaml.cs">
+      <DependentUpon>ControlsStylesSampleForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Content\ControlsStylesSlider.xaml.cs">
+      <DependentUpon>ControlsStylesSlider.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Content\ControlsStylesText.xaml.cs">
+      <DependentUpon>ControlsStylesText.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Content\LoremIpsum.xaml.cs">
+      <DependentUpon>LoremIpsum.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Content\LoremIpsumList.xaml.cs">
+      <DependentUpon>LoremIpsumList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Content\LoremIpsumSplit.xaml.cs">
+      <DependentUpon>LoremIpsumSplit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Content\ModernFrame\CancelNavigateSample.xaml.cs">
+      <DependentUpon>CancelNavigateSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Content\ModernFrame\ErrorSample.xaml.cs">
+      <DependentUpon>ErrorSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Content\ModernFrame\Sample.xaml.cs">
+      <DependentUpon>Sample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Content\SettingsAppearance.xaml.cs">
+      <DependentUpon>SettingsAppearance.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Content\SettingsAppearanceViewModel.cs" />
+    <Compile Include="FlickrImageLoader.cs" />
+    <Compile Include="LoremIpsumLoader.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Pages\ContentLoader.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\ControlsModern.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\ControlsStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\DpiAwareness.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\Introduction.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\LayoutBasic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\LayoutList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\LayoutSplit.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\LayoutTab.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\LayoutWireframe.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\Navigation.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\Settings.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Dictionary1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\GlassButtonStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\GlobalDatagridStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\GlobalDatagridStyle_Black.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\MetroButtonStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Windows10ButtonStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\ActionButtonsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\ActiveTasksControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\BalanceControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\BuyAndSellControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\KilledTasksControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\MarketsControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\MarketSummaryControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\OpenOrdersControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\OrderHistoryControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\OutputControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\TickerControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Pages\ContentLoader.xaml.cs">
+      <DependentUpon>ContentLoader.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ControlsModern.xaml.cs">
+      <DependentUpon>ControlsModern.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ControlsStyles.xaml.cs">
+      <DependentUpon>ControlsStyles.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\DpiAwareness.xaml.cs">
+      <DependentUpon>DpiAwareness.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\DpiAwarenessViewModel.cs" />
+    <Compile Include="Pages\Introduction.xaml.cs">
+      <DependentUpon>Introduction.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\LayoutBasic.xaml.cs">
+      <DependentUpon>LayoutBasic.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\LayoutList.xaml.cs">
+      <DependentUpon>LayoutList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\LayoutSplit.xaml.cs">
+      <DependentUpon>LayoutSplit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\LayoutTab.xaml.cs">
+      <DependentUpon>LayoutTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\LayoutWireframe.xaml.cs">
+      <DependentUpon>LayoutWireframe.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Navigation.xaml.cs">
+      <DependentUpon>Navigation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Settings.xaml.cs">
+      <DependentUpon>Settings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\background.kitty.png" />
+    <Resource Include="Assets\background.love.jpg" />
+    <Resource Include="Assets\background.snowflakes.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AutoBitBot.BittrexProxy\AutoBitBot.BittrexProxy.csproj">
+      <Project>{cf48750d-7fc6-4271-be14-6f34f0b966ee}</Project>
+      <Name>AutoBitBot.BittrexProxy</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AutoBitBot.ServerEngine\AutoBitBot.ServerEngine.csproj">
+      <Project>{90a542cd-1f99-4f3a-9052-496546349799}</Project>
+      <Name>AutoBitBot.ServerEngine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AutoBitBot.UI\AutoBitBot.UI.csproj">
+      <Project>{d58d7907-ddc8-4b40-a0f0-d20fafd96434}</Project>
+      <Name>AutoBitBot.UI</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Dummy\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
