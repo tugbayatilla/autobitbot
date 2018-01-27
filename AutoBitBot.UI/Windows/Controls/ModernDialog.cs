@@ -1,4 +1,5 @@
-﻿using AutoBitBot.UI.Presentation;
+﻿using AutoBitBot.UI.Resources;
+using AutoBitBot.UI.Presentation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace AutoBitBot.UI.Windows.Controls
     /// Represents a Modern UI styled dialog window.
     /// </summary>
     public class ModernDialog
-        : DpiAwareWindow
+        : Window
     {
         /// <summary>
         /// Identifies the BackgroundContent dependency property.
@@ -100,7 +101,7 @@ namespace AutoBitBot.UI.Windows.Controls
             get
             {
                 if (this.okButton == null) {
-                    this.okButton = CreateCloseDialogButton(AutoBitBot.UI.Resources.Ok, true, false, MessageBoxResult.OK);
+                    this.okButton = CreateCloseDialogButton(Messages.Ok, true, false, MessageBoxResult.OK);
                 }
                 return this.okButton;
             }
@@ -114,7 +115,7 @@ namespace AutoBitBot.UI.Windows.Controls
             get
             {
                 if (this.cancelButton == null) {
-                    this.cancelButton = CreateCloseDialogButton(AutoBitBot.UI.Resources.Cancel, false, true, MessageBoxResult.Cancel);
+                    this.cancelButton = CreateCloseDialogButton(Messages.Cancel, false, true, MessageBoxResult.Cancel);
                 }
                 return this.cancelButton;
             }
@@ -128,7 +129,7 @@ namespace AutoBitBot.UI.Windows.Controls
             get
             {
                 if (this.yesButton == null) {
-                    this.yesButton = CreateCloseDialogButton(AutoBitBot.UI.Resources.Yes, true, false, MessageBoxResult.Yes);
+                    this.yesButton = CreateCloseDialogButton(Messages.Yes, true, false, MessageBoxResult.Yes);
                 }
                 return this.yesButton;
             }
@@ -142,7 +143,7 @@ namespace AutoBitBot.UI.Windows.Controls
             get
             {
                 if (this.noButton == null) {
-                    this.noButton = CreateCloseDialogButton(AutoBitBot.UI.Resources.No, false, true, MessageBoxResult.No);
+                    this.noButton = CreateCloseDialogButton(Messages.No, false, true, MessageBoxResult.No);
                 }
                 return this.noButton;
             }
@@ -156,7 +157,7 @@ namespace AutoBitBot.UI.Windows.Controls
             get
             {
                 if (this.closeButton == null) {
-                    this.closeButton = CreateCloseDialogButton(AutoBitBot.UI.Resources.Close, true, false, MessageBoxResult.None);
+                    this.closeButton = CreateCloseDialogButton(Messages.Close, true, false, MessageBoxResult.None);
                 }
                 return this.closeButton;
             }

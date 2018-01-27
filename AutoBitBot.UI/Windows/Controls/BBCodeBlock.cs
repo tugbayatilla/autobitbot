@@ -1,4 +1,5 @@
-﻿using AutoBitBot.UI.Windows.Controls.BBCode;
+﻿using AutoBitBot.UI.Resources;
+using AutoBitBot.UI.Windows.Controls.BBCode;
 using AutoBitBot.UI.Windows.Media;
 using AutoBitBot.UI.Windows.Navigation;
 using System;
@@ -108,7 +109,7 @@ namespace AutoBitBot.UI.Windows.Controls
             }
             catch (Exception error) {
                 // display navigation failures
-                ModernDialog.ShowMessage(error.Message, UI.Resources.NavigationFailed, MessageBoxButton.OK);
+                ModernDialog.ShowMessage(error.Message, Messages.NavigationFailed, MessageBoxButton.OK);
             }
         }
 

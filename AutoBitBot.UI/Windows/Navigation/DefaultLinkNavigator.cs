@@ -1,4 +1,5 @@
 ﻿using AutoBitBot.UI.Presentation;
+using AutoBitBot.UI.Resources;
 using AutoBitBot.UI.Windows.Controls;
 using AutoBitBot.UI.Windows.Media;
 using System;
@@ -74,31 +75,37 @@ namespace AutoBitBot.UI.Windows.Navigation
             }
 
             // first check if uri refers to a command
-            ICommand command;
-            if (this.commands != null && this.commands.TryGetValue(uri, out command)) {
+            if (this.commands != null && this.commands.TryGetValue(uri, out ICommand command))
+            {
                 // note: not executed within BBCodeBlock context, Hyperlink instance has Command and CommandParameter set
-                if (command.CanExecute(parameter)) {
+                if (command.CanExecute(parameter))
+                {
                     command.Execute(parameter);
                 }
-                else {
+                else
+                {
                     // do nothing
                 }
             }
-            else if (uri.IsAbsoluteUri && this.externalSchemes != null && this.externalSchemes.Any(s => uri.Scheme.Equals(s, StringComparison.OrdinalIgnoreCase))) {
+            else if (uri.IsAbsoluteUri && this.externalSchemes != null && this.externalSchemes.Any(s => uri.Scheme.Equals(s, StringComparison.OrdinalIgnoreCase)))
+            {
                 // uri is external, load in default browser
                 Process.Start(uri.AbsoluteUri);
                 return;
             }
-            else {
+            else
+            {
                 // perform frame navigation
-                if (source == null) {   // source required
-                    throw new ArgumentException(string.Format(CultureInfo.CurrentUICulture, UI.Resources.NavigationFailedSourceNotSpecified, uri));
+                if (source == null)
+                {   // source required
+                    throw new ArgumentException(string.Format(CultureInfo.CurrentUICulture, Messages.NavigationFailedSourceNotSpecified, uri));
                 }
 
                 // use optional parameter as navigation target to identify target frame (_self, _parent, _top or named target frame)
                 var frame = NavigationHelper.FindFrame(parameter, source);
-                if (frame == null) {
-                    throw new ArgumentException(string.Format(CultureInfo.CurrentUICulture, UI.Resources.NavigationFailedFrameNotFound, uri, parameter));
+                if (frame == null)
+                {
+                    throw new ArgumentException(string.Format(CultureInfo.CurrentUICulture, Messages.NavigationFailedFrameNotFound, uri, parameter));
                 }
 
                 // delegate navigation to the frame

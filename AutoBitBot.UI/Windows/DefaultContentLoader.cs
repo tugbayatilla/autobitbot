@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using AutoBitBot.UI.Resources;
 
 namespace AutoBitBot.UI.Windows
 {
@@ -23,7 +24,7 @@ namespace AutoBitBot.UI.Windows
         public Task<object> LoadContentAsync(Uri uri, CancellationToken cancellationToken)
         {
             if (!Application.Current.Dispatcher.CheckAccess()) {
-               throw new InvalidOperationException(Resources.UIThreadRequired);
+               throw new InvalidOperationException(Messages.UIThreadRequired);
             }
             
             // scheduler ensures LoadContent is executed on the current UI thread
@@ -39,7 +40,7 @@ namespace AutoBitBot.UI.Windows
         protected virtual object LoadContent(Uri uri)
         {
             // don't do anything in design mode
-            if (ModernUIHelper.IsInDesignMode) {
+            if (IDEDesignTimeHelper.IsInDesignMode) {
                 return null;
             }
             return Application.LoadComponent(uri);

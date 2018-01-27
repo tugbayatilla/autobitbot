@@ -393,10 +393,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\DpiAwareness.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Pages\Introduction.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -508,10 +504,6 @@
     <Compile Include="Pages\ControlsStyles.xaml.cs">
       <DependentUpon>ControlsStyles.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\DpiAwareness.xaml.cs">
-      <DependentUpon>DpiAwareness.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\DpiAwarenessViewModel.cs" />
     <Compile Include="Pages\Introduction.xaml.cs">
       <DependentUpon>Introduction.xaml</DependentUpon>
     </Compile>

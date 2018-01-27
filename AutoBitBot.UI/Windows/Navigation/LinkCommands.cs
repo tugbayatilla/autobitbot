@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoBitBot.UI.Resources;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,7 @@ namespace AutoBitBot.UI.Windows.Navigation
     /// </summary>
     public static class LinkCommands
     {
-        private static RoutedUICommand navigateLink = new RoutedUICommand(Resources.NavigateLink, "NavigateLink", typeof(LinkCommands));
+        private static RoutedUICommand navigateLink = new RoutedUICommand(Messages.NavigateLink, "NavigateLink", typeof(LinkCommands));
 
         /// <summary>
         /// Gets the navigate link routed command.

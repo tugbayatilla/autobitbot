@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows;
 using System.Windows.Input;
 using AutoBitBot.UI.Windows.Navigation;
+using AutoBitBot.UI.Resources;
 
 namespace AutoBitBot.UI.Windows.Controls.BBCode
 {
@@ -74,10 +75,7 @@ namespace AutoBitBot.UI.Windows.Controls.BBCode
         public BBCodeParser(string value, FrameworkElement source)
             : base(new BBCodeLexer(value))
         {
-            if (source == null) {
-                throw new ArgumentNullException("source");
-            }
-            this.source = source;
+            this.source = source ?? throw new ArgumentNullException("source");
         }
 
         /// <summary>
@@ -161,24 +159,24 @@ namespace AutoBitBot.UI.Windows.Controls.BBCode
                 }
                 else if (token.TokenType == BBCodeLexer.TokenText) {
                     var parent = span;
-                    Uri uri;
-                    string parameter = null;
-                    string targetName = null;
 
                     // parse uri value for optional parameter and/or target, eg [url=cmd://foo|parameter|target]
-                    if (NavigationHelper.TryParseUriWithParameters(context.NavigateUri, out uri, out parameter, out targetName)) {
+                    if (NavigationHelper.TryParseUriWithParameters(context.NavigateUri, out Uri uri, out string parameter, out string targetName))
+                    {
                         var link = new Hyperlink();
 
                         // assign ICommand instance if available, otherwise set NavigateUri
-                        ICommand command;
-                        if (this.Commands != null && this.Commands.TryGetValue(uri, out command)) {
+                        if (this.Commands != null && this.Commands.TryGetValue(uri, out ICommand command))
+                        {
                             link.Command = command;
                             link.CommandParameter = parameter;
-                            if (targetName != null) {
+                            if (targetName != null)
+                            {
                                 link.CommandTarget = this.source.FindName(targetName) as IInputElement;
                             }
                         }
-                        else {
+                        else
+                        {
                             link.NavigateUri = uri;
                             link.TargetName = parameter;
                         }
@@ -192,13 +190,13 @@ namespace AutoBitBot.UI.Windows.Controls.BBCode
                     span.Inlines.Add(new LineBreak());
                 }
                 else if (token.TokenType == BBCodeLexer.TokenAttribute) {
-                    throw new ParseException(Resources.UnexpectedToken);
+                    throw new ParseException(Messages.UnexpectedToken);
                 }
                 else if (token.TokenType == BBCodeLexer.TokenEnd) {
                     break;
                 }
                 else {
-                    throw new ParseException(Resources.UnknownTokenType);
+                    throw new ParseException(Messages.UnknownTokenType);
                 }
             }
         }
