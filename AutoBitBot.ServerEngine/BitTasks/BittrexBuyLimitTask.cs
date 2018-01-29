@@ -23,20 +23,14 @@ namespace AutoBitBot.ServerEngine.BitTasks
 
         protected override async Task<Object> ExecuteAction(Object parameter)
         {
-            //fistan: merkezi yap
-            //var manager = BittrexApiManagerFactory.Instance.Create();
+            if(parameter == null)
+            {
+                throw new ArgumentNullException(nameof(parameter), new BitTaskException($"[{Name}] Execute method parameter is null."));
+            }
 
-            //var result = await manager.GetBalances(new ApiKeyModel()
-            //{
-            //    ApiKey = ConfigurationManager.AppSettings["BittrexApiKey"],
-            //    SecretKey = ConfigurationManager.AppSettings["BittrexApiSecret"]
-            //});
+            Notification.NotifyAsync($"[{Name}] executed. Parameter: {parameter}");
 
-            Thread.Sleep(2000);
-
-            Notification.NotifyAsync($"[{Name}] executed. go to next one!");
-
-            return Guid.NewGuid();
+            return null;
 
         }
     }

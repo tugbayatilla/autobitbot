@@ -10,7 +10,8 @@ namespace AutoBitBot.ServerEngine
     {
         Waiting,
         Executing,
-        Executed
+        Executed,
+        Failed
     }
 
    

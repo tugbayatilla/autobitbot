@@ -169,6 +169,25 @@ namespace AutoBitBot.ServerEngine
             }
         }
 
+        String failedMessage;
+        /// <summary>
+        /// Gets the failed message.
+        /// </summary>
+        /// <value>
+        /// The failed message.
+        /// </value>
+        public String FailedMessage
+        {
+            get { return failedMessage; }
+            private set
+            {
+                failedMessage = value;
+                PropertyChanged(this, new PropertyChangedEventArgs(nameof(FailedMessage)));
+            }
+        }
+
+
+
         #endregion
 
         /// <summary>
@@ -200,57 +219,66 @@ namespace AutoBitBot.ServerEngine
         {
             await Task.Factory.StartNew(async () =>
             {
-                while (true)
+                try
                 {
-                    if (!CanExecute())
+                    while (true)
                     {
-                        await Task.Delay((Int32)ExecuteAtEvery);
-                        continue;
-                    }
-                    ExecutionCount++;
+                        if (!CanExecute())
+                        {
+                            await Task.Delay((Int32)ExecuteAtEvery);
+                            continue;
+                        }
+                        ExecutionCount++;
 
-                    stopWatch.Restart();
-                    this.Status = BitTaskStatus.Executing;
-                    Notification.NotifyAsync(ToString());
+                        stopWatch.Restart();
+                        this.Status = BitTaskStatus.Executing;
+                        Notification.NotifyAsync(ToString());
 
-                    var data = await ExecuteAction(parameter);
-                    this.LastResult = data;
-                    stopWatch.Stop();
+                        var data = await ExecuteAction(parameter);
+                        this.LastResult = data;
+                        stopWatch.Stop();
 
-                    this.LastExecutionTime = DateTime.Now;
-                    this.Status = BitTaskStatus.Executed;
-                    this.ElapsedTime = stopWatch.ElapsedMilliseconds;
-                    Notification.NotifyAsync(ToString());
-                    Executed(this, new BitTaskExecutedEventArgs() { Data = data, BitTask = this });
+                        this.LastExecutionTime = DateTime.Now;
+                        this.Status = BitTaskStatus.Executed;
+                        this.ElapsedTime = stopWatch.ElapsedMilliseconds;
+                        Notification.NotifyAsync(ToString());
+                        Executed(this, new BitTaskExecutedEventArgs() { Data = data, BitTask = this });
 
-                    ////fistan: dikkat!!!
-                    //var list = this.Server.Config.Where(p => p.Task == this.GetType() && p.ExecutionTime == ConfigExecutionTimes.AfterExecution);
-                    //list.ForEach(p=> {
-                    //    var task = this.Server.RegisterInstanceAndExecute(p.Task, data);
-                    //    task.ExecutionId = this.ExecutionId;
-                    //});
+                        ////fistan: dikkat!!!
+                        //var list = this.Server.Config.Where(p => p.Task == this.GetType() && p.ExecutionTime == ConfigExecutionTimes.AfterExecution);
+                        //list.ForEach(p=> {
+                        //    var task = this.Server.RegisterInstanceAndExecute(p.Task, data);
+                        //    task.ExecutionId = this.ExecutionId;
+                        //});
 
-                    //prematurely interrupts the execution
-                    if (ExplicitlyTerminateAfterExecution)
-                    {
-                        break;
-                    }
-                    if (this.ExecutionType == BitTaskExecutionTypes.OneTime)
-                    {
-                        break;
-                    }
+                        //prematurely interrupts the execution
+                        if (ExplicitlyTerminateAfterExecution)
+                        {
+                            break;
+                        }
+                        if (this.ExecutionType == BitTaskExecutionTypes.OneTime)
+                        {
+                            break;
+                        }
 
-                    //change status
-                    this.Status = BitTaskStatus.Waiting;
-                    Notification.NotifyAsync(ToString());
+                        //change status
+                        this.Status = BitTaskStatus.Waiting;
+                        Notification.NotifyAsync(ToString());
 
-                    //sleep for a while
-                    if (this.WaitTime > 0)
-                    {
-                        await Task.Delay((Int32)WaitTime);
+                        //sleep for a while
+                        if (this.WaitTime > 0)
+                        {
+                            await Task.Delay((Int32)WaitTime);
+                        }
                     }
                 }
+                catch (Exception ex)
+                {
+                    this.Status = BitTaskStatus.Failed;
+                    this.FailedMessage = ex.GetAllMessages(false, " ");
 
+                    Notification.NotifyAsync(ex, NotificationLocations.EventLog);
+                }
 
                 if (this.KillAfterExecution)
                 {
@@ -287,6 +315,7 @@ namespace AutoBitBot.ServerEngine
         {
             stopWatch.Stop();
         }
+
     }
 
 

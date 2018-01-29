@@ -69,6 +69,7 @@
     <Compile Include="Commands\OpenBuyAndSellCommand.cs" />
     <Compile Include="Commands\OpenKilledTasksCommand.cs" />
     <Compile Include="Commands\OpenMarketsCommand.cs" />
+    <Compile Include="Commands\OpenModalCommand.cs" />
     <Compile Include="Commands\OpenOrderHistoryCommand.cs" />
     <Compile Include="Commands\SampleDisabledCommand.cs" />
     <Compile Include="Commands\SampleMsgBoxCommand.cs" />

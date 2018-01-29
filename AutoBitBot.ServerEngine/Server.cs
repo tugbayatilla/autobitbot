@@ -32,6 +32,7 @@ namespace AutoBitBot.ServerEngine
             this.notification = notification;
 
             BindingOperations.EnableCollectionSynchronization(this.ActiveTasks, _lock);
+            BindingOperations.EnableCollectionSynchronization(this.KilledTasks, _lock);
         }
 
         public ObservableCollection<BitTask> ActiveTasks

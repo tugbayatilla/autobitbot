@@ -49,6 +49,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BitTaskException.cs" />
     <Compile Include="Enums\BitTaskWorkingTimes.cs" />
     <Compile Include="BitTasks\BittrexGetOrderHistoryTask.cs" />
     <Compile Include="BitTasks\BittrexGetOpenOrdersTask.cs" />

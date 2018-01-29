@@ -31,6 +31,8 @@ namespace AutoBitBot.UI.MainApp.Converters
                 case BitTaskStatus.Executing:
                     return "Lime";
                 case BitTaskStatus.Executed:
+                    return "Black";
+                case BitTaskStatus.Failed:
                     return "Red";
                 default:
                     return "Black";

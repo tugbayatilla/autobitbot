@@ -77,7 +77,22 @@ namespace AutoBitBot.UI.MainApp.ViewModels
                 new ConfigItem(typeof(BittrexSellLimitTask)) { ExecutionTime = ConfigExecutionTimes.AfterExecution }, //todo: execute onetime can be set here
                 new ConfigItem(typeof(BittrexSellLimitCompletedTask))));
 
+            DecisionMaker decisionMaker = new DecisionMaker(server)
+            {
+                InteractionWithUser = OpenModal
+            };
+            decisionMaker.Start();
+
             server.RunAllRegisteredTasksAsync();
+
+        }
+
+
+        Task<Boolean> OpenModal(String message)
+        {
+            var command = new OpenModalCommand();
+            command.Execute(message);
+            return Task.FromResult<Boolean>((Boolean)command.Result);
         }
 
         private void TaskScheduler_TaskExecuted(object sender, BitTaskExecutedEventArgs e)
