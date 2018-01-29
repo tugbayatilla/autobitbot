@@ -4,15 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoBitBot.ServerEngine
+namespace AutoBitBot.ServerEngine.Enums
 {
-    public enum BitTaskStatus
-    {
-        Waiting,
-        Executing,
-        Executed
-    }
-
     public enum BitTaskExecutionTypes
     {
         OneTime,

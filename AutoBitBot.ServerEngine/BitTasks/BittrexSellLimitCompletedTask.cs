@@ -1,6 +1,7 @@
 ﻿using ArchPM.Core.Notifications;
 using AutoBitBot.BittrexProxy;
 using AutoBitBot.Infrastructure;
+using AutoBitBot.ServerEngine.Enums;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -23,7 +24,7 @@ namespace AutoBitBot.ServerEngine.BitTasks
         {
             return await Task.Factory.StartNew<Boolean>(() => { 
                 Thread.Sleep(20000);
-                this.InterruptExecution = true;
+                this.ExplicitlyTerminateAfterExecution = true;
                 return true;
             });
         }

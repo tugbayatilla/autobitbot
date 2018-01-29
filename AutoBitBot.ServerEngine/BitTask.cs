@@ -1,6 +1,7 @@
 ﻿using ArchPM.Core;
 using ArchPM.Core.Extensions;
 using ArchPM.Core.Notifications;
+using AutoBitBot.ServerEngine.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,7 +19,6 @@ namespace AutoBitBot.ServerEngine
     /// </summary>
     public abstract class BitTask : INotifyPropertyChanged, IDisposable
     {
-        public event EventHandler<BitTaskExecutionCompletedEventArgs> ExecutionCompleted = delegate { };
         public event EventHandler<BitTaskExecutedEventArgs> Executed = delegate { };
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
@@ -37,7 +37,7 @@ namespace AutoBitBot.ServerEngine
             this.Status = BitTaskStatus.Waiting;
             this.ExecutionId = Guid.NewGuid();
             this.ElapsedTime = 0;
-            this.InterruptExecution = false;
+            this.ExplicitlyTerminateAfterExecution = false;
         }
 
         public Server Server { get; set; }
@@ -152,6 +152,23 @@ namespace AutoBitBot.ServerEngine
             }
         }
 
+        Boolean killAfterExecution = true;
+        /// <summary>
+        /// Gets a value indicating whether [kill after execution].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [kill after execution]; otherwise, <c>false</c>.
+        /// </value>
+        public Boolean KillAfterExecution
+        {
+            get { return killAfterExecution; }
+            private set
+            {
+                killAfterExecution = value;
+                PropertyChanged(this, new PropertyChangedEventArgs(nameof(KillAfterExecution)));
+            }
+        }
+
         #endregion
 
         /// <summary>
@@ -165,14 +182,14 @@ namespace AutoBitBot.ServerEngine
             return DateTime.Now >= NextExecutionTime && Status == BitTaskStatus.Waiting;
         }
 
+
         /// <summary>
-        /// Gets or sets a value indicating whether [interrupt execution].
-        /// Prematurely interrupts the execution. Default value is false.
+        /// Gets or sets a value indicating whether [explicitly terminate after execution].
         /// </summary>
         /// <value>
-        ///   <c>true</c> if [interrupt execution]; otherwise, <c>false</c>.
+        ///   <c>true</c> if [explicitly terminate after execution]; otherwise, <c>false</c>.
         /// </value>
-        public Boolean InterruptExecution { get; set; }
+        public Boolean ExplicitlyTerminateAfterExecution { get; set; }
 
         /// <summary>
         /// Executes the specified execution identifier.
@@ -203,38 +220,43 @@ namespace AutoBitBot.ServerEngine
                     this.LastExecutionTime = DateTime.Now;
                     this.Status = BitTaskStatus.Executed;
                     this.ElapsedTime = stopWatch.ElapsedMilliseconds;
-
                     Notification.NotifyAsync(ToString());
-                    Notification.NotifyAsync($"[{Name}] {Newtonsoft.Json.JsonConvert.SerializeObject(data)}");
                     Executed(this, new BitTaskExecutedEventArgs() { Data = data, BitTask = this });
 
-                    //fistan: dikkat!!!
-                    var list = this.Server.Config.Where(p => p.Task == this.GetType() && p.ExecutionTime == ConfigExecutionTimes.AfterExecution);
-                    list.ForEach(p=> {
-                        var task = this.Server.RegisterInstanceAndExecute(p.Task, data);
-                        task.ExecutionId = this.ExecutionId;
-                    });
+                    ////fistan: dikkat!!!
+                    //var list = this.Server.Config.Where(p => p.Task == this.GetType() && p.ExecutionTime == ConfigExecutionTimes.AfterExecution);
+                    //list.ForEach(p=> {
+                    //    var task = this.Server.RegisterInstanceAndExecute(p.Task, data);
+                    //    task.ExecutionId = this.ExecutionId;
+                    //});
 
                     //prematurely interrupts the execution
-                    if (InterruptExecution)
+                    if (ExplicitlyTerminateAfterExecution)
+                    {
                         break;
-
+                    }
                     if (this.ExecutionType == BitTaskExecutionTypes.OneTime)
+                    {
                         break;
+                    }
 
+                    //change status
                     this.Status = BitTaskStatus.Waiting;
                     Notification.NotifyAsync(ToString());
 
+                    //sleep for a while
                     if (this.WaitTime > 0)
                     {
                         await Task.Delay((Int32)WaitTime);
                     }
                 }
 
-                Notification.NotifyAsync($"[{Name}] {Newtonsoft.Json.JsonConvert.SerializeObject(this.LastResult)}", NotificationLocations.Log);
-                ExecutionCompleted(this, new BitTaskExecutionCompletedEventArgs() { BitTask = this });
 
-                this.Server.Kill(this);
+                if (this.KillAfterExecution)
+                {
+                    Notification.NotifyAsync($"[{Name}] Killing the task...", NotificationLocations.Log);
+                    this.Server?.Kill(this);
+                }
 
             });
 
@@ -259,22 +281,10 @@ namespace AutoBitBot.ServerEngine
                 $"[Waits:{WaitTime}] " +
                 $"[Next:{NextExecutionTime}] " +
                 $"[Last:{LastExecutionTime}]";
-
-            //return
-            //    $"[{nameof(Name)}:{Name}] " +
-            //    $"[{nameof(Status)}:{Status.GetName()}] " +
-            //    $"[{nameof(ExecutionType)}:{ExecutionType.GetName()}] " +
-            //    $"[{nameof(ExecutionCount)}:{ExecutionCount}] " +
-            //    $"[{nameof(ElapsedTime)}:{ElapsedTime}] " +
-            //    $"[{nameof(ExecuteAtEvery)}:{ExecuteAtEvery}] " +
-            //    $"[{nameof(WaitTime)}:{WaitTime}] " +
-            //    $"[{nameof(NextExecutionTime)}:{NextExecutionTime}] " +
-            //    $"[{nameof(LastExecutionTime)}:{LastExecutionTime}]";
         }
 
         public void Dispose()
         {
-            ExecutionCompleted = null;
             stopWatch.Stop();
         }
     }

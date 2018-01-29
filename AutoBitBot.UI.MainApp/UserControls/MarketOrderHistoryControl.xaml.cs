@@ -1,5 +1,7 @@
-﻿using System;
+﻿using AutoBitBot.UI.MainApp.DTO;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,13 +18,16 @@ using System.Windows.Shapes;
 namespace AutoBitBot.UI.MainApp.UserControls
 {
     /// <summary>
-    /// Interaction logic for ActionButtonsControl.xaml
+    /// Interaction logic for MarketControl.xaml
     /// </summary>
-    public partial class ActionButtonsControl : UserControl
+    public partial class MarketOrderHistoryControl : UserControl
     {
-        public ActionButtonsControl()
+        public MarketOrderHistoryControl()
         {
             InitializeComponent();
+
         }
+
+       
     }
 }

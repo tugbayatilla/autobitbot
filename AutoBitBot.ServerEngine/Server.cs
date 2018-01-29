@@ -16,7 +16,6 @@ namespace AutoBitBot.ServerEngine
 {
     public class Server : INotifyPropertyChanged
     {
-        public event EventHandler<BitTaskExecutionCompletedEventArgs> TaskExecutionCompleted = delegate { };
         public event EventHandler<BitTaskExecutedEventArgs> TaskExecuted = delegate { };
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
@@ -53,7 +52,6 @@ namespace AutoBitBot.ServerEngine
             {
                 bitTask.ThrowExceptionIfNull();
                 bitTask.Notification = this.notification;
-                bitTask.ExecutionCompleted += BitTask_ExecutionCompleted;
                 bitTask.Executed += BitTask_Executed;
                 bitTask.Server = this;
                 this.activeTasks.Add(bitTask);
@@ -88,7 +86,7 @@ namespace AutoBitBot.ServerEngine
             lock (_lock)
             {
                 this.ActiveTasks.Remove(bitTask);
-                bitTask.ExecutionCompleted -= BitTask_ExecutionCompleted;
+                bitTask.Executed -= BitTask_Executed;
                 bitTask.Dispose();
 
                 killedTasks.Add(bitTask);
@@ -107,13 +105,6 @@ namespace AutoBitBot.ServerEngine
                       RegisterInstanceAndExecute(item, bitTask.LastResult);
                   });
             }
-        }
-
-        private void BitTask_ExecutionCompleted(object sender, BitTaskExecutionCompletedEventArgs e)
-        {
-            //notification.NotifyAsync($"Event: {((IBitTask)sender).Name} Completed!");
-
-            TaskExecutionCompleted(this, e);
         }
 
 

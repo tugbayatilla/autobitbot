@@ -10,5 +10,6 @@ namespace AutoBitBot.ServerEngine
     {
         public BitTask BitTask { get; set; }
         public Object Data { get; set; }
+        public BitTaskWorkingTimes WorkingTime { get; set; }
     }
 }

@@ -20,9 +20,9 @@ namespace AutoBitBot.UI.MainApp.UserControls
     /// <summary>
     /// Interaction logic for MarketControl.xaml
     /// </summary>
-    public partial class OrderHistoryControl : UserControl
+    public partial class MarketOpenOrdersControl : UserControl
     {
-        public OrderHistoryControl()
+        public MarketOpenOrdersControl()
         {
             InitializeComponent();
 

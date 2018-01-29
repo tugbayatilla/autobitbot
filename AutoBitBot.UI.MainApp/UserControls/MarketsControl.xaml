@@ -19,7 +19,7 @@
         <TextBox x:Name="SearchTextBox" TextChanged="SearchTextBox_TextChanged" />
         <ScrollViewer HorizontalScrollBarVisibility="Visible" MaxHeight="200" ScrollViewer.CanContentScroll="False">
             <DataGrid x:Name="dg" 
-                      ItemsSource="{Binding}" 
+                      ItemsSource="{Binding Markets}" 
                       AutoGenerateColumns="False" 
                       CanUserAddRows="False" 
                       EnableRowVirtualization="True"  

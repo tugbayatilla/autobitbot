@@ -7,7 +7,7 @@
     <ProjectGuid>{29A6CD8A-27BE-45B2-88E3-67FF3B7F03B9}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>AutoBitBot.UI.MainApp</RootNamespace>
-    <AssemblyName>AutoBitBot.UI.MainApp</AssemblyName>
+    <AssemblyName>AutoBitBot</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -37,12 +37,16 @@
     <StartupObject>
     </StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\app.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ArchPM.Core, Version=0.0.16.26102, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ArchPM.Core.0.0.16\lib\net45\ArchPM.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -69,6 +73,9 @@
     <Compile Include="Commands\SampleDisabledCommand.cs" />
     <Compile Include="Commands\SampleMsgBoxCommand.cs" />
     <Compile Include="Commands\SampleParameterCommand.cs" />
+    <Compile Include="Content\MarketInfo.xaml.cs">
+      <DependentUpon>MarketInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\DateTimeToStringConverter.cs" />
     <Compile Include="Converters\DecimalStringValueConverter.cs" />
     <Compile Include="Converters\ForegroundBitTaskStatusChangedValueConverter.cs" />
@@ -83,8 +90,8 @@
     <Compile Include="Infrastructure\ObservableObject.cs" />
     <Compile Include="Infrastructure\TextConverter.cs" />
     <Compile Include="Notifiers\RichTextBoxNotifier.cs" />
-    <Compile Include="Pages\MarketsPage.xaml.cs">
-      <DependentUpon>MarketsPage.xaml</DependentUpon>
+    <Compile Include="Pages\MarketPage.xaml.cs">
+      <DependentUpon>MarketPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Resources\Messages.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -97,9 +104,6 @@
       <DependentUpon>Titles.resx</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\SampleFormViewModel.cs" />
-    <Compile Include="UserControls\ActionButtonsControl.xaml.cs">
-      <DependentUpon>ActionButtonsControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\ActiveTasksControl.xaml.cs">
       <DependentUpon>ActiveTasksControl.xaml</DependentUpon>
     </Compile>
@@ -118,17 +122,17 @@
     <Compile Include="UserControls\MarketSummaryControl.xaml.cs">
       <DependentUpon>MarketSummaryControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\OpenOrdersControl.xaml.cs">
-      <DependentUpon>OpenOrdersControl.xaml</DependentUpon>
+    <Compile Include="UserControls\MarketOpenOrdersControl.xaml.cs">
+      <DependentUpon>MarketOpenOrdersControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\OrderHistoryControl.xaml.cs">
-      <DependentUpon>OrderHistoryControl.xaml</DependentUpon>
+    <Compile Include="UserControls\MarketOrderHistoryControl.xaml.cs">
+      <DependentUpon>MarketOrderHistoryControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\OutputControl.xaml.cs">
       <DependentUpon>OutputControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\TickerControl.xaml.cs">
-      <DependentUpon>TickerControl.xaml</DependentUpon>
+    <Compile Include="UserControls\MarketTickerControl.xaml.cs">
+      <DependentUpon>MarketTickerControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Presenter.cs" />
@@ -229,6 +233,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Content\ControlsStylesButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Content\MarketInfo.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -385,7 +393,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\MarketsPage.xaml">
+    <Page Include="Pages\MarketPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -441,10 +449,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\ActionButtonsControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="UserControls\ActiveTasksControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -469,11 +473,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\OpenOrdersControl.xaml">
+    <Page Include="UserControls\MarketOpenOrdersControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\OrderHistoryControl.xaml">
+    <Page Include="UserControls\MarketOrderHistoryControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -481,7 +485,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\TickerControl.xaml">
+    <Page Include="UserControls\MarketTickerControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -531,7 +535,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Messages.resx">
@@ -572,6 +576,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dummy\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\app.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

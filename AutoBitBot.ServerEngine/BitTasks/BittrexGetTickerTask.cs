@@ -1,6 +1,7 @@
 ﻿using ArchPM.Core.Notifications;
 using AutoBitBot.BittrexProxy;
 using AutoBitBot.BittrexProxy.Models;
+using AutoBitBot.ServerEngine.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;

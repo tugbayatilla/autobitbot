@@ -24,6 +24,9 @@ namespace AutoBitBot.UI.MainApp.UserControls
                 return;
 
             ICollectionView cv = CollectionViewSource.GetDefaultView(dg.ItemsSource);
+            if (cv == null)
+                return;
+
             if (filter == "")
                 cv.Filter = null;
             else
@@ -31,6 +34,11 @@ namespace AutoBitBot.UI.MainApp.UserControls
                 cv.Filter = o =>
                 {
                     var p = o as MarketDTO;
+                    if(p == null)
+                    {
+                        return true;
+                    }
+
                     return (p.MarketName.ToUpperInvariant().Contains(filter.ToUpperInvariant()));
                 };
             }

@@ -25,12 +25,12 @@ namespace AutoBitBot.UI.MainApp.Commands
         public void Execute(object parameter)
         {
             var model = parameter as MainViewModel;
-            var uc = new UserControls.OrderHistoryControl()
+            var uc = new UserControls.MarketOrderHistoryControl()
             {
                 DataContext = model
             };
 
-            model.server.RegisterInstanceAndExecute(new BittrexGetOrderHistoryTask("BTC-XRP") { InterruptExecution = true }, null);
+            model.server.RegisterInstanceAndExecute(new BittrexGetOrderHistoryTask("BTC-XRP") { ExplicitlyTerminateAfterExecution = true }, null);
 
             Window window = new Window
             {

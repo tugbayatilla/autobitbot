@@ -18,9 +18,9 @@ namespace AutoBitBot.UI.MainApp.UserControls
     /// <summary>
     /// Interaction logic for MarketTicksControl.xaml
     /// </summary>
-    public partial class TickerControl : UserControl
+    public partial class MarketTickerControl : UserControl
     {
-        public TickerControl()
+        public MarketTickerControl()
         {
             InitializeComponent();
         }

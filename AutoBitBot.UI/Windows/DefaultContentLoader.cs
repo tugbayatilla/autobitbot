@@ -40,9 +40,10 @@ namespace AutoBitBot.UI.Windows
         protected virtual object LoadContent(Uri uri)
         {
             // don't do anything in design mode
-            //if (IDEDesignTimeHelper.IsInDesignMode) {
-            //    return null;
-            //}
+            if (IDEDesignTimeHelper.IsInDesignMode)
+            {
+                return null;
+            }
             return Application.LoadComponent(uri);
         }
     }

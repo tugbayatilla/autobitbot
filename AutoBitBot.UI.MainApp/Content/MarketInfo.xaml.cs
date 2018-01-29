@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,16 +14,18 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AutoBitBot.UI.MainApp.Pages
+namespace AutoBitBot.UI.MainApp.Content
 {
     /// <summary>
-    /// Interaction logic for Introduction.xaml
+    /// Interaction logic for ControlsStylesDataGrid.xaml
     /// </summary>
-    public partial class MarketsPage : UserControl
+    public partial class MarketInfo : UserControl
     {
-        public MarketsPage()
+        public MarketInfo()
         {
             InitializeComponent();
+
         }
+      
     }
 }

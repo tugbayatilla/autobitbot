@@ -49,6 +49,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\BitTaskWorkingTimes.cs" />
     <Compile Include="BitTasks\BittrexGetOrderHistoryTask.cs" />
     <Compile Include="BitTasks\BittrexGetOpenOrdersTask.cs" />
     <Compile Include="BitTasks\BittrexGetMarketSummaryTask.cs" />
@@ -56,12 +57,14 @@
     <Compile Include="BitTasks\BittrexGetMarketsTask.cs" />
     <Compile Include="BitTasks\BittrexSellLimitCompletedTask.cs" />
     <Compile Include="BitTasks\BittrexSellLimitTask.cs" />
+    <Compile Include="DecisionMaker.cs" />
+    <Compile Include="Enums\BitTaskExecutionTypes.cs" />
     <Compile Include="EventArgs\BitTaskExecutedEventArgs.cs" />
     <Compile Include="EventArgs\BitTaskExecutionCompletedEventArgs.cs" />
     <Compile Include="BitTaskResult.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="BitTask.cs" />
-    <Compile Include="BitTaskStatus.cs" />
+    <Compile Include="Enums\BitTaskStatus.cs" />
     <Compile Include="ConfigItem.cs" />
     <Compile Include="BitTasks\BittrexBuyLimitTask.cs" />
     <Compile Include="BitTasks\BittrexBuyLimitCompletedTask.cs" />

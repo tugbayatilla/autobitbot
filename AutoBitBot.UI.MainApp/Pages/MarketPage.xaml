@@ -4,25 +4,22 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ui="http://autobitbot.com/UI"
-             xmlns:UserControls="clr-namespace:AutoBitBot.UI.MainApp.UserControls" x:Class="AutoBitBot.UI.MainApp.Pages.DashboardPage"
+             
+             xmlns:UserControls="clr-namespace:AutoBitBot.UI.MainApp.UserControls" x:Class="AutoBitBot.UI.MainApp.Pages.MarketPage"
+             
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800">
     <Grid Style="{StaticResource ContentRoot}">
 
-        <ui:ModernTab SelectedSource="/UserControls/ActiveTasksControl.xaml" Layout="List">
+        <ui:ModernTab SelectedSource="/UserControls/MarketSummaryControl.xaml" Layout="List">
             <ui:ModernTab.Links>
-                <ui:Link DisplayName="Active Tasks" Source="/UserControls/ActiveTasksControl.xaml"/>
-                <ui:Link DisplayName="Balance" Source="/UserControls/BalanceControl.xaml"/>
-                <ui:Link DisplayName="Markets" Source="/UserControls/MarketsControl.xaml"/>
                 <ui:Link DisplayName="Market Summary" Source="/UserControls/MarketSummaryControl.xaml"/>
                 <ui:Link DisplayName="Market Open Orders" Source="/UserControls/MarketOpenOrdersControl.xaml"/>
                 <ui:Link DisplayName="Market Order History" Source="/UserControls/MarketOrderHistoryControl.xaml"/>
                 <ui:Link DisplayName="Market Ticker" Source="/UserControls/MarketTickerControl.xaml"/>
-                <ui:Link DisplayName="Killed Tasks" Source="/UserControls/KilledTasksControl.xaml"/>
-                <ui:Link DisplayName="Output" Source="/UserControls/OutputControl.xaml"/>
             </ui:ModernTab.Links>
         </ui:ModernTab>
 
-       
+
     </Grid>
 </UserControl>

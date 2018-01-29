@@ -1,7 +1,5 @@
-﻿using AutoBitBot.UI.MainApp.DTO;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,19 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AutoBitBot.UI.MainApp.UserControls
+namespace AutoBitBot.UI.MainApp.Pages
 {
     /// <summary>
-    /// Interaction logic for MarketControl.xaml
+    /// Interaction logic for Introduction.xaml
     /// </summary>
-    public partial class OpenOrdersControl : UserControl
+    public partial class MarketPage : UserControl
     {
-        public OpenOrdersControl()
+        public MarketPage()
         {
             InitializeComponent();
-
         }
-
-       
     }
 }

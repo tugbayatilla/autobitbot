@@ -2,6 +2,7 @@
 using AutoBitBot.BittrexProxy;
 using AutoBitBot.BittrexProxy.Models;
 using AutoBitBot.Infrastructure;
+using AutoBitBot.ServerEngine.Enums;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
