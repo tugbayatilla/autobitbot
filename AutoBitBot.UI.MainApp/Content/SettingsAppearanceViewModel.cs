@@ -126,7 +126,7 @@ namespace AutoBitBot.UI.MainApp.Content
             {
                 if (this.selectedPalette != value) {
                     this.selectedPalette = value;
-                    OnPropertyChanged("AccentColors");
+                    FirePropertyChanged("AccentColors");
 
                     this.SelectedAccentColor = this.AccentColors.FirstOrDefault();
                 }
@@ -140,7 +140,7 @@ namespace AutoBitBot.UI.MainApp.Content
             {
                 if (this.selectedTheme != value) {
                     this.selectedTheme = value;
-                    OnPropertyChanged("SelectedTheme");
+                    FirePropertyChanged("SelectedTheme");
 
                     // and update the actual theme
                     AppearanceManager.Current.ThemeSource = value.Source;
@@ -155,7 +155,7 @@ namespace AutoBitBot.UI.MainApp.Content
             {
                 if (this.selectedFontSize != value) {
                     this.selectedFontSize = value;
-                    OnPropertyChanged("SelectedFontSize");
+                    FirePropertyChanged("SelectedFontSize");
 
                     AppearanceManager.Current.FontSize = value == FontLarge ? FontSize.Large : FontSize.Small;
                 }
@@ -169,7 +169,7 @@ namespace AutoBitBot.UI.MainApp.Content
             {
                 if (this.selectedAccentColor != value) {
                     this.selectedAccentColor = value;
-                    OnPropertyChanged("SelectedAccentColor");
+                    FirePropertyChanged("SelectedAccentColor");
 
                     AppearanceManager.Current.AccentColor = value;
                 }

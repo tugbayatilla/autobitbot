@@ -22,7 +22,7 @@ namespace AutoBitBot.UI.MainApp
                 if (this.firstName != value)
                 {
                     this.firstName = value;
-                    OnPropertyChanged("FirstName");
+                    FirePropertyChanged("FirstName");
                 }
             }
         }
@@ -35,7 +35,7 @@ namespace AutoBitBot.UI.MainApp
                 if (this.lastName != value)
                 {
                     this.lastName = value;
-                    OnPropertyChanged("LastName");
+                    FirePropertyChanged("LastName");
                 }
             }
         }

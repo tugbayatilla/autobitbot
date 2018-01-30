@@ -10,7 +10,7 @@ namespace AutoBitBot.UI.Presentation
     /// Represents a named group of links.
     /// </summary>
     public class LinkGroup
-        : Displayable
+        : DisplayableFrameworkElement
     {
         private string groupKey;
         private Link selectedLink;
@@ -30,7 +30,7 @@ namespace AutoBitBot.UI.Presentation
             {
                 if (this.groupKey != value) {
                     this.groupKey = value;
-                    OnPropertyChanged("GroupKey");
+                    FirePropertyChanged(nameof(GroupKey));
                 }
             }
         }
@@ -46,7 +46,7 @@ namespace AutoBitBot.UI.Presentation
             {
                 if (this.selectedLink != value) {
                     this.selectedLink = value;
-                    OnPropertyChanged("SelectedLink");
+                    FirePropertyChanged(nameof(SelectedLink));
                 }
             }
         }

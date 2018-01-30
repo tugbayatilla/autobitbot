@@ -13,18 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AutoBitBot.UI.MainApp.Pages
+namespace AutoBitBot.UI.MainApp.UserControls
 {
     /// <summary>
-    /// Interaction logic for Introduction.xaml
+    /// Interaction logic for ImmediatelySellAfterBuyControl.xaml
     /// </summary>
-    public partial class DashboardPage : UserControl
+    public partial class BuyLimitControl : UserControl
     {
-        public DashboardPage()
+        public BuyLimitControl()
         {
             InitializeComponent();
         }
-
-        public Int32 ActiveTasksCount => GlobalContext.Instance.ActiveTasks.Count;
     }
 }

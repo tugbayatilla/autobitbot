@@ -63,11 +63,8 @@ namespace AutoBitBot.UI.Windows.Controls
 
         private Stack<Uri> history = new Stack<Uri>();
         private Dictionary<Uri, object> contentCache = new Dictionary<Uri, object>();
-#if NET4
-        private List<WeakReference> childFrames = new List<WeakReference>();        // list of registered frames in sub tree
-#else
+
         private List<WeakReference<ModernFrame>> childFrames = new List<WeakReference<ModernFrame>>();        // list of registered frames in sub tree
-#endif
         private CancellationTokenSource tokenSource;
         private bool isNavigatingHistory;
         private bool isResetSource;
@@ -299,12 +296,8 @@ namespace AutoBitBot.UI.Windows.Controls
                 var valid = false;
                 ModernFrame frame;
 
-#if NET4
-                if (r.IsAlive) {
-                    frame = (ModernFrame)r.Target;
-#else
+
                 if (r.TryGetTarget(out frame)) {
-#endif
                     // check if frame is still an actual child (not the case when child is removed, but not yet garbage collected)
                     if (NavigationHelper.FindFrame(null, frame) == this) {
                         valid = true;
@@ -464,11 +457,8 @@ namespace AutoBitBot.UI.Windows.Controls
         {
             // do not register existing frame
             if (!GetChildFrames().Contains(frame)) {
-#if NET4
-                var r = new WeakReference(frame);
-#else
+
                 var r = new WeakReference<ModernFrame>(frame);
-#endif
                 this.childFrames.Add(r);
             }
         }

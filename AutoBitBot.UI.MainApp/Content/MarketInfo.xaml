@@ -8,20 +8,29 @@
              xmlns:ui="http://autobitbot.com/UI"
              xmlns:UserControls="clr-namespace:AutoBitBot.UI.MainApp.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="500" d:DesignWidth="500">
     <Grid>
 
         <ScrollViewer>
-            <StackPanel >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="150"/>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
 
-                <UserControls:BalanceControl/>
-                <UserControls:MarketsControl/>
-                <UserControls:MarketOpenOrdersControl/>
-                <UserControls:MarketOrderHistoryControl/>
-                <UserControls:MarketTickerControl />
-
-
-            </StackPanel>
+                <UserControls:MarketTickerControl Grid.Row="0" Grid.Column="0" />
+                <UserControls:MarketSummaryControl Grid.Row="0" Grid.Column="1" />
+                <UserControls:MarketOpenOrdersControl Grid.Row="3" Grid.ColumnSpan="2"/>
+                <UserControls:MarketOrderHistoryControl Grid.Row="2" Grid.ColumnSpan="2"/>
+                <UserControls:BuyLimitControl Grid.Row="1" Grid.Column="0" />
+                
+            </Grid>
         </ScrollViewer>
     </Grid>
 </UserControl>

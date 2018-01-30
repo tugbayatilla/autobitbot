@@ -22,6 +22,8 @@ namespace AutoBitBot.UI.MainApp
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
+
+            GlobalContext.Instance.Init(App.Current.Dispatcher);
         }
     }
 }

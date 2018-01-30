@@ -25,7 +25,6 @@ namespace AutoBitBot.UI.MainApp.ViewModels
     {
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
-        public Server server; //todo: boktan
         readonly RichTextBox outputRichTextBox;
         readonly Dispatcher dispatcher;
 
@@ -34,7 +33,6 @@ namespace AutoBitBot.UI.MainApp.ViewModels
             this.dispatcher = dispatcher;
             this.outputRichTextBox = outputRichTextBox;
 
-            this.Messages = new ObservableCollection<string>();
             this.Balances = new ObservableCollection<DTO.BalanceDTO>();
             this.Markets = new ObservableCollection<DTO.MarketDTO>();
             this.OpenOrders = new ObservableCollection<BittrexOpenOrdersModel>();
@@ -43,59 +41,15 @@ namespace AutoBitBot.UI.MainApp.ViewModels
             this.BuyAndSell = new DTO.BuyAndSellDTO();
             this.MarketTicker = new DTO.MarketTickerDTO();
             this.MarketSummary = new DTO.MarketSummaryDTO();
-        }
 
-        public void Init()
-        {
-            var notification = new NotificationAsyncManager();
+            GlobalContext.Instance.server.TaskExecuted += Server_TaskExecuted;
+
             var notifierOutput = new RichTextBoxNotifier(this.dispatcher, outputRichTextBox);
-            var notifierFile = new LogNotifier();
-            notification.RegisterNotifier(NotificationLocations.Console, notifierOutput);
-            notification.RegisterNotifier(NotificationLocations.Console, notifierFile);
-            notification.RegisterNotifier(NotificationLocations.EventLog, notifierOutput);
-            notification.RegisterNotifier(NotificationLocations.EventLog, notifierFile);
-            notification.RegisterNotifier(NotificationLocations.Log,
-                new LogNotifier(new ArchPM.Core.IO.LogToFileManager()
-                {
-                    LogDirectoryPath = Path.Combine(Environment.CurrentDirectory, "ExecutionCompleted")
-                }));
-
-            var bittrexManager = BittrexProxy.BittrexApiManagerFactory.Instance.Create();
-
-            server = new Server(notification);
-            server.TaskExecuted += TaskScheduler_TaskExecuted;
-            server.RegisterInstance(new BittrexGetTickerTask("BTC-XRP"));
-            server.RegisterInstance(new BittrexGetBalanceTask());
-            server.RegisterInstance(new BittrexGetMarketsTask());
-            server.RegisterInstance(new BittrexGetMarketSummaryTask("BTC-XRP"));
-            server.RegisterInstance(new BittrexGetOpenOrdersTask("BTC-XRP"));
-            server.RegisterInstance(new BittrexGetOrderHistoryTask("BTC-XRP"));
-
-
-            server.Config.Add(new ConfigItem(typeof(BittrexGetTickerTask),
-                new ConfigItem(typeof(BittrexBuyLimitCompletedTask)) { ExecutionTime = ConfigExecutionTimes.AfterExecution },
-                new ConfigItem(typeof(BittrexSellLimitTask)) { ExecutionTime = ConfigExecutionTimes.AfterExecution }, //todo: execute onetime can be set here
-                new ConfigItem(typeof(BittrexSellLimitCompletedTask))));
-
-            DecisionMaker decisionMaker = new DecisionMaker(server)
-            {
-                InteractionWithUser = OpenModal
-            };
-            decisionMaker.Start();
-
-            server.RunAllRegisteredTasksAsync();
-
+            GlobalContext.Instance.RegisterNotifier(NotificationLocations.Console, notifierOutput);
+            GlobalContext.Instance.RegisterNotifier(NotificationLocations.EventLog, notifierOutput);
         }
 
-
-        Task<Boolean> OpenModal(String message)
-        {
-            var command = new OpenModalCommand();
-            command.Execute(message);
-            return Task.FromResult<Boolean>((Boolean)command.Result);
-        }
-
-        private void TaskScheduler_TaskExecuted(object sender, BitTaskExecutedEventArgs e)
+        private void Server_TaskExecuted(object sender, BitTaskExecutedEventArgs e)
         {
             if (e.Data is BittrexTickerModel)
             {
@@ -187,11 +141,13 @@ namespace AutoBitBot.UI.MainApp.ViewModels
                 });
                 PropertyChanged(this, new PropertyChangedEventArgs(nameof(OrderHistory)));
             }
+
+            
         }
 
 
-        public ObservableCollection<BitTask> ActiveTasks => server.ActiveTasks;
-        public ObservableCollection<BitTask> KilledTasks => server.KilledTasks;
+        public ObservableCollection<BitTask> ActiveTasks => GlobalContext.Instance.ActiveTasks;
+        public ObservableCollection<BitTask> KilledTasks => GlobalContext.Instance.KilledTasks;
         public ObservableCollection<String> Messages { get; private set; }
         public ObservableCollection<DTO.MarketDTO> Markets { get; set; }
         public ObservableCollection<DTO.BalanceDTO> Balances { get; set; }

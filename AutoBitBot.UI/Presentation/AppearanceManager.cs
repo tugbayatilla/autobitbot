@@ -122,7 +122,7 @@ namespace AutoBitBot.UI.Presentation
                 dictionaries.Remove(oldThemeDict);
             }
 
-            OnPropertyChanged("ThemeSource");
+            FirePropertyChanged("ThemeSource");
         }
 
         private void ApplyAccentColor(Color accentColor)
@@ -153,7 +153,7 @@ namespace AutoBitBot.UI.Presentation
             Application.Current.Resources[KeyDefaultFontSize] = fontSize == FontSize.Small ? 12D : 13D;
             Application.Current.Resources[KeyFixedFontSize] = fontSize == FontSize.Small ? 10.667D : 13.333D;
 
-            OnPropertyChanged("FontSize");
+            FirePropertyChanged("FontSize");
         }
 
         private Color GetAccentColor()
@@ -178,7 +178,7 @@ namespace AutoBitBot.UI.Presentation
                 SetThemeSource(themeSource, false);
             }
 
-            OnPropertyChanged("AccentColor");
+            FirePropertyChanged("AccentColor");
         }
 
         /// <summary>

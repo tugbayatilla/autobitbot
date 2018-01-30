@@ -30,7 +30,7 @@ namespace AutoBitBot.UI.MainApp.Commands
                 DataContext = model
             };
 
-            model.server.RegisterInstanceAndExecute(new BittrexGetOrderHistoryTask("BTC-XRP") { ExplicitlyTerminateAfterExecution = true }, null);
+            GlobalContext.Instance.server.RegisterInstanceAndExecute(new BittrexGetOrderHistoryTask("BTC-XRP") { ExplicitlyTerminateAfterExecution = true }, null);
 
             Window window = new Window
             {

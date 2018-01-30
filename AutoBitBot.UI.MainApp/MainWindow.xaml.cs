@@ -34,9 +34,7 @@ namespace AutoBitBot.UI.MainApp
 
             RichTextBox output = (RichTextBox)Template.FindName("Output", this);
 
-            ViewModels.MainViewModel model = new ViewModels.MainViewModel(this.Dispatcher, output);
-            model.Init();
-            this.DataContext = model;
+            this.DataContext = new ViewModels.MainViewModel(this.Dispatcher, output);
         }
     }
 }

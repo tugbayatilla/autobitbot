@@ -47,7 +47,7 @@
     <Compile Include="IDEDesignTimeHelper.cs" />
     <Compile Include="Presentation\AppearanceManager.cs" />
     <Compile Include="Presentation\CommandBase.cs" />
-    <Compile Include="Presentation\Displayable.cs" />
+    <Compile Include="Presentation\DisplayableFrameworkElement.cs" />
     <Compile Include="Presentation\FontSize.cs" />
     <Compile Include="Presentation\Link.cs" />
     <Compile Include="Presentation\LinkCollection.cs" />

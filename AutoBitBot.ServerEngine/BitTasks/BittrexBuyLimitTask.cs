@@ -28,6 +28,8 @@ namespace AutoBitBot.ServerEngine.BitTasks
                 throw new ArgumentNullException(nameof(parameter), new BitTaskException($"[{Name}] Execute method parameter is null."));
             }
 
+            Thread.Sleep(2000);
+
             Notification.NotifyAsync($"[{Name}] executed. Parameter: {parameter}");
 
             return null;

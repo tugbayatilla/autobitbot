@@ -17,6 +17,7 @@
                 <ui:Link DisplayName="Market Open Orders" Source="/UserControls/MarketOpenOrdersControl.xaml"/>
                 <ui:Link DisplayName="Market Order History" Source="/UserControls/MarketOrderHistoryControl.xaml"/>
                 <ui:Link DisplayName="Market Ticker" Source="/UserControls/MarketTickerControl.xaml"/>
+                <ui:Link DisplayName="Buy" Source="/UserControls/BuyLimitControl.xaml"/>
             </ui:ModernTab.Links>
         </ui:ModernTab>
 

@@ -12,43 +12,39 @@
 
     <ui:ModernWindow.TitleLinks>
         <ui:Link DisplayName="Settings" Source="/Pages/Settings.xaml" />
-        <ui:Link DisplayName="Help" Source="https://github.com/firstfloorsoftware/mui/wiki" />
+        <ui:Link DisplayName="Help" Source="https://github.com/tugbayatilla" />
     </ui:ModernWindow.TitleLinks>
 
     <ui:ModernWindow.MenuLinkGroups>
         <ui:LinkGroup DisplayName="Welcome">
             <ui:LinkGroup.Links>
-                <ui:Link DisplayName="{x:Static res:Titles.Dashboard}" Source="/Pages/DashboardPage.xaml" />
+                <ui:Link DisplayName="{x:Static res:Titles.Dashboard}" Source="/Pages/DashboardPage.xaml"/>
                 <ui:Link DisplayName="Market" Source="/Pages/MarketPage.xaml" />
             </ui:LinkGroup.Links>
         </ui:LinkGroup>
-        <ui:LinkGroup DisplayName="Layout">
+       <ui:LinkGroup DisplayName="Layout" >
             <ui:LinkGroup.Links>
-                <ui:Link DisplayName="Wireframe" Source="/Pages/LayoutWireframe.xaml" />
-                <ui:Link DisplayName="Basic" Source="/Pages/LayoutBasic.xaml" />
-                <ui:Link DisplayName="Split" Source="/Pages/LayoutSplit.xaml" />
-                <ui:Link DisplayName="List" Source="/Pages/LayoutList.xaml"  />
-                <ui:Link DisplayName="Tab" Source="/Pages/LayoutTab.xaml" />
+                <ui:Link DisplayName="Market" Source="/Pages/MarketPage.xaml" />
             </ui:LinkGroup.Links>
         </ui:LinkGroup>
-        <ui:LinkGroup DisplayName="Controls">
+        <!--  <ui:LinkGroup DisplayName="Controls" >
             <ui:LinkGroup.Links>
                 <ui:Link DisplayName="Styles" Source="/Pages/ControlsStyles.xaml" />
                 <ui:Link DisplayName="Modern controls" Source="/Pages/ControlsModern.xaml" />
             </ui:LinkGroup.Links>
         </ui:LinkGroup>
-        <ui:LinkGroup DisplayName="Advanced">
+        <ui:LinkGroup DisplayName="Advanced" >
             <ui:LinkGroup.Links>
                 <ui:Link DisplayName="DPI awareness" Source="/Pages/DpiAwareness.xaml" />
                 <ui:Link DisplayName="Navigation" Source="/Pages/Navigation.xaml" />
                 <ui:Link DisplayName="Content Loader" Source="/Pages/ContentLoader.xaml" />
             </ui:LinkGroup.Links>
-        </ui:LinkGroup>
-        <ui:LinkGroup DisplayName="Settings" GroupKey="settings">
+        </ui:LinkGroup>-->
+        <!--<ui:LinkGroup DisplayName="Settings" GroupKey="settings">
             <ui:LinkGroup.Links>
                 <ui:Link DisplayName="Software" Source="/Pages/Settings.xaml" />
             </ui:LinkGroup.Links>
-        </ui:LinkGroup>
+        </ui:LinkGroup>-->
     </ui:ModernWindow.MenuLinkGroups>
 
 </ui:ModernWindow>
