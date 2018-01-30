@@ -67,6 +67,7 @@ namespace AutoBitBot.UI.MainApp
             server.RegisterInstance(new BittrexGetMarketSummaryTask("BTC-XRP"));
             server.RegisterInstance(new BittrexGetOpenOrdersTask("BTC-XRP"));
             server.RegisterInstance(new BittrexGetOrderHistoryTask("BTC-XRP"));
+            server.RegisterInstance(new BittrexGetMarketSummariesTask());
 
 
             server.Config.Add(new ConfigItem(typeof(BittrexGetTickerTask),

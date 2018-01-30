@@ -78,13 +78,16 @@
       <DependentUpon>MarketInfo.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\DateTimeToStringConverter.cs" />
+    <Compile Include="Converters\PercentStringValueConverter.cs" />
     <Compile Include="Converters\DecimalStringValueConverter.cs" />
+    <Compile Include="Converters\ForegroundChangeValueConverter.cs" />
     <Compile Include="Converters\ForegroundBitTaskStatusChangedValueConverter.cs" />
     <Compile Include="Converters\ForegroundOldNewPairValueConverter.cs" />
     <Compile Include="DTO\BalanceDTO.cs" />
     <Compile Include="DTO\BitTaskDTO.cs" />
     <Compile Include="DTO\BuyLimitDTO.cs" />
     <Compile Include="DTO\BuyAndSellDTO.cs" />
+    <Compile Include="DTO\OldNewPair.cs" />
     <Compile Include="DTO\MarketDTO.cs" />
     <Compile Include="DTO\MarketSummaryDTO.cs" />
     <Compile Include="DTO\MarketTickerDTO.cs" />
@@ -107,6 +110,9 @@
     </Compile>
     <Compile Include="UserControls\BuyLimitControl.xaml.cs">
       <DependentUpon>BuyLimitControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\MarketSummeriesControl.xaml.cs">
+      <DependentUpon>MarketSummeriesControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\GlobalContext.cs" />
     <Compile Include="ViewModels\SampleFormViewModel.cs" />
@@ -472,6 +478,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControls\KilledTasksControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\MarketSummeriesControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

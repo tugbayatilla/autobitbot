@@ -9,7 +9,7 @@ namespace AutoBitBot.UI.MainApp.DTO
 {
     public class MarketSummaryDTO : ObservableObject
     {
-        Decimal high, low, volume;
+        Decimal high, low, volume, prevDay, baseValume;
         OldNewPair<Decimal> last, bid, ask;
         String marketName;
         Int32 openBuyOrders, openSellOrders;
@@ -72,6 +72,33 @@ namespace AutoBitBot.UI.MainApp.DTO
 
             }
         }
+
+        public Decimal BaseVolume
+        {
+            get
+            {
+                return baseValume;
+            }
+            set
+            {
+                baseValume = value;
+                OnPropertyChanged(nameof(BaseVolume));
+
+            }
+        }
+        public Decimal PrevDay
+        {
+            get
+            {
+                return prevDay;
+            }
+            set
+            {
+                prevDay = value;
+                OnPropertyChanged(nameof(PrevDay));
+                OnPropertyChanged(nameof(Change));
+            }
+        }
         public OldNewPair<Decimal> Last
         {
             get
@@ -84,12 +111,10 @@ namespace AutoBitBot.UI.MainApp.DTO
                 OnPropertyChanged(nameof(Last));
                 last.PropertyNotify = () => {
                     OnPropertyChanged(nameof(Last));
+                    OnPropertyChanged(nameof(Change));
                 };
             }
         }
-
-       
-
         public OldNewPair<Decimal> Bid
         {
             get
@@ -149,30 +174,9 @@ namespace AutoBitBot.UI.MainApp.DTO
             }
         }
 
+        public Decimal Change => (Last.NewValue - PrevDay) * 100 / PrevDay;
+
     }
 
-    public class OldNewPair<T> : ObservableObject
-    {
-        T oldValue, newValue;
 
-        public Action PropertyNotify;
-
-        public T NewValue
-        {
-            get
-            {
-                return newValue;
-            }
-            set
-            {
-                oldValue = newValue;
-                newValue = value;
-                OnPropertyChanged(nameof(NewValue));
-                OnPropertyChanged(nameof(OldValue));
-
-                PropertyNotify?.Invoke();
-            }
-        }
-        public T OldValue => oldValue;
-    }
 }

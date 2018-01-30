@@ -26,6 +26,7 @@
                                     <Binding Path="Status" Converter="{StaticResource ForegroundBitTaskStatusChangedValueConverter}"/>
                                 </Setter.Value>
                             </Setter>
+                            
                         </Style>
                     </DataGridTextColumn.CellStyle>
                 </DataGridTextColumn>
