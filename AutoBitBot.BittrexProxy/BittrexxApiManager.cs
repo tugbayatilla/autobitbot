@@ -9,11 +9,15 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using AutoBitBot.Infrastructure;
 using ArchPM.Core.Api;
+using AutoBitBot.Infrastructure.Exchanges;
 
 namespace AutoBitBot.BittrexProxy
 {
     //fistan:apiKeyModel key'ler gelmezse exception throw et. 
     //manager initialize olurken key'leri al
+
+
+        //apiurl'i de inject etmelisin
 
     /// <summary>
     /// 
@@ -111,7 +115,7 @@ namespace AutoBitBot.BittrexProxy
             return await __handler<List<BittrexMarketSummaryModel>>(url);
         }
 
-        public async Task<IApiResponse<List<BittrexOpenOrdersModel>>> GetOpenOrders(ApiKeyModel apiKeyModel, String market = "")
+        public async Task<IApiResponse<List<BittrexOpenOrdersModel>>> GetOpenOrders(ExchangeApiKey apiKeyModel, String market = "")
         {
             var url = BittrexApiUrls.GetOpenOrders(apiKeyModel.ApiKey, apiKeyModel.Nonce, market);
             return await __handler<List<BittrexOpenOrdersModel>>(url, () =>
@@ -129,7 +133,7 @@ namespace AutoBitBot.BittrexProxy
             return await __handler<List<BittrexCurrencyModel>>(url);
         }
 
-        public async Task<IApiResponse<List<BittrexBalanceModel>>> GetBalances(ApiKeyModel apiKeyModel)
+        public async Task<IApiResponse<List<BittrexBalanceModel>>> GetBalances(ExchangeApiKey apiKeyModel)
         {
             var url = BittrexApiUrls.GetBalances(apiKeyModel.ApiKey, apiKeyModel.Nonce);
             return await __handler<List<BittrexBalanceModel>>(url, () =>
@@ -139,7 +143,7 @@ namespace AutoBitBot.BittrexProxy
             });
         }
 
-        public async Task<IApiResponse<BittrexBalanceModel>> GetBalance(ApiKeyModel apiKeyModel, String currency)
+        public async Task<IApiResponse<BittrexBalanceModel>> GetBalance(ExchangeApiKey apiKeyModel, String currency)
         {
             var url = BittrexApiUrls.GetBalance(apiKeyModel.ApiKey, apiKeyModel.Nonce, currency);
             return await __handler<BittrexBalanceModel>(url, () =>
@@ -149,7 +153,7 @@ namespace AutoBitBot.BittrexProxy
             });
         }
 
-        public async Task<IApiResponse<List<BittrexOrderHistoryModel>>> GetOrderHistory(ApiKeyModel apiKeyModel, String market)
+        public async Task<IApiResponse<List<BittrexOrderHistoryModel>>> GetOrderHistory(ExchangeApiKey apiKeyModel, String market)
         {
             var url = BittrexApiUrls.GetOrderHistory(apiKeyModel.ApiKey, apiKeyModel.Nonce, market);
             return await __handler<List<BittrexOrderHistoryModel>>(url, () =>
@@ -159,7 +163,7 @@ namespace AutoBitBot.BittrexProxy
             });
         }
 
-        public async Task<IApiResponse<BittrexOrderModel>> GetOrder(ApiKeyModel apiKeyModel, String uuid)
+        public async Task<IApiResponse<BittrexOrderModel>> GetOrder(ExchangeApiKey apiKeyModel, String uuid)
         {
             var url = BittrexApiUrls.GetOrder(apiKeyModel.ApiKey, apiKeyModel.Nonce, uuid);
             return await __handler<BittrexOrderModel>(url, () =>
@@ -169,7 +173,7 @@ namespace AutoBitBot.BittrexProxy
             });
         }
 
-        public async Task<IApiResponse<BittrexLimitModel>> BuyLimit(ApiKeyModel apiKeyModel, BittrexBuyLimitArgs args)
+        public async Task<IApiResponse<BittrexLimitModel>> BuyLimit(ExchangeApiKey apiKeyModel, BittrexBuyLimitArgs args)
         {
             var url = BittrexApiUrls.BuyLimit(apiKeyModel.ApiKey, apiKeyModel.Nonce, args.Market, args.Quantity, args.Rate);
             return await __handler<BittrexLimitModel>(url, () =>
@@ -179,7 +183,7 @@ namespace AutoBitBot.BittrexProxy
             });
         }
 
-        public async Task<IApiResponse<BittrexLimitModel>> SellLimit(ApiKeyModel apiKeyModel, BittrexSellLimitArgs args)
+        public async Task<IApiResponse<BittrexLimitModel>> SellLimit(ExchangeApiKey apiKeyModel, BittrexSellLimitArgs args)
         {
             var url = BittrexApiUrls.SellLimit(apiKeyModel.ApiKey, apiKeyModel.Nonce, args.Market, args.Quantity, args.Rate);
             return await __handler<BittrexLimitModel>(url, () =>

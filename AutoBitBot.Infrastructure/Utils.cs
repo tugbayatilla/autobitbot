@@ -11,20 +11,6 @@ namespace AutoBitBot.Infrastructure
 {
     public static class Utils
     {
-        /// <summary>
-        /// ApplicationSecret Key
-        /// </summary>
-        /// <value>
-        /// The secret key.
-        /// </value>
-        public static String SecretKey
-        {
-            get
-            {
-                return ConfigurationManager.AppSettings.Get("SecretKey");
-            }
-        }
-
         public static Int64 GetTime()
         {
             Int64 retval = 0;

@@ -12,17 +12,17 @@ namespace AutoBitBot.BittrexProxy
     {
         public static readonly BittrexApiManagerFactory Instance = new BittrexApiManagerFactory();
 
-        HttpClient _httpClient;
+        public readonly HttpClient httpClient;
         
         public BittrexApiManagerFactory()
         {
-            _httpClient = new HttpClient();
+            httpClient = new HttpClient();
         }
 
         public BittrexApiManager Create()
         {
             IApiResponseLog apiResponseLog = new NullApiResponseLog();
-            return new BittrexApiManager(_httpClient, apiResponseLog);
+            return new BittrexApiManager(httpClient, apiResponseLog);
         }
 
     }

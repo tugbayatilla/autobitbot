@@ -1,6 +1,7 @@
 ﻿using ArchPM.Core;
 using ArchPM.Core.Extensions;
 using ArchPM.Core.Notifications;
+using AutoBitBot.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,10 +15,9 @@ using System.Windows.Threading;
 
 namespace AutoBitBot.ServerEngine
 {
-    public class Server : INotifyPropertyChanged
+    public class Server : ObservableObject
     {
         public event EventHandler<BitTaskExecutedEventArgs> TaskExecuted = delegate { };
-        public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
         readonly ObservableCollection<BitTask> activeTasks;
         readonly ObservableCollection<BitTask> killedTasks;

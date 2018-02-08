@@ -40,11 +40,12 @@
                 <ui:Link DisplayName="Content Loader" Source="/Pages/ContentLoader.xaml" />
             </ui:LinkGroup.Links>
         </ui:LinkGroup>-->
-        <!--<ui:LinkGroup DisplayName="Settings" GroupKey="settings">
+        <ui:LinkGroup DisplayName="Settings" GroupKey="settings">
             <ui:LinkGroup.Links>
-                <ui:Link DisplayName="Software" Source="/Pages/Settings.xaml" />
+                <ui:Link DisplayName="Customization" Source="/Pages/Settings.xaml" />
+                <ui:Link DisplayName="Task Management" Source="/UserControls/ActiveTasksControl.xaml" />
             </ui:LinkGroup.Links>
-        </ui:LinkGroup>-->
+        </ui:LinkGroup>
     </ui:ModernWindow.MenuLinkGroups>
 
 </ui:ModernWindow>

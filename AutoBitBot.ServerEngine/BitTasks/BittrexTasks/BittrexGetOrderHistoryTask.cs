@@ -2,6 +2,7 @@
 using AutoBitBot.BittrexProxy;
 using AutoBitBot.BittrexProxy.Models;
 using AutoBitBot.Infrastructure;
+using AutoBitBot.Infrastructure.Exchanges;
 using AutoBitBot.ServerEngine.Enums;
 using System;
 using System.Collections.Generic;
@@ -13,17 +14,17 @@ using System.Threading.Tasks;
 
 namespace AutoBitBot.ServerEngine.BitTasks
 {
-    public class BittrexGetOpenOrdersTask : BitTask
+    public class BittrexGetOrderHistoryTask : BitTask
     {
         readonly String market;
-        public BittrexGetOpenOrdersTask(String market)
+        public BittrexGetOrderHistoryTask(String market)
         {
             this.market = market;
         }
 
-        public override long ExecuteAtEvery => 30000;
+        public override long ExecuteAtEvery => 10000;
 
-        public override string Name => "BittrexGetOpenOrdersTask";
+        public override string Name => "BittrexGetOrderHistoryTask";
 
         public override BitTaskExecutionTypes ExecutionType => BitTaskExecutionTypes.Permanent;
 
@@ -32,7 +33,7 @@ namespace AutoBitBot.ServerEngine.BitTasks
             //fistan: merkezi yap
             var manager = BittrexApiManagerFactory.Instance.Create();
 
-            var result = await manager.GetOpenOrders(new ApiKeyModel()
+            var result = await manager.GetOrderHistory(new ExchangeApiKey()
             {
                 ApiKey = ConfigurationManager.AppSettings["BittrexApiKey"],
                 SecretKey = ConfigurationManager.AppSettings["BittrexApiSecret"]

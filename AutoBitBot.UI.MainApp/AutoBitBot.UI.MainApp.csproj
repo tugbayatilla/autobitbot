@@ -92,7 +92,6 @@
     <Compile Include="DTO\MarketSummaryDTO.cs" />
     <Compile Include="DTO\MarketTickerDTO.cs" />
     <Compile Include="Infrastructure\DelegateCommand.cs" />
-    <Compile Include="Infrastructure\ObservableObject.cs" />
     <Compile Include="Infrastructure\TextConverter.cs" />
     <Compile Include="Notifiers\RichTextBoxNotifier.cs" />
     <Compile Include="Pages\MarketPage.xaml.cs">
@@ -147,7 +146,6 @@
       <DependentUpon>MarketTickerControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\Presenter.cs" />
     <Page Include="Assets\Icons\appbar.add.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -585,6 +583,10 @@
       <Project>{cf48750d-7fc6-4271-be14-6f34f0b966ee}</Project>
       <Name>AutoBitBot.BittrexProxy</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AutoBitBot.Infrastructure\AutoBitBot.Infrastructure.csproj">
+      <Project>{588870ff-1117-4dd7-af92-e5eb653f93bf}</Project>
+      <Name>AutoBitBot.Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AutoBitBot.ServerEngine\AutoBitBot.ServerEngine.csproj">
       <Project>{90a542cd-1f99-4f3a-9052-496546349799}</Project>
       <Name>AutoBitBot.ServerEngine</Name>
@@ -594,9 +596,7 @@
       <Name>AutoBitBot.UI</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Dummy\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Resources\app.ico" />
   </ItemGroup>
