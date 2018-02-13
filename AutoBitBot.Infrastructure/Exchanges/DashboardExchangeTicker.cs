@@ -1,31 +1,54 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace AutoBitBot.Infrastructure.Exchanges
 {
-    public class ExchangeTicker : ObservableObject
+    public class DashboardExchangeTicker : ObservableObject
     {
-        Decimal high, low, volume, prevDay, baseValume, change;
-        OldNewPair<Decimal> last, bid, ask;
-        String marketName;
-        Int32 openBuyOrders, openSellOrders;
-
-        public ExchangeTicker()
+        public DashboardExchangeTicker()
         {
-            this.Last = new OldNewPair<Decimal>();
-            this.Bid = new OldNewPair<decimal>();
-            this.Ask = new OldNewPair<decimal>();
+            this.ExchangeTickers = new ObservableCollection<DashboardExchangeTickerData>();
         }
 
+        String marketName;
         public String MarketName
         {
             get => marketName;
             set
             {
                 marketName = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<DashboardExchangeTickerData> ExchangeTickers { get; set; }
+    }
+
+
+    public class DashboardExchangeTickerData : ObservableObject
+    {
+        Decimal high, low, volume, prevDay, baseValume, change;
+        OldNewPair<Decimal> last, bid, ask;
+        String exchangeName;
+        Int32 openBuyOrders, openSellOrders;
+
+        public DashboardExchangeTickerData()
+        {
+            this.Last = new OldNewPair<Decimal>();
+            this.Bid = new OldNewPair<decimal>();
+            this.Ask = new OldNewPair<decimal>();
+        }
+
+        public String ExchangeName
+        {
+            get => exchangeName;
+            set
+            {
+                exchangeName = value;
                 OnPropertyChanged();
             }
         }

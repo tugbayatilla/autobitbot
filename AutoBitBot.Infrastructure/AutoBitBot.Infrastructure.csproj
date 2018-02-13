@@ -59,8 +59,9 @@
     <Compile Include="Exchanges\ExchangeMarketSummary.cs" />
     <Compile Include="Exchanges\ExchangeOrder.cs" />
     <Compile Include="Exchanges\ExchangeOrderHistory.cs" />
-    <Compile Include="Exchanges\IExchangeOps.cs" />
     <Compile Include="Exchanges\ExchangeTicker.cs" />
+    <Compile Include="Exchanges\IExchangeOps.cs" />
+    <Compile Include="Exchanges\DashboardExchangeTicker.cs" />
     <Compile Include="ObservableObject.cs" />
     <Compile Include="OldNewPair.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

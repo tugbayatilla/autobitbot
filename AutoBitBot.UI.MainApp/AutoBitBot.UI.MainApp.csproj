@@ -106,6 +106,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Titles.resx</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\DashboardExchangeTickersControl.xaml.cs">
+      <DependentUpon>DashboardExchangeTickersControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\BuyLimitControl.xaml.cs">
       <DependentUpon>BuyLimitControl.xaml</DependentUpon>
     </Compile>
@@ -466,6 +469,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControls\BalanceControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\DashboardExchangeTickersControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
