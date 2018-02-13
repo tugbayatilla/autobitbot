@@ -21,7 +21,7 @@ namespace AutoBitBot.ServerEngine.BitTasks
             this.market = market;
         }
 
-        public override long ExecuteAtEvery => 5000;
+        public override long ExecuteAtEvery => 10000;
 
         public override string Name => "BittrexGetMarketSummaryTask";
 

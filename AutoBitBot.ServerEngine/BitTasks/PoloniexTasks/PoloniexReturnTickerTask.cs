@@ -2,6 +2,7 @@
 using AutoBitBot.BittrexProxy;
 using AutoBitBot.BittrexProxy.Models;
 using AutoBitBot.Infrastructure;
+using AutoBitBot.PoloniexProxy;
 using AutoBitBot.ServerEngine.Enums;
 using System;
 using System.Collections.Generic;
@@ -13,24 +14,21 @@ using System.Threading.Tasks;
 
 namespace AutoBitBot.ServerEngine.BitTasks
 {
-    public class BittrexGetMarketSummariesTask : BitTask
+    public class PoloniexReturnTickerTask : BitTask
     {
-        public BittrexGetMarketSummariesTask()
-        {
-        }
 
         public override long ExecuteAtEvery => 20000;
 
-        public override string Name => "BittrexGetMarketSummariesTask";
+        public override string Name => "PoloniexReturnTickerTask";
 
         public override BitTaskExecutionTypes ExecutionType => BitTaskExecutionTypes.Permanent;
 
         protected override async Task<Object> ExecuteAction(Object parameter)
         {
             //fistan: merkezi yap
-            var manager = BittrexApiManagerFactory.Instance.Create();
+            var manager = PoloniexApiManagerFactory.Instance.Create();
 
-            var result = await manager.GetMarketSummaries();
+            var result = await manager.ReturnTicker();
 
             if (!result.Result)
             {

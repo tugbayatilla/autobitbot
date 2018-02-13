@@ -141,10 +141,7 @@ namespace AutoBitBot.UI.Windows.Controls
             }
 
             // raise SelectedSourceChanged event
-            var handler = this.SelectedSourceChanged;
-            if (handler != null) {
-                handler(this, new SourceEventArgs(newValue));
-            }
+            this.SelectedSourceChanged?.Invoke(this, new SourceEventArgs(newValue));
         }
 
         /// <summary>

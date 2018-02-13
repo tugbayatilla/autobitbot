@@ -59,6 +59,7 @@
     <Compile Include="BitTasks\BittrexTasks\BittrexGetMarketsTask.cs" />
     <Compile Include="BitTasks\BittrexTasks\BittrexSellLimitCompletedTask.cs" />
     <Compile Include="BitTasks\BittrexTasks\BittrexSellLimitTask.cs" />
+    <Compile Include="BitTasks\PoloniexTasks\PoloniexReturnTickerTask.cs" />
     <Compile Include="BitTasks\PoloniexTasks\PoloniexReturnBalancesTask.cs" />
     <Compile Include="DecisionMaker.cs" />
     <Compile Include="BitTasks\Enums\BitTaskExecutionTypes.cs" />

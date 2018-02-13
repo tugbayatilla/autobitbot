@@ -1,0 +1,60 @@
+﻿<UserControl x:Class="AutoBitBot.UI.MainApp.UserControls.BittrexTickersControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AutoBitBot.UI.MainApp.UserControls"
+             xmlns:converters="clr-namespace:AutoBitBot.UI.MainApp.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="1000">
+
+    <UserControl.Resources>
+        <converters:DateTimeToStringConverter x:Key="DateTimeToStringConverter" />
+        <converters:DecimalStringValueConverter x:Key="DecimalStringValueConverter"/>
+        <converters:PercentStringValueConverter x:Key="PercentStringValueConverter"/>
+        <converters:ForegroundOldNewPairValueConverter x:Key="ForegroundOldNewPairValueConverter" />
+        <converters:ForegroundChangeValueConverter x:Key="ForegroundChangeValueConverter" />
+
+    </UserControl.Resources>
+        
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBox Grid.Row="0" x:Name="SearchTextBox" TextChanged="SearchTextBox_TextChanged" />
+            <DataGrid x:Name="dg"   Grid.Row="1"
+                      ItemsSource="{Binding BittrexTickers}" 
+                      AutoGenerateColumns="False" 
+                      CanUserAddRows="False" 
+                      
+                       >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Market" Binding="{Binding MarketName}" />
+                    <DataGridTextColumn Header="Volume" Binding="{Binding BaseVolume, Converter={StaticResource PercentStringValueConverter}}" />
+                <DataGridTextColumn Header="Change" Binding="{Binding Change, Converter={StaticResource PercentStringValueConverter}}">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="{x:Type DataGridCell}">
+                            <Setter Property="Foreground">
+                                <Setter.Value>
+                                    <Binding Path="Change" Converter="{StaticResource ForegroundChangeValueConverter}"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="TextBlock.TextAlignment" Value="Right" />
+                            <Setter Property="TextBlock.Padding" Value="0,0,20,0" />
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Header="Last" Binding="{Binding Last.NewValue, Converter={StaticResource DecimalStringValueConverter}}" Foreground="{Binding Last, Converter={StaticResource ForegroundOldNewPairValueConverter}}" />
+                    <DataGridTextColumn Header="24H High" Binding="{Binding High, Converter={StaticResource DecimalStringValueConverter}}" />
+                    <DataGridTextColumn Header="24H Low" Binding="{Binding Low, Converter={StaticResource DecimalStringValueConverter}}"/>
+                    <DataGridTextColumn Header="Gap" Binding="{Binding Gap, Converter={StaticResource DecimalStringValueConverter}}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+    </Grid>
+</UserControl>

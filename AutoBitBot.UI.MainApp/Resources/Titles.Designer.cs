@@ -61,11 +61,29 @@ namespace AutoBitBot.UI.MainApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to BITTREX TICKERS.
+        /// </summary>
+        public static string BittrexTickers {
+            get {
+                return ResourceManager.GetString("BittrexTickers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DASHBOARD.
         /// </summary>
         public static string Dashboard {
             get {
                 return ResourceManager.GetString("Dashboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to POLONIEX TICKERS.
+        /// </summary>
+        public static string PoloniexTickers {
+            get {
+                return ResourceManager.GetString("PoloniexTickers", resourceCulture);
             }
         }
     }

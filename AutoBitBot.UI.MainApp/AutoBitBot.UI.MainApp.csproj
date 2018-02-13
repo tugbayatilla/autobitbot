@@ -89,7 +89,6 @@
     <Compile Include="DTO\BuyAndSellDTO.cs" />
     <Compile Include="DTO\OldNewPair.cs" />
     <Compile Include="DTO\MarketDTO.cs" />
-    <Compile Include="DTO\MarketSummaryDTO.cs" />
     <Compile Include="DTO\MarketTickerDTO.cs" />
     <Compile Include="Infrastructure\DelegateCommand.cs" />
     <Compile Include="Infrastructure\TextConverter.cs" />
@@ -110,8 +109,11 @@
     <Compile Include="UserControls\BuyLimitControl.xaml.cs">
       <DependentUpon>BuyLimitControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\MarketSummeriesControl.xaml.cs">
-      <DependentUpon>MarketSummeriesControl.xaml</DependentUpon>
+    <Compile Include="UserControls\BittrexTickersControl.xaml.cs">
+      <DependentUpon>BittrexTickersControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\PoloniexTickersControl.xaml.cs">
+      <DependentUpon>PoloniexTickersControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\GlobalContext.cs" />
     <Compile Include="ViewModels\SampleFormViewModel.cs" />
@@ -479,7 +481,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\MarketSummeriesControl.xaml">
+    <Page Include="UserControls\BittrexTickersControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\PoloniexTickersControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

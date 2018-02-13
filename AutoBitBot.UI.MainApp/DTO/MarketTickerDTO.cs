@@ -23,18 +23,18 @@ namespace AutoBitBot.UI.MainApp.DTO
         public OldNewPair<Decimal> Bid
         {
             get { return bid; }
-            set { bid = value; OnPropertyChanged(nameof(Bid)); bid.PropertyNotify = () => { OnPropertyChanged(nameof(Bid)); }; }
+            set { bid = value; OnPropertyChanged(nameof(Bid)); bid.EscaladeChangeAction = () => { OnPropertyChanged(nameof(Bid)); }; }
         }
 
         public OldNewPair<Decimal> Ask
         {
             get { return ask; }
-            set { ask = value; OnPropertyChanged(nameof(Ask)); ask.PropertyNotify = () => { OnPropertyChanged(nameof(Ask)); }; }
+            set { ask = value; OnPropertyChanged(nameof(Ask)); ask.EscaladeChangeAction = () => { OnPropertyChanged(nameof(Ask)); }; }
         }
         public OldNewPair<Decimal> Last
         {
             get { return last; }
-            set { last = value; OnPropertyChanged(nameof(Last)); last.PropertyNotify = () => { OnPropertyChanged(nameof(Last)); }; }
+            set { last = value; OnPropertyChanged(nameof(Last)); last.EscaladeChangeAction = () => { OnPropertyChanged(nameof(Last)); }; }
         }
     }
 }

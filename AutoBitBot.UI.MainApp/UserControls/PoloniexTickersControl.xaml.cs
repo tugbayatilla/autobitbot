@@ -1,5 +1,7 @@
-﻿using AutoBitBot.UI.MainApp.DTO;
+﻿using AutoBitBot.Infrastructure.Exchanges;
+using AutoBitBot.UI.MainApp.DTO;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -20,9 +22,9 @@ namespace AutoBitBot.UI.MainApp.UserControls
     /// <summary>
     /// Interaction logic for MarketControl.xaml
     /// </summary>
-    public partial class MarketSummeriesControl : UserControl
+    public partial class PoloniexTickersControl : UserControl
     {
-        public MarketSummeriesControl()
+        public PoloniexTickersControl()
         {
             InitializeComponent();
 
@@ -45,7 +47,7 @@ namespace AutoBitBot.UI.MainApp.UserControls
             {
                 cv.Filter = o =>
                 {
-                    var p = o as MarketSummaryDTO;
+                    var p = o as ExchangeTicker;
                     if (p == null)
                     {
                         return true;

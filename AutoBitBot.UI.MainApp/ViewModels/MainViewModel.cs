@@ -40,11 +40,12 @@ namespace AutoBitBot.UI.MainApp.ViewModels
             this.Markets = new ObservableCollection<DTO.MarketDTO>();
             this.OpenOrders = new ObservableCollection<BittrexOpenOrdersModel>();
             this.OrderHistory = new ObservableCollection<BittrexOrderHistoryModel>();
-            this.MarketSummaries = new ObservableCollection<MarketSummaryDTO>();
+            this.PoloniexTickers = new ObservableCollection<ExchangeTicker>();
+            this.BittrexTickers = new ObservableCollection<ExchangeTicker>();
 
             this.BuyAndSell = new DTO.BuyAndSellDTO();
             this.MarketTicker = new DTO.MarketTickerDTO();
-            this.MarketSummary = new DTO.MarketSummaryDTO();
+            this.MarketSummary = new ExchangeTicker();
 
             GlobalContext.Instance.server.TaskExecuted += Server_TaskExecuted;
 
@@ -156,27 +157,54 @@ namespace AutoBitBot.UI.MainApp.ViewModels
             {
                 var model = e.Data as List<BittrexMarketSummaryModel>;
 
-                this.dispatcher.Invoke(() =>
+                model.ForEach(p =>
                 {
-                    //sadece btc ile baslayanlar
-                    model.Where(p => p.MarketName.StartsWith("BTC")).OrderByDescending(p => p.BaseVolume).ToList()
-                    .ForEach(p =>
+                    var item = this.BittrexTickers.FirstOrDefault(x => x.MarketName == p.MarketName);
+
+                    this.dispatcher.Invoke(() =>
                     {
-                        var item = this.MarketSummaries.FirstOrDefault(x => x.MarketName == p.MarketName);
                         if (item == null)
                         {
-                            var newItem = new MarketSummaryDTO();
+                            var newItem = new ExchangeTicker();
                             ConvertMarketSummaryDTO(newItem, p);
-                            this.MarketSummaries.Add(newItem);
+                            this.BittrexTickers.Add(newItem);
                         }
                         else
                         {
                             ConvertMarketSummaryDTO(item, p);
                         }
                     });
+
                 });
 
-                PropertyChanged(this, new PropertyChangedEventArgs(nameof(MarketSummary)));
+                //PropertyChanged(this, new PropertyChangedEventArgs(nameof(MarketSummary)));
+            }
+
+            if (e.Data is PoloniexTickerModel)
+            {
+                var model = e.Data as PoloniexTickerModel;
+
+                model.ToList().ForEach(p =>
+                {
+                    var item = this.PoloniexTickers.FirstOrDefault(x => x.MarketName == p.Key);
+
+                    this.dispatcher.Invoke(() =>
+                    {
+                        if (item == null)
+                        {
+                            var newItem = new ExchangeTicker();
+                            ConvertMarketSummaryDTO2(newItem, p.Key, p.Value);
+                            this.PoloniexTickers.Add(newItem);
+                        }
+                        else
+                        {
+                            ConvertMarketSummaryDTO2(item, p.Key, p.Value);
+                        }
+                    });
+
+                });
+
+                //PropertyChanged(this, new PropertyChangedEventArgs(nameof(MarketSummary)));
             }
 
             if (e.Data is List<BittrexOpenOrdersModel>)
@@ -204,7 +232,7 @@ namespace AutoBitBot.UI.MainApp.ViewModels
 
         }
 
-        void ConvertMarketSummaryDTO(MarketSummaryDTO dto, BittrexMarketSummaryModel model)
+        void ConvertMarketSummaryDTO(ExchangeTicker dto, BittrexMarketSummaryModel model)
         {
             dto.Ask.NewValue = model.Ask;
             dto.Bid.NewValue = model.Bid;
@@ -217,6 +245,23 @@ namespace AutoBitBot.UI.MainApp.ViewModels
             dto.BaseVolume = model.BaseVolume;
             dto.OpenBuyOrders = model.OpenBuyOrders;
             dto.OpenSellOrders = model.OpenSellOrders;
+            dto.Change = dto.CalculateChange();
+        }
+
+        void ConvertMarketSummaryDTO2(ExchangeTicker dto, String market, PoloniexTickerModelData model)
+        {
+            dto.Ask.NewValue = model.LowestAsk;
+            dto.Bid.NewValue = model.HighestBid;
+            dto.High = model.High24hr;
+            dto.Last.NewValue = model.Last;
+            dto.PrevDay = 1;
+            dto.Change = model.PercentChange;
+            dto.Low = model.Low24hr;
+            dto.MarketName = market;
+            dto.Volume = model.BaseVolume;
+            dto.BaseVolume = model.BaseVolume;
+            dto.OpenBuyOrders = 0;
+            dto.OpenSellOrders = 0;
         }
 
 
@@ -227,12 +272,13 @@ namespace AutoBitBot.UI.MainApp.ViewModels
         public ObservableCollection<ExchangeBalance> Balances { get; set; }
         public ObservableCollection<BittrexOpenOrdersModel> OpenOrders { get; set; }
         public ObservableCollection<BittrexOrderHistoryModel> OrderHistory { get; set; }
-        public ObservableCollection<MarketSummaryDTO> MarketSummaries { get; set; }
+        public ObservableCollection<ExchangeTicker> PoloniexTickers { get; set; }
+        public ObservableCollection<ExchangeTicker> BittrexTickers { get; set; }
 
 
         public DTO.MarketTickerDTO MarketTicker { get; set; }
         public DTO.BuyAndSellDTO BuyAndSell { get; set; }
-        public DTO.MarketSummaryDTO MarketSummary { get; set; }
+        public ExchangeTicker MarketSummary { get; set; }
 
 
 
