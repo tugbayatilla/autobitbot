@@ -30,8 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ArchPM.Core, Version=0.0.16.26102, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ArchPM.Core.0.0.16\lib\net45\ArchPM.Core.dll</HintPath>
+    <Reference Include="ArchPM.Core, Version=0.0.17.17882, Culture=neutral, PublicKeyToken=a7c5f15bb1b78c45, processorArchitecture=MSIL">
+      <HintPath>..\packages\ArchPM.Core.0.0.17\lib\net45\ArchPM.Core.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -59,6 +59,7 @@
     <Compile Include="BitTasks\BittrexTasks\BittrexGetMarketsTask.cs" />
     <Compile Include="BitTasks\BittrexTasks\BittrexSellLimitCompletedTask.cs" />
     <Compile Include="BitTasks\BittrexTasks\BittrexSellLimitTask.cs" />
+    <Compile Include="BitTasks\PoloniexTasks\PoloniexReturnBalancesTask.cs" />
     <Compile Include="DecisionMaker.cs" />
     <Compile Include="BitTasks\Enums\BitTaskExecutionTypes.cs" />
     <Compile Include="BitTasks\EventArgs\BitTaskExecutedEventArgs.cs" />
@@ -85,13 +86,15 @@
       <Project>{588870ff-1117-4dd7-af92-e5eb653f93bf}</Project>
       <Name>AutoBitBot.Infrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AutoBitBot.PoloniexProxy\AutoBitBot.PoloniexProxy.csproj">
+      <Project>{08E103B7-8FDB-4ACF-9881-DF90BA707912}</Project>
+      <Name>AutoBitBot.PoloniexProxy</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="BitTasks\PoloniexTasks\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

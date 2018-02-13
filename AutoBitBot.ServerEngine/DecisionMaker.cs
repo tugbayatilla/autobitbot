@@ -33,7 +33,7 @@ namespace AutoBitBot.ServerEngine
 
             if (e.BitTask is BittrexGetBalanceTask)
             {
-
+                return;
                 //1. notify user 
                 //2. get respose from user 
                 var result = await (InteractionWithUser).Invoke($"{e.BitTask.Name} called. Start BuyLimit?");

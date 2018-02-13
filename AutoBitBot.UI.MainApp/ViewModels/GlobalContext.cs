@@ -61,6 +61,7 @@ namespace AutoBitBot.UI.MainApp
             this.dispatcher = dispatcher;
 
             //server.TaskExecuted += TaskScheduler_TaskExecuted;
+
             server.RegisterInstance(new BittrexGetTickerTask("BTC-XRP"));
             server.RegisterInstance(new BittrexGetBalanceTask());
             server.RegisterInstance(new BittrexGetMarketsTask());
@@ -68,6 +69,7 @@ namespace AutoBitBot.UI.MainApp
             server.RegisterInstance(new BittrexGetOpenOrdersTask("BTC-XRP"));
             server.RegisterInstance(new BittrexGetOrderHistoryTask("BTC-XRP"));
             server.RegisterInstance(new BittrexGetMarketSummariesTask());
+            server.RegisterInstance(new PoloniexReturnBalancesTask());
 
 
             server.Config.Add(new ConfigItem(typeof(BittrexGetTickerTask),

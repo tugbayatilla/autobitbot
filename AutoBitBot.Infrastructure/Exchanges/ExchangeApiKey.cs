@@ -7,22 +7,13 @@ namespace AutoBitBot.Infrastructure.Exchanges
 {
     public class ExchangeApiKey
     {
+        public ExchangeApiKey()
+        {
+            this.Nonce = Utils.GetTime();
+        }
 
         public String ApiKey { get; set; }
         public String SecretKey { get; set; }
-
-        Int64 nonce;
-        public Int64 Nonce
-        {
-            get
-            {
-                var temp = Utils.GetTime();
-                if (nonce != temp)
-                {
-                    nonce = temp;
-                }
-                return nonce;
-            }
-        }
+        public Int64 Nonce { get; private set; }
     }
 }

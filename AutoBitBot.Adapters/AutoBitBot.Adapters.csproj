@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ArchPM.Core, Version=0.0.17.17882, Culture=neutral, PublicKeyToken=a7c5f15bb1b78c45, processorArchitecture=MSIL">
+      <HintPath>..\packages\ArchPM.Core.0.0.17\lib\net45\ArchPM.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -52,6 +55,10 @@
       <Project>{588870ff-1117-4dd7-af92-e5eb653f93bf}</Project>
       <Name>AutoBitBot.Infrastructure</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -18,6 +18,9 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
+using AutoBitBot.Infrastructure.Exchanges;
+using AutoBitBot.Infrastructure;
+using AutoBitBot.PoloniexProxy.Models;
 
 namespace AutoBitBot.UI.MainApp.ViewModels
 {
@@ -33,7 +36,7 @@ namespace AutoBitBot.UI.MainApp.ViewModels
             this.dispatcher = dispatcher;
             this.outputRichTextBox = outputRichTextBox;
 
-            this.Balances = new ObservableCollection<DTO.BalanceDTO>();
+            this.Balances = new ObservableCollection<ExchangeBalance>();
             this.Markets = new ObservableCollection<DTO.MarketDTO>();
             this.OpenOrders = new ObservableCollection<BittrexOpenOrdersModel>();
             this.OrderHistory = new ObservableCollection<BittrexOrderHistoryModel>();
@@ -63,24 +66,60 @@ namespace AutoBitBot.UI.MainApp.ViewModels
                 PropertyChanged(this, new PropertyChangedEventArgs(nameof(BuyAndSell)));
             }
 
+
             if (e.Data is List<BittrexBalanceModel>)
             {
                 var model = e.Data as List<BittrexBalanceModel>;
 
-                this.dispatcher.Invoke(() =>
+                model.Where(p => p.Balance != 0).ToList().ForEach(p =>
                 {
-                    this.Balances.Clear();
+                    var item = this.Balances.FirstOrDefault(x => x.Currency == p.Currency && x.ExchangeName == ConstantNames.BITTREX);
 
-                    model.OrderByDescending(p => p.Available).ToList().ForEach(p =>
+                    this.dispatcher.Invoke(() =>
                     {
-                        if (p.Available != 0)
+                        if (item == null)
                         {
-                            this.Balances.Add(new BalanceDTO() { Name = p.Currency, Value = p.Available });
+                            this.Balances.Add(new ExchangeBalance() { ExchangeName = ConstantNames.BITTREX, Currency = p.Currency, Amount = p.Balance });
                         }
-
+                        else
+                        {
+                            item.Amount = p.Balance;
+                        }
                     });
+
                 });
             }
+
+            if (e.Data is PoloniexBalanceModel)
+            {
+                var model = e.Data as PoloniexBalanceModel;
+
+                model.ToList().ForEach(p =>
+                  {
+                      var item = this.Balances.FirstOrDefault(x => x.Currency == p.Key && x.ExchangeName == ConstantNames.POLONIEX);
+                      Decimal.TryParse(p.Value, out Decimal price);
+
+                      if (price == 0)
+                      {
+                          return;
+                      }
+
+                      this.dispatcher.Invoke(() =>
+                      {
+                          if (item == null)
+                          {
+                              this.Balances.Add(new ExchangeBalance() { ExchangeName = ConstantNames.POLONIEX, Currency = p.Key, Amount = price });
+                          }
+                          else
+                          {
+                              item.Amount = price;
+                          }
+                      });
+                  });
+            }
+
+
+
 
             if (e.Data is List<BittrexMarketModel>)
             {
@@ -185,7 +224,7 @@ namespace AutoBitBot.UI.MainApp.ViewModels
         public ObservableCollection<BitTask> KilledTasks => GlobalContext.Instance.KilledTasks;
         public ObservableCollection<String> Messages { get; private set; }
         public ObservableCollection<DTO.MarketDTO> Markets { get; set; }
-        public ObservableCollection<DTO.BalanceDTO> Balances { get; set; }
+        public ObservableCollection<ExchangeBalance> Balances { get; set; }
         public ObservableCollection<BittrexOpenOrdersModel> OpenOrders { get; set; }
         public ObservableCollection<BittrexOrderHistoryModel> OrderHistory { get; set; }
         public ObservableCollection<MarketSummaryDTO> MarketSummaries { get; set; }

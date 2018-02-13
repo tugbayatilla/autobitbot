@@ -19,8 +19,9 @@
 
         <DataGrid ItemsSource="{Binding Balances}" AutoGenerateColumns="False" >
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Currency" Binding="{Binding Name}" />
-                <DataGridTextColumn Header="Price" Binding="{Binding Value, Converter={StaticResource CoinPriceStringValueConverter}}" />
+                <DataGridTextColumn Header="Exchange" Binding="{Binding ExchangeName}" />
+                <DataGridTextColumn Header="Currency" Binding="{Binding Currency}" />
+                <DataGridTextColumn Header="Amount" Binding="{Binding Amount, Converter={StaticResource CoinPriceStringValueConverter}}" />
                 <DataGridTextColumn Header="LastUpdateTime" Binding="{Binding LastUpdateTime, Converter={StaticResource DateTimeToStringConverter}}" />
             </DataGrid.Columns>
         </DataGrid>

@@ -41,8 +41,8 @@
     <ApplicationIcon>Resources\app.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ArchPM.Core, Version=0.0.16.26102, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ArchPM.Core.0.0.16\lib\net45\ArchPM.Core.dll</HintPath>
+    <Reference Include="ArchPM.Core, Version=0.0.17.17882, Culture=neutral, PublicKeyToken=a7c5f15bb1b78c45, processorArchitecture=MSIL">
+      <HintPath>..\packages\ArchPM.Core.0.0.17\lib\net45\ArchPM.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -586,6 +586,10 @@
     <ProjectReference Include="..\AutoBitBot.Infrastructure\AutoBitBot.Infrastructure.csproj">
       <Project>{588870ff-1117-4dd7-af92-e5eb653f93bf}</Project>
       <Name>AutoBitBot.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AutoBitBot.PoloniexProxy\AutoBitBot.PoloniexProxy.csproj">
+      <Project>{08e103b7-8fdb-4acf-9881-df90ba707912}</Project>
+      <Name>AutoBitBot.PoloniexProxy</Name>
     </ProjectReference>
     <ProjectReference Include="..\AutoBitBot.ServerEngine\AutoBitBot.ServerEngine.csproj">
       <Project>{90a542cd-1f99-4f3a-9052-496546349799}</Project>
