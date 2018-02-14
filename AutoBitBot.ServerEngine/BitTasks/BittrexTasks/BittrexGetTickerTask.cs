@@ -1,6 +1,6 @@
 ﻿using ArchPM.Core.Notifications;
 using AutoBitBot.BittrexProxy;
-using AutoBitBot.BittrexProxy.Models;
+using AutoBitBot.BittrexProxy.Responses;
 using AutoBitBot.ServerEngine.Enums;
 using System;
 using System.Collections.Generic;
@@ -37,9 +37,9 @@ namespace AutoBitBot.ServerEngine.BitTasks
             return result.Data;
         }
 
-        public static BittrexTickerModel DataConverter(Object data)
+        public static BittrexxTickerResponse DataConverter(Object data)
         {
-            return data as BittrexTickerModel;
+            return data as BittrexxTickerResponse;
         }
     }
 }

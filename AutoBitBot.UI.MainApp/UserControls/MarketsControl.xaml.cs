@@ -1,4 +1,5 @@
-﻿using AutoBitBot.UI.MainApp.DTO;
+﻿using AutoBitBot.Infrastructure;
+using AutoBitBot.UI.MainApp.DTO;
 using System.ComponentModel;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -20,28 +21,8 @@ namespace AutoBitBot.UI.MainApp.UserControls
         {
             TextBox t = (TextBox)sender;
             string filter = t.Text;
-            if (filter.Length < 3)
-                return;
 
-            ICollectionView cv = CollectionViewSource.GetDefaultView(dg.ItemsSource);
-            if (cv == null)
-                return;
-
-            if (filter == "")
-                cv.Filter = null;
-            else
-            {
-                cv.Filter = o =>
-                {
-                    var p = o as MarketDTO;
-                    if(p == null)
-                    {
-                        return true;
-                    }
-
-                    return (p.MarketName.ToUpperInvariant().Contains(filter.ToUpperInvariant()));
-                };
-            }
+            SingleFieldDataGridFilterMediator.Filter<MarketDTO>(filter, dg, p => p.MarketName);
         }
     }
 }

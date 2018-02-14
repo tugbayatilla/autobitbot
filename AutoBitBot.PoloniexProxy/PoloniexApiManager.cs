@@ -45,25 +45,25 @@ namespace AutoBitBot.PoloniexProxy
         /// <param name="market">The market.</param>
         /// <exception cref=""></exception>
         /// <returns></returns>
-        public async Task<IApiResponse<PoloniexTickerModel>> ReturnTicker()
+        public async Task<IApiResponse<PoloniexTickerResponse>> ReturnTicker()
         {
             var url = PoloniexApiUrls.ReturnTickerUrl();
 
             Stopwatch sw = Stopwatch.StartNew();
-            IApiResponse<PoloniexTickerModel> result = new PoloniexApiResponse<PoloniexTickerModel>();
+            IApiResponse<PoloniexTickerResponse> result = new PoloniexApiResponse<PoloniexTickerResponse>();
             try
             {
                 var response = await httpClient.GetAsync(url);
                 response.EnsureSuccessStatusCode();
 
-                result.Data = await response.Content.ReadAsAsync<PoloniexTickerModel>();
+                result.Data = await response.Content.ReadAsAsync<PoloniexTickerResponse>();
                 result.Code = ApiResponseCodes.OK;
                 result.ET = sw.ElapsedMilliseconds;
                 result.RequestedUrl = url;
             }
             catch (Exception ex)
             {
-                result = PoloniexApiResponse<PoloniexTickerModel>.CreateException(ex);
+                result = PoloniexApiResponse<PoloniexTickerResponse>.CreateException(ex);
             }
             finally
             {

@@ -7,7 +7,7 @@ using System.Web;
 namespace AutoBitBot.PoloniexProxy.Models
 {
     [DataContract]
-    public class PoloniexTickerModelData
+    public class PoloniexTickerResponseDetail
     {
         [DataMember(Name = "id")]
         public Int32 Id { get; set; }
@@ -41,8 +41,4 @@ namespace AutoBitBot.PoloniexProxy.Models
 
     }
 
-    public class PoloniexTickerModel : Dictionary<String, PoloniexTickerModelData>
-    {
-
-    }
 }

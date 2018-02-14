@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace AutoBitBot.BittrexProxy.Models
+namespace AutoBitBot.BittrexProxy.Responses
 {
-    public class BittrexBalanceModel
+    public class BittrexxBalanceResponse
     {
         public String Currency { get; set; }
         public Decimal Balance { get; set; }

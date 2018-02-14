@@ -1,4 +1,5 @@
-﻿using AutoBitBot.Infrastructure.Exchanges;
+﻿using AutoBitBot.Infrastructure;
+using AutoBitBot.Infrastructure.Exchanges;
 using AutoBitBot.UI.MainApp.DTO;
 using System;
 using System.Collections;
@@ -34,28 +35,8 @@ namespace AutoBitBot.UI.MainApp.UserControls
         {
             TextBox t = (TextBox)sender;
             string filter = t.Text;
-            if (filter.Length < 3)
-                return;
 
-            ICollectionView cv = CollectionViewSource.GetDefaultView(dg.ItemsSource);
-            if (cv == null)
-                return;
-
-            if (filter == "")
-                cv.Filter = null;
-            else
-            {
-                cv.Filter = o =>
-                {
-                    var p = o as ExchangeTicker;
-                    if (p == null)
-                    {
-                        return true;
-                    }
-
-                    return (p.MarketName.ToUpperInvariant().Contains(filter.ToUpperInvariant()));
-                };
-            }
+            SingleFieldDataGridFilterMediator.Filter<ExchangeTicker>(filter, dg, p => p.MarketName);
         }
     }
 }

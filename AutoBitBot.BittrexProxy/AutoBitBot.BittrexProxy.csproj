@@ -55,16 +55,16 @@
     <Compile Include="BittrexxApiUrls.cs" />
     <Compile Include="BittrexxBuyLimitArgs.cs" />
     <Compile Include="BittrexxSellLimitArgs.cs" />
-    <Compile Include="Models\BittrexMarketSummaryModel.cs" />
-    <Compile Include="Models\BittrexOpenOrdersModel.cs" />
-    <Compile Include="Models\BittrexxMarketHistoryModel.cs" />
-    <Compile Include="Models\BittrexxBalanceModel.cs" />
-    <Compile Include="Models\BittrexxCurrencyModel.cs" />
-    <Compile Include="Models\BittrexxLimitModel.cs" />
-    <Compile Include="Models\BittrexxMarketModel.cs" />
-    <Compile Include="Models\BittrexxOrderHistoryModel.cs" />
-    <Compile Include="Models\BittrexxOrderModel.cs" />
-    <Compile Include="Models\BittrexxTickerModel.cs" />
+    <Compile Include="Responses\BittrexMarketSummaryResponse.cs" />
+    <Compile Include="Responses\BittrexOpenOrdersResponse.cs" />
+    <Compile Include="Responses\BittrexxMarketHistoryResponse.cs" />
+    <Compile Include="Responses\BittrexxBalanceResponse.cs" />
+    <Compile Include="Responses\BittrexxCurrencyResponse.cs" />
+    <Compile Include="Responses\BittrexxLimitResponse.cs" />
+    <Compile Include="Responses\BittrexxMarketResponse.cs" />
+    <Compile Include="Responses\BittrexxOrderHistoryResponse.cs" />
+    <Compile Include="Responses\BittrexxOrderResponse.cs" />
+    <Compile Include="Responses\BittrexxTickerResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace AutoBitBot.BittrexProxy.Models
+namespace AutoBitBot.BittrexProxy.Responses
 {
-    public class BittrexMarketModel
+    public class BittrexxMarketResponse
     {
         public String MarketCurrency { get; set; }
         public String BaseCurrency { get; set; }

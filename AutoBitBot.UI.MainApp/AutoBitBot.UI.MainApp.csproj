@@ -118,6 +118,9 @@
     <Compile Include="UserControls\PoloniexTickersControl.xaml.cs">
       <DependentUpon>PoloniexTickersControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Collections\ExchangeTickerCollection.cs" />
+    <Compile Include="Collections\DashboardExchangeTickerCollection.cs" />
+    <Compile Include="ViewModels\DashboardExchangeTickerViewModel.cs" />
     <Compile Include="ViewModels\GlobalContext.cs" />
     <Compile Include="ViewModels\SampleFormViewModel.cs" />
     <Compile Include="UserControls\ActiveTasksControl.xaml.cs">

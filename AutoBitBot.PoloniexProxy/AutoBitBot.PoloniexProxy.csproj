@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\PoloniexTickerResponseDetail.cs" />
     <Compile Include="PoloniexException.cs" />
     <Compile Include="PoloniexApiManager.cs" />
     <Compile Include="PoloniexApiManagerFactory.cs" />
@@ -53,7 +54,7 @@
     <Compile Include="BittrexxBuyLimitArgs.cs" />
     <Compile Include="BittrexxSellLimitArgs.cs" />
     <Compile Include="Models\PoloniexBalanceModel.cs" />
-    <Compile Include="Models\PoloniexTickerModel.cs" />
+    <Compile Include="Models\PoloniexTickerResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -17,6 +17,9 @@
     </UserControl.Resources>
 
 
+
+
+
     <Grid>
 
         <Grid.RowDefinitions>
@@ -27,55 +30,55 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
+
+        <!--<Grid.Resources>
+            <CollectionViewSource x:Key="groups" Source="{Binding DashboardExchangeTickers}">
+                <CollectionViewSource.GroupDescriptions>
+                    <PropertyGroupDescription PropertyName="MarketName" />
+                </CollectionViewSource.GroupDescriptions>
+            </CollectionViewSource>
+        </Grid.Resources>-->
         <TextBox Grid.Row="0" x:Name="SearchTextBox" TextChanged="SearchTextBox_TextChanged" />
-        <DataGrid x:Name="dg" Grid.Row="1"
-                      ItemsSource="{Binding DashboardExchangeTickers}" 
-                      AutoGenerateColumns="False" 
-                      CanUserAddRows="False" >
+
+        <DataGrid Grid.Row="1" x:Name="dg" CanUserAddRows="False" ItemsSource="{Binding DashboardExchangeTickers}" AutoGenerateColumns="False"  IsReadOnly="True"
+                  VirtualizingPanel.IsVirtualizing="True"
+                  VirtualizingPanel.IsVirtualizingWhenGrouping="True" 
+                  VirtualizingPanel.ScrollUnit ="Item" 
+                  VirtualizingPanel.VirtualizationMode="Recycling"
+                  
+                  >
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Market" Binding="{Binding MarketName}"  Width="Auto"/>
+                <DataGridTextColumn Header="Market" Binding="{Binding MarketName}" />
+                <DataGridTextColumn Header="Exchange" Binding="{Binding ExchangeName}" />
+                <DataGridTextColumn Header="Volume" Binding="{Binding BaseVolume, Converter={StaticResource PercentStringValueConverter}}" />
+                <DataGridTextColumn Header="Change" Binding="{Binding Change, Converter={StaticResource PercentStringValueConverter}}">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="{x:Type DataGridCell}">
+                            <Setter Property="Foreground">
+                                <Setter.Value>
+                                    <Binding Path="Change" Converter="{StaticResource ForegroundChangeValueConverter}"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="TextBlock.TextAlignment" Value="Right" />
+                            <Setter Property="TextBlock.Padding" Value="0,0,20,0" />
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
 
-                <DataGridTemplateColumn Header="Exchange" Width="*">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <DataGrid 
-                       ItemsSource="{Binding ExchangeTickers}"
-                
-                                AutoGenerateColumns="False" 
-                      CanUserAddRows="False">
-                                <DataGrid.Columns>
-                                    <DataGridTextColumn Header="Exchange" Binding="{Binding ExchangeName}" />
-                                    <DataGridTemplateColumn>
-
-                                    </DataGridTemplateColumn>
-                                    <DataGridTextColumn Header="Volume" Binding="{Binding BaseVolume, Converter={StaticResource PercentStringValueConverter}}" />
-                                    <DataGridTextColumn Header="Change" Binding="{Binding Change, Converter={StaticResource PercentStringValueConverter}}">
-                                        <DataGridTextColumn.CellStyle>
-                                            <Style TargetType="{x:Type DataGridCell}">
-                                                <Setter Property="Foreground">
-                                                    <Setter.Value>
-                                                        <Binding Path="Change" Converter="{StaticResource ForegroundChangeValueConverter}"/>
-                                                    </Setter.Value>
-                                                </Setter>
-                                                <Setter Property="TextBlock.TextAlignment" Value="Right" />
-                                                <Setter Property="TextBlock.Padding" Value="0,0,20,0" />
-                                            </Style>
-                                        </DataGridTextColumn.CellStyle>
-                                    </DataGridTextColumn>
-
-                                    <DataGridTextColumn Header="Last" Binding="{Binding Last.NewValue, Converter={StaticResource DecimalStringValueConverter}}" Foreground="{Binding Last, Converter={StaticResource ForegroundOldNewPairValueConverter}}" />
-                                    <DataGridTextColumn Header="24H High" Binding="{Binding High, Converter={StaticResource DecimalStringValueConverter}}" />
-                                    <DataGridTextColumn Header="24H Low" Binding="{Binding Low, Converter={StaticResource DecimalStringValueConverter}}"/>
-                                    <DataGridTextColumn Header="Gap" Binding="{Binding Gap, Converter={StaticResource DecimalStringValueConverter}}"/>
-                                </DataGrid.Columns>
-                            </DataGrid>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-
+                <DataGridTextColumn Header="Last" Binding="{Binding Last.NewValue, Converter={StaticResource DecimalStringValueConverter}}" Foreground="{Binding Last, Converter={StaticResource ForegroundOldNewPairValueConverter}}" />
+                <DataGridTextColumn Header="24H High" Binding="{Binding High, Converter={StaticResource DecimalStringValueConverter}}" />
+                <DataGridTextColumn Header="24H Low" Binding="{Binding Low, Converter={StaticResource DecimalStringValueConverter}}"/>
+                <DataGridTextColumn Header="Gap" Binding="{Binding Gap, Converter={StaticResource DecimalStringValueConverter}}"/>
 
             </DataGrid.Columns>
         </DataGrid>
-
     </Grid>
+
+
+
+
+
+
+
+
 </UserControl>

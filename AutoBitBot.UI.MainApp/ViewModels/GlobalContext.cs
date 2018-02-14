@@ -1,6 +1,6 @@
 ﻿using ArchPM.Core.Notifications;
 using ArchPM.Core.Notifications.Notifiers;
-using AutoBitBot.BittrexProxy.Models;
+using AutoBitBot.BittrexProxy.Responses;
 using AutoBitBot.UI.MainApp.Commands;
 using AutoBitBot.UI.MainApp.DTO;
 using AutoBitBot.UI.MainApp.Notifiers;

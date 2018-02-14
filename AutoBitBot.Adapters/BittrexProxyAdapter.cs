@@ -18,7 +18,7 @@ namespace AutoBitBot.Adapters
             bittrexApiManager = BittrexApiManagerFactory.Instance.Create();
         }
 
-        public string Name => ConstantNames.BITTREX;
+        public string Name => Constants.BITTREX;
 
         public ExchangeBuyLimit BuyLimit(ExchangeBuyLimitArguments buyLimitArguments)
         {

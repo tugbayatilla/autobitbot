@@ -1,4 +1,4 @@
-﻿using AutoBitBot.BittrexProxy.Models;
+﻿using AutoBitBot.BittrexProxy.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +20,9 @@ namespace AutoBitBot.UI.MainApp.Commands
 
         public void Execute(object parameter)
         {
-            if (parameter is List<BittrexBalanceModel>)
+            if (parameter is List<BittrexxBalanceResponse>)
             {
-                var model = (parameter as List<BittrexBalanceModel>).ToList();
+                var model = (parameter as List<BittrexxBalanceResponse>).ToList();
 
                 //this.Balances.Clear();
 

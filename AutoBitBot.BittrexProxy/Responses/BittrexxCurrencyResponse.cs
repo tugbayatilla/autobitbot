@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace AutoBitBot.BittrexProxy.Models
+namespace AutoBitBot.BittrexProxy.Responses
 {
-    public class BittrexCurrencyModel
+    public class BittrexCurrencyResponse
     {
         public String Currency { get; set; }
         public String CurrencyLong { get; set; }

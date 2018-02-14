@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace AutoBitBot.BittrexProxy.Models
+namespace AutoBitBot.BittrexProxy.Responses
 {
-    public class BittrexMasketHistoryModel
+    public class BittrexxMarketHistoryResponse
     {
         public Int32 Id { get; set; }
         public DateTime TimeStamp { get; set; }

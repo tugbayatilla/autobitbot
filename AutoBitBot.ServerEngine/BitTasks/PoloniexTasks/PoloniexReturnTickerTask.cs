@@ -1,6 +1,6 @@
 ﻿using ArchPM.Core.Notifications;
 using AutoBitBot.BittrexProxy;
-using AutoBitBot.BittrexProxy.Models;
+using AutoBitBot.BittrexProxy.Responses;
 using AutoBitBot.Infrastructure;
 using AutoBitBot.PoloniexProxy;
 using AutoBitBot.ServerEngine.Enums;

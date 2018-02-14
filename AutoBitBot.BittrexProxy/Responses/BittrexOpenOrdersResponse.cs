@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoBitBot.BittrexProxy.Models
+namespace AutoBitBot.BittrexProxy.Responses
 {
-    public class BittrexOpenOrdersModel
+    public class BittrexOpenOrdersResponse
     {
         public String Uuid { get; set; }
         public Guid OrderUuid { get; set; }

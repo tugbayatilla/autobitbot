@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoBitBot.BittrexProxy.Models
+namespace AutoBitBot.BittrexProxy.Responses
 {
-    public class BittrexMarketSummaryModel
+    public class BittrexMarketSummaryResponse
     {
         public String MarketName { get; set; }
         public Decimal? High { get; set; }

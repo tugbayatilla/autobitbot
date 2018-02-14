@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace AutoBitBot.BittrexProxy.Models
+namespace AutoBitBot.BittrexProxy.Responses
 {
-    public class BittrexOrderModel
+    public class BittrexxOrderResponse
     {
         public Object AccountId { get; set; }
         public String OrderUuid { get; set; }
