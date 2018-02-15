@@ -1,5 +1,6 @@
 ﻿using AutoBitBot.Infrastructure;
 using AutoBitBot.Infrastructure.Exchanges;
+using AutoBitBot.Infrastructure.Exchanges.ViewModels;
 using AutoBitBot.UI.MainApp.DTO;
 using AutoBitBot.UI.MainApp.ViewModels;
 using System;
@@ -24,9 +25,9 @@ namespace AutoBitBot.UI.MainApp.UserControls
     /// <summary>
     /// Interaction logic for MarketControl.xaml
     /// </summary>
-    public partial class DashboardExchangeTickersControl : UserControl
+    public partial class AllExchangeTickersControl : UserControl
     {
-        public DashboardExchangeTickersControl()
+        public AllExchangeTickersControl()
         {
             InitializeComponent();
 
@@ -37,7 +38,7 @@ namespace AutoBitBot.UI.MainApp.UserControls
             TextBox t = (TextBox)sender;
             string filter = t.Text;
 
-            SingleFieldDataGridFilterMediator.Filter<DashboardExchangeTickerViewModel>(filter, dg, p => p.MarketName);
+            SingleFieldDataGridFilterMediator.SingleFieldFilter<AllExchangeTickerViewModel>(filter, dg);
         }
     }
 }

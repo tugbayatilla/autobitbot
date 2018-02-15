@@ -4,7 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Web;
 
-namespace AutoBitBot.PoloniexProxy.Models
+namespace AutoBitBot.PoloniexProxy.Responses
 {
     [DataContract]
     public class PoloniexTickerResponseDetail

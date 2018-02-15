@@ -61,6 +61,15 @@ namespace AutoBitBot.UI.MainApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ALL EXCHANGE TICKERS.
+        /// </summary>
+        public static string AllExchangeTickers {
+            get {
+                return ResourceManager.GetString("AllExchangeTickers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to BITTREX TICKERS.
         /// </summary>
         public static string BittrexTickers {

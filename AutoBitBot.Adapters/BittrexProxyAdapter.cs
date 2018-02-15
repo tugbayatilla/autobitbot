@@ -1,6 +1,7 @@
 ﻿using AutoBitBot.BittrexProxy;
 using AutoBitBot.Infrastructure;
 using AutoBitBot.Infrastructure.Exchanges;
+using AutoBitBot.Infrastructure.Exchanges.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,12 +26,12 @@ namespace AutoBitBot.Adapters
             throw new NotImplementedException();
         }
 
-        public ExchangeBalance GetBalance(string currency)
+        public ExchangeBalanceViewModel GetBalance(string currency)
         {
             throw new NotImplementedException();
         }
 
-        public IObservable<ExchangeBalance> GetBalances()
+        public IObservable<ExchangeBalanceViewModel> GetBalances()
         {
             throw new NotImplementedException();
         }
@@ -70,7 +71,7 @@ namespace AutoBitBot.Adapters
             throw new NotImplementedException();
         }
 
-        public ExchangeTicker GetTicker(string market)
+        public ExchangeTickerViewModel GetTicker(string market)
         {
             throw new NotImplementedException();
         }

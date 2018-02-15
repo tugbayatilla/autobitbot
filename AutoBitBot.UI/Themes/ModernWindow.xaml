@@ -160,7 +160,7 @@
                                     <!-- content frame -->
                                     <Grid Grid.Row="3" Grid.RowSpan="2" >
                                         <DockPanel>
-                                            <RichTextBox x:Name="Output" DockPanel.Dock="Bottom" Height="100" IsReadOnly="True" Foreground="Blue" ></RichTextBox>
+                                            <RichTextBox x:Name="Output" DockPanel.Dock="Bottom" Height="100" IsReadOnly="True" Foreground="{Binding Foreground}" ></RichTextBox>
                                             <controls:ModernFrame  x:Name="ContentFrame" Margin="42,8,16,16"  Source="{Binding ContentSource, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" ContentLoader="{TemplateBinding ContentLoader}"/>
                                         </DockPanel>
                                     </Grid>

@@ -19,7 +19,7 @@ namespace AutoBitBot.ServerEngine.BitTasks
 
         public override long ExecuteAtEvery => 20000;
 
-        public override string Name => "PoloniexReturnTickerTask";
+        public override string Name => "Poloniex-Ticker-All-Task";
 
         public override BitTaskExecutionTypes ExecutionType => BitTaskExecutionTypes.Permanent;
 

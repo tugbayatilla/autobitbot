@@ -65,6 +65,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Collections\AllExchangeBalancesObservableCollection.cs" />
     <Compile Include="Commands\LoadBalanceCommand.cs" />
     <Compile Include="Commands\OpenBuyAndSellCommand.cs" />
     <Compile Include="Commands\OpenKilledTasksCommand.cs" />
@@ -106,8 +107,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Titles.resx</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\DashboardExchangeTickersControl.xaml.cs">
-      <DependentUpon>DashboardExchangeTickersControl.xaml</DependentUpon>
+    <Compile Include="UserControls\AllExchangeTickersControl.xaml.cs">
+      <DependentUpon>AllExchangeTickersControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\BuyLimitControl.xaml.cs">
       <DependentUpon>BuyLimitControl.xaml</DependentUpon>
@@ -118,16 +119,15 @@
     <Compile Include="UserControls\PoloniexTickersControl.xaml.cs">
       <DependentUpon>PoloniexTickersControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Collections\ExchangeTickerCollection.cs" />
-    <Compile Include="Collections\DashboardExchangeTickerCollection.cs" />
-    <Compile Include="ViewModels\DashboardExchangeTickerViewModel.cs" />
+    <Compile Include="Collections\ExchangeTickerObservableCollection.cs" />
+    <Compile Include="Collections\AllExchangeTickerObservableCollection.cs" />
     <Compile Include="ViewModels\GlobalContext.cs" />
     <Compile Include="ViewModels\SampleFormViewModel.cs" />
     <Compile Include="UserControls\ActiveTasksControl.xaml.cs">
       <DependentUpon>ActiveTasksControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\BalanceControl.xaml.cs">
-      <DependentUpon>BalanceControl.xaml</DependentUpon>
+    <Compile Include="UserControls\AllExchangeBalancesControl.xaml.cs">
+      <DependentUpon>AllExchangeBalancesControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\BuyAndSellControl.xaml.cs">
       <DependentUpon>BuyAndSellControl.xaml</DependentUpon>
@@ -471,11 +471,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\BalanceControl.xaml">
+    <Page Include="UserControls\AllExchangeBalancesControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\DashboardExchangeTickersControl.xaml">
+    <Page Include="UserControls\AllExchangeTickersControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

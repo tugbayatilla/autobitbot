@@ -20,7 +20,7 @@ namespace AutoBitBot.ServerEngine.BitTasks
 
         public override long ExecuteAtEvery => 5000;
 
-        public override string Name => "BittrexGetTickerTask";
+        public override string Name => "Bittrex-Ticker-One-Task";
 
         public override BitTaskExecutionTypes ExecutionType => BitTaskExecutionTypes.Permanent;
 

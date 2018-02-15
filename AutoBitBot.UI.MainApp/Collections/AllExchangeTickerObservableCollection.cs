@@ -1,7 +1,8 @@
 ﻿using AutoBitBot.BittrexProxy.Responses;
 using AutoBitBot.Infrastructure;
 using AutoBitBot.Infrastructure.Exchanges;
-using AutoBitBot.PoloniexProxy.Models;
+using AutoBitBot.Infrastructure.Exchanges.ViewModels;
+using AutoBitBot.PoloniexProxy.Responses;
 using AutoBitBot.UI.MainApp.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -13,11 +14,11 @@ using System.Windows.Data;
 
 namespace AutoBitBot.UI.MainApp.Collections
 {
-    public class DashboardExchangeTickerViewModelCollection : ObservableCollection<DashboardExchangeTickerViewModel>
+    public class AllExchangeTickerObservableCollection : ObservableCollection<AllExchangeTickerViewModel>
     {
         protected static Object _locker = new object();
 
-        public DashboardExchangeTickerViewModelCollection()
+        public AllExchangeTickerObservableCollection()
         {
             BindingOperations.EnableCollectionSynchronization(this, _locker);
         }
@@ -36,7 +37,7 @@ namespace AutoBitBot.UI.MainApp.Collections
                 if (marketViewModel == null) 
                 {
                     // no market, then insert new
-                    marketViewModel = new DashboardExchangeTickerViewModel() { MarketName = marketName, ExchangeName = poloniex };
+                    marketViewModel = new AllExchangeTickerViewModel() { MarketName = marketName, ExchangeName = poloniex };
                     ConvertResponseToModel(responseDetail, marketViewModel);
                     this.Add(marketViewModel);
                 }
@@ -47,7 +48,7 @@ namespace AutoBitBot.UI.MainApp.Collections
                 }
             }
         }
-        void ConvertResponseToModel(PoloniexTickerResponseDetail response, DashboardExchangeTickerViewModel model)
+        void ConvertResponseToModel(PoloniexTickerResponseDetail response, AllExchangeTickerViewModel model)
         {
             model.Ask.NewValue = response.LowestAsk;
             model.Bid.NewValue = response.HighestBid;
@@ -78,7 +79,7 @@ namespace AutoBitBot.UI.MainApp.Collections
                 if (marketViewModel == null)
                 {
                     // no market, then insert new
-                    marketViewModel = new DashboardExchangeTickerViewModel() { MarketName = marketName, ExchangeName = bittrex };
+                    marketViewModel = new AllExchangeTickerViewModel() { MarketName = marketName, ExchangeName = bittrex };
                     ConvertResponseToModel(response, marketViewModel);
                     this.Add(marketViewModel);
                 }
@@ -90,7 +91,7 @@ namespace AutoBitBot.UI.MainApp.Collections
             }
         }
 
-        void ConvertResponseToModel(BittrexMarketSummaryResponse response, DashboardExchangeTickerViewModel model)
+        void ConvertResponseToModel(BittrexMarketSummaryResponse response, AllExchangeTickerViewModel model)
         {
             model.Ask.NewValue = response.Ask ?? 0;
             model.Bid.NewValue = response.Bid ?? 0;

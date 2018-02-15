@@ -9,7 +9,7 @@ using System.Diagnostics;
 using AutoBitBot.Infrastructure;
 using ArchPM.Core.Api;
 using AutoBitBot.Infrastructure.Exchanges;
-using AutoBitBot.PoloniexProxy.Models;
+using AutoBitBot.PoloniexProxy.Responses;
 
 namespace AutoBitBot.PoloniexProxy
 {
@@ -77,12 +77,12 @@ namespace AutoBitBot.PoloniexProxy
 
         }
 
-        public async Task<IApiResponse<PoloniexBalanceModel>> ReturnBalances(ExchangeApiKey apiKeyModel)
+        public async Task<IApiResponse<PoloniexBalanceResponse>> ReturnBalances(ExchangeApiKey apiKeyModel)
         {
             var url = PoloniexApiUrls.ReturnBalancesUrl();
 
             Stopwatch sw = Stopwatch.StartNew();
-            IApiResponse<PoloniexBalanceModel> result = new PoloniexApiResponse<PoloniexBalanceModel>();
+            IApiResponse<PoloniexBalanceResponse> result = new PoloniexApiResponse<PoloniexBalanceResponse>();
             try
             {
                 String commandName = "returnBalances";
@@ -98,7 +98,7 @@ namespace AutoBitBot.PoloniexProxy
                 var response = await httpClient.SendAsync(request);
                 response.EnsureSuccessStatusCode();
 
-                result.Data = await response.Content.ReadAsAsync<PoloniexBalanceModel>();
+                result.Data = await response.Content.ReadAsAsync<PoloniexBalanceResponse>();
                 if (result.Data.ContainsKey("error"))
                 {
                     result.Data.TryGetValue("error", out String error);
@@ -110,7 +110,7 @@ namespace AutoBitBot.PoloniexProxy
             }
             catch (Exception ex)
             {
-                result = PoloniexApiResponse<PoloniexBalanceModel>.CreateException(ex);
+                result = PoloniexApiResponse<PoloniexBalanceResponse>.CreateException(ex);
             }
             finally
             {

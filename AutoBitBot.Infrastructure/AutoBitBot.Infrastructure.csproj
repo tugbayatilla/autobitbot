@@ -48,7 +48,8 @@
   <ItemGroup>
     <Compile Include="Exchanges\ExchangeApiKey.cs" />
     <Compile Include="Exceptions\ApiKeyNotProvidedException.cs" />
-    <Compile Include="Exchanges\ExchangeBalance.cs" />
+    <Compile Include="Exchanges\ViewModels\AllExchangeTickerViewModel.cs" />
+    <Compile Include="Exchanges\ViewModels\ExchangeBalanceViewModel.cs" />
     <Compile Include="Exchanges\ExchangeSellLimitArguments.cs" />
     <Compile Include="Exchanges\ExchangeSellLimit.cs" />
     <Compile Include="Exchanges\ExchangeBuyLimit.cs" />
@@ -61,8 +62,9 @@
     <Compile Include="Exchanges\ExchangeMarketSummary.cs" />
     <Compile Include="Exchanges\ExchangeOrder.cs" />
     <Compile Include="Exchanges\ExchangeOrderHistory.cs" />
-    <Compile Include="Exchanges\ExchangeTicker.cs" />
+    <Compile Include="Exchanges\ViewModels\ExchangeTickerViewModel.cs" />
     <Compile Include="Exchanges\IExchangeOps.cs" />
+    <Compile Include="Interfaces\ISingleFieldUIFilter.cs" />
     <Compile Include="ObservableObject.cs" />
     <Compile Include="OldNewPair.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

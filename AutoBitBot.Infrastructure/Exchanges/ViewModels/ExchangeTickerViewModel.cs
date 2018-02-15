@@ -1,19 +1,20 @@
-﻿using System;
+﻿using AutoBitBot.Infrastructure.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoBitBot.Infrastructure.Exchanges
+namespace AutoBitBot.Infrastructure.Exchanges.ViewModels
 {
-    public class ExchangeTicker : ObservableObject
+    public class ExchangeTickerViewModel : ObservableObject, ISingleFieldUIFilter
     {
         Decimal high, low, volume, prevDay, baseValume, change;
         OldNewPair<Decimal> last, bid, ask;
         String marketName;
         Int32 openBuyOrders, openSellOrders;
 
-        public ExchangeTicker()
+        public ExchangeTickerViewModel()
         {
             this.Last = new OldNewPair<Decimal>();
             this.Bid = new OldNewPair<decimal>();
@@ -163,6 +164,7 @@ namespace AutoBitBot.Infrastructure.Exchanges
             }
         }
 
+        public string FilterField => MarketName;
 
         public Decimal CalculateChange() => (Last.NewValue - PrevDay) * 100 / (PrevDay == 0 ? 1 : PrevDay);
     }

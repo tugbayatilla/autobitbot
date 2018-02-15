@@ -1,5 +1,6 @@
 ﻿using AutoBitBot.Infrastructure;
 using AutoBitBot.Infrastructure.Exchanges;
+using AutoBitBot.Infrastructure.Exchanges.ViewModels;
 using AutoBitBot.UI.MainApp.DTO;
 using System;
 using System.Collections;
@@ -36,7 +37,7 @@ namespace AutoBitBot.UI.MainApp.UserControls
             TextBox t = (TextBox)sender;
             string filter = t.Text;
 
-            SingleFieldDataGridFilterMediator.Filter<ExchangeTicker>(filter, dg, p => p.MarketName);
+            SingleFieldDataGridFilterMediator.SingleFieldFilter<ExchangeTickerViewModel>(filter, dg);
         }
     }
 }

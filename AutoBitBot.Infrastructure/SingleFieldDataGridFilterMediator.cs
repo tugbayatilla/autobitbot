@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoBitBot.Infrastructure.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -11,6 +12,38 @@ namespace AutoBitBot.Infrastructure
 {
     public static class SingleFieldDataGridFilterMediator
     {
+        public static void SingleFieldFilter<T>(String filter, DataGrid dataGrid) where T : class, ISingleFieldUIFilter
+        {
+            if (filter.Length < 3 && filter.Length != 0)
+            {
+                return;
+            }
+
+            ICollectionView collectionView = CollectionViewSource.GetDefaultView(dataGrid.ItemsSource);
+            if (collectionView == null)
+            {
+                return;
+            }
+
+            if (filter == "")
+            {
+                collectionView.Filter = null;
+            }
+            else
+            {
+                collectionView.Filter = o =>
+                {
+                    var p = o as T;
+                    if (p == null)
+                    {
+                        return true;
+                    }
+
+                    return p.FilterField.ToUpperInvariant().Contains(filter.ToUpperInvariant());
+                };
+            }
+        }
+
         public static void Filter<T>(String filter, DataGrid dataGrid, Func<T, String> searchPattern) where T : class
         {
             if (filter.Length < 3 && filter.Length != 0)

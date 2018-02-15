@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AutoBitBot.Infrastructure.Exchanges
+namespace AutoBitBot.Infrastructure.Exchanges.ViewModels
 {
-    public class ExchangeBalance : ObservableObject
+    public class ExchangeBalanceViewModel : ObservableObject
     {
         String exchangeName, currency;
         Decimal amount;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoBitBot.Infrastructure.Exchanges.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,14 +18,14 @@ namespace AutoBitBot.Infrastructure.Exchanges
         String Name { get; }
 
 
-        ExchangeTicker GetTicker(String market);
+        ExchangeTickerViewModel GetTicker(String market);
         IObservable<ExchangeMarket> GetMarkets();
         IObservable<ExchangeMarketHistory> GetMarketHistory(String market);
         IObservable<ExchangeMarketSummary> GetMarketSummary(String market);
         IObservable<ExchangeMarketOpenOrder> GetMarketOpenOrders(String market);
         IObservable<ExchangeCurrency> GetCurrencies();
-        IObservable<ExchangeBalance> GetBalances();
-        ExchangeBalance GetBalance(String currency);
+        IObservable<ExchangeBalanceViewModel> GetBalances();
+        ExchangeBalanceViewModel GetBalance(String currency);
         IObservable<ExchangeOrderHistory> GetOrderHistories();
         ExchangeOrder GetOrder(String id);
         ExchangeBuyLimit BuyLimit(ExchangeBuyLimitArguments buyLimitArguments);

@@ -17,7 +17,7 @@ namespace AutoBitBot.ServerEngine.BitTasks
     {
         public override long ExecuteAtEvery => 10000;
 
-        public override string Name => "BittrexGetBalanceTask";
+        public override string Name => "Bittrex-User-Balances-Task";
 
         public override BitTaskExecutionTypes ExecutionType => BitTaskExecutionTypes.Permanent;
 

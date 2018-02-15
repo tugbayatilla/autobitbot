@@ -20,8 +20,9 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using AutoBitBot.Infrastructure.Exchanges;
 using AutoBitBot.Infrastructure;
-using AutoBitBot.PoloniexProxy.Models;
+using AutoBitBot.PoloniexProxy.Responses;
 using AutoBitBot.UI.MainApp.Collections;
+using AutoBitBot.Infrastructure.Exchanges.ViewModels;
 
 namespace AutoBitBot.UI.MainApp.ViewModels
 {
@@ -39,18 +40,18 @@ namespace AutoBitBot.UI.MainApp.ViewModels
             this.dispatcher = dispatcher;
             this.outputRichTextBox = outputRichTextBox;
 
-            this.Balances = new ObservableCollection<ExchangeBalance>();
+            this.AllExchangeBalances = new AllExchangeBalancesObservableCollection();
             this.Markets = new ObservableCollection<DTO.MarketDTO>();
             this.OpenOrders = new ObservableCollection<BittrexOpenOrdersResponse>();
             this.OrderHistory = new ObservableCollection<BittrexxOrderHistoryResponse>();
             this.PoloniexTickers = new ExchangeTickerObservableCollection();
             this.BittrexTickers = new ExchangeTickerObservableCollection();
-            this.DashboardExchangeTickers = new DashboardExchangeTickerViewModelCollection();
+            this.AllExchangeTickers = new AllExchangeTickerObservableCollection();
 
 
             this.BuyAndSell = new DTO.BuyAndSellDTO();
             this.MarketTicker = new DTO.MarketTickerDTO();
-            this.MarketSummary = new ExchangeTicker();
+            this.MarketSummary = new ExchangeTickerViewModel();
 
             GlobalContext.Instance.server.TaskExecuted += Server_TaskExecuted;
 
@@ -63,68 +64,76 @@ namespace AutoBitBot.UI.MainApp.ViewModels
         {
             try
             {
-                if (e.Data is BittrexxTickerResponse)
-                {
-                    var model = e.Data as BittrexxTickerResponse;
-                    this.MarketTicker.Ask.NewValue = model.Ask;
-                    this.MarketTicker.Bid.NewValue = model.Bid;
-                    this.MarketTicker.Last.NewValue = model.Last;
+                //if (e.Data is BittrexxTickerResponse)
+                //{
+                //    var model = e.Data as BittrexxTickerResponse;
+                //    this.MarketTicker.Ask.NewValue = model.Ask;
+                //    this.MarketTicker.Bid.NewValue = model.Bid;
+                //    this.MarketTicker.Last.NewValue = model.Last;
 
-                    this.BuyAndSell.Price = model.Ask;
-                    PropertyChanged(this, new PropertyChangedEventArgs(nameof(BuyAndSell)));
+                //    this.BuyAndSell.Price = model.Ask;
+                //    PropertyChanged(this, new PropertyChangedEventArgs(nameof(BuyAndSell)));
+                //}
+
+                #region Tickers
+                //tickers
+                if (e.BitTask is BittrexGetMarketSummariesTask)
+                {
+                    var model = e.Data as List<BittrexMarketSummaryResponse>;
+
+                    model.ForEach(p =>
+                    {
+                        //Bittrex Ticker
+                        this.BittrexTickers.AddOrUpdate(p);
+
+                        //Dashboard Ticker
+                        this.AllExchangeTickers.AddOrUpdate(p);
+                    });
+
                 }
 
+                //tickers
+                if (e.BitTask is PoloniexReturnTickerTask)
+                {
+                    var model = e.Data as PoloniexTickerResponse;
 
+                    model.ToList().ForEach(p =>
+                    {
+                        //Poloniex Ticker
+                        this.PoloniexTickers.AddOrUpdate(p.Key, p.Value);
+
+                        //Dashboard Ticker
+                        this.AllExchangeTickers.AddOrUpdate(p.Key, p.Value);
+                    });
+
+                }
+
+                #endregion
+
+                #region Balances
                 if (e.Data is List<BittrexxBalanceResponse>)
                 {
                     var model = e.Data as List<BittrexxBalanceResponse>;
 
-                    model.Where(p => p.Balance != 0).ToList().ForEach(p =>
+                    model.ForEach(p =>
                     {
-                        var item = this.Balances.FirstOrDefault(x => x.Currency == p.Currency && x.ExchangeName == Constants.BITTREX);
-
-                        this.dispatcher.Invoke(() =>
+                        if (p.Balance != 0)
                         {
-                            if (item == null)
-                            {
-                                this.Balances.Add(new ExchangeBalance() { ExchangeName = Constants.BITTREX, Currency = p.Currency, Amount = p.Balance });
-                            }
-                            else
-                            {
-                                item.Amount = p.Balance;
-                            }
-                        });
-
+                            this.AllExchangeBalances.AddOrUpdate(p);
+                        }
                     });
                 }
 
-                if (e.Data is PoloniexBalanceModel)
+                if (e.Data is PoloniexBalanceResponse)
                 {
-                    var model = e.Data as PoloniexBalanceModel;
+                    var model = e.Data as PoloniexBalanceResponse;
 
                     model.ToList().ForEach(p =>
-                      {
-                          var item = this.Balances.FirstOrDefault(x => x.Currency == p.Key && x.ExchangeName == Constants.POLONIEX);
-                          Decimal.TryParse(p.Value, out Decimal price);
-
-                          if (price == 0)
-                          {
-                              return;
-                          }
-
-                          this.dispatcher.Invoke(() =>
-                          {
-                              if (item == null)
-                              {
-                                  this.Balances.Add(new ExchangeBalance() { ExchangeName = Constants.POLONIEX, Currency = p.Key, Amount = price });
-                              }
-                              else
-                              {
-                                  item.Amount = price;
-                              }
-                          });
-                      });
-                }
+                    {
+                        this.AllExchangeBalances.AddOrUpdate(p.Key, p.Value);
+                    });
+                } 
+                #endregion
 
 
 
@@ -160,37 +169,7 @@ namespace AutoBitBot.UI.MainApp.ViewModels
                 //    PropertyChanged(this, new PropertyChangedEventArgs(nameof(MarketSummary)));
                 //}
 
-                //tickers
-                if (e.Data is List<BittrexMarketSummaryResponse>)
-                {
-                    var model = e.Data as List<BittrexMarketSummaryResponse>;
-
-                    model.ForEach(p =>
-                    {
-                        //Bittrex Ticker
-                        this.BittrexTickers.AddOrUpdate(p);
-
-                        //Dashboard Ticker
-                        this.DashboardExchangeTickers.AddOrUpdate(p);
-                    });
-
-                }
-
-                //tickers
-                if (e.Data is PoloniexTickerResponse)
-                {
-                    var model = e.Data as PoloniexTickerResponse;
-
-                    model.ToList().ForEach(p =>
-                    {
-                        //Poloniex Ticker
-                        this.PoloniexTickers.AddOrUpdate(p.Key, p.Value);
-
-                        //Dashboard Ticker
-                        this.DashboardExchangeTickers.AddOrUpdate(p.Key, p.Value);
-                    });
-
-                }
+                
 
                 if (e.Data is List<BittrexOpenOrdersResponse>)
                 {
@@ -222,23 +201,23 @@ namespace AutoBitBot.UI.MainApp.ViewModels
 
         }
 
-        
+
 
         public ObservableCollection<BitTask> ActiveTasks => GlobalContext.Instance.ActiveTasks;
         public ObservableCollection<BitTask> KilledTasks => GlobalContext.Instance.KilledTasks;
         public ObservableCollection<String> Messages { get; private set; }
         public ObservableCollection<DTO.MarketDTO> Markets { get; set; }
-        public ObservableCollection<ExchangeBalance> Balances { get; set; }
         public ObservableCollection<BittrexOpenOrdersResponse> OpenOrders { get; set; }
         public ObservableCollection<BittrexxOrderHistoryResponse> OrderHistory { get; set; }
         public ExchangeTickerObservableCollection PoloniexTickers { get; set; }
         public ExchangeTickerObservableCollection BittrexTickers { get; set; }
-        public DashboardExchangeTickerViewModelCollection DashboardExchangeTickers { get; set; }
+        public AllExchangeTickerObservableCollection AllExchangeTickers { get; set; }
+        public AllExchangeBalancesObservableCollection AllExchangeBalances { get; set; }
 
 
         public DTO.MarketTickerDTO MarketTicker { get; set; }
         public DTO.BuyAndSellDTO BuyAndSell { get; set; }
-        public ExchangeTicker MarketSummary { get; set; }
+        public ExchangeTickerViewModel MarketSummary { get; set; }
 
 
 

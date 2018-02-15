@@ -1,7 +1,8 @@
 ﻿using AutoBitBot.BittrexProxy.Responses;
 using AutoBitBot.Infrastructure;
 using AutoBitBot.Infrastructure.Exchanges;
-using AutoBitBot.PoloniexProxy.Models;
+using AutoBitBot.Infrastructure.Exchanges.ViewModels;
+using AutoBitBot.PoloniexProxy.Responses;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,7 +13,7 @@ using System.Windows.Data;
 
 namespace AutoBitBot.UI.MainApp.Collections
 {
-    public class ExchangeTickerObservableCollection : ObservableCollection<ExchangeTicker>
+    public class ExchangeTickerObservableCollection : ObservableCollection<ExchangeTickerViewModel>
     {
         protected static Object _locker = new object();
 
@@ -32,7 +33,7 @@ namespace AutoBitBot.UI.MainApp.Collections
                 if (item == null)
                 {
                     //insert new 
-                    item = new ExchangeTicker() { MarketName = marketName };
+                    item = new ExchangeTickerViewModel() { MarketName = marketName };
                     ConvertResponseToModel(response, item);
                     this.Add(item);
                 }
@@ -44,7 +45,7 @@ namespace AutoBitBot.UI.MainApp.Collections
             }
         }
 
-        void ConvertResponseToModel(BittrexMarketSummaryResponse response, ExchangeTicker model)
+        void ConvertResponseToModel(BittrexMarketSummaryResponse response, ExchangeTickerViewModel model)
         {
             model.Ask.NewValue = response.Ask ?? 0;
             model.Bid.NewValue = response.Bid ?? 0;
@@ -72,7 +73,7 @@ namespace AutoBitBot.UI.MainApp.Collections
                 if (item == null)
                 {
                     //insert new 
-                    item = new ExchangeTicker() { MarketName = marketName };
+                    item = new ExchangeTickerViewModel() { MarketName = marketName };
                     ConvertResponseToModel(response, item);
                     this.Add(item);
                 }
@@ -84,7 +85,7 @@ namespace AutoBitBot.UI.MainApp.Collections
             }
         }
 
-        void ConvertResponseToModel(PoloniexTickerResponseDetail response, ExchangeTicker model)
+        void ConvertResponseToModel(PoloniexTickerResponseDetail response, ExchangeTickerViewModel model)
         {
             model.Ask.NewValue = response.LowestAsk;
             model.Bid.NewValue = response.HighestBid;

@@ -18,7 +18,7 @@ namespace AutoBitBot.ServerEngine.BitTasks
     {
         public override long ExecuteAtEvery => 10000;
 
-        public override string Name => "PoloniexReturnBalancesTask";
+        public override string Name => "Poloniex-User-Balances-Task";
 
         public override BitTaskExecutionTypes ExecutionType => BitTaskExecutionTypes.Permanent;
 
