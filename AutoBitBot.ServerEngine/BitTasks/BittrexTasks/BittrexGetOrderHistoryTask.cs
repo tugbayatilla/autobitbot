@@ -24,7 +24,7 @@ namespace AutoBitBot.ServerEngine.BitTasks
 
         public override long ExecuteAtEvery => 10000;
 
-        public override string Name => "BittrexGetOrderHistoryTask";
+        public override string Name => "Bittrex-OrderHistory-Task";
 
         public override BitTaskExecutionTypes ExecutionType => BitTaskExecutionTypes.Permanent;
 
@@ -41,7 +41,7 @@ namespace AutoBitBot.ServerEngine.BitTasks
 
             if (!result.Result)
             {
-                Notification.NotifyAsync($"[{Name}] {result.Message}");
+                Notification.Notify($"[{Name}] {result.Message}");
             }
 
             return result.Data;

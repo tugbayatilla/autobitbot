@@ -22,9 +22,9 @@ namespace AutoBitBot.ServerEngine
         readonly ObservableCollection<BitTask> activeTasks;
         readonly ObservableCollection<BitTask> killedTasks;
         static Object _lock = new Object();
-        readonly INotificationAsync notification;
+        readonly INotification notification;
 
-        public Server(INotificationAsync notification)
+        public Server(INotification notification)
         {
             this.Config = new List<ConfigItem>();
             this.activeTasks = new ObservableCollection<BitTask>();

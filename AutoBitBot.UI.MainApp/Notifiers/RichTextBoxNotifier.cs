@@ -14,7 +14,7 @@ using ArchPM.Core.Extensions;
 
 namespace AutoBitBot.UI.MainApp.Notifiers
 {
-    public class RichTextBoxNotifier : INotifierAsync
+    public class RichTextBoxNotifier : INotifier
     {
         readonly Dispatcher dispatcher;
         readonly RichTextBox richTextBox;

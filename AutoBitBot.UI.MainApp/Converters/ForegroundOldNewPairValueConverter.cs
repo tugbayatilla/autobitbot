@@ -17,10 +17,9 @@ namespace AutoBitBot.UI.MainApp.Converters
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            var data = value as OldNewPair<Decimal>;
             var result = "Black";
 
-            if (data != null)
+            if (value is OldNewPair<Decimal> data)
             {
                 if (data.NewValue >= data.OldValue)
                 {

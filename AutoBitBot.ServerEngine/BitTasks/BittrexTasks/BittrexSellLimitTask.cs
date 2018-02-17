@@ -34,7 +34,7 @@ namespace AutoBitBot.ServerEngine.BitTasks
 
             Thread.Sleep(2000);
 
-            Notification.NotifyAsync($"[{Name}] executed. go to next one!");
+            Notification.Notify($"[{Name}] executed. go to next one!");
 
             return Guid.NewGuid();
 

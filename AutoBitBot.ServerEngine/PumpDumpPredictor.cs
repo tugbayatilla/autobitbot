@@ -14,11 +14,11 @@ namespace AutoBitBot.ServerEngine
         List<PumpDumpPredictionFeed> feeds;
         List<TwoFeedAngleResult> angleResults;
         static Object _lock = new Object();
-        INotificationAsync notification;
+        INotification notification;
         Int32 garbageCount = 100;
         PumpDumpPredictionFeed baseFeed;
 
-        public PumpDumpPredictor(INotificationAsync notification)
+        public PumpDumpPredictor(INotification notification)
         {
             this.notification = notification;
             this.feeds = new List<PumpDumpPredictionFeed>();
@@ -103,7 +103,7 @@ namespace AutoBitBot.ServerEngine
             var x = x2 - x1;
             var y = y2 - y1;
 
-            notification.NotifyAsync($"({x1};{y1:N8}) | ({x2};{y2:N8}) | {Math.Round(result.Angle)} | {(decimal)x}sn:{(decimal)y}B", NotificationLocations.Console | NotificationLocations.File);
+            notification.Notify($"({x1};{y1:N8}) | ({x2};{y2:N8}) | {Math.Round(result.Angle)} | {(decimal)x}sn:{(decimal)y}B", NotifyTo.CONSOLE, NotifyTo.EVENT_LOG);
 
             OnAngleCalculated(this, result);
             return result;

@@ -14,8 +14,7 @@
     </UserControl.Resources>
         
     
-    <StackPanel>
-        <Label Foreground="Blue" Margin="5,5,5,0">BALANCES</Label>
+    <Grid>
         <DataGrid ItemsSource="{Binding AllExchangeBalances}" AutoGenerateColumns="False" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Exchange" Binding="{Binding ExchangeName}" />
@@ -25,5 +24,5 @@
             </DataGrid.Columns>
         </DataGrid>
 
-    </StackPanel>
+    </Grid>
 </UserControl>

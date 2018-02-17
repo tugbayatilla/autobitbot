@@ -37,7 +37,7 @@ namespace AutoBitBot.Infrastructure.Exchanges.ViewModels
             {
                 high = value;
                 OnPropertyChanged(nameof(High));
-                OnPropertyChanged(nameof(Gap));
+                OnPropertyChanged(nameof(Range));
 
             }
         }
@@ -48,12 +48,13 @@ namespace AutoBitBot.Infrastructure.Exchanges.ViewModels
             {
                 low = value;
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(Gap));
+                OnPropertyChanged(nameof(Range));
 
             }
         }
 
-        public Decimal Gap => High - Low;
+        public Decimal Range => High - Low;
+        public Decimal RangePercent => ((High - Low) / Low) * 100;
 
 
         public Decimal Volume

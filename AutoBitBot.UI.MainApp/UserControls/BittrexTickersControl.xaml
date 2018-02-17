@@ -16,7 +16,7 @@
         <converters:ForegroundChangeValueConverter x:Key="ForegroundChangeValueConverter" />
 
     </UserControl.Resources>
-        
+
 
     <Grid>
 
@@ -26,15 +26,15 @@
         </Grid.RowDefinitions>
 
         <TextBox Grid.Row="0" x:Name="SearchTextBox" TextChanged="SearchTextBox_TextChanged" />
-            <DataGrid x:Name="dg"   Grid.Row="1"
+        <DataGrid x:Name="dg"   Grid.Row="1"
                       ItemsSource="{Binding BittrexTickers}" 
                       AutoGenerateColumns="False" 
                       CanUserAddRows="False" 
                       
                        >
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Market" Binding="{Binding MarketName}" />
-                    <DataGridTextColumn Header="Volume" Binding="{Binding BaseVolume, Converter={StaticResource PercentStringValueConverter}}" />
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Market" Binding="{Binding MarketName}" />
+                <DataGridTextColumn Header="Volume" Binding="{Binding BaseVolume, Converter={StaticResource PercentStringValueConverter}}" />
                 <DataGridTextColumn Header="Change" Binding="{Binding Change, Converter={StaticResource PercentStringValueConverter}}">
                     <DataGridTextColumn.CellStyle>
                         <Style TargetType="{x:Type DataGridCell}">
@@ -49,12 +49,13 @@
                     </DataGridTextColumn.CellStyle>
                 </DataGridTextColumn>
 
-                <DataGridTextColumn Header="Last" Binding="{Binding Last.NewValue, Converter={StaticResource DecimalStringValueConverter}}" Foreground="{Binding Last, Converter={StaticResource ForegroundOldNewPairValueConverter}}" />
-                    <DataGridTextColumn Header="24H High" Binding="{Binding High, Converter={StaticResource DecimalStringValueConverter}}" />
-                    <DataGridTextColumn Header="24H Low" Binding="{Binding Low, Converter={StaticResource DecimalStringValueConverter}}"/>
-                    <DataGridTextColumn Header="Gap" Binding="{Binding Gap, Converter={StaticResource DecimalStringValueConverter}}"/>
-                </DataGrid.Columns>
-            </DataGrid>
+                <DataGridTextColumn Header="Last" Binding="{Binding Last.NewValue, Converter={StaticResource DecimalStringValueConverter}}"  />
+                <DataGridTextColumn Header="24H High" Binding="{Binding High, Converter={StaticResource DecimalStringValueConverter}}" />
+                <DataGridTextColumn Header="24H Low" Binding="{Binding Low, Converter={StaticResource DecimalStringValueConverter}}"/>
+                <DataGridTextColumn Header="Range" Binding="{Binding Range, Converter={StaticResource DecimalStringValueConverter}}"/>
+                <DataGridTextColumn Header="%Range" Binding="{Binding RangePercent, Converter={StaticResource PercentStringValueConverter}}"/>
+            </DataGrid.Columns>
+        </DataGrid>
 
     </Grid>
 </UserControl>

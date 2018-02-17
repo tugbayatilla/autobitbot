@@ -30,8 +30,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ArchPM.Core, Version=0.0.17.17882, Culture=neutral, PublicKeyToken=a7c5f15bb1b78c45, processorArchitecture=MSIL">
-      <HintPath>..\packages\ArchPM.Core.0.0.17\lib\net45\ArchPM.Core.dll</HintPath>
+    <Reference Include="ArchPM.Core, Version=0.1.3.42270, Culture=neutral, PublicKeyToken=a7c5f15bb1b78c45, processorArchitecture=MSIL">
+      <HintPath>..\packages\ArchPM.Core.0.1.3\lib\net45\ArchPM.Core.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -50,17 +50,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BitTasks\BitTaskException.cs" />
+    <Compile Include="BitTasks\BittrexTasks\BittrexFatFinger1MinSignalCollectorTask.cs" />
+    <Compile Include="BitTasks\BittrexTasks\BittrexFatFinger1MinMainTask.cs" />
     <Compile Include="BitTasks\BittrexTasks\BittrexGetMarketSummariesTask.cs" />
     <Compile Include="BitTasks\Enums\BitTaskWorkingTimes.cs" />
     <Compile Include="BitTasks\BittrexTasks\BittrexGetOrderHistoryTask.cs" />
     <Compile Include="BitTasks\BittrexTasks\BittrexGetOpenOrdersTask.cs" />
     <Compile Include="BitTasks\BittrexTasks\BittrexGetMarketSummaryTask.cs" />
-    <Compile Include="BitTasks\BittrexTasks\BittrexBuyAndSellLimitTask.cs" />
     <Compile Include="BitTasks\BittrexTasks\BittrexGetMarketsTask.cs" />
     <Compile Include="BitTasks\BittrexTasks\BittrexSellLimitCompletedTask.cs" />
     <Compile Include="BitTasks\BittrexTasks\BittrexSellLimitTask.cs" />
     <Compile Include="BitTasks\PoloniexTasks\PoloniexReturnTickerTask.cs" />
     <Compile Include="BitTasks\PoloniexTasks\PoloniexReturnBalancesTask.cs" />
+    <Compile Include="BitTasks\ProcessTasks\OverallCurrentStatusProcessTask.cs" />
     <Compile Include="DecisionMaker.cs" />
     <Compile Include="BitTasks\Enums\BitTaskExecutionTypes.cs" />
     <Compile Include="BitTasks\EventArgs\BitTaskExecutedEventArgs.cs" />

@@ -28,7 +28,7 @@ namespace AutoBitBot.ServerEngine.BitTasks
             var result = await manager.GetMarkets();
             if (!result.Result)
             {
-                Notification.NotifyAsync($"[{Name}] {result.Message}");
+                Notification.Notify($"[{Name}] {result.Message}");
             }
 
             return result.Data;

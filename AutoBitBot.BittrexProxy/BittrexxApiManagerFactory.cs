@@ -1,4 +1,5 @@
 ﻿using ArchPM.Core.Api;
+using ArchPM.Core.Notifications;
 using ArchPM.Core.Session;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace AutoBitBot.BittrexProxy
 
         public BittrexApiManager Create()
         {
-            IApiResponseLog apiResponseLog = new NullApiResponseLog();
+            var apiResponseLog = new NullNotification();
             return new BittrexApiManager(httpClient, apiResponseLog);
         }
 

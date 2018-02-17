@@ -13,8 +13,7 @@
 
 
     </UserControl.Resources>
-    <StackPanel >
-        <Label Foreground="Blue" Margin="5,5,5,0">ACTIVE TASKS</Label>
+    <Grid >
         <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding ActiveTasks}" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
@@ -26,7 +25,6 @@
                                     <Binding Path="Status" Converter="{StaticResource ForegroundBitTaskStatusChangedValueConverter}"/>
                                 </Setter.Value>
                             </Setter>
-                            
                         </Style>
                     </DataGridTextColumn.CellStyle>
                 </DataGridTextColumn>
@@ -39,5 +37,5 @@
                 <DataGridTextColumn Header="ExecutionId" Binding="{Binding ExecutionId}" />
             </DataGrid.Columns>
         </DataGrid>
-    </StackPanel>
+    </Grid>
 </UserControl>

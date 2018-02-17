@@ -50,7 +50,7 @@ namespace AutoBitBot.ServerEngine
         /// <value>
         /// The notification.
         /// </value>
-        public INotificationAsync Notification { get; set; }
+        public INotification Notification { get; set; }
 
         /// <summary>
         /// Gets the execute at every.
@@ -100,6 +100,17 @@ namespace AutoBitBot.ServerEngine
             {
                 lastResult = value;
                 PropertyChanged(this, new PropertyChangedEventArgs(nameof(LastResult)));
+            }
+        }
+
+        Task<Object> lastResultAsync;
+        public Task<Object> LastResultAsync
+        {
+            get { return lastResultAsync; }
+            private set
+            {
+                lastResultAsync = value;
+                PropertyChanged(this, new PropertyChangedEventArgs(nameof(LastResultAsync)));
             }
         }
 
@@ -191,6 +202,13 @@ namespace AutoBitBot.ServerEngine
         #endregion
 
         /// <summary>
+        /// Validates the task.
+        /// </summary>
+        protected virtual void ValidateTask()
+        {
+        }
+
+        /// <summary>
         /// Determines whether this instance can execute.
         /// </summary>
         /// <returns>
@@ -221,6 +239,8 @@ namespace AutoBitBot.ServerEngine
             {
                 try
                 {
+                    ValidateTask();
+
                     while (true)
                     {
                         if (!CanExecute())
@@ -232,17 +252,17 @@ namespace AutoBitBot.ServerEngine
 
                         stopWatch.Restart();
                         this.Status = BitTaskStatus.Executing;
-                        Notification.NotifyAsync(ToString());
+                        Notification.Notify(ToString(), NotifyTo.CONSOLE);
 
-                        var data = await ExecuteAction(parameter);
-                        this.LastResult = data;
+                        this.LastResultAsync = ExecuteAction(parameter);
+                        this.LastResult = await LastResultAsync;
                         stopWatch.Stop();
 
                         this.LastExecutionTime = DateTime.Now;
                         this.Status = BitTaskStatus.Executed;
                         this.ElapsedTime = stopWatch.ElapsedMilliseconds;
-                        Notification.NotifyAsync(ToString());
-                        Executed(this, new BitTaskExecutedEventArgs() { Data = data, BitTask = this });
+                        Notification.Notify(ToString(), NotifyTo.CONSOLE);
+                        Executed(this, new BitTaskExecutedEventArgs() { Data = LastResult, BitTask = this });
 
                         ////fistan: dikkat!!!
                         //var list = this.Server.Config.Where(p => p.Task == this.GetType() && p.ExecutionTime == ConfigExecutionTimes.AfterExecution);
@@ -263,7 +283,7 @@ namespace AutoBitBot.ServerEngine
 
                         //change status
                         this.Status = BitTaskStatus.Waiting;
-                        Notification.NotifyAsync(ToString());
+                        Notification.Notify(ToString(), NotifyTo.CONSOLE);
 
                         //sleep for a while
                         if (this.WaitTime > 0)
@@ -277,12 +297,12 @@ namespace AutoBitBot.ServerEngine
                     this.Status = BitTaskStatus.Failed;
                     this.FailedMessage = ex.GetAllMessages(false, " ");
 
-                    Notification.NotifyAsync(ex, NotificationLocations.EventLog);
+                    Notification.Notify(ex, NotifyTo.EVENT_LOG);
                 }
 
                 if (this.KillAfterExecution)
                 {
-                    Notification.NotifyAsync($"[{Name}] Killing the task...", NotificationLocations.Log);
+                    Notification.Notify($"[{Name}] Killing the task...", NotifyTo.CONSOLE);
                     this.Server?.Kill(this);
                 }
 

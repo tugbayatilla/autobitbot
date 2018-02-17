@@ -30,7 +30,7 @@ namespace AutoBitBot.ServerEngine.BitTasks
 
             Thread.Sleep(2000);
 
-            Notification.NotifyAsync($"[{Name}] executed. Parameter: {parameter}");
+            Notification.Notify($"[{Name}] executed. Parameter: {parameter}");
 
             return null;
 

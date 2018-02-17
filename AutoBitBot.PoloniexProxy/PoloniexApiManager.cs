@@ -10,6 +10,7 @@ using AutoBitBot.Infrastructure;
 using ArchPM.Core.Api;
 using AutoBitBot.Infrastructure.Exchanges;
 using AutoBitBot.PoloniexProxy.Responses;
+using ArchPM.Core.Notifications;
 
 namespace AutoBitBot.PoloniexProxy
 {
@@ -25,15 +26,15 @@ namespace AutoBitBot.PoloniexProxy
     public class PoloniexApiManager
     {
         readonly HttpClient httpClient;
-        readonly IApiResponseLog apiResponseLog;
+        readonly INotification notification;
 
-        internal PoloniexApiManager(HttpClient httpClient) : this(httpClient, new NullApiResponseLog())
+        internal PoloniexApiManager(HttpClient httpClient) : this(httpClient, new NullNotification())
         {
         }
-        internal PoloniexApiManager(HttpClient httpClient, IApiResponseLog apiResponseLog)
+        internal PoloniexApiManager(HttpClient httpClient, INotification notification)
         {
             this.httpClient = httpClient;
-            this.apiResponseLog = apiResponseLog;
+            this.notification = notification;
 
             SetDefaultHeadersToHeader();
 
@@ -71,7 +72,7 @@ namespace AutoBitBot.PoloniexProxy
                 result.RequestedUrl = url;
 
                 //log here: dont use await here. dont want to wait here
-                apiResponseLog.LogAsync(result);
+                notification.Notify(result.ApiResponseToString());
             }
             return result;
 
@@ -118,7 +119,7 @@ namespace AutoBitBot.PoloniexProxy
                 result.RequestedUrl = url;
 
                 //log here: dont use await here. dont want to wait here
-                apiResponseLog.LogAsync(result);
+                notification.Notify(result.ApiResponseToString());
             }
             return result;
 

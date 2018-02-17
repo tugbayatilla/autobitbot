@@ -41,7 +41,7 @@ namespace AutoBitBot.ServerEngine.BitTasks
 
             if (!result.Result)
             {
-                Notification.NotifyAsync($"[{Name}] {result.Message}");
+                Notification.Notify($"[{Name}] {result.Message}");
             }
 
             return result.Data;

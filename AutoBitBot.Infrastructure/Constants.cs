@@ -7,6 +7,11 @@ namespace AutoBitBot.Infrastructure
 {
     public static class Constants
     {
+        public static IEnumerable<String> GetExchangeNames()
+        {
+            return new List<String>() { BITTREX, POLONIEX };
+        }
+
         public const String BITTREX = "Bittrex";
         public const String POLONIEX = "Poloniex";
         //public const String APIKEYS = "ApiKeys";

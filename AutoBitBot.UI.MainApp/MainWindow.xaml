@@ -18,7 +18,7 @@
     <ui:ModernWindow.MenuLinkGroups>
         <ui:LinkGroup DisplayName="Welcome">
             <ui:LinkGroup.Links>
-                <ui:Link DisplayName="{x:Static res:Titles.AllExchangeTickers}" Source="/Pages/DashboardPage.xaml"/>
+                <ui:Link DisplayName="{x:Static res:Titles.Dashboard}" Source="/Pages/DashboardPage.xaml"/>
             </ui:LinkGroup.Links>
         </ui:LinkGroup>
         <ui:LinkGroup DisplayName="Tickers">
@@ -36,8 +36,8 @@
         </ui:LinkGroup>
         <ui:LinkGroup DisplayName="Settings" >
             <ui:LinkGroup.Links>
+                <ui:Link DisplayName="Task Management" Source="/Pages/TaskManagementPage.xaml" />
                 <ui:Link DisplayName="Customization" Source="/Pages/Settings.xaml" />
-                <ui:Link DisplayName="Task Management" Source="/UserControls/ActiveTasksControl.xaml" />
             </ui:LinkGroup.Links>
         </ui:LinkGroup>
         <!--  <ui:LinkGroup DisplayName="Controls" >

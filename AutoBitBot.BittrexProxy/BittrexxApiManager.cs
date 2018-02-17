@@ -10,6 +10,7 @@ using System.Diagnostics;
 using AutoBitBot.Infrastructure;
 using ArchPM.Core.Api;
 using AutoBitBot.Infrastructure.Exchanges;
+using ArchPM.Core.Notifications;
 
 namespace AutoBitBot.BittrexProxy
 {
@@ -25,15 +26,15 @@ namespace AutoBitBot.BittrexProxy
     public class BittrexApiManager
     {
         readonly HttpClient httpClient;
-        readonly IApiResponseLog  apiResponseLog;
+        readonly INotification  notification;
 
-        internal BittrexApiManager(HttpClient httpClient) : this(httpClient, new NullApiResponseLog())
+        internal BittrexApiManager(HttpClient httpClient) : this(httpClient, new NullNotification())
         {
         }
-        internal BittrexApiManager(HttpClient httpClient, IApiResponseLog apiResponseLog)
+        internal BittrexApiManager(HttpClient httpClient, INotification notification)
         {
             this.httpClient = httpClient;
-            this.apiResponseLog = apiResponseLog;
+            this.notification = notification;
 
             SetDefaultHeaders();
 
@@ -56,7 +57,7 @@ namespace AutoBitBot.BittrexProxy
             }
             catch (Exception ex)
             {
-                result = BittrexApiResponse<T>.CreateException(ex);
+                result = BittrexApiResponse<T>.CreateException(ex); //bittrex-exception
             }
             finally
             {
@@ -64,7 +65,7 @@ namespace AutoBitBot.BittrexProxy
                 result.RequestedUrl = url;
 
                 //log here: dont use await here. dont want to wait here
-                apiResponseLog.LogAsync(result);
+                notification.Notify(result.ApiResponseToString()); //fistan: bittrexx-final-response
             }
             return result;
         }

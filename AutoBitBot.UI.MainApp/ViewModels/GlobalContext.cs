@@ -24,33 +24,33 @@ namespace AutoBitBot.UI.MainApp
     public sealed class GlobalContext
     {
         public static readonly GlobalContext Instance = new GlobalContext();
-        readonly NotificationAsyncManager notificationManager;
+        readonly NotificationManager notificationManager;
         public readonly Server server;
         Dispatcher dispatcher;
         Boolean initialized = false;
 
         private GlobalContext()
         {
-            notificationManager = new NotificationAsyncManager();
+            notificationManager = new NotificationManager();
             var notifierFile = new LogNotifier();
             //notification.RegisterNotifier(NotificationLocations.Console, notifierOutput);
-            notificationManager.RegisterNotifier(NotificationLocations.Console, notifierFile);
+            notificationManager.RegisterNotifier(NotifyTo.CONSOLE, notifierFile);
             //notification.RegisterNotifier(NotificationLocations.EventLog, notifierOutput);
-            notificationManager.RegisterNotifier(NotificationLocations.EventLog, notifierFile);
-            notificationManager.RegisterNotifier(NotificationLocations.Log,
-                new LogNotifier(new ArchPM.Core.IO.LogToFileManager()
-                {
-                    LogDirectoryPath = Path.Combine(Environment.CurrentDirectory, "ExecutionCompleted")
-                }));
+            notificationManager.RegisterNotifier(NotifyTo.EVENT_LOG, notifierFile);
+            //notificationManager.RegisterNotifier(NotificationLocations.Log,
+            //    new LogNotifier(new ArchPM.Core.IO.LogToFileManager()
+            //    {
+            //        LogDirectoryPath = Path.Combine(Environment.CurrentDirectory, "ExecutionCompleted")
+            //    }));
 
             var bittrexManager = BittrexProxy.BittrexApiManagerFactory.Instance.Create();
 
             server = new Server(notificationManager);
         }
 
-        public void RegisterNotifier(NotificationLocations location, INotifierAsync notifier)
+        public void RegisterNotifier(String notifyTo, INotifier notifier)
         {
-            notificationManager.RegisterNotifier(location, notifier);
+            notificationManager.RegisterNotifier(notifyTo, notifier);
         }
 
         public void Init(Dispatcher dispatcher)

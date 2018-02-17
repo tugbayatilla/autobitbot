@@ -10,8 +10,7 @@
     <UserControl.Resources>
         <converters:DateTimeToStringConverter x:Key="DateTimeToString" />
     </UserControl.Resources>
-    <StackPanel >
-        <Label Foreground="Blue" Margin="5,5,5,0">KILLED TASKS</Label>
+    <Grid >
         <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding KilledTasks}" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
@@ -24,5 +23,5 @@
                 <DataGridTextColumn Header="ExecutionId" Binding="{Binding ExecutionId}" />
             </DataGrid.Columns>
         </DataGrid>
-    </StackPanel>
+    </Grid>
 </UserControl>

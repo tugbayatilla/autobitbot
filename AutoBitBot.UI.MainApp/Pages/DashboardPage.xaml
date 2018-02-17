@@ -14,14 +14,16 @@
             <ColumnDefinition Width="4*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" MaxHeight="300"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="1*" MaxHeight="300"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         
         
         <UserControls:AllExchangeTickersControl />
         <UserControls:AllExchangeBalancesControl Grid.Column="1" />
 
+        <UserControls:MarketOpenOrdersControl Grid.Column="0" Grid.Row="1" />
 
 
 

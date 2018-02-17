@@ -47,6 +47,7 @@ namespace AutoBitBot.UI.MainApp.ViewModels
             this.PoloniexTickers = new ExchangeTickerObservableCollection();
             this.BittrexTickers = new ExchangeTickerObservableCollection();
             this.AllExchangeTickers = new AllExchangeTickerObservableCollection();
+            this.ExchangeOverallCurrentStatus = new ExchangeOverallCurrentStatusObservableCollection();
 
 
             this.BuyAndSell = new DTO.BuyAndSellDTO();
@@ -56,8 +57,8 @@ namespace AutoBitBot.UI.MainApp.ViewModels
             GlobalContext.Instance.server.TaskExecuted += Server_TaskExecuted;
 
             var notifierOutput = new RichTextBoxNotifier(this.dispatcher, outputRichTextBox);
-            GlobalContext.Instance.RegisterNotifier(NotificationLocations.Console, notifierOutput);
-            GlobalContext.Instance.RegisterNotifier(NotificationLocations.EventLog, notifierOutput);
+            GlobalContext.Instance.RegisterNotifier(NotifyTo.CONSOLE, notifierOutput);
+            GlobalContext.Instance.RegisterNotifier(NotifyTo.EVENT_LOG, notifierOutput);
         }
 
         private void Server_TaskExecuted(object sender, BitTaskExecutedEventArgs e)
@@ -213,6 +214,7 @@ namespace AutoBitBot.UI.MainApp.ViewModels
         public ExchangeTickerObservableCollection BittrexTickers { get; set; }
         public AllExchangeTickerObservableCollection AllExchangeTickers { get; set; }
         public AllExchangeBalancesObservableCollection AllExchangeBalances { get; set; }
+        public ExchangeOverallCurrentStatusObservableCollection ExchangeOverallCurrentStatus { get; set; }
 
 
         public DTO.MarketTickerDTO MarketTicker { get; set; }

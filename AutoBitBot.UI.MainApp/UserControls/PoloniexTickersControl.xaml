@@ -50,7 +50,7 @@
                     </DataGridTextColumn.CellStyle>
                 </DataGridTextColumn>
 
-                <DataGridTextColumn Header="Last" Binding="{Binding Last.NewValue, Converter={StaticResource DecimalStringValueConverter}}" Foreground="{Binding Last, Converter={StaticResource ForegroundOldNewPairValueConverter}}" />
+                <DataGridTextColumn Header="Last" Binding="{Binding Last.NewValue, Converter={StaticResource DecimalStringValueConverter}}"  />
                     <DataGridTextColumn Header="24H High" Binding="{Binding High, Converter={StaticResource DecimalStringValueConverter}}" />
                     <DataGridTextColumn Header="24H Low" Binding="{Binding Low, Converter={StaticResource DecimalStringValueConverter}}"/>
                     <DataGridTextColumn Header="Gap" Binding="{Binding Gap, Converter={StaticResource DecimalStringValueConverter}}"/>
