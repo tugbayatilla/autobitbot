@@ -24,22 +24,22 @@ namespace AutoBitBot.UI.MainApp.Commands
 
         public void Execute(object parameter)
         {
-            var model = parameter as MainViewModel;
-            var uc = new UserControls.MarketsControl()
-            {
-                DataContext = model.Markets
-            };
+            //var model = parameter as MainViewModel;
+            //var uc = new UserControls.MarketsControl()
+            //{
+            //    DataContext = model.Markets
+            //};
 
-            Window window = new Window
-            {
-                Title = "Markets",
-                Content = uc,
-                WindowState = WindowState.Normal,
-                Width = 400,
-                Height = 400
-            };
+            //Window window = new Window
+            //{
+            //    Title = "Markets",
+            //    Content = uc,
+            //    WindowState = WindowState.Normal,
+            //    Width = 400,
+            //    Height = 400
+            //};
 
-            window.Show();
+            //window.Show();
 
         }
     }

@@ -13,16 +13,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AutoBitBot.UI.MainApp.UserControls
+namespace AutoBitBot.UI.MainApp.Pages
 {
     /// <summary>
-    /// Interaction logic for MarketSummaryControl.xaml
+    /// Interaction logic for Introduction.xaml
     /// </summary>
-    public partial class MarketSummaryControl : UserControl
+    public partial class BittrexPage : UserControl
     {
-        public MarketSummaryControl()
+        public BittrexPage()
         {
             InitializeComponent();
         }
+
     }
 }

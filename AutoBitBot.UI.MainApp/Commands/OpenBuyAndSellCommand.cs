@@ -25,7 +25,7 @@ namespace AutoBitBot.UI.MainApp.Commands
         public void Execute(object parameter)
         {
             var model = parameter as MainViewModel;
-            var uc = new UserControls.BuyAndSellControl()
+            var uc = new UserControls.BittrexBuyAndSellControl()
             {
                 DataContext = model.BuyAndSell
             };

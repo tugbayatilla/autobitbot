@@ -9,9 +9,9 @@ namespace AutoBitBot.UI.MainApp.UserControls
     /// <summary>
     /// Interaction logic for MarketControl.xaml
     /// </summary>
-    public partial class MarketsControl : UserControl
+    public partial class BittrexMarketsControl : UserControl
     {
-        public MarketsControl()
+        public BittrexMarketsControl()
         {
             InitializeComponent();
 

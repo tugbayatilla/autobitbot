@@ -1,7 +1,5 @@
-﻿using AutoBitBot.UI.MainApp.DTO;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,16 +16,13 @@ using System.Windows.Shapes;
 namespace AutoBitBot.UI.MainApp.UserControls
 {
     /// <summary>
-    /// Interaction logic for MarketControl.xaml
+    /// Interaction logic for FatFingerStarterControl.xaml
     /// </summary>
-    public partial class MarketOpenOrdersControl : UserControl
+    public partial class BittrexFatFingerStarterControl : UserControl
     {
-        public MarketOpenOrdersControl()
+        public BittrexFatFingerStarterControl()
         {
             InitializeComponent();
-
         }
-
-       
     }
 }

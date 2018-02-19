@@ -120,11 +120,17 @@
   <data name="AllExchangeTickers" xml:space="preserve">
     <value>ALL EXCHANGE TICKERS</value>
   </data>
+  <data name="Bittrex" xml:space="preserve">
+    <value>BITTREX</value>
+  </data>
   <data name="BittrexTickers" xml:space="preserve">
     <value>BITTREX TICKERS</value>
   </data>
   <data name="Dashboard" xml:space="preserve">
     <value>DASHBOARD</value>
+  </data>
+  <data name="Poloniex" xml:space="preserve">
+    <value>POLONIEX</value>
   </data>
   <data name="PoloniexTickers" xml:space="preserve">
     <value>POLONIEX TICKERS</value>

@@ -70,6 +70,15 @@ namespace AutoBitBot.UI.MainApp.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to BITTREX.
+        /// </summary>
+        public static string Bittrex {
+            get {
+                return ResourceManager.GetString("Bittrex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to BITTREX TICKERS.
         /// </summary>
         public static string BittrexTickers {
@@ -84,6 +93,15 @@ namespace AutoBitBot.UI.MainApp.Resources {
         public static string Dashboard {
             get {
                 return ResourceManager.GetString("Dashboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to POLONIEX.
+        /// </summary>
+        public static string Poloniex {
+            get {
+                return ResourceManager.GetString("Poloniex", resourceCulture);
             }
         }
         

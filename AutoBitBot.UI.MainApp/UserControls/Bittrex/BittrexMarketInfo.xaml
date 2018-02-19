@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="AutoBitBot.UI.MainApp.Content.MarketInfo"
+﻿<UserControl x:Class="AutoBitBot.UI.MainApp.Content.BittrexMarketInfo"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -24,11 +24,11 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
-                <UserControls:MarketTickerControl Grid.Row="0" Grid.Column="0" />
-                <UserControls:MarketSummaryControl Grid.Row="0" Grid.Column="1" />
-                <UserControls:MarketOpenOrdersControl Grid.Row="3" Grid.ColumnSpan="2"/>
-                <UserControls:MarketOrderHistoryControl Grid.Row="2" Grid.ColumnSpan="2"/>
-                <UserControls:BuyLimitControl Grid.Row="1" Grid.Column="0" />
+                <UserControls:BittrexMarketTickerControl Grid.Row="0" Grid.Column="0" />
+                <UserControls:BittrexMarketSummaryControl Grid.Row="0" Grid.Column="1" />
+                <UserControls:BittrexMarketOpenOrdersControl Grid.Row="3" Grid.ColumnSpan="2"/>
+                <UserControls:BittrexMarketOrderHistoryControl Grid.Row="2" Grid.ColumnSpan="2"/>
+                <UserControls:BittrexBuyLimitControl Grid.Row="1" Grid.Column="0" />
                 
             </Grid>
         </ScrollViewer>

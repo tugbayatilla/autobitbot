@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace AutoBitBot.UI.MainApp.UserControls
 {
     /// <summary>
-    /// Interaction logic for ImmediatelySellAfterBuyControl.xaml
+    /// Interaction logic for MarketTicksControl.xaml
     /// </summary>
-    public partial class BuyLimitControl : UserControl
+    public partial class BittrexMarketTickerControl : UserControl
     {
-        public BuyLimitControl()
+        public BittrexMarketTickerControl()
         {
             InitializeComponent();
         }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,18 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AutoBitBot.UI.MainApp.Content
+namespace AutoBitBot.UI.MainApp.UserControls
 {
     /// <summary>
-    /// Interaction logic for ControlsStylesDataGrid.xaml
+    /// Interaction logic for ImmediatelySellAfterBuyControl.xaml
     /// </summary>
-    public partial class MarketInfo : UserControl
+    public partial class BittrexBuyAndSellControl : UserControl
     {
-        public MarketInfo()
+        public BittrexBuyAndSellControl()
         {
             InitializeComponent();
-
         }
-      
     }
 }

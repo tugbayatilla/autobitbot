@@ -54,7 +54,7 @@ namespace AutoBitBot.Infrastructure.Exchanges.ViewModels
         }
 
         public Decimal Range => High - Low;
-        public Decimal RangePercent => ((High - Low) / Low) * 100;
+        public Decimal RangePercent => (High - Low) * 100 / (Low == 0 ? 1 : Low);
 
 
         public Decimal Volume

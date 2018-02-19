@@ -8,10 +8,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid Style="{StaticResource ContentRoot}">
-        <ui:ModernTab SelectedSource="/UserControls/ActiveTasksControl.xaml" Layout="List">
+        <ui:ModernTab SelectedSource="/UserControls/Global/ActiveTasksControl.xaml" Layout="List">
             <ui:ModernTab.Links>
-                <ui:Link DisplayName="Active Tasks" Source="/UserControls/ActiveTasksControl.xaml" />
-                <ui:Link DisplayName="Killed Tasks" Source="/UserControls/KilledTasksControl.xaml" />
+                <ui:Link DisplayName="Active Tasks" Source="/UserControls/Global/ActiveTasksControl.xaml" />
+                <ui:Link DisplayName="Killed Tasks" Source="/UserControls/Global/KilledTasksControl.xaml" />
             </ui:ModernTab.Links>
         </ui:ModernTab>
     </Grid>

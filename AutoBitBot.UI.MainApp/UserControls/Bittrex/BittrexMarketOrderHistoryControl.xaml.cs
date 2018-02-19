@@ -1,5 +1,7 @@
-﻿using System;
+﻿using AutoBitBot.UI.MainApp.DTO;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,16 +15,19 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AutoBitBot.UI.MainApp.Pages
+namespace AutoBitBot.UI.MainApp.UserControls
 {
     /// <summary>
-    /// Interaction logic for Introduction.xaml
+    /// Interaction logic for MarketControl.xaml
     /// </summary>
-    public partial class MarketPage : UserControl
+    public partial class BittrexMarketOrderHistoryControl : UserControl
     {
-        public MarketPage()
+        public BittrexMarketOrderHistoryControl()
         {
             InitializeComponent();
+
         }
+
+       
     }
 }

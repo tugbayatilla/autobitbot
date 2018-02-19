@@ -21,11 +21,10 @@
                 <ui:Link DisplayName="{x:Static res:Titles.Dashboard}" Source="/Pages/DashboardPage.xaml"/>
             </ui:LinkGroup.Links>
         </ui:LinkGroup>
-        <ui:LinkGroup DisplayName="Tickers">
+        <ui:LinkGroup DisplayName="Exchanges">
             <ui:LinkGroup.Links>
-                <ui:Link DisplayName="{x:Static res:Titles.AllExchangeTickers}" Source="/UserControls/AllExchangeTickersControl.xaml"/>
-                <ui:Link DisplayName="{x:Static res:Titles.PoloniexTickers}" Source="/UserControls/PoloniexTickersControl.xaml"/>
-                <ui:Link DisplayName="{x:Static res:Titles.BittrexTickers}" Source="/UserControls/BittrexTickersControl.xaml"/>
+                <ui:Link DisplayName="{x:Static res:Titles.Bittrex}" Source="/Pages/BittrexPage.xaml"/>
+                <ui:Link DisplayName="{x:Static res:Titles.Poloniex}" Source="/UserControls/PoloniexTickersControl.xaml"/>
             </ui:LinkGroup.Links>
         </ui:LinkGroup>
        <ui:LinkGroup DisplayName="Layout" >

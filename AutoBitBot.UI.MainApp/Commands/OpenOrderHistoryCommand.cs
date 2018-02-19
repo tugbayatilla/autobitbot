@@ -25,7 +25,7 @@ namespace AutoBitBot.UI.MainApp.Commands
         public void Execute(object parameter)
         {
             var model = parameter as MainViewModel;
-            var uc = new UserControls.MarketOrderHistoryControl()
+            var uc = new UserControls.BittrexMarketOrderHistoryControl()
             {
                 DataContext = model
             };
