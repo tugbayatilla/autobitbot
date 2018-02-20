@@ -5,7 +5,7 @@ using System.Web;
 
 namespace AutoBitBot.BittrexProxy.Responses
 {
-    public class BittrexxBalanceResponse
+    public class BittrexBalanceResponse
     {
         public String Currency { get; set; }
         public Decimal Balance { get; set; }

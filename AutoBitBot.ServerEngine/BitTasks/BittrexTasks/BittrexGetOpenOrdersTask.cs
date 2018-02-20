@@ -33,11 +33,7 @@ namespace AutoBitBot.ServerEngine.BitTasks
             //fistan: merkezi yap
             var manager = BittrexApiManagerFactory.Instance.Create();
 
-            var result = await manager.GetOpenOrders(new ExchangeApiKey()
-            {
-                ApiKey = ConfigurationManager.AppSettings["BittrexApiKey"],
-                SecretKey = ConfigurationManager.AppSettings["BittrexApiSecret"]
-            }, market);
+            var result = await manager.GetOpenOrders(market);
 
             if (!result.Result)
             {

@@ -11,7 +11,7 @@ namespace AutoBitBot.Infrastructure.Exchanges.ViewModels
     {
         Decimal high, low, volume, prevDay, baseValume, change;
         OldNewPair<Decimal> last, bid, ask;
-        String marketName;
+        String marketName, exchangeName;
         Int32 openBuyOrders, openSellOrders;
 
         public ExchangeTickerViewModel()
@@ -19,6 +19,16 @@ namespace AutoBitBot.Infrastructure.Exchanges.ViewModels
             this.Last = new OldNewPair<Decimal>();
             this.Bid = new OldNewPair<decimal>();
             this.Ask = new OldNewPair<decimal>();
+        }
+
+        public String ExchangeName
+        {
+            get => exchangeName;
+            set
+            {
+                exchangeName = value;
+                OnPropertyChanged();
+            }
         }
 
         public String MarketName

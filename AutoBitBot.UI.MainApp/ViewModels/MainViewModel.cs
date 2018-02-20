@@ -43,12 +43,12 @@ namespace AutoBitBot.UI.MainApp.ViewModels
             this.AllExchangeBalances = new AllExchangeBalancesObservableCollection();
             this.Markets = new ObservableCollection<DTO.MarketDTO>();
             this.OpenOrders = new ObservableCollection<BittrexOpenOrdersResponse>();
-            this.OrderHistory = new ObservableCollection<BittrexxOrderHistoryResponse>();
+            this.OrderHistory = new ObservableCollection<BittrexOrderHistoryResponse>();
             this.PoloniexTickers = new ExchangeTickerObservableCollection();
             this.BittrexTickers = new ExchangeTickerObservableCollection();
             this.AllExchangeTickers = new AllExchangeTickerObservableCollection();
             this.ExchangeOverallCurrentStatus = new ExchangeOverallCurrentStatusObservableCollection();
-
+            this.ExchangeOpenOrders = new ExchangeOpenOrdersObservableCollection();
 
             this.BuyAndSell = new DTO.BuyAndSellDTO();
             this.MarketTicker = new DTO.MarketTickerDTO();
@@ -59,6 +59,10 @@ namespace AutoBitBot.UI.MainApp.ViewModels
             var notifierOutput = new RichTextBoxNotifier(this.dispatcher, outputRichTextBox);
             GlobalContext.Instance.RegisterNotifier(NotifyTo.CONSOLE, notifierOutput);
             GlobalContext.Instance.RegisterNotifier(NotifyTo.EVENT_LOG, notifierOutput);
+
+            GlobalContext.Instance.RegisterNotifier(Business.BittrexBusiness.NOTIFYTO, notifierOutput);
+            GlobalContext.Instance.RegisterNotifier(BittrexProxy.BittrexApiManager.NOTIFYTO, notifierOutput);
+
         }
 
         private void Server_TaskExecuted(object sender, BitTaskExecutedEventArgs e)
@@ -112,9 +116,9 @@ namespace AutoBitBot.UI.MainApp.ViewModels
                 #endregion
 
                 #region Balances
-                if (e.Data is List<BittrexxBalanceResponse>)
+                if (e.Data is List<BittrexBalanceResponse>)
                 {
-                    var model = e.Data as List<BittrexxBalanceResponse>;
+                    var model = e.Data as List<BittrexBalanceResponse>;
 
                     model.ForEach(p =>
                     {
@@ -133,15 +137,25 @@ namespace AutoBitBot.UI.MainApp.ViewModels
                     {
                         this.AllExchangeBalances.AddOrUpdate(p.Key, p.Value);
                     });
-                } 
+                }
+                #endregion
+
+
+                #region Exchange
+
+                if (e.BitTask is ExchangeOpenOrdersTask)
+                {
+                    var model = e.Data as ObservableCollection<ExchangeOpenOrdersViewModel>;
+                    this.ExchangeOpenOrders.AddRange(model);
+                }
+
                 #endregion
 
 
 
-
-                if (e.Data is List<BittrexxMarketResponse>)
+                if (e.Data is List<BittrexMarketResponse>)
                 {
-                    var model = e.Data as List<BittrexxMarketResponse>;
+                    var model = e.Data as List<BittrexMarketResponse>;
 
                     this.dispatcher.Invoke(() =>
                     {
@@ -182,15 +196,18 @@ namespace AutoBitBot.UI.MainApp.ViewModels
                     PropertyChanged(this, new PropertyChangedEventArgs(nameof(OpenOrders)));
                 }
 
-                if (e.Data is List<BittrexxOrderHistoryResponse>)
+                if (e.Data is List<BittrexOrderHistoryResponse>)
                 {
-                    var model = e.Data as List<BittrexxOrderHistoryResponse>;
+                    var model = e.Data as List<BittrexOrderHistoryResponse>;
                     this.dispatcher.Invoke(() =>
                     {
-                        this.OrderHistory = new ObservableCollection<BittrexxOrderHistoryResponse>(model);
+                        this.OrderHistory = new ObservableCollection<BittrexOrderHistoryResponse>(model);
                     });
                     PropertyChanged(this, new PropertyChangedEventArgs(nameof(OrderHistory)));
                 }
+
+
+
 
 
             }
@@ -209,12 +226,13 @@ namespace AutoBitBot.UI.MainApp.ViewModels
         public ObservableCollection<String> Messages { get; private set; }
         public ObservableCollection<DTO.MarketDTO> Markets { get; set; }
         public ObservableCollection<BittrexOpenOrdersResponse> OpenOrders { get; set; }
-        public ObservableCollection<BittrexxOrderHistoryResponse> OrderHistory { get; set; }
+        public ObservableCollection<BittrexOrderHistoryResponse> OrderHistory { get; set; }
         public ExchangeTickerObservableCollection PoloniexTickers { get; set; }
         public ExchangeTickerObservableCollection BittrexTickers { get; set; }
         public AllExchangeTickerObservableCollection AllExchangeTickers { get; set; }
         public AllExchangeBalancesObservableCollection AllExchangeBalances { get; set; }
         public ExchangeOverallCurrentStatusObservableCollection ExchangeOverallCurrentStatus { get; set; }
+        public ExchangeOpenOrdersObservableCollection ExchangeOpenOrders { get; set; }
 
 
         public DTO.MarketTickerDTO MarketTicker { get; set; }
@@ -227,6 +245,7 @@ namespace AutoBitBot.UI.MainApp.ViewModels
         public ICommand OpenMarketsCommand => new OpenMarketsCommand();
         public ICommand OpenKilledTasksCommand => new OpenKilledTasksCommand();
         public ICommand OpenOrderHistoryCommand => new OpenOrderHistoryCommand();
+        public ICommand Open_BittrexSellLimitCommand => new Open_BittrexSellLimitCommand();
 
     }
 }

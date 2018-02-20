@@ -30,5 +30,18 @@ namespace AutoBitBot.Infrastructure
         {
             return name.Replace("_", "-");
         }
+
+        public static String GetCurrenyFromMarketName(String marketName)
+        {
+            Int32 index = marketName.IndexOfAny(new char[] { '-', '_' });
+            if (index != -1)
+            {
+                return marketName.Substring(index + 1);
+            }
+
+            return marketName;
+        }
+
+
     }
 }

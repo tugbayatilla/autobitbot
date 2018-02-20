@@ -57,7 +57,7 @@
     <ApplicationIcon>Resources\app.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>B4E557B79C20F9272CB74086396D061B4DC5CAF7</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>6FDE668A1882C02909B032FF608869BFD82E5A79</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>AutoBitBot.UI.MainApp_TemporaryKey.pfx</ManifestKeyFile>
@@ -68,11 +68,18 @@
   <PropertyGroup>
     <SignManifests>true</SignManifests>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ArchPM.Core, Version=0.1.3.42270, Culture=neutral, PublicKeyToken=a7c5f15bb1b78c45, processorArchitecture=MSIL">
       <HintPath>..\packages\ArchPM.Core.0.1.3\lib\net45\ArchPM.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
@@ -93,9 +100,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Collections\ExchangeOpenOrdersObservableCollection.cs" />
     <Compile Include="Collections\ExchangeOverallCurrentStatusObservableCollection.cs" />
     <Compile Include="Collections\AllExchangeBalancesObservableCollection.cs" />
     <Compile Include="Commands\LoadBalanceCommand.cs" />
+    <Compile Include="Commands\Open_BittrexSellLimitCommand.cs" />
     <Compile Include="Commands\OpenBuyAndSellCommand.cs" />
     <Compile Include="Commands\OpenKilledTasksCommand.cs" />
     <Compile Include="Commands\OpenMarketsCommand.cs" />
@@ -104,6 +113,12 @@
     <Compile Include="Commands\SampleDisabledCommand.cs" />
     <Compile Include="Commands\SampleMsgBoxCommand.cs" />
     <Compile Include="Commands\SampleParameterCommand.cs" />
+    <Compile Include="UserControls\Bittrex\BittrexCommandButtons.xaml.cs">
+      <DependentUpon>BittrexCommandButtons.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Bittrex\BittrexSellLimitControl.xaml.cs">
+      <DependentUpon>BittrexSellLimitControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Bittrex\BittrexMarketInfo.xaml.cs">
       <DependentUpon>BittrexMarketInfo.xaml</DependentUpon>
     </Compile>
@@ -154,11 +169,15 @@
     <Compile Include="UserControls\Bittrex\BittrexFatFingerStarterControl.xaml.cs">
       <DependentUpon>BittrexFatFingerStarterControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\Common\ExchangeOpenOrdersControl.xaml.cs">
+      <DependentUpon>ExchangeOpenOrdersControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Poloniex\PoloniexTickersControl.xaml.cs">
       <DependentUpon>PoloniexTickersControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Collections\ExchangeTickerObservableCollection.cs" />
     <Compile Include="Collections\AllExchangeTickerObservableCollection.cs" />
+    <Compile Include="ViewModels\BittrexSellLimitViewModel.cs" />
     <Compile Include="ViewModels\GlobalContext.cs" />
     <Compile Include="ViewModels\SampleFormViewModel.cs" />
     <Compile Include="UserControls\Global\ActiveTasksControl.xaml.cs">
@@ -289,6 +308,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Content\ControlsStylesButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Bittrex\BittrexCommandButtons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\Bittrex\BittrexSellLimitControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -509,6 +536,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="UserControls\Common\ExchangeOpenOrdersControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UserControls\Global\ActiveTasksControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -631,6 +662,7 @@
       <LastGenOutput>Titles.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="AutoBitBot.UI.MainApp_TemporaryKey.pfx" />
+    <None Include="Key.snk" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

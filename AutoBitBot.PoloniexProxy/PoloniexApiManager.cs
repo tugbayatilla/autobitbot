@@ -25,8 +25,10 @@ namespace AutoBitBot.PoloniexProxy
     /// </summary>
     public class PoloniexApiManager
     {
+        public const String NOTIFYTO = "PoloniexApiManager";
         readonly HttpClient httpClient;
         readonly INotification notification;
+        public ExchangeApiKey ApiKeyModel { get; set; }
 
         internal PoloniexApiManager(HttpClient httpClient) : this(httpClient, new NullNotification())
         {
@@ -78,7 +80,7 @@ namespace AutoBitBot.PoloniexProxy
 
         }
 
-        public async Task<IApiResponse<PoloniexBalanceResponse>> ReturnBalances(ExchangeApiKey apiKeyModel)
+        public async Task<IApiResponse<PoloniexBalanceResponse>> ReturnBalances()
         {
             var url = PoloniexApiUrls.ReturnBalancesUrl();
 
@@ -87,9 +89,9 @@ namespace AutoBitBot.PoloniexProxy
             try
             {
                 String commandName = "returnBalances";
-                String commandText = $"command={commandName}&nonce={apiKeyModel.Nonce}";
-                var apiSign = Utils.CreateHash(commandText, apiKeyModel.SecretKey);
-                SetApiSignToHeader(apiKeyModel.ApiKey, apiSign);
+                String commandText = $"command={commandName}&nonce={ApiKeyModel.Nonce}";
+                var apiSign = Utils.CreateHash(commandText, ApiKeyModel.SecretKey);
+                SetApiSignToHeader(ApiKeyModel.ApiKey, apiSign);
 
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, url)
                 {
@@ -119,202 +121,150 @@ namespace AutoBitBot.PoloniexProxy
                 result.RequestedUrl = url;
 
                 //log here: dont use await here. dont want to wait here
-                notification.Notify(result.ApiResponseToString());
+                notification.Notify(result.ApiResponseToString(), NotifyTo.CONSOLE, NOTIFYTO);
             }
             return result;
 
         }
 
 
-        //async Task<IApiResponse<T>> __handler<T>(String url, Action beforeCallFunction = null)
-        //{
-        //    Stopwatch sw = Stopwatch.StartNew();
-        //    IApiResponse<T> result = null;
-        //    try
-        //    {
-        //        beforeCallFunction?.Invoke();
-        //        var response = await httpClient.GetAsync(url);
-        //        response.EnsureSuccessStatusCode();
+        /// <summary>
+        /// Returns the open orders.
+        /// </summary>
+        /// <param name="marketName">Name of the market. or 'all' to get all</param>
+        /// <returns></returns>
+        /// <exception cref="PoloniexException"></exception>
+        public async Task<IApiResponse<PoloniexOpenOrdersResponse>> ReturnOpenOrdersAll()
+        {
+            var url = PoloniexApiUrls.ReturnOpenOrdersUrl();
 
-        //        result = await response.Content.ReadAsAsync<BittrexApiResponse<T>>();
-        //        result.Code = ApiResponseCodes.OK;
-        //        result.ET = sw.ElapsedMilliseconds;
-        //        result.RequestedUrl = url;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        result = BittrexApiResponse<T>.CreateException(ex);
-        //    }
-        //    finally
-        //    {
-        //        result.ET = sw.ElapsedMilliseconds;
-        //        result.RequestedUrl = url;
+            Stopwatch sw = Stopwatch.StartNew();
+            IApiResponse<PoloniexOpenOrdersResponse> result = new ApiResponse<PoloniexOpenOrdersResponse>();
+            try
+            {
+                String commandName = "returnOpenOrders";
+                String commandText = $"command={commandName}&nonce={ApiKeyModel.Nonce}&currencyPair=all";
 
-        //        //log here: dont use await here. dont want to wait here
-        //        apiResponseLog.LogAsync(result);
-        //    }
-        //    return result;
-        //}
+                var apiSign = Utils.CreateHash(commandText, ApiKeyModel.SecretKey);
+                SetApiSignToHeader(ApiKeyModel.ApiKey, apiSign);
 
-        //async Task<IApiResponse<T>> PostHandler<T>(String url, String commandName, ExchangeApiKey apiKeyModel)
-        //{
-        //    Stopwatch sw = Stopwatch.StartNew();
-        //    IApiResponse<T> result = null;
-        //    try
-        //    {
-        //        var apiSign = CreateApiSign(url, apiKeyModel.SecretKey);
-        //        SetApiSign(apiSign);
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, url)
+                {
+                    Content = new StringContent(commandText, Encoding.UTF8, "application/x-www-form-urlencoded")
+                };
 
-        //        String myContent = $"command={commandName}&nonce={apiKeyModel.Nonce}";
-        //        var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
-        //        var byteContent = new ByteArrayContent(buffer);
+                var response = await httpClient.SendAsync(request);
+                response.EnsureSuccessStatusCode();
 
-        //        var response = await httpClient.PostAsync(url, byteContent);
-        //        response.EnsureSuccessStatusCode();
+                result.Data = await response.Content.ReadAsAsync<PoloniexOpenOrdersResponse>();
+                result.Code = ApiResponseCodes.OK;
+                result.ET = sw.ElapsedMilliseconds;
+                result.RequestedUrl = url;
+            }
+            catch (Exception ex)
+            {
+                result = PoloniexApiResponse<PoloniexOpenOrdersResponse>.CreateException(ex);
+            }
+            finally
+            {
+                result.ET = sw.ElapsedMilliseconds;
+                result.RequestedUrl = url;
 
-        //        result = await response.Content.ReadAsAsync<PoloniexApiResponse<T>>();
-        //        result.Code = ApiResponseCodes.OK;
-        //        result.ET = sw.ElapsedMilliseconds;
-        //        result.RequestedUrl = url;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        result = BittrexApiResponse<T>.CreateException(ex);
-        //    }
-        //    finally
-        //    {
-        //        result.ET = sw.ElapsedMilliseconds;
-        //        result.RequestedUrl = url;
+                //log here: dont use await here. dont want to wait here
+                notification.Notify(result.ApiResponseToString(), NotifyTo.CONSOLE, NOTIFYTO);
+            }
+            return result;
 
-        //        //log here: dont use await here. dont want to wait here
-        //        apiResponseLog.LogAsync(result);
-        //    }
-        //    return result;
-        //}
+        }
 
+        public async Task<IApiResponse<List<PoloniexOpenOrdersResponseDetail>>> ReturnOpenOrders(String marketName)
+        {
+            var url = PoloniexApiUrls.ReturnOpenOrdersUrl();
 
-        ///// <summary>
-        ///// Gets the markets.
-        ///// </summary>
-        ///// <exception cref="">throws it</exception>
-        ///// <returns></returns>
-        //public async Task<IApiResponse<List<BittrexMarketModel>>> GetMarkets()
-        //{
-        //    var url = BittrexApiUrls.GetMarkets();
-        //    return await __handler<List<BittrexMarketModel>>(url);
-        //}
-        //public async Task<IApiResponse<List<BittrexMasketHistoryModel>>> GetMarketHistory(String market)
-        //{
-        //    var url = BittrexApiUrls.GetMarketHistory(market);
-        //    return await __handler<List<BittrexMasketHistoryModel>>(url);
-        //}
+            Stopwatch sw = Stopwatch.StartNew();
+            IApiResponse<List<PoloniexOpenOrdersResponseDetail>> result = new PoloniexApiResponse<List<PoloniexOpenOrdersResponseDetail>>();
+            try
+            {
+                String commandName = "returnOpenOrders";
+                    String currencyPair = Constants.ToPoloniexMarketName(marketName);
+                String commandText = $"command={commandName}&nonce={ApiKeyModel.Nonce}&currencyPair={currencyPair}";
 
+                var apiSign = Utils.CreateHash(commandText, ApiKeyModel.SecretKey);
+                SetApiSignToHeader(ApiKeyModel.ApiKey, apiSign);
 
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, url)
+                {
+                    Content = new StringContent(commandText, Encoding.UTF8, "application/x-www-form-urlencoded")
+                };
 
-        ///// <summary>
-        ///// Gets the ticker.
-        ///// </summary>
-        ///// <param name="market">The market.</param>
-        ///// <exception cref=""></exception>
-        ///// <returns></returns>
-        //public async Task<IApiResponse<BittrexTickerModel>> GetTicker(String market)
-        //{
-        //    var url = BittrexApiUrls.GetTicker(market);
+                var response = await httpClient.SendAsync(request);
+                response.EnsureSuccessStatusCode();
 
-        //    return await __handler<BittrexTickerModel>(url);
-        //}
+                result.Data = await response.Content.ReadAsAsync<List<PoloniexOpenOrdersResponseDetail>>();
+                result.Code = ApiResponseCodes.OK;
+                result.ET = sw.ElapsedMilliseconds;
+                result.RequestedUrl = url;
+            }
+            catch (Exception ex)
+            {
+                result = PoloniexApiResponse<List<PoloniexOpenOrdersResponseDetail>>.CreateException(ex);
+            }
+            finally
+            {
+                result.ET = sw.ElapsedMilliseconds;
+                result.RequestedUrl = url;
 
-        //public async Task<IApiResponse<List<BittrexMarketSummaryModel>>> GetMarketSummary(String market)
-        //{
-        //    var url = BittrexApiUrls.GetMarketSummary(market);
+                //log here: dont use await here. dont want to wait here
+                notification.Notify(result.ApiResponseToString(), NotifyTo.CONSOLE, NOTIFYTO);
+            }
+            return result;
 
-        //    return await __handler<List<BittrexMarketSummaryModel>>(url);
-        //}
-
-        //public async Task<IApiResponse<List<BittrexMarketSummaryModel>>> GetMarketSummaries()
-        //{
-        //    var url = BittrexApiUrls.GetMarketSummaries();
-
-        //    return await __handler<List<BittrexMarketSummaryModel>>(url);
-        //}
-
-        //public async Task<IApiResponse<List<BittrexOpenOrdersModel>>> GetOpenOrders(ExchangeApiKey apiKeyModel, String market = "")
-        //{
-        //    var url = BittrexApiUrls.GetOpenOrders(apiKeyModel.ApiKey, apiKeyModel.Nonce, market);
-        //    return await __handler<List<BittrexOpenOrdersModel>>(url, () =>
-        //    {
-        //        var apiSign = CreateApiSign(url, apiKeyModel.SecretKey);
-        //        SetApiSign(apiSign);
-        //    });
-        //}
+        }
 
 
-        //public async Task<IApiResponse<List<BittrexCurrencyModel>>> GetCurrencies()
-        //{
-        //    var url = BittrexApiUrls.GetCurrencies();
+        public async Task<IApiResponse<PoloniexOrderTradesResponse>> ReturnOrderTrades(Int32 orderNumber)
+        {
+            var url = PoloniexApiUrls.ReturnOrderTradesUrl();
 
-        //    return await __handler<List<BittrexCurrencyModel>>(url);
-        //}
+            Stopwatch sw = Stopwatch.StartNew();
+            IApiResponse<PoloniexOrderTradesResponse> result = new PoloniexApiResponse<PoloniexOrderTradesResponse>();
+            try
+            {
+                String commandName = "returnOrderTrades";
+                String commandText = $"command={commandName}&nonce={ApiKeyModel.Nonce}&orderNumber={orderNumber}";
 
-        //public async Task<IApiResponse<List<BittrexBalanceModel>>> GetBalances(ExchangeApiKey apiKeyModel)
-        //{
-        //    var url = BittrexApiUrls.GetBalances(apiKeyModel.ApiKey, apiKeyModel.Nonce);
-        //    return await __handler<List<BittrexBalanceModel>>(url, () =>
-        //    {
-        //        var apiSign = CreateApiSign(url, apiKeyModel.SecretKey);
-        //        SetApiSign(apiSign);
-        //    });
-        //}
+                var apiSign = Utils.CreateHash(commandText, ApiKeyModel.SecretKey);
+                SetApiSignToHeader(ApiKeyModel.ApiKey, apiSign);
 
-        //public async Task<IApiResponse<BittrexBalanceModel>> GetBalance(ExchangeApiKey apiKeyModel, String currency)
-        //{
-        //    var url = BittrexApiUrls.GetBalance(apiKeyModel.ApiKey, apiKeyModel.Nonce, currency);
-        //    return await __handler<BittrexBalanceModel>(url, () =>
-        //    {
-        //        var apiSign = CreateApiSign(url, apiKeyModel.SecretKey);
-        //        SetApiSign(apiSign);
-        //    });
-        //}
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, url)
+                {
+                    Content = new StringContent(commandText, Encoding.UTF8, "application/x-www-form-urlencoded")
+                };
 
-        //public async Task<IApiResponse<List<BittrexOrderHistoryModel>>> GetOrderHistory(ExchangeApiKey apiKeyModel, String market)
-        //{
-        //    var url = BittrexApiUrls.GetOrderHistory(apiKeyModel.ApiKey, apiKeyModel.Nonce, market);
-        //    return await __handler<List<BittrexOrderHistoryModel>>(url, () =>
-        //    {
-        //        var apiSign = CreateApiSign(url, apiKeyModel.SecretKey);
-        //        SetApiSign(apiSign);
-        //    });
-        //}
+                var response = await httpClient.SendAsync(request);
+                response.EnsureSuccessStatusCode();
 
-        //public async Task<IApiResponse<BittrexOrderModel>> GetOrder(ExchangeApiKey apiKeyModel, String uuid)
-        //{
-        //    var url = BittrexApiUrls.GetOrder(apiKeyModel.ApiKey, apiKeyModel.Nonce, uuid);
-        //    return await __handler<BittrexOrderModel>(url, () =>
-        //    {
-        //        var apiSign = CreateApiSign(url, apiKeyModel.SecretKey);
-        //        SetApiSign(apiSign);
-        //    });
-        //}
+                result.Data = await response.Content.ReadAsAsync<PoloniexOrderTradesResponse>();
+                result.Code = ApiResponseCodes.OK;
+                result.ET = sw.ElapsedMilliseconds;
+                result.RequestedUrl = url;
+            }
+            catch (Exception ex)
+            {
+                result = PoloniexApiResponse<PoloniexOrderTradesResponse>.CreateException(ex);
+            }
+            finally
+            {
+                result.ET = sw.ElapsedMilliseconds;
+                result.RequestedUrl = url;
 
-        //public async Task<IApiResponse<BittrexLimitModel>> BuyLimit(ExchangeApiKey apiKeyModel, BittrexBuyLimitArgs args)
-        //{
-        //    var url = BittrexApiUrls.BuyLimit(apiKeyModel.ApiKey, apiKeyModel.Nonce, args.Market, args.Quantity, args.Rate);
-        //    return await __handler<BittrexLimitModel>(url, () =>
-        //    {
-        //        var apiSign = CreateApiSign(url, apiKeyModel.SecretKey);
-        //        SetApiSign(apiSign);
-        //    });
-        //}
+                //log here: dont use await here. dont want to wait here
+                notification.Notify(result.ApiResponseToString(), NotifyTo.CONSOLE, NOTIFYTO);
+            }
+            return result;
 
-        //public async Task<IApiResponse<BittrexLimitModel>> SellLimit(ExchangeApiKey apiKeyModel, BittrexSellLimitArgs args)
-        //{
-        //    var url = BittrexApiUrls.SellLimit(apiKeyModel.ApiKey, apiKeyModel.Nonce, args.Market, args.Quantity, args.Rate);
-        //    return await __handler<BittrexLimitModel>(url, () =>
-        //    {
-        //        var apiSign = CreateApiSign(url, apiKeyModel.SecretKey);
-        //        SetApiSign(apiSign);
-        //    });
-        //}
+        }
+
 
 
 
@@ -333,6 +283,7 @@ namespace AutoBitBot.PoloniexProxy
         /// <param name="apiSign">Sign - The query's POST data signed by your key's "secret" according to the HMAC-SHA512 method.</param>
         internal void SetApiSignToHeader(String key, String apiSign)
         {
+            httpClient.DefaultRequestHeaders.Clear();
             httpClient.DefaultRequestHeaders.Add("Key", key);
             httpClient.DefaultRequestHeaders.Add("Sign", apiSign);
         }

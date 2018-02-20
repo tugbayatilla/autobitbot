@@ -49,7 +49,7 @@ namespace AutoBitBot.UI.MainApp.Collections
         }
 
 
-        public void AddOrUpdate(BittrexxBalanceResponse response)
+        public void AddOrUpdate(BittrexBalanceResponse response)
         {
             var bittrex = Constants.BITTREX;
 

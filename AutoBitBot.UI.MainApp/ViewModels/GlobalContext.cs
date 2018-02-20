@@ -24,33 +24,53 @@ namespace AutoBitBot.UI.MainApp
     public sealed class GlobalContext
     {
         public static readonly GlobalContext Instance = new GlobalContext();
-        readonly NotificationManager notificationManager;
+        public readonly INotification notification;
         public readonly Server server;
         Dispatcher dispatcher;
         Boolean initialized = false;
 
         private GlobalContext()
         {
-            notificationManager = new NotificationManager();
-            var notifierFile = new LogNotifier();
-            //notification.RegisterNotifier(NotificationLocations.Console, notifierOutput);
-            notificationManager.RegisterNotifier(NotifyTo.CONSOLE, notifierFile);
-            //notification.RegisterNotifier(NotificationLocations.EventLog, notifierOutput);
-            notificationManager.RegisterNotifier(NotifyTo.EVENT_LOG, notifierFile);
-            //notificationManager.RegisterNotifier(NotificationLocations.Log,
-            //    new LogNotifier(new ArchPM.Core.IO.LogToFileManager()
-            //    {
-            //        LogDirectoryPath = Path.Combine(Environment.CurrentDirectory, "ExecutionCompleted")
-            //    }));
+            lock (this)
+            {
+                notification = new NotificationManager();
+                var notifierFile = new LogNotifier();
+                //notification.RegisterNotifier(NotificationLocations.Console, notifierOutput);
+                notification.RegisterNotifier(NotifyTo.CONSOLE, notifierFile);
+                //notification.RegisterNotifier(NotificationLocations.EventLog, notifierOutput);
+                //notification.RegisterNotifier(NotifyTo.EVENT_LOG, notifierFile);
 
-            var bittrexManager = BittrexProxy.BittrexApiManagerFactory.Instance.Create();
+                var bittrexManager = BittrexProxy.BittrexApiManagerFactory.Instance.Create();
 
-            server = new Server(notificationManager);
+
+                var bittrexLogFileNotifier = new LogNotifier(new ArchPM.Core.IO.LogToFileManager()
+                {
+                    LogDirectoryPath = Path.Combine(Environment.CurrentDirectory, "Bittrex")
+                });
+                notification.RegisterNotifier(Business.BittrexBusiness.NOTIFYTO, bittrexLogFileNotifier);
+                notification.RegisterNotifier(BittrexProxy.BittrexApiManager.NOTIFYTO, bittrexLogFileNotifier);
+
+                var exchangeLogFileNotifier = new LogNotifier(new ArchPM.Core.IO.LogToFileManager()
+                {
+                    LogDirectoryPath = Path.Combine(Environment.CurrentDirectory, "Exchange")
+                });
+                notification.RegisterNotifier(Business.ExchangeBusiness.NOTIFYTO, exchangeLogFileNotifier);
+                notification.RegisterNotifier(BittrexProxy.BittrexApiManager.NOTIFYTO, exchangeLogFileNotifier);
+
+                var error = new LogNotifier(new ArchPM.Core.IO.LogToFileManager()
+                {
+                    LogDirectoryPath = Path.Combine(Environment.CurrentDirectory, "Error")
+                });
+                notification.RegisterNotifier(NotifyTo.EVENT_LOG, error);
+            }
+
+
+            server = new Server(notification);
         }
 
         public void RegisterNotifier(String notifyTo, INotifier notifier)
         {
-            notificationManager.RegisterNotifier(notifyTo, notifier);
+            notification.RegisterNotifier(notifyTo, notifier);
         }
 
         public void Init(Dispatcher dispatcher)
@@ -71,6 +91,8 @@ namespace AutoBitBot.UI.MainApp
             server.RegisterInstance(new PoloniexReturnBalancesTask());
             server.RegisterInstance(new BittrexGetBalanceTask());
             server.RegisterInstance(new PoloniexReturnTickerTask());
+
+            server.RegisterInstance(new ExchangeOpenOrdersTask());
 
 
             server.Config.Add(new ConfigItem(typeof(BittrexGetTickerTask),

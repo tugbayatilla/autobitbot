@@ -38,7 +38,7 @@ namespace AutoBitBot.UI.MainApp.UserControls
             TextBox t = (TextBox)sender;
             string filter = t.Text;
 
-            SingleFieldDataGridFilterMediator.SingleFieldFilter<AllExchangeTickerViewModel>(filter, dg);
+            SingleFieldDataGridFilterMediator.SingleFieldFilter<ExchangeTickerViewModel>(filter, dg);
         }
     }
 }

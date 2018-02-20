@@ -18,16 +18,17 @@ namespace AutoBitBot.BittrexProxy
     //manager initialize olurken key'leri al
 
 
-        //apiurl'i de inject etmelisin
+    //apiurl'i de inject etmelisin
 
     /// <summary>
     /// 
     /// </summary>
     public class BittrexApiManager
     {
-        public const String NOTIFICATION_NOTIFYTO = "BittrexApiManager";
+        public const String NOTIFYTO = "BittrexApiManager";
         readonly HttpClient httpClient;
-        readonly INotification  notification;
+        readonly INotification notification;
+        public ExchangeApiKey ApiKeyModel { get; set; } //todo: constructor'a koy
 
         internal BittrexApiManager(HttpClient httpClient) : this(httpClient, new NullNotification())
         {
@@ -64,7 +65,7 @@ namespace AutoBitBot.BittrexProxy
                 result.RequestedUrl = url;
 
                 //log here: dont use await here. dont want to wait here
-                notification.Notify(result.ApiResponseToString(), NOTIFICATION_NOTIFYTO); 
+                notification.Notify(result.ApiResponseToString(), NotifyTo.CONSOLE, NOTIFYTO);
             }
             return result;
         }
@@ -75,15 +76,15 @@ namespace AutoBitBot.BittrexProxy
         /// </summary>
         /// <exception cref="">throws it</exception>
         /// <returns></returns>
-        public async Task<IApiResponse<List<BittrexxMarketResponse>>> GetMarkets()
+        public async Task<IApiResponse<List<BittrexMarketResponse>>> GetMarkets()
         {
             var url = BittrexApiUrls.GetMarkets();
-            return await __handler<List<BittrexxMarketResponse>>(url);
+            return await __handler<List<BittrexMarketResponse>>(url);
         }
-        public async Task<IApiResponse<List<BittrexxMarketHistoryResponse>>> GetMarketHistory(String market)
+        public async Task<IApiResponse<List<BittrexMarketHistoryResponse>>> GetMarketHistory(String market)
         {
             var url = BittrexApiUrls.GetMarketHistory(market);
-            return await __handler<List<BittrexxMarketHistoryResponse>>(url);
+            return await __handler<List<BittrexMarketHistoryResponse>>(url);
         }
 
 
@@ -94,11 +95,11 @@ namespace AutoBitBot.BittrexProxy
         /// <param name="market">The market.</param>
         /// <exception cref=""></exception>
         /// <returns></returns>
-        public async Task<IApiResponse<BittrexxTickerResponse>> GetTicker(String market)
+        public async Task<IApiResponse<BittrexTickerResponse>> GetTicker(String market)
         {
             var url = BittrexApiUrls.GetTicker(market);
 
-            return await __handler<BittrexxTickerResponse>(url);
+            return await __handler<BittrexTickerResponse>(url);
         }
 
         public async Task<IApiResponse<List<BittrexMarketSummaryResponse>>> GetMarketSummary(String market)
@@ -115,12 +116,17 @@ namespace AutoBitBot.BittrexProxy
             return await __handler<List<BittrexMarketSummaryResponse>>(url);
         }
 
-        public async Task<IApiResponse<List<BittrexOpenOrdersResponse>>> GetOpenOrders(ExchangeApiKey apiKeyModel, String market = "")
+        /// <summary>
+        /// Gets the open orders.
+        /// </summary>
+        /// <param name="market">Optional The market. if empty then all markets</param>
+        /// <returns></returns>
+        public async Task<IApiResponse<List<BittrexOpenOrdersResponse>>> GetOpenOrders(String market = "")
         {
-            var url = BittrexApiUrls.GetOpenOrders(apiKeyModel.ApiKey, apiKeyModel.Nonce, market);
+            var url = BittrexApiUrls.GetOpenOrders(ApiKeyModel.ApiKey, ApiKeyModel.Nonce, market);
             return await __handler<List<BittrexOpenOrdersResponse>>(url, () =>
             {
-                var apiSign = Utils.CreateHash(url, apiKeyModel.SecretKey);
+                var apiSign = Utils.CreateHash(url, ApiKeyModel.SecretKey);
                 SetApiSign(apiSign);
             });
         }
@@ -133,95 +139,75 @@ namespace AutoBitBot.BittrexProxy
             return await __handler<List<BittrexCurrencyResponse>>(url);
         }
 
-        public async Task<IApiResponse<List<BittrexxBalanceResponse>>> GetBalances(ExchangeApiKey apiKeyModel)
+        public async Task<IApiResponse<List<BittrexBalanceResponse>>> GetBalances()
         {
-            var url = BittrexApiUrls.GetBalances(apiKeyModel.ApiKey, apiKeyModel.Nonce);
-            return await __handler<List<BittrexxBalanceResponse>>(url, () =>
+            var url = BittrexApiUrls.GetBalances(ApiKeyModel.ApiKey, ApiKeyModel.Nonce);
+            return await __handler<List<BittrexBalanceResponse>>(url, () =>
             {
-                var apiSign = Utils.CreateHash(url, apiKeyModel.SecretKey);
+                var apiSign = Utils.CreateHash(url, ApiKeyModel.SecretKey);
                 SetApiSign(apiSign);
             });
         }
 
-        public async Task<IApiResponse<BittrexxBalanceResponse>> GetBalance(ExchangeApiKey apiKeyModel, String currency)
+        public async Task<IApiResponse<BittrexBalanceResponse>> GetBalance(String currency)
         {
-            var url = BittrexApiUrls.GetBalance(apiKeyModel.ApiKey, apiKeyModel.Nonce, currency);
-            return await __handler<BittrexxBalanceResponse>(url, () =>
+            var url = BittrexApiUrls.GetBalance(ApiKeyModel.ApiKey, ApiKeyModel.Nonce, currency);
+            return await __handler<BittrexBalanceResponse>(url, () =>
             {
-                var apiSign = Utils.CreateHash(url, apiKeyModel.SecretKey);
+                var apiSign = Utils.CreateHash(url, ApiKeyModel.SecretKey);
                 SetApiSign(apiSign);
             });
         }
 
-        public async Task<IApiResponse<List<BittrexxOrderHistoryResponse>>> GetOrderHistory(ExchangeApiKey apiKeyModel, String market)
+        public async Task<IApiResponse<List<BittrexOrderHistoryResponse>>> GetOrderHistory(String market)
         {
-            var url = BittrexApiUrls.GetOrderHistory(apiKeyModel.ApiKey, apiKeyModel.Nonce, market);
-            return await __handler<List<BittrexxOrderHistoryResponse>>(url, () =>
+            var url = BittrexApiUrls.GetOrderHistory(ApiKeyModel.ApiKey, ApiKeyModel.Nonce, market);
+            return await __handler<List<BittrexOrderHistoryResponse>>(url, () =>
             {
-                var apiSign = Utils.CreateHash(url, apiKeyModel.SecretKey);
+                var apiSign = Utils.CreateHash(url, ApiKeyModel.SecretKey);
                 SetApiSign(apiSign);
             });
         }
 
-        public async Task<IApiResponse<BittrexxOrderResponse>> GetOrder(ExchangeApiKey apiKeyModel, String uuid)
+        public async Task<IApiResponse<BittrexOrderResponse>> GetOrder(String uuid)
         {
-            var url = BittrexApiUrls.GetOrder(apiKeyModel.ApiKey, apiKeyModel.Nonce, uuid);
-            return await __handler<BittrexxOrderResponse>(url, () =>
+            var url = BittrexApiUrls.GetOrder(ApiKeyModel.ApiKey, ApiKeyModel.Nonce, uuid);
+            return await __handler<BittrexOrderResponse>(url, () =>
             {
-                var apiSign = Utils.CreateHash(url, apiKeyModel.SecretKey);
+                var apiSign = Utils.CreateHash(url, ApiKeyModel.SecretKey);
                 SetApiSign(apiSign);
             });
         }
 
-        public async Task<IApiResponse<BittrexLimitResponse>> BuyLimit(ExchangeApiKey apiKeyModel, BittrexBuyLimitArgs args)
+        public async Task<IApiResponse<BittrexLimitResponse>> BuyLimit(BittrexBuyLimitArgs args)
         {
-            var url = BittrexApiUrls.BuyLimit(apiKeyModel.ApiKey, apiKeyModel.Nonce, args.Market, args.Quantity, args.Rate);
+            var url = BittrexApiUrls.BuyLimit(ApiKeyModel.ApiKey, ApiKeyModel.Nonce, args.Market, args.Quantity, args.Rate);
             return await __handler<BittrexLimitResponse>(url, () =>
             {
-                var apiSign = Utils.CreateHash(url, apiKeyModel.SecretKey);
+                var apiSign = Utils.CreateHash(url, ApiKeyModel.SecretKey);
                 SetApiSign(apiSign);
             });
         }
 
-        public async Task<IApiResponse<BittrexLimitResponse>> SellLimit(ExchangeApiKey apiKeyModel, BittrexSellLimitArgs args)
+        public async Task<IApiResponse<BittrexLimitResponse>> SellLimit(BittrexSellLimitArgs args)
         {
-            var url = BittrexApiUrls.SellLimit(apiKeyModel.ApiKey, apiKeyModel.Nonce, args.Market, args.Quantity, args.Rate);
+            var url = BittrexApiUrls.SellLimit(ApiKeyModel.ApiKey, ApiKeyModel.Nonce, args.Market, args.Quantity, args.Rate);
             return await __handler<BittrexLimitResponse>(url, () =>
             {
-                var apiSign = Utils.CreateHash(url, apiKeyModel.SecretKey);
+                var apiSign = Utils.CreateHash(url, ApiKeyModel.SecretKey);
                 SetApiSign(apiSign);
             });
         }
 
-
-
-        //String CreateApiSign(String url, String secretKey)
-        //{
-        //    byte[] key = Encoding.UTF8.GetBytes(secretKey);
-        //    byte[] urlBytes = Encoding.UTF8.GetBytes(url);
-        //    byte[] hash = null;
-        //    String result = String.Empty;
-
-        //    using (HMACSHA512 hmac = new HMACSHA512(key))
-        //    {
-        //        hash = hmac.ComputeHash(urlBytes);
-        //    }
-
-        //    if (hash != null)
-        //    {
-        //        result = hash.ToHexString();
-        //    }
-
-        //    return result;
-        //}
         internal void SetDefaultHeaders()
         {
             httpClient.DefaultRequestHeaders.Clear();
             httpClient.DefaultRequestHeaders.Accept.Clear();
-            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));//ACCEPT header
+            //httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));//ACCEPT header
         }
         internal void SetApiSign(String apiSign)
         {
+            httpClient.DefaultRequestHeaders.Remove("apisign");
             httpClient.DefaultRequestHeaders.Add("apisign", apiSign);
         }
 

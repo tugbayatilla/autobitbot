@@ -23,7 +23,7 @@
         <UserControls:AllExchangeTickersControl />
         <UserControls:AllExchangeBalancesControl Grid.Column="1" />
 
-        <UserControls:BittrexMarketOpenOrdersControl Grid.Column="0" Grid.Row="1" />
+        <UserControls:ExchangeOpenOrdersControl Grid.ColumnSpan="2" Grid.Row="1" />
 
 
 

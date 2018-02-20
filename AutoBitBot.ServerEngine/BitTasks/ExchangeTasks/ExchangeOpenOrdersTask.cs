@@ -1,6 +1,7 @@
 ﻿using ArchPM.Core.Notifications;
 using AutoBitBot.BittrexProxy;
 using AutoBitBot.BittrexProxy.Responses;
+using AutoBitBot.Business;
 using AutoBitBot.Infrastructure;
 using AutoBitBot.Infrastructure.Exchanges;
 using AutoBitBot.ServerEngine.Enums;
@@ -14,33 +15,24 @@ using System.Threading.Tasks;
 
 namespace AutoBitBot.ServerEngine.BitTasks
 {
-    public class BittrexGetOrderHistoryTask : BitTask
+    public class ExchangeOpenOrdersTask : BitTask
     {
-        readonly String market;
-        public BittrexGetOrderHistoryTask(String market)
+        public ExchangeOpenOrdersTask()
         {
-            this.market = market;
         }
 
-        public override long ExecuteAtEvery => 10000;
+        public override long ExecuteAtEvery => 20000;
 
-        public override string Name => "Bittrex-OrderHistory-Task";
+        public override string Name => "Exchange-OpenOrders-Task";
 
         public override BitTaskExecutionTypes ExecutionType => BitTaskExecutionTypes.Permanent;
 
         protected override async Task<Object> ExecuteAction(Object parameter)
         {
-            //fistan: merkezi yap
-            var manager = BittrexApiManagerFactory.Instance.Create();
+            ExchangeBusiness bus = new ExchangeBusiness(this.Notification);
+            var result = await bus.GetExchangeOpenOrderViewModel();
 
-            var result = await manager.GetOrderHistory(market);
-
-            if (!result.Result)
-            {
-                Notification.Notify($"[{Name}] {result.Message}");
-            }
-
-            return result.Data;
+            return result;
 
         }
     }

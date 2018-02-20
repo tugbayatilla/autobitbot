@@ -37,9 +37,9 @@ namespace AutoBitBot.ServerEngine.BitTasks
             return result.Data;
         }
 
-        public static BittrexxTickerResponse DataConverter(Object data)
+        public static BittrexTickerResponse DataConverter(Object data)
         {
-            return data as BittrexxTickerResponse;
+            return data as BittrexTickerResponse;
         }
     }
 }

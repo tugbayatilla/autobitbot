@@ -5,7 +5,7 @@ using System.Web;
 
 namespace AutoBitBot.BittrexProxy
 {
-    public class BittrexSellLimitArgs : BittrexBuyLimitArgs
+    public class PoloniexSellLimitArgs : PoloniexBuyLimitArgs
     {
     }
 }

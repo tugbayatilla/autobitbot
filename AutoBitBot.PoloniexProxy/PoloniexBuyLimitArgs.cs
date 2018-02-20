@@ -5,7 +5,7 @@ using System.Web;
 
 namespace AutoBitBot.BittrexProxy
 {
-    public class BittrexBuyLimitArgs
+    public class PoloniexBuyLimitArgs
     {
         public String Market { get; set; }
         public Decimal Quantity { get; set; }

@@ -42,20 +42,21 @@ namespace AutoBitBot.UI.MainApp.Notifiers
 
         public Task Notify(Exception ex)
         {
-            Add(ex.GetAllMessages(true," "), Colors.Red);
+            Add(ex.GetAllMessages(true, " "), Colors.Red);
             return Task.CompletedTask;
         }
 
         void Add(String message, Color color)
         {
             AppendText(message, color.ToString());
-           
+
         }
 
         public void AppendText(string text, string color)
         {
-            
-            dispatcher.Invoke((Action)delegate {
+
+            dispatcher.Invoke((Action)delegate
+            {
                 //tr.Text = text;
                 //try
                 //{
@@ -63,12 +64,12 @@ namespace AutoBitBot.UI.MainApp.Notifiers
                 //        bc.ConvertFromString(color));
                 //}
                 //catch (FormatException) { }
-
+                text = String.Concat($"[{DateTime.Now.ToMessageHeaderString()}] ", text);
                 richTextBox.AppendText(text); // Linebreak, not paragraph break
                 richTextBox.AppendText("\u2028"); // Linebreak, not paragraph break
                 richTextBox.ScrollToEnd();
             });
-            
+
         }
     }
 }

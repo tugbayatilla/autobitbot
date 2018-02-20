@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="AutoBitBot.UI.MainApp.UserControls.BittrexSellLimitControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AutoBitBot.UI.MainApp.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="190" d:DesignWidth="300">
+    <StackPanel>
+        <Label Foreground="Blue" Margin="5,5,5,0" Content="{Binding Market}"></Label>
+        <Label>Rate</Label>
+        <TextBox Name="PriceTextBox" Text="{Binding Rate}"></TextBox>
+        <Label>Quantity</Label>
+        <TextBox Name="QuantityTextBox" Text="{Binding Quantity}"></TextBox>
+
+        <Button Command="{Binding BittrexSellLimitCommand}" CommandParameter="{Binding}">Sell</Button>
+    </StackPanel>
+</UserControl>

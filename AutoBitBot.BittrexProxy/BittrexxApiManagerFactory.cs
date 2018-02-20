@@ -1,8 +1,10 @@
 ﻿using ArchPM.Core.Api;
 using ArchPM.Core.Notifications;
 using ArchPM.Core.Session;
+using AutoBitBot.Infrastructure.Exchanges;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net.Http;
 using System.Web;
@@ -20,10 +22,18 @@ namespace AutoBitBot.BittrexProxy
             httpClient = new HttpClient();
         }
 
-        public BittrexApiManager Create()
+        public BittrexApiManager Create(ExchangeApiKey apiKeyModel = null, INotification notification = null)
         {
-            var apiResponseLog = new NullNotification();
-            return new BittrexApiManager(httpClient, apiResponseLog);
+            if (notification == null)
+            {
+                notification = new NullNotification();
+            }
+            if(apiKeyModel == null)
+            {
+                apiKeyModel = new ExchangeApiKey() { ApiKey = ConfigurationManager.AppSettings["BittrexApiKey"], SecretKey = ConfigurationManager.AppSettings["BittrexApiSecret"] };
+            }
+
+            return new BittrexApiManager(httpClient, notification) { ApiKeyModel = apiKeyModel };
         }
 
     }

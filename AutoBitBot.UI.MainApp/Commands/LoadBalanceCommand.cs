@@ -20,9 +20,9 @@ namespace AutoBitBot.UI.MainApp.Commands
 
         public void Execute(object parameter)
         {
-            if (parameter is List<BittrexxBalanceResponse>)
+            if (parameter is List<BittrexBalanceResponse>)
             {
-                var model = (parameter as List<BittrexxBalanceResponse>).ToList();
+                var model = (parameter as List<BittrexBalanceResponse>).ToList();
 
                 //this.Balances.Clear();
 

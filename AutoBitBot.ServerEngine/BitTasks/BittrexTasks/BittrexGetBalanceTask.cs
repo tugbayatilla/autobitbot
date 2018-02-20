@@ -26,11 +26,7 @@ namespace AutoBitBot.ServerEngine.BitTasks
             //fistan: merkezi yap
             var manager = BittrexApiManagerFactory.Instance.Create();
 
-            var result = await manager.GetBalances(new ExchangeApiKey()
-            {
-                ApiKey = ConfigurationManager.AppSettings["BittrexApiKey"],
-                SecretKey = ConfigurationManager.AppSettings["BittrexApiSecret"]
-            });
+            var result = await manager.GetBalances();
 
             if (!result.Result)
             {

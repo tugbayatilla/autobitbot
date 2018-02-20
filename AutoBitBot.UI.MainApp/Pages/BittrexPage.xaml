@@ -12,7 +12,7 @@
         <ui:ModernTab SelectedSource="/UserControls/Bittrex/BittrexTickersControl.xaml" Layout="List">
             <ui:ModernTab.Links>
                 <ui:Link DisplayName="Tickers" Source="/UserControls/Bittrex/BittrexTickersControl.xaml" />
-                <ui:Link DisplayName="Lorem Ipsum 2" Source="/" />
+                <ui:Link DisplayName="Commands" Source="/UserControls/Bittrex/BittrexCommandButtons.xaml" />
                 <ui:Link DisplayName="Lorem Ipsum 3" Source="/"/>
                 <ui:Link DisplayName="Lorem Ipsum 4" Source="/" />
                 <ui:Link DisplayName="Lorem Ipsum 5" Source="/"/>

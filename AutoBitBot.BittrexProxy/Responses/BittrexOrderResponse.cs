@@ -5,7 +5,7 @@ using System.Web;
 
 namespace AutoBitBot.BittrexProxy.Responses
 {
-    public class BittrexxOrderResponse
+    public class BittrexOrderResponse
     {
         public Object AccountId { get; set; }
         public String OrderUuid { get; set; }

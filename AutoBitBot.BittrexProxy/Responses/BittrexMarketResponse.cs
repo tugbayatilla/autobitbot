@@ -5,7 +5,7 @@ using System.Web;
 
 namespace AutoBitBot.BittrexProxy.Responses
 {
-    public class BittrexxMarketResponse
+    public class BittrexMarketResponse
     {
         public String MarketCurrency { get; set; }
         public String BaseCurrency { get; set; }

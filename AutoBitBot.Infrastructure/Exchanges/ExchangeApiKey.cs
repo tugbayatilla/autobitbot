@@ -9,11 +9,11 @@ namespace AutoBitBot.Infrastructure.Exchanges
     {
         public ExchangeApiKey()
         {
-            this.Nonce = Utils.GetTime();
         }
 
         public String ApiKey { get; set; }
         public String SecretKey { get; set; }
-        public Int64 Nonce { get; private set; }
+        public Int64 Nonce => Utils.GetTime();
+
     }
 }

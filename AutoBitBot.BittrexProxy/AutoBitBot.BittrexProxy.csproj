@@ -29,6 +29,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ArchPM.Core, Version=0.1.3.42270, Culture=neutral, PublicKeyToken=a7c5f15bb1b78c45, processorArchitecture=MSIL">
       <HintPath>..\packages\ArchPM.Core.0.1.3\lib\net45\ArchPM.Core.dll</HintPath>
@@ -37,6 +43,7 @@
       <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Runtime.Serialization" />
@@ -57,14 +64,14 @@
     <Compile Include="BittrexxSellLimitArgs.cs" />
     <Compile Include="Responses\BittrexMarketSummaryResponse.cs" />
     <Compile Include="Responses\BittrexOpenOrdersResponse.cs" />
-    <Compile Include="Responses\BittrexxMarketHistoryResponse.cs" />
-    <Compile Include="Responses\BittrexxBalanceResponse.cs" />
-    <Compile Include="Responses\BittrexxCurrencyResponse.cs" />
-    <Compile Include="Responses\BittrexxLimitResponse.cs" />
-    <Compile Include="Responses\BittrexxMarketResponse.cs" />
-    <Compile Include="Responses\BittrexxOrderHistoryResponse.cs" />
-    <Compile Include="Responses\BittrexxOrderResponse.cs" />
-    <Compile Include="Responses\BittrexxTickerResponse.cs" />
+    <Compile Include="Responses\BittrexMarketHistoryResponse.cs" />
+    <Compile Include="Responses\BittrexBalanceResponse.cs" />
+    <Compile Include="Responses\BittrexCurrencyResponse.cs" />
+    <Compile Include="Responses\BittrexLimitResponse.cs" />
+    <Compile Include="Responses\BittrexMarketResponse.cs" />
+    <Compile Include="Responses\BittrexOrderHistoryResponse.cs" />
+    <Compile Include="Responses\BittrexOrderResponse.cs" />
+    <Compile Include="Responses\BittrexTickerResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -75,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Key.snk" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

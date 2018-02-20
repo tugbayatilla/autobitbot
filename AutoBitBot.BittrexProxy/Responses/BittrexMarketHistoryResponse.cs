@@ -5,7 +5,7 @@ using System.Web;
 
 namespace AutoBitBot.BittrexProxy.Responses
 {
-    public class BittrexxMarketHistoryResponse
+    public class BittrexMarketHistoryResponse
     {
         public Int32 Id { get; set; }
         public DateTime TimeStamp { get; set; }

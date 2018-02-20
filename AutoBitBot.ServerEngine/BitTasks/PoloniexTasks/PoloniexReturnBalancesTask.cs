@@ -27,11 +27,7 @@ namespace AutoBitBot.ServerEngine.BitTasks
             //fistan: merkezi yap
             var manager = PoloniexApiManagerFactory.Instance.Create();
 
-            var result = await manager.ReturnBalances(new ExchangeApiKey()
-            {
-                ApiKey = ConfigurationManager.AppSettings["PoloniexApiKey"],
-                SecretKey = ConfigurationManager.AppSettings["PoloniexApiSecret"]
-            });
+            var result = await manager.ReturnBalances();
 
             if (!result.Result)
             {
