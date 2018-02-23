@@ -1,6 +1,9 @@
 ﻿using AutoBitBot.BittrexProxy;
+using AutoBitBot.Infrastructure;
+using AutoBitBot.Infrastructure.Exchanges.ViewModels;
 using AutoBitBot.ServerEngine.BitTasks;
 using AutoBitBot.UI.MainApp.ViewModels;
+using AutoBitBot.UI.Windows.Controls;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -24,23 +27,31 @@ namespace AutoBitBot.UI.MainApp.Commands
 
         public void Execute(object parameter)
         {
+            var market = "BTC-DOGE";
             var model = parameter as MainViewModel;
+
+            var ticker = model.AllExchangeTickers.FirstOrDefault(p => p.ExchangeName == Constants.BITTREX && p.MarketName == market);
+            if(ticker == null)
+            {
+                ticker = new ExchangeTickerViewModel();
+            }
+
             var uc = new UserControls.BittrexSellLimitControl()
             {
-                DataContext = new ViewModels.BittrexSellLimitViewModel() { Market = "BTC-DOGE" }
+                DataContext = new BittrexLimitViewModel() { Market = market, ButtonText = "Sell Limit", Rate = ticker.Bid.NewValue, LimitType = LimitTypes.Sell }
             };
 
-            Window window = new Window
+            var window = new ModernWindow
             {
-                Title = "Bittrex Sel Limit Window",
+                Style = (Style)App.Current.Resources["BlankWindow"],
+                IsTitleVisible = true,
+                Title = "Bittrex Sell Limit Window",
                 Content = uc,
                 WindowState = WindowState.Normal,
-                Width = 400,
-                Height = 400
+                WindowStartupLocation = WindowStartupLocation.CenterScreen
             };
 
             window.Show();
-
         }
     }
 }

@@ -6,7 +6,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/AutoBitBot.UI;component/Assets/ModernUI.xaml" />
-                <ResourceDictionary Source="/AutoBitBot.UI;component/Assets/ModernUI.Light.xaml" />
+                <ResourceDictionary Source="/AutoBitBot.UI;component/Assets/ModernUI.Dark.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             

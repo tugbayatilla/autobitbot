@@ -18,9 +18,9 @@ namespace AutoBitBot.UI.MainApp.UserControls
     /// <summary>
     /// Interaction logic for BalanceControl.xaml
     /// </summary>
-    public partial class AllExchangeBalancesControl : UserControl
+    public partial class WalletControl : UserControl
     {
-        public AllExchangeBalancesControl()
+        public WalletControl()
         {
             InitializeComponent();
         }

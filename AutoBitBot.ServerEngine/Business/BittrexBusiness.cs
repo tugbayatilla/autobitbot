@@ -91,7 +91,7 @@ namespace AutoBitBot.Business
         }
 
 
-        public async void Sell(String market, Decimal quantity, Decimal rate)
+        public async Task<Boolean> Sell(String market, Decimal quantity, Decimal rate)
         {
             notification.Notify($"[{nameof(Sell)}] {nameof(market)}:{market},{nameof(quantity)}:{quantity}, {nameof(rate)}:{rate}", NOTIFYTO, NotifyTo.CONSOLE);
 
@@ -106,12 +106,38 @@ namespace AutoBitBot.Business
             {
                 var ex = new BittrexException(sellResult.Message);
                 notification.Notify(ex, NOTIFYTO, NotifyTo.CONSOLE, NotifyTo.EVENT_LOG);
-                return;
+                return false;
             }
 
             var orderResult = await MakeSureOrderFulfilled(manager, sellResult.Data.uuid, 2000, 10000);
 
             notification.Notify($"[{nameof(Sell)}:{nameof(orderResult)}] {nameof(orderResult.Result)}:{orderResult.Result}", NOTIFYTO, NotifyTo.CONSOLE);
+
+            return true;
+        }
+
+        public async Task<Boolean> Buy(String market, Decimal quantity, Decimal rate)
+        {
+            notification.Notify($"[{nameof(Buy)}] {nameof(market)}:{market},{nameof(quantity)}:{quantity}, {nameof(rate)}:{rate}", NOTIFYTO, NotifyTo.CONSOLE);
+
+            //calculations
+            var manager = BittrexApiManagerFactory.Instance.Create();
+            //todo: make it global
+            var buyResult = await manager.BuyLimit(new BittrexSellLimitArgs() { Market = market, Quantity = quantity, Rate = rate });
+
+            notification.Notify($"[{nameof(Buy)}:{nameof(buyResult)}] {nameof(buyResult.Result)}:{buyResult.Result}", NOTIFYTO, NotifyTo.CONSOLE);
+
+            if (!buyResult.Result)
+            {
+                var ex = new BittrexException(buyResult.Message);
+                notification.Notify(ex, NOTIFYTO, NotifyTo.CONSOLE, NotifyTo.EVENT_LOG);
+                return false;
+            }
+
+            var orderResult = await MakeSureOrderFulfilled(manager, buyResult.Data.uuid, 2000, 10000);
+
+            notification.Notify($"[{nameof(Sell)}:{nameof(orderResult)}] {nameof(orderResult.Result)}:{orderResult.Result}", NOTIFYTO, NotifyTo.CONSOLE);
+            return true;
         }
 
         /// <summary>

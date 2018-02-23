@@ -4,38 +4,42 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AutoBitBot.UI.MainApp.UserControls"
+             xmlns:viewModel="clr-namespace:AutoBitBot.UI.MainApp.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="150" d:DesignWidth="200" Width="300" Height="100">
-    <Grid>
+             d:DesignHeight="150" d:DesignWidth="300" 
+             d:DataContext="{Binding Source={x:Static viewModel:DesignViewModel.Instance}, Path=BittrexLimitViewModel}">
+    <Grid Style="{StaticResource ContentRoot}">
         <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
+            <ColumnDefinition  Width="4*" MaxWidth="250"/>
+            <ColumnDefinition Width="8*"/>
         </Grid.ColumnDefinitions>
         <TextBlock >
-            <StackPanel>
-                <Label Content="Market:"/>
-                <Label Content="{Binding Market, Mode=OneTime}" Foreground="Blue"/>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Market: "/>
+                <Label Content="{Binding Market, Mode=OneTime}" />
             </StackPanel>
         </TextBlock>
-        <TextBlock Grid.Column="1" FontSize="8" HorizontalAlignment="Right" >
+        <TextBlock Grid.Column="1" 
+                   HorizontalAlignment="Right" >
                 <Run Text="Available"/>
-                <Run Text="{Binding Available}" Foreground="Blue"/>
+                <Run Text="{Binding Available, Mode=OneWay}"/>
         </TextBlock>
 
-        <Label Grid.Row="1" Grid.Column="0" Content="Price" />
-        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Price}"></TextBox>
-        <Label Grid.Row="2" Grid.Column="0" Content="Quantity" />
+        <Label Grid.Row="1" Grid.Column="0" Content="Rate" HorizontalAlignment="Left" />
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Rate}"></TextBox>
+        <Label Grid.Row="2" Grid.Column="0" Content="Quantity" HorizontalAlignment="Left" />
         <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Quantity}"></TextBox>
 
-        <Button Command="{Binding BuyLimitCommand}" Grid.Row="3" Grid.ColumnSpan="2">
+        <Button Command="{Binding BittrexBuyLimitCommand}" CommandParameter="{Binding}" Grid.Row="3" Grid.ColumnSpan="2">
             <StackPanel Orientation="Horizontal">
-                <Label Content="Buy" />
+                <Label Content="{Binding ButtonText}" />
+                <Label Content=" - " />
                 <Label Content="{Binding Currency}"/>
             </StackPanel>
         </Button>

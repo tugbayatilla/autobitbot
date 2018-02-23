@@ -4,15 +4,45 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AutoBitBot.UI.MainApp.UserControls"
+             xmlns:viewModel="clr-namespace:AutoBitBot.UI.MainApp.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="190" d:DesignWidth="300">
-    <StackPanel>
-        <Label Foreground="Blue" Margin="5,5,5,0" Content="{Binding Market}"></Label>
-        <Label>Rate</Label>
-        <TextBox Name="PriceTextBox" Text="{Binding Rate}"></TextBox>
-        <Label>Quantity</Label>
-        <TextBox Name="QuantityTextBox" Text="{Binding Quantity}"></TextBox>
+             d:DesignHeight="150" d:DesignWidth="300" 
+             d:DataContext="{Binding Source={x:Static viewModel:DesignViewModel.Instance}, Path=BittrexLimitViewModel}">
+    <Grid Style="{StaticResource ContentRoot}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition  Width="4*" MaxWidth="250"/>
+            <ColumnDefinition Width="8*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock >
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Market: "/>
+                <Label Content="{Binding Market, Mode=OneTime}" />
+            </StackPanel>
+        </TextBlock>
+        <TextBlock Grid.Column="1" 
+                   HorizontalAlignment="Right" >
+                <Run Text="Available"/>
+                <Run Text="{Binding Available, Mode=OneWay}"/>
+        </TextBlock>
 
-        <Button Command="{Binding BittrexSellLimitCommand}" CommandParameter="{Binding}">Sell</Button>
-    </StackPanel>
+        <Label Grid.Row="1" Grid.Column="0" Content="Rate" HorizontalAlignment="Left" />
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Rate}"></TextBox>
+        <Label Grid.Row="2" Grid.Column="0" Content="Quantity" HorizontalAlignment="Left" />
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Quantity}"></TextBox>
+
+        <Button Command="{Binding BittrexSellLimitCommand}" CommandParameter="{Binding}" Grid.Row="3" Grid.ColumnSpan="2">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="{Binding ButtonText}" />
+                <Label Content=" - " />
+                <Label Content="{Binding Currency}"/>
+            </StackPanel>
+        </Button>
+    </Grid>
+
 </UserControl>

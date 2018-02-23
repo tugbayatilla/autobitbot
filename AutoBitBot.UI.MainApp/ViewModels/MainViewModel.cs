@@ -32,15 +32,12 @@ namespace AutoBitBot.UI.MainApp.ViewModels
 
         readonly RichTextBox outputRichTextBox;
         readonly Dispatcher dispatcher;
-        public static Object dashboardLocker = new object();
-
 
         public MainViewModel(Dispatcher dispatcher, RichTextBox outputRichTextBox)
         {
             this.dispatcher = dispatcher;
             this.outputRichTextBox = outputRichTextBox;
 
-            this.AllExchangeBalances = new AllExchangeBalancesObservableCollection();
             this.Markets = new ObservableCollection<DTO.MarketDTO>();
             this.OpenOrders = new ObservableCollection<BittrexOpenOrdersResponse>();
             this.OrderHistory = new ObservableCollection<BittrexOrderHistoryResponse>();
@@ -57,11 +54,11 @@ namespace AutoBitBot.UI.MainApp.ViewModels
             GlobalContext.Instance.server.TaskExecuted += Server_TaskExecuted;
 
             var notifierOutput = new RichTextBoxNotifier(this.dispatcher, outputRichTextBox);
-            GlobalContext.Instance.RegisterNotifier(NotifyTo.CONSOLE, notifierOutput);
-            GlobalContext.Instance.RegisterNotifier(NotifyTo.EVENT_LOG, notifierOutput);
+            GlobalContext.Instance.Notification.RegisterNotifier(NotifyTo.CONSOLE, notifierOutput);
+            GlobalContext.Instance.Notification.RegisterNotifier(NotifyTo.EVENT_LOG, notifierOutput);
 
-            GlobalContext.Instance.RegisterNotifier(Business.BittrexBusiness.NOTIFYTO, notifierOutput);
-            GlobalContext.Instance.RegisterNotifier(BittrexProxy.BittrexApiManager.NOTIFYTO, notifierOutput);
+            GlobalContext.Instance.Notification.RegisterNotifier(Business.BittrexBusiness.NOTIFYTO, notifierOutput);
+            GlobalContext.Instance.Notification.RegisterNotifier(BittrexProxy.BittrexApiManager.NOTIFYTO, notifierOutput);
 
         }
 
@@ -115,30 +112,7 @@ namespace AutoBitBot.UI.MainApp.ViewModels
 
                 #endregion
 
-                #region Balances
-                if (e.Data is List<BittrexBalanceResponse>)
-                {
-                    var model = e.Data as List<BittrexBalanceResponse>;
-
-                    model.ForEach(p =>
-                    {
-                        if (p.Balance != 0)
-                        {
-                            this.AllExchangeBalances.AddOrUpdate(p);
-                        }
-                    });
-                }
-
-                if (e.Data is PoloniexBalanceResponse)
-                {
-                    var model = e.Data as PoloniexBalanceResponse;
-
-                    model.ToList().ForEach(p =>
-                    {
-                        this.AllExchangeBalances.AddOrUpdate(p.Key, p.Value);
-                    });
-                }
-                #endregion
+                
 
 
                 #region Exchange
@@ -230,9 +204,12 @@ namespace AutoBitBot.UI.MainApp.ViewModels
         public ExchangeTickerObservableCollection PoloniexTickers { get; set; }
         public ExchangeTickerObservableCollection BittrexTickers { get; set; }
         public AllExchangeTickerObservableCollection AllExchangeTickers { get; set; }
-        public AllExchangeBalancesObservableCollection AllExchangeBalances { get; set; }
         public ExchangeOverallCurrentStatusObservableCollection ExchangeOverallCurrentStatus { get; set; }
         public ExchangeOpenOrdersObservableCollection ExchangeOpenOrders { get; set; }
+
+
+        public SelectedMarketViewModel SelectedMarket { get; set; }
+
 
 
         public DTO.MarketTickerDTO MarketTicker { get; set; }
@@ -246,6 +223,7 @@ namespace AutoBitBot.UI.MainApp.ViewModels
         public ICommand OpenKilledTasksCommand => new OpenKilledTasksCommand();
         public ICommand OpenOrderHistoryCommand => new OpenOrderHistoryCommand();
         public ICommand Open_BittrexSellLimitCommand => new Open_BittrexSellLimitCommand();
+        public ICommand Open_BittrexBuyLimitCommand => new Open_BittrexBuyLimitCommand();
 
     }
 }

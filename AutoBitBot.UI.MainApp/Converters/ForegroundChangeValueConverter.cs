@@ -21,17 +21,11 @@ namespace AutoBitBot.UI.MainApp.Converters
                 return value;
             }
 
-            if (value is Decimal)
+            if (value is Decimal result)
             {
-                var result = (Decimal)value;
-
-                if (result < 0)
+                if (result <= 0)
                 {
                     return "Red";
-                }
-                else if (result == 0)
-                {
-                    return "Black";
                 }
                 else
                 {

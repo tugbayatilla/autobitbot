@@ -1,5 +1,7 @@
-﻿using System;
+﻿using ArchPM.Core.Extensions;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -21,5 +23,44 @@ namespace AutoBitBot.Infrastructure
             PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             PropertyChanged(this, new PropertyChangedEventArgs(nameof(LastUpdateTime)));
         }
+
+        public void Refresh()
+        {
+            this.Properties().ForEach(p => {
+                if (p.IsPrimitive)
+                {
+                    OnPropertyChanged(p.Name);
+                }
+
+            });
+        }
     }
+
+    public class ObservableObjectCollection<T> : ObservableObject
+    {
+        public ObservableObjectCollection()
+        {
+            this.Data = new ObservableCollection<T>();
+            this.Data.CollectionChanged += Data_CollectionChanged;
+        }
+
+        private void Data_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(Data));
+        }
+
+        ObservableCollection<T> data;
+        public ObservableCollection<T> Data
+        {
+            get => data;
+            set
+            {
+                data = value;
+                OnPropertyChanged();
+            }
+        }
+
+    }
+
+
 }

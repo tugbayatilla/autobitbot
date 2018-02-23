@@ -24,7 +24,5 @@ namespace AutoBitBot.UI.MainApp.Pages
         {
             InitializeComponent();
         }
-
-        public Int32 ActiveTasksCount => GlobalContext.Instance.ActiveTasks.Count;
     }
 }

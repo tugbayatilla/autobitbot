@@ -29,7 +29,6 @@
         </ui:LinkGroup>
        <ui:LinkGroup DisplayName="Layout" >
             <ui:LinkGroup.Links>
-                <ui:Link DisplayName="{x:Static res:Titles.Dashboard}" Source="/Pages/DashboardPage.xaml"/>
                 <ui:Link DisplayName="Market" Source="/Pages/MarketPage.xaml" />
             </ui:LinkGroup.Links>
         </ui:LinkGroup>

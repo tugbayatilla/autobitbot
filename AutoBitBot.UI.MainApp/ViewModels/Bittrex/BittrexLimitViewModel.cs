@@ -1,4 +1,5 @@
 ﻿using AutoBitBot.Infrastructure;
+using AutoBitBot.UI.MainApp.Commands.Bittrex;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,10 @@ using System.Windows.Input;
 
 namespace AutoBitBot.UI.MainApp.ViewModels
 {
-    public class BittrexSellLimitViewModel : ObservableObject
+    public class BittrexLimitViewModel : ObservableObject
     {
-        String market;
+        String market, buttonText;
         Decimal rate, quantity;
-
 
         public String Market
         {
@@ -22,8 +22,16 @@ namespace AutoBitBot.UI.MainApp.ViewModels
             {
                 market = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(Currency));
             }
         }
+
+        public String Currency
+        {
+            get => Constants.GetCurrenyFromMarketName(this.Market, LimitType);
+        }
+
+        public LimitTypes LimitType { get; set; }
 
         public Decimal Rate
         {
@@ -45,29 +53,28 @@ namespace AutoBitBot.UI.MainApp.ViewModels
             }
         }
 
+        public Decimal Available
+        {
+            get => GlobalContext.Instance.Wallet.Get(Constants.BITTREX, this.Currency).Amount;
+        }
+
+
+        public String ButtonText
+        {
+            get => buttonText;
+            set
+            {
+                buttonText = value;
+                OnPropertyChanged();
+            }
+        }
+
         public ICommand BittrexSellLimitCommand => new BittrexSellLimitCommand();
-
-
+        public ICommand BittrexBuyLimitCommand => new BittrexBuyLimitCommand();
 
     };
 
-    public class BittrexSellLimitCommand : ICommand
-    {
-        public event EventHandler CanExecuteChanged = delegate { };
 
-        public bool CanExecute(object parameter)
-        {
-            return true;
-        }
-
-        public void Execute(object parameter)
-        {
-            var model = parameter as BittrexSellLimitViewModel;
-
-            Business.BittrexBusiness business = new Business.BittrexBusiness(GlobalContext.Instance.notification);
-            business.Sell(model.Market, model.Quantity, model.Rate);
-        }
-    }
 
 
 }

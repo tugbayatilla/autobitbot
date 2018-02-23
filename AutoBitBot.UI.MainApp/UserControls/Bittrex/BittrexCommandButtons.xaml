@@ -7,7 +7,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <StackPanel>
-        <Button Command="{Binding Open_BittrexSellLimitCommand}">Open Bittrex Sell Window</Button>
+        <Button Command="{Binding Open_BittrexSellLimitCommand}" CommandParameter="{Binding}">Open Bittrex Sell Window</Button>
+        <Separator />
+        <Button Command="{Binding Open_BittrexBuyLimitCommand}" CommandParameter="{Binding}">Open Bittrex Buy Window</Button>
 
     </StackPanel>
 </UserControl>

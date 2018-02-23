@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoBitBot.UI.MainApp.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,9 +26,6 @@ namespace AutoBitBot.UI.MainApp.UserControls
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
 
-        }
     }
 }

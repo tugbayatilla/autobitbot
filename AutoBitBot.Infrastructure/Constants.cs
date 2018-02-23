@@ -5,6 +5,13 @@ using System.Web;
 
 namespace AutoBitBot.Infrastructure
 {
+
+    public enum LimitTypes
+    {
+        Buy,
+        Sell
+    }
+
     public static class Constants
     {
         public static IEnumerable<String> GetExchangeNames()
@@ -31,12 +38,20 @@ namespace AutoBitBot.Infrastructure
             return name.Replace("_", "-");
         }
 
-        public static String GetCurrenyFromMarketName(String marketName)
+        public static String GetCurrenyFromMarketName(String marketName, LimitTypes limitType = LimitTypes.Sell)
         {
             Int32 index = marketName.IndexOfAny(new char[] { '-', '_' });
             if (index != -1)
             {
-                return marketName.Substring(index + 1);
+                switch (limitType)
+                {
+                    case LimitTypes.Buy:
+                        return marketName.Substring(0, index);
+                    case LimitTypes.Sell:
+                        return marketName.Substring(index + 1);
+                    default:
+                        break;
+                }
             }
 
             return marketName;

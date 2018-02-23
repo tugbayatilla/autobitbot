@@ -18,25 +18,31 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Threading;
+using AutoBitBot.Infrastructure;
+using AutoBitBot.UI.MainApp.Collections;
+using AutoBitBot.PoloniexProxy.Responses;
 
 namespace AutoBitBot.UI.MainApp
 {
-    public sealed class GlobalContext
+    public sealed class GlobalContext : ObservableObject
     {
         public static readonly GlobalContext Instance = new GlobalContext();
-        public readonly INotification notification;
+
+        public readonly INotification Notification;
         public readonly Server server;
         Dispatcher dispatcher;
         Boolean initialized = false;
 
         private GlobalContext()
         {
+            this.Wallet = new WalletObservableCollection();
+
             lock (this)
             {
-                notification = new NotificationManager();
+                Notification = new NotificationManager();
                 var notifierFile = new LogNotifier();
                 //notification.RegisterNotifier(NotificationLocations.Console, notifierOutput);
-                notification.RegisterNotifier(NotifyTo.CONSOLE, notifierFile);
+                Notification.RegisterNotifier(NotifyTo.CONSOLE, notifierFile);
                 //notification.RegisterNotifier(NotificationLocations.EventLog, notifierOutput);
                 //notification.RegisterNotifier(NotifyTo.EVENT_LOG, notifierFile);
 
@@ -47,30 +53,25 @@ namespace AutoBitBot.UI.MainApp
                 {
                     LogDirectoryPath = Path.Combine(Environment.CurrentDirectory, "Bittrex")
                 });
-                notification.RegisterNotifier(Business.BittrexBusiness.NOTIFYTO, bittrexLogFileNotifier);
-                notification.RegisterNotifier(BittrexProxy.BittrexApiManager.NOTIFYTO, bittrexLogFileNotifier);
+                Notification.RegisterNotifier(Business.BittrexBusiness.NOTIFYTO, bittrexLogFileNotifier);
+                Notification.RegisterNotifier(BittrexProxy.BittrexApiManager.NOTIFYTO, bittrexLogFileNotifier);
 
                 var exchangeLogFileNotifier = new LogNotifier(new ArchPM.Core.IO.LogToFileManager()
                 {
                     LogDirectoryPath = Path.Combine(Environment.CurrentDirectory, "Exchange")
                 });
-                notification.RegisterNotifier(Business.ExchangeBusiness.NOTIFYTO, exchangeLogFileNotifier);
-                notification.RegisterNotifier(BittrexProxy.BittrexApiManager.NOTIFYTO, exchangeLogFileNotifier);
+                Notification.RegisterNotifier(Business.ExchangeBusiness.NOTIFYTO, exchangeLogFileNotifier);
+                Notification.RegisterNotifier(BittrexProxy.BittrexApiManager.NOTIFYTO, exchangeLogFileNotifier);
 
                 var error = new LogNotifier(new ArchPM.Core.IO.LogToFileManager()
                 {
                     LogDirectoryPath = Path.Combine(Environment.CurrentDirectory, "Error")
                 });
-                notification.RegisterNotifier(NotifyTo.EVENT_LOG, error);
+                Notification.RegisterNotifier(NotifyTo.EVENT_LOG, error);
             }
 
 
-            server = new Server(notification);
-        }
-
-        public void RegisterNotifier(String notifyTo, INotifier notifier)
-        {
-            notification.RegisterNotifier(notifyTo, notifier);
+            server = new Server(Notification);
         }
 
         public void Init(Dispatcher dispatcher)
@@ -107,10 +108,41 @@ namespace AutoBitBot.UI.MainApp
             decisionMaker.Start();
 
             server.RunAllRegisteredTasksAsync();
+            server.TaskExecuted += Server_TaskExecuted;
+
 
             initialized = true;
         }
 
+        private void Server_TaskExecuted(object sender, BitTaskExecutedEventArgs e)
+        {
+            #region Balances
+            if (e.Data is List<BittrexBalanceResponse>)
+            {
+                var model = e.Data as List<BittrexBalanceResponse>;
+
+                model.ForEach(p =>
+                {
+                    if (p.Balance != 0)
+                    {
+                        GlobalContext.Instance.Wallet.AddOrUpdate(p);
+                        //this.Wallet.AddOrUpdate(p);
+                    }
+                });
+            }
+
+            if (e.Data is PoloniexBalanceResponse)
+            {
+                var model = e.Data as PoloniexBalanceResponse;
+
+                model.ToList().ForEach(p =>
+                {
+                    GlobalContext.Instance.Wallet.AddOrUpdate(p.Key, p.Value);
+                    //this.Wallet.AddOrUpdate(p.Key, p.Value);
+                });
+            }
+            #endregion
+        }
 
         Task<Boolean> OpenModal(String message)
         {
@@ -118,6 +150,8 @@ namespace AutoBitBot.UI.MainApp
             command.Execute(message);
             return Task.FromResult<Boolean>((Boolean)command.Result);
         }
+
+        public WalletObservableCollection Wallet { get; set; }
 
 
         public ObservableCollection<BitTask> ActiveTasks => server.ActiveTasks;

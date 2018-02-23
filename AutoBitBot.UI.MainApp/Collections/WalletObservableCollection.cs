@@ -14,13 +14,13 @@ using System.Windows.Data;
 
 namespace AutoBitBot.UI.MainApp.Collections
 {
-    public class AllExchangeBalancesObservableCollection : ObservableCollection<ExchangeBalanceViewModel>
+    public class WalletObservableCollection : ObservableObjectCollection<ExchangeBalanceViewModel>
     {
         protected static Object _locker = new object();
 
-        public AllExchangeBalancesObservableCollection()
+        public WalletObservableCollection()
         {
-            BindingOperations.EnableCollectionSynchronization(this, _locker);
+            BindingOperations.EnableCollectionSynchronization(this.Data, _locker);
         }
 
         public void AddOrUpdate(String currency, String value)
@@ -28,7 +28,7 @@ namespace AutoBitBot.UI.MainApp.Collections
             var poloniex = Constants.POLONIEX;
             lock (_locker)
             {
-                var item = this.FirstOrDefault(x => x.Currency == currency && x.ExchangeName == poloniex);
+                var item = this.Data.FirstOrDefault(x => x.Currency == currency && x.ExchangeName == poloniex);
                 Decimal.TryParse(value, out Decimal price);
 
                 if (price == 0)
@@ -39,15 +39,16 @@ namespace AutoBitBot.UI.MainApp.Collections
                 if (item == null)
                 {
                     item = new ExchangeBalanceViewModel() { ExchangeName = poloniex, Currency = currency, Amount = price };
-                    this.Add(item);
+                    this.Data.Add(item);
                 }
                 else
                 {
                     item.Amount = price;
                 }
             }
-        }
 
+            OnPropertyChanged(nameof(LastUpdateTime));
+        }
 
         public void AddOrUpdate(BittrexBalanceResponse response)
         {
@@ -55,11 +56,11 @@ namespace AutoBitBot.UI.MainApp.Collections
 
             lock (_locker)
             {
-                var item = this.FirstOrDefault(x => x.Currency == response.Currency && x.ExchangeName == bittrex);
+                var item = this.Data.FirstOrDefault(x => x.Currency == response.Currency && x.ExchangeName == bittrex);
                 if (item == null)
                 {
                     item = new ExchangeBalanceViewModel() { ExchangeName = bittrex, Currency = response.Currency, Amount = response.Balance };
-                    this.Add(item);
+                    this.Data.Add(item);
                 }
                 else
                 {
@@ -67,6 +68,18 @@ namespace AutoBitBot.UI.MainApp.Collections
                 }
             }
 
+            OnPropertyChanged(nameof(LastUpdateTime));
+        }
+
+        public ExchangeBalanceViewModel Get(String exchangeName, String currency)
+        {
+            var balance = this.Data.FirstOrDefault(p => p.Currency == currency && p.ExchangeName == exchangeName);
+            if(balance == null)
+            {
+                balance = new ExchangeBalanceViewModel() { Amount = -1 };
+
+            }
+            return balance;
         }
 
     }
