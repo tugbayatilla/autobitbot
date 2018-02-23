@@ -1,4 +1,5 @@
-﻿using AutoBitBot.UI.MainApp.ViewModels;
+﻿using AutoBitBot.Infrastructure;
+using AutoBitBot.UI.MainApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,9 @@ namespace AutoBitBot.UI.MainApp.Commands.Bittrex
             var model = parameter as BittrexLimitViewModel;
             model.ButtonText = "Operating...";
 
-            Business.BittrexBusiness business = new Business.BittrexBusiness(GlobalContext.Instance.Notification);
+            var business = new Business.BittrexBusiness(GlobalContext.Instance.Notification);
+            business.NotifyLocation = Constants.BITTREX;
+
             await business.Buy(model.Market, model.Quantity, model.Rate);
             canExecute = true;
 

@@ -21,6 +21,7 @@ namespace AutoBitBot.Infrastructure
 
         public const String BITTREX = "Bittrex";
         public const String POLONIEX = "Poloniex";
+        public const String TASKS = "Tasks";
         //public const String APIKEYS = "ApiKeys";
 
         public static String ToBittrexMarketName(String name)

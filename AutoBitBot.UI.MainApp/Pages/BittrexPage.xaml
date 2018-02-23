@@ -9,13 +9,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800" x:Name="Dashboard">
     <Grid Style="{StaticResource ContentRoot}">
-        <ui:ModernTab SelectedSource="/UserControls/Bittrex/BittrexTickersControl.xaml" Layout="List">
+        <ui:ModernTab SelectedSource="/UserControls/Bittrex/BittrexCommandButtons.xaml" Layout="List">
             <ui:ModernTab.Links>
-                <ui:Link DisplayName="Tickers" Source="/UserControls/Bittrex/BittrexTickersControl.xaml" />
                 <ui:Link DisplayName="Commands" Source="/UserControls/Bittrex/BittrexCommandButtons.xaml" />
-                <ui:Link DisplayName="Lorem Ipsum 3" Source="/"/>
-                <ui:Link DisplayName="Lorem Ipsum 4" Source="/" />
-                <ui:Link DisplayName="Lorem Ipsum 5" Source="/"/>
             </ui:ModernTab.Links>
 
             <!-- ensures new LoremIpsum content is loaded for each uri -->

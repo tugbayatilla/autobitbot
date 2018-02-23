@@ -16,12 +16,15 @@ namespace AutoBitBot.Business
 {
     public class ExchangeBusiness
     {
-        public const String NOTIFYTO = "ExchangeBusiness";
         readonly INotification notification;
+        public const String DEFAULT_NOTIFY_LOCATION = "ExchangeBusiness";
+
+        public String NotifyLocation { get; set; }
 
         public ExchangeBusiness(INotification notification)
         {
             this.notification = notification;
+            this.NotifyLocation = DEFAULT_NOTIFY_LOCATION;
         }
 
         public async Task<ObservableCollection<ExchangeOpenOrdersViewModel>> GetExchangeOpenOrderViewModel()
@@ -33,7 +36,7 @@ namespace AutoBitBot.Business
             var bittrexOpenOrdersResult = await bittrexManager.GetOpenOrders();
             if (!bittrexOpenOrdersResult.Result)
             {
-                notification.Notify(new BusinessException(bittrexOpenOrdersResult.Message), NotifyTo.CONSOLE, NotifyTo.EVENT_LOG);
+                notification.Notify(new BusinessException(bittrexOpenOrdersResult.Message), NotifyTo.EVENT_LOG, DEFAULT_NOTIFY_LOCATION);
             }
             else
             {
@@ -61,7 +64,7 @@ namespace AutoBitBot.Business
             var poloniexOpenOrdersResult = await poloniexManager.ReturnOpenOrdersAll();
             if (!poloniexOpenOrdersResult.Result)
             {
-                notification.Notify(new BusinessException(poloniexOpenOrdersResult.Message), NotifyTo.CONSOLE, NotifyTo.EVENT_LOG);
+                notification.Notify(new BusinessException(poloniexOpenOrdersResult.Message), NotifyTo.EVENT_LOG, DEFAULT_NOTIFY_LOCATION);
             }
             else
             {
@@ -92,7 +95,7 @@ namespace AutoBitBot.Business
                         }
                         else
                         {
-                            notification.Notify(new BusinessException(orderTradeResult.Message), NotifyTo.CONSOLE, NotifyTo.EVENT_LOG);
+                            notification.Notify(new BusinessException(orderTradeResult.Message), NotifyTo.EVENT_LOG, DEFAULT_NOTIFY_LOCATION);
                         }
                     });
 

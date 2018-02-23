@@ -56,9 +56,8 @@ namespace AutoBitBot.UI.MainApp.ViewModels
             var notifierOutput = new RichTextBoxNotifier(this.dispatcher, outputRichTextBox);
             GlobalContext.Instance.Notification.RegisterNotifier(NotifyTo.CONSOLE, notifierOutput);
             GlobalContext.Instance.Notification.RegisterNotifier(NotifyTo.EVENT_LOG, notifierOutput);
-
-            GlobalContext.Instance.Notification.RegisterNotifier(Business.BittrexBusiness.NOTIFYTO, notifierOutput);
-            GlobalContext.Instance.Notification.RegisterNotifier(BittrexProxy.BittrexApiManager.NOTIFYTO, notifierOutput);
+            //GlobalContext.Instance.Notification.RegisterNotifier(Business.BittrexBusiness.DEFAULT_NOTIFY_LOCATION, notifierOutput);
+            //GlobalContext.Instance.Notification.RegisterNotifier(BittrexProxy.BittrexApiManager.DEFAULT_NOTIFY_LOCATION, notifierOutput);
 
         }
 

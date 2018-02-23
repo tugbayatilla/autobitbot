@@ -19,6 +19,9 @@ namespace AutoBitBot.ServerEngine
     /// </summary>
     public abstract class BitTask : INotifyPropertyChanged, IDisposable
     {
+
+        public const String DEFAULT_NOTIFY_LOCATION = "BitTask";
+
         public event EventHandler<BitTaskExecutedEventArgs> Executed = delegate { };
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
@@ -252,7 +255,7 @@ namespace AutoBitBot.ServerEngine
 
                         stopWatch.Restart();
                         this.Status = BitTaskStatus.Executing;
-                        Notification.Notify(ToString(), NotifyTo.CONSOLE);
+                        Notification.Notify(ToString(), DEFAULT_NOTIFY_LOCATION);
 
                         this.LastResultAsync = ExecuteAction(parameter);
                         this.LastResult = await LastResultAsync;
@@ -261,7 +264,7 @@ namespace AutoBitBot.ServerEngine
                         this.LastExecutionTime = DateTime.Now;
                         this.Status = BitTaskStatus.Executed;
                         this.ElapsedTime = stopWatch.ElapsedMilliseconds;
-                        Notification.Notify(ToString(), NotifyTo.CONSOLE);
+                        Notification.Notify(ToString(), DEFAULT_NOTIFY_LOCATION);
                         Executed(this, new BitTaskExecutedEventArgs() { Data = LastResult, BitTask = this });
 
                         ////fistan: dikkat!!!
@@ -283,7 +286,7 @@ namespace AutoBitBot.ServerEngine
 
                         //change status
                         this.Status = BitTaskStatus.Waiting;
-                        Notification.Notify(ToString(), NotifyTo.CONSOLE);
+                        Notification.Notify(ToString(), DEFAULT_NOTIFY_LOCATION);
 
                         //sleep for a while
                         if (this.WaitTime > 0)
@@ -297,12 +300,12 @@ namespace AutoBitBot.ServerEngine
                     this.Status = BitTaskStatus.Failed;
                     this.FailedMessage = ex.GetAllMessages(false, " ");
 
-                    Notification.Notify(ex, NotifyTo.EVENT_LOG);
+                    Notification.Notify(ex, NotifyTo.EVENT_LOG, DEFAULT_NOTIFY_LOCATION);
                 }
 
                 if (this.KillAfterExecution)
                 {
-                    Notification.Notify($"[{Name}] Killing the task...", NotifyTo.CONSOLE);
+                    Notification.Notify($"[{Name}] Killing the task...", DEFAULT_NOTIFY_LOCATION);
                     this.Server?.Kill(this);
                 }
 

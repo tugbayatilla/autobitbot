@@ -18,6 +18,11 @@ namespace AutoBitBot.UI.MainApp.Commands
 {
     public class Open_BittrexSellLimitCommand : ICommand
     {
+        public Open_BittrexSellLimitCommand()
+        {
+
+        }
+
         public event EventHandler CanExecuteChanged = delegate { };
 
         public bool CanExecute(object parameter)

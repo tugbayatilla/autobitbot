@@ -25,7 +25,8 @@ namespace AutoBitBot.BittrexProxy
     /// </summary>
     public class BittrexApiManager
     {
-        public const String NOTIFYTO = "BittrexApiManager";
+        public const String DEFAULT_NOTIFY_LOCATION = "BittrexBusiness";
+
         readonly HttpClient httpClient;
         readonly INotification notification;
         public ExchangeApiKey ApiKeyModel { get; set; } //todo: constructor'a koy
@@ -37,10 +38,12 @@ namespace AutoBitBot.BittrexProxy
         {
             this.httpClient = httpClient;
             this.notification = notification;
+            this.NotifyLocation = DEFAULT_NOTIFY_LOCATION;
 
             SetDefaultHeaders();
-
         }
+
+        public String NotifyLocation { get; set; }
 
         async Task<IApiResponse<T>> __handler<T>(String url, Action beforeCallFunction = null)
         {
@@ -52,12 +55,13 @@ namespace AutoBitBot.BittrexProxy
                 var response = await httpClient.GetAsync(url);
                 response.EnsureSuccessStatusCode();
 
+                result = BittrexApiResponse<T>.CreateSuccessResponse(default(T));
                 result = await response.Content.ReadAsAsync<BittrexApiResponse<T>>();
-                result.Code = ApiResponseCodes.OK;
             }
             catch (Exception ex)
             {
-                result = BittrexApiResponse<T>.CreateException(ex); //bittrex-exception
+                var bex = new BittrexException("Failed Bittrex ", ex);
+                result = BittrexApiResponse<T>.CreateException(bex);
             }
             finally
             {
@@ -65,7 +69,7 @@ namespace AutoBitBot.BittrexProxy
                 result.RequestedUrl = url;
 
                 //log here: dont use await here. dont want to wait here
-                notification.Notify(result.ApiResponseToString(), NotifyTo.CONSOLE, NOTIFYTO);
+                notification.Notify(result.ApiResponseToString(), NotifyTo.CONSOLE, NotifyLocation);
             }
             return result;
         }

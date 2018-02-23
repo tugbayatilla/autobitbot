@@ -41,27 +41,29 @@ namespace AutoBitBot.UI.MainApp
             {
                 Notification = new NotificationManager();
                 var notifierFile = new LogNotifier();
-                //notification.RegisterNotifier(NotificationLocations.Console, notifierOutput);
                 Notification.RegisterNotifier(NotifyTo.CONSOLE, notifierFile);
+                Notification.RegisterNotifier(NotifyTo.EVENT_LOG, notifierFile);
+
                 //notification.RegisterNotifier(NotificationLocations.EventLog, notifierOutput);
                 //notification.RegisterNotifier(NotifyTo.EVENT_LOG, notifierFile);
 
-                var bittrexManager = BittrexProxy.BittrexApiManagerFactory.Instance.Create();
+                //var bittrexManager = BittrexProxy.BittrexApiManagerFactory.Instance.Create();
 
 
                 var bittrexLogFileNotifier = new LogNotifier(new ArchPM.Core.IO.LogToFileManager()
                 {
                     LogDirectoryPath = Path.Combine(Environment.CurrentDirectory, "Bittrex")
                 });
-                Notification.RegisterNotifier(Business.BittrexBusiness.NOTIFYTO, bittrexLogFileNotifier);
-                Notification.RegisterNotifier(BittrexProxy.BittrexApiManager.NOTIFYTO, bittrexLogFileNotifier);
+                Notification.RegisterNotifier(Constants.BITTREX, bittrexLogFileNotifier);
 
-                var exchangeLogFileNotifier = new LogNotifier(new ArchPM.Core.IO.LogToFileManager()
-                {
-                    LogDirectoryPath = Path.Combine(Environment.CurrentDirectory, "Exchange")
-                });
-                Notification.RegisterNotifier(Business.ExchangeBusiness.NOTIFYTO, exchangeLogFileNotifier);
-                Notification.RegisterNotifier(BittrexProxy.BittrexApiManager.NOTIFYTO, exchangeLogFileNotifier);
+                //Notification.RegisterNotifier(BittrexProxy.BittrexApiManager.NOTIFYTO, bittrexLogFileNotifier);
+
+                //var exchangeLogFileNotifier = new LogNotifier(new ArchPM.Core.IO.LogToFileManager()
+                //{
+                //    LogDirectoryPath = Path.Combine(Environment.CurrentDirectory, "Exchange")
+                //});
+                //Notification.RegisterNotifier(Business.ExchangeBusiness.NOTIFYTO, exchangeLogFileNotifier);
+                //Notification.RegisterNotifier(BittrexProxy.BittrexApiManager.NOTIFYTO, exchangeLogFileNotifier);
 
                 var error = new LogNotifier(new ArchPM.Core.IO.LogToFileManager()
                 {

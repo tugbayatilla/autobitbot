@@ -31,7 +31,7 @@ namespace AutoBitBot.ServerEngine.BitTasks
 
             if (!result.Result)
             {
-                Notification.Notify($"[{Name}] {result.Message}");
+                Notification.Notify($"[{Name}] {result.Message}", Constants.POLONIEX);
             }
 
             return result.Data;

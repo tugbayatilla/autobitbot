@@ -40,7 +40,7 @@
                 <DataGridTextColumn Header="Market" Binding="{Binding MarketName}" />
                 <DataGridTextColumn Header="Exchange" Binding="{Binding ExchangeName}" />
                 <DataGridTextColumn Header="Volume" Binding="{Binding BaseVolume, Converter={StaticResource PercentStringValueConverter}}" />
-                <DataGridTextColumn Header="Change" Binding="{Binding Change, Converter={StaticResource PercentStringValueConverter}}">
+                <DataGridTextColumn Header="Change"  Binding="{Binding Change, Converter={StaticResource PercentStringValueConverter}}">
                     <DataGridTextColumn.CellStyle>
                         <Style TargetType="{x:Type DataGridCell}">
                             <Setter Property="Foreground">
@@ -48,6 +48,7 @@
                                     <Binding Path="Change" Converter="{StaticResource ForegroundChangeValueConverter}"/>
                                 </Setter.Value>
                             </Setter>
+                            <Setter Property="Width" Value="35" />
                             <Setter Property="TextBlock.TextAlignment" Value="Right" />
                             <Setter Property="TextBlock.Padding" Value="0,0,20,0" />
                         </Style>
@@ -58,7 +59,7 @@
                 <DataGridTextColumn Header="24H High" Binding="{Binding High, Converter={StaticResource DecimalStringValueConverter}}" />
                 <DataGridTextColumn Header="24H Low" Binding="{Binding Low, Converter={StaticResource DecimalStringValueConverter}}"/>
                 <DataGridTextColumn Header="Range" Binding="{Binding Range, Converter={StaticResource DecimalStringValueConverter}}"/>
-                <DataGridTextColumn Header="%Range" Binding="{Binding RangePercent, Converter={StaticResource PercentStringValueConverter}}"/>
+                <DataGridTextColumn Header="%Range" Binding="{Binding RangePercent, Converter={StaticResource PercentStringValueConverter}}"  />
 
             </DataGrid.Columns>
         </DataGrid>

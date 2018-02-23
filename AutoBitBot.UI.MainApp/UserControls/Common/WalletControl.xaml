@@ -16,7 +16,6 @@
     
     </UserControl.Resources>
 
-
     <Grid >
         <StackPanel>
            
@@ -27,13 +26,10 @@
                     <DataGridTextColumn Header="Amount" Binding="{Binding Amount, Converter={StaticResource CoinPriceStringValueConverter}}" />
                 </DataGrid.Columns>
             </DataGrid>
-            <TextBlock FontSize="10" HorizontalAlignment="Right">
-                 <StackPanel Orientation="Horizontal">
-                <Label Content="Last Update:" />
-                <Label Content=" " />
-                <Label Content="{Binding LastUpdateTime, Converter={StaticResource DateTimeToStringConverter}}"/>
-            </StackPanel>
-            </TextBlock>
+            <TextBlock FontSize="10" 
+                       HorizontalAlignment="Right" 
+                       Foreground="Green" 
+                       Text="{Binding LastUpdateTime, StringFormat='Last Update: {0}', Converter={StaticResource DateTimeToStringConverter}}" />
         </StackPanel>
     </Grid>
 </UserControl>

@@ -12,6 +12,16 @@ namespace AutoBitBot.UI.MainApp.ViewModels
 {
     public class BittrexLimitViewModel : ObservableObject
     {
+        public BittrexLimitViewModel()
+        {
+            GlobalContext.Instance.Wallet.PropertyChanged += Wallet_PropertyChanged;
+        }
+
+        private void Wallet_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            Refresh();
+        }
+
         String market, buttonText;
         Decimal rate, quantity;
 

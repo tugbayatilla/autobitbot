@@ -25,7 +25,7 @@ namespace AutoBitBot.PoloniexProxy
     /// </summary>
     public class PoloniexApiManager
     {
-        public const String NOTIFYTO = "PoloniexApiManager";
+        public const String DEFAULT_NOTIFY_LOCATION = "PoloniexApiManager";
         readonly HttpClient httpClient;
         readonly INotification notification;
         public ExchangeApiKey ApiKeyModel { get; set; }
@@ -38,9 +38,12 @@ namespace AutoBitBot.PoloniexProxy
             this.httpClient = httpClient;
             this.notification = notification;
 
-            SetDefaultHeadersToHeader();
+            this.NotifyLocation = DEFAULT_NOTIFY_LOCATION;
 
+            SetDefaultHeadersToHeader();
         }
+
+        public String NotifyLocation { get; set; }
 
         /// <summary>
         /// Gets the ticker.
@@ -59,14 +62,13 @@ namespace AutoBitBot.PoloniexProxy
                 var response = await httpClient.GetAsync(url);
                 response.EnsureSuccessStatusCode();
 
-                result.Data = await response.Content.ReadAsAsync<PoloniexTickerResponse>();
-                result.Code = ApiResponseCodes.OK;
-                result.ET = sw.ElapsedMilliseconds;
-                result.RequestedUrl = url;
+                var data = await response.Content.ReadAsAsync<PoloniexTickerResponse>();
+                result = PoloniexApiResponse<PoloniexTickerResponse>.CreateSuccessResponse(data);
             }
             catch (Exception ex)
             {
                 result = PoloniexApiResponse<PoloniexTickerResponse>.CreateException(ex);
+                notification.Notify(ex, NotifyTo.EVENT_LOG, NotifyLocation);
             }
             finally
             {
@@ -74,7 +76,7 @@ namespace AutoBitBot.PoloniexProxy
                 result.RequestedUrl = url;
 
                 //log here: dont use await here. dont want to wait here
-                notification.Notify(result.ApiResponseToString());
+                notification.Notify(result.ApiResponseToString(), NotifyLocation);
             }
             return result;
 
@@ -101,19 +103,18 @@ namespace AutoBitBot.PoloniexProxy
                 var response = await httpClient.SendAsync(request);
                 response.EnsureSuccessStatusCode();
 
-                result.Data = await response.Content.ReadAsAsync<PoloniexBalanceResponse>();
-                if (result.Data.ContainsKey("error"))
+                var data = await response.Content.ReadAsAsync<PoloniexBalanceResponse>();
+                if (data.ContainsKey("error"))
                 {
                     result.Data.TryGetValue("error", out String error);
                     throw new PoloniexException(error);
                 }
-                result.Code = ApiResponseCodes.OK;
-                result.ET = sw.ElapsedMilliseconds;
-                result.RequestedUrl = url;
+                result = PoloniexApiResponse<PoloniexBalanceResponse>.CreateSuccessResponse(data);
             }
             catch (Exception ex)
             {
                 result = PoloniexApiResponse<PoloniexBalanceResponse>.CreateException(ex);
+                notification.Notify(ex, NotifyTo.EVENT_LOG, NotifyLocation);
             }
             finally
             {
@@ -121,7 +122,7 @@ namespace AutoBitBot.PoloniexProxy
                 result.RequestedUrl = url;
 
                 //log here: dont use await here. dont want to wait here
-                notification.Notify(result.ApiResponseToString(), NotifyTo.CONSOLE, NOTIFYTO);
+                notification.Notify(result.ApiResponseToString(), NotifyLocation);
             }
             return result;
 
@@ -156,14 +157,13 @@ namespace AutoBitBot.PoloniexProxy
                 var response = await httpClient.SendAsync(request);
                 response.EnsureSuccessStatusCode();
 
-                result.Data = await response.Content.ReadAsAsync<PoloniexOpenOrdersResponse>();
-                result.Code = ApiResponseCodes.OK;
-                result.ET = sw.ElapsedMilliseconds;
-                result.RequestedUrl = url;
+                var data = await response.Content.ReadAsAsync<PoloniexOpenOrdersResponse>();
+                result = PoloniexApiResponse<PoloniexOpenOrdersResponse>.CreateSuccessResponse(data);
             }
             catch (Exception ex)
             {
                 result = PoloniexApiResponse<PoloniexOpenOrdersResponse>.CreateException(ex);
+                notification.Notify(ex, NotifyTo.EVENT_LOG, NotifyLocation);
             }
             finally
             {
@@ -171,7 +171,7 @@ namespace AutoBitBot.PoloniexProxy
                 result.RequestedUrl = url;
 
                 //log here: dont use await here. dont want to wait here
-                notification.Notify(result.ApiResponseToString(), NotifyTo.CONSOLE, NOTIFYTO);
+                notification.Notify(result.ApiResponseToString(), NotifyLocation);
             }
             return result;
 
@@ -186,7 +186,7 @@ namespace AutoBitBot.PoloniexProxy
             try
             {
                 String commandName = "returnOpenOrders";
-                    String currencyPair = Constants.ToPoloniexMarketName(marketName);
+                String currencyPair = Constants.ToPoloniexMarketName(marketName);
                 String commandText = $"command={commandName}&nonce={ApiKeyModel.Nonce}&currencyPair={currencyPair}";
 
                 var apiSign = Utils.CreateHash(commandText, ApiKeyModel.SecretKey);
@@ -200,14 +200,13 @@ namespace AutoBitBot.PoloniexProxy
                 var response = await httpClient.SendAsync(request);
                 response.EnsureSuccessStatusCode();
 
-                result.Data = await response.Content.ReadAsAsync<List<PoloniexOpenOrdersResponseDetail>>();
-                result.Code = ApiResponseCodes.OK;
-                result.ET = sw.ElapsedMilliseconds;
-                result.RequestedUrl = url;
+                var data = await response.Content.ReadAsAsync<List<PoloniexOpenOrdersResponseDetail>>();
+                result = PoloniexApiResponse<List<PoloniexOpenOrdersResponseDetail>>.CreateSuccessResponse(data);
             }
             catch (Exception ex)
             {
                 result = PoloniexApiResponse<List<PoloniexOpenOrdersResponseDetail>>.CreateException(ex);
+                notification.Notify(ex, NotifyTo.EVENT_LOG, NotifyLocation);
             }
             finally
             {
@@ -215,7 +214,7 @@ namespace AutoBitBot.PoloniexProxy
                 result.RequestedUrl = url;
 
                 //log here: dont use await here. dont want to wait here
-                notification.Notify(result.ApiResponseToString(), NotifyTo.CONSOLE, NOTIFYTO);
+                notification.Notify(result.ApiResponseToString(), NotifyLocation);
             }
             return result;
 
@@ -244,14 +243,13 @@ namespace AutoBitBot.PoloniexProxy
                 var response = await httpClient.SendAsync(request);
                 response.EnsureSuccessStatusCode();
 
-                result.Data = await response.Content.ReadAsAsync<PoloniexOrderTradesResponse>();
-                result.Code = ApiResponseCodes.OK;
-                result.ET = sw.ElapsedMilliseconds;
-                result.RequestedUrl = url;
+                var data = await response.Content.ReadAsAsync<PoloniexOrderTradesResponse>();
+                result = PoloniexApiResponse<PoloniexOrderTradesResponse>.CreateSuccessResponse(data);
             }
             catch (Exception ex)
             {
                 result = PoloniexApiResponse<PoloniexOrderTradesResponse>.CreateException(ex);
+                notification.Notify(ex, NotifyTo.EVENT_LOG, NotifyLocation);
             }
             finally
             {
@@ -259,7 +257,7 @@ namespace AutoBitBot.PoloniexProxy
                 result.RequestedUrl = url;
 
                 //log here: dont use await here. dont want to wait here
-                notification.Notify(result.ApiResponseToString(), NotifyTo.CONSOLE, NOTIFYTO);
+                notification.Notify(result.ApiResponseToString(), NotifyLocation);
             }
             return result;
 

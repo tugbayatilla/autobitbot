@@ -26,7 +26,9 @@ namespace AutoBitBot.ServerEngine.BitTasks
 
         protected override async Task<Object> ExecuteAction(Object parameter)
         {
-            ExchangeBusiness bus = new ExchangeBusiness(this.Notification);
+            var bus = new ExchangeBusiness(this.Notification);
+            bus.NotifyLocation = Constants.TASKS;
+
             var result = await bus.GetExchangeOverallStatus();
 
             return result;

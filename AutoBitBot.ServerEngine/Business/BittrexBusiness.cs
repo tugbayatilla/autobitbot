@@ -1,7 +1,9 @@
 ﻿using ArchPM.Core.Api;
+using ArchPM.Core.Extensions;
 using ArchPM.Core.Notifications;
 using AutoBitBot.BittrexProxy;
 using AutoBitBot.BittrexProxy.Responses;
+using AutoBitBot.Infrastructure;
 using AutoBitBot.Infrastructure.Exchanges;
 using System;
 using System.Collections.Generic;
@@ -14,13 +16,17 @@ namespace AutoBitBot.Business
 {
     public class BittrexBusiness
     {
-        public const String NOTIFYTO = "BittrexBusiness";
+        public const String DEFAULT_NOTIFY_LOCATION = "BittrexBusiness";
         readonly INotification notification;
 
         public BittrexBusiness(INotification notification)
         {
             this.notification = notification;
+            this.NotifyLocation = DEFAULT_NOTIFY_LOCATION;
         }
+
+        public String NotifyLocation { get; set; }
+
 
         /// <summary>
         /// Runs the fat finder1 minimum when signal data received
@@ -59,7 +65,7 @@ namespace AutoBitBot.Business
 
         public async void BuyAndSell(String market, Decimal reserved, Decimal rate, Decimal profitPercent)
         {
-            notification.Notify($"[{nameof(BuyAndSell)}] {nameof(market)}:{market},{nameof(reserved)}:{reserved}, {nameof(rate)}:{rate}, {nameof(profitPercent)}:{profitPercent}", NOTIFYTO, NotifyTo.CONSOLE);
+            notification.Notify($"[{nameof(BuyAndSell)}] {nameof(market)}:{market},{nameof(reserved)}:{reserved}, {nameof(rate)}:{rate}, {nameof(profitPercent)}:{profitPercent}", NotifyLocation);
 
             //calculations
             var calculatedRate = rate + (rate * profitPercent / 100M);
@@ -69,12 +75,12 @@ namespace AutoBitBot.Business
             var manager = BittrexProxy.BittrexApiManagerFactory.Instance.Create();
             //todo: make it global
             var buyLimitResult = await manager.BuyLimit(new BittrexProxy.BittrexBuyLimitArgs() { Market = market, Rate = calculatedRate, Quantity = calculatedQuantity });
-            notification.Notify($"[{nameof(BuyAndSell)}:{nameof(buyLimitResult)}] {nameof(market)}:{market},{nameof(calculatedRate)}:{calculatedRate}, {nameof(calculatedQuantity)}:{calculatedQuantity}", NOTIFYTO, NotifyTo.CONSOLE);
+            notification.Notify($"[{nameof(BuyAndSell)}:{nameof(buyLimitResult)}] {nameof(market)}:{market},{nameof(calculatedRate)}:{calculatedRate}, {nameof(calculatedQuantity)}:{calculatedQuantity}", NotifyLocation);
 
             if (!buyLimitResult.Result)
             {
                 var ex = new BittrexProxy.BittrexException(buyLimitResult.Message);
-                notification.Notify(ex, NOTIFYTO, NotifyTo.CONSOLE, NotifyTo.EVENT_LOG);
+                notification.Notify(ex, this.NotifyLocation, NotifyTo.CONSOLE, NotifyTo.EVENT_LOG, NotifyLocation);
                 throw ex;
             }
 
@@ -84,59 +90,66 @@ namespace AutoBitBot.Business
             if (!orderResult.Result)
             {
                 var ex = new BittrexProxy.BittrexException(orderResult.Message);
-                notification.Notify(ex, NOTIFYTO, NotifyTo.CONSOLE, NotifyTo.EVENT_LOG);
+                notification.Notify(ex, NotifyLocation, NotifyTo.CONSOLE, NotifyTo.EVENT_LOG);
                 throw ex;
             }
-            notification.Notify($"[{nameof(BuyAndSell)}:{nameof(orderResult)}] {nameof(orderResult.Data.OrderUuid)}:{orderResult.Data.OrderUuid}", NOTIFYTO, NotifyTo.CONSOLE);
+            notification.Notify($"[{nameof(BuyAndSell)}:{nameof(orderResult)}] {nameof(orderResult.Data.OrderUuid)}:{orderResult.Data.OrderUuid}", NotifyLocation);
         }
 
 
         public async Task<Boolean> Sell(String market, Decimal quantity, Decimal rate)
         {
-            notification.Notify($"[{nameof(Sell)}] {nameof(market)}:{market},{nameof(quantity)}:{quantity}, {nameof(rate)}:{rate}", NOTIFYTO, NotifyTo.CONSOLE);
+            Guid transactionId = Guid.NewGuid();
+
+            notification.Notify($"[Sell][{transactionId}][Order Starting...]: @{market}, {nameof(quantity)} is {quantity} with {nameof(rate)}:{rate}", NotifyLocation);
 
             //calculations
-            var manager = BittrexApiManagerFactory.Instance.Create();
+            var manager = BittrexApiManagerFactory.Instance.Create(null, notification);
+            manager.NotifyLocation = this.NotifyLocation;
+
             //todo: make it global
             var sellResult = await manager.SellLimit(new BittrexSellLimitArgs() { Market = market, Quantity = quantity, Rate = rate });
 
-            notification.Notify($"[{nameof(Sell)}:{nameof(sellResult)}] {nameof(sellResult.Result)}:{sellResult.Result}", NOTIFYTO, NotifyTo.CONSOLE);
-
             if (!sellResult.Result)
             {
-                var ex = new BittrexException(sellResult.Message);
-                notification.Notify(ex, NOTIFYTO, NotifyTo.CONSOLE, NotifyTo.EVENT_LOG);
+                var ex = new BittrexException(String.Concat($"[Sell][{transactionId}][Order Failed] ", sellResult.Message));
+                notification.Notify(ex, NotifyLocation, NotifyTo.CONSOLE, NotifyTo.EVENT_LOG, NotifyLocation);
                 return false;
             }
+            notification.Notify($"[Sell][{transactionId}][Order Given]:{sellResult.Data.uuid}", NotifyLocation);
 
-            var orderResult = await MakeSureOrderFulfilled(manager, sellResult.Data.uuid, 2000, 10000);
-
-            notification.Notify($"[{nameof(Sell)}:{nameof(orderResult)}] {nameof(orderResult.Result)}:{orderResult.Result}", NOTIFYTO, NotifyTo.CONSOLE);
+            var waitTime = 2000;
+            var orderResult = await MakeSureOrderFulfilled(LimitTypes.Sell, manager, sellResult.Data.uuid, waitTime, 10000);
+            notification.Notify($"[Sell][{transactionId}][Order Fulfilled/Completed]: ET:{orderResult.TryCount*waitTime} Try:{orderResult.TryCount}", NotifyLocation);
 
             return true;
         }
 
         public async Task<Boolean> Buy(String market, Decimal quantity, Decimal rate)
         {
-            notification.Notify($"[{nameof(Buy)}] {nameof(market)}:{market},{nameof(quantity)}:{quantity}, {nameof(rate)}:{rate}", NOTIFYTO, NotifyTo.CONSOLE);
+            Guid transactionId = Guid.NewGuid();
+
+            notification.Notify($"[Buy][{transactionId}][Order Starting...]: @{market}, {nameof(quantity)} is {quantity} with {nameof(rate)}:{rate}", NotifyLocation);
 
             //calculations
             var manager = BittrexApiManagerFactory.Instance.Create();
+            manager.NotifyLocation = this.NotifyLocation;
+
             //todo: make it global
             var buyResult = await manager.BuyLimit(new BittrexSellLimitArgs() { Market = market, Quantity = quantity, Rate = rate });
 
-            notification.Notify($"[{nameof(Buy)}:{nameof(buyResult)}] {nameof(buyResult.Result)}:{buyResult.Result}", NOTIFYTO, NotifyTo.CONSOLE);
-
             if (!buyResult.Result)
             {
-                var ex = new BittrexException(buyResult.Message);
-                notification.Notify(ex, NOTIFYTO, NotifyTo.CONSOLE, NotifyTo.EVENT_LOG);
+                var ex = new BittrexException(String.Concat($"[Buy][{transactionId}][Order Failed]: ", buyResult.Message));
+                notification.Notify(ex, NotifyLocation, NotifyTo.CONSOLE, NotifyTo.EVENT_LOG, NotifyLocation);
                 return false;
             }
+            notification.Notify($"[Buy][{transactionId}][Order Given]: uuid={buyResult.Data.uuid}", NotifyLocation);
 
-            var orderResult = await MakeSureOrderFulfilled(manager, buyResult.Data.uuid, 2000, 10000);
+            var waitTime = 2000;
+            var orderResult = await MakeSureOrderFulfilled(LimitTypes.Buy, manager, buyResult.Data.uuid, waitTime, 10000);
 
-            notification.Notify($"[{nameof(Sell)}:{nameof(orderResult)}] {nameof(orderResult.Result)}:{orderResult.Result}", NOTIFYTO, NotifyTo.CONSOLE);
+            notification.Notify($"[Buy][{transactionId}][Order Fulfilled/Completed]: uuid={orderResult.Data.OrderUuid} Time:{waitTime * orderResult.TryCount}", NotifyLocation);
             return true;
         }
 
@@ -148,7 +161,7 @@ namespace AutoBitBot.Business
         /// <param name="waitBeforeTryAgain">The wait before try again.</param>
         /// <param name="tryCount">The try count.</param>
         /// <returns></returns>
-        public async Task<IApiResponse<BittrexOrderResponse>> MakeSureOrderFulfilled(BittrexApiManager manager, String uuid, Int32 waitBeforeTryAgain = 1000, Int32 tryCount = 5)
+        public async Task<IApiResponse<BittrexOrderResponse>> MakeSureOrderFulfilled(LimitTypes limitType, BittrexApiManager manager, String uuid, Int32 waitBeforeTryAgain = 1000, Int32 tryCount = 5)
         {
             IApiResponse<BittrexOrderResponse> result = null;
             Int32 whileTryCount = 0;
@@ -164,15 +177,15 @@ namespace AutoBitBot.Business
                 var orderResult = await manager.GetOrder(uuid);
                 if (!orderResult.Result)
                 {
-                    var ex = new BittrexException(orderResult.Message);
-                    notification.Notify(ex, NOTIFYTO, NotifyTo.CONSOLE, NotifyTo.EVENT_LOG);
+                    var ex = new BittrexException($"uuid:{uuid} failed! " + orderResult.Message);
+                    notification.Notify(ex, NotifyLocation, NotifyTo.CONSOLE, NotifyTo.EVENT_LOG, NotifyLocation);
                 }
                 else
                 {
                     //order closed, then break the loop and return value
-                    notification.Notify($"[{nameof(Sell)}:{nameof(orderResult)}] {nameof(orderResult.Data.IsOpen)}:{orderResult.Data.IsOpen} {nameof(orderResult.Data.OrderUuid)}:{orderResult.Data.OrderUuid}", NOTIFYTO, NotifyTo.CONSOLE);
                     if (!orderResult.Data.IsOpen)
                     {
+                        notification.Notify($"[{limitType.GetName()} Order Closed]: Time:{whileTryCount* waitBeforeTryAgain}", NotifyLocation);
                         result = orderResult;
                         break;
                     }
@@ -187,6 +200,7 @@ namespace AutoBitBot.Business
 
                 whileTryCount++;
             }
+            result.TryCount = whileTryCount;
 
             return result;
 
