@@ -19,10 +19,13 @@ namespace AutoBitBot.UI.MainApp.Notifiers
         readonly Dispatcher dispatcher;
         readonly RichTextBox richTextBox;
 
+        public Guid Id { get; private set; }
+
         public RichTextBoxNotifier(Dispatcher dispatcher, RichTextBox richTextBox)
         {
             this.dispatcher = dispatcher;
             this.richTextBox = richTextBox;
+            this.Id = Guid.NewGuid();
 
             //BrushConverter bc = new BrushConverter();
             //TextRange tr = new TextRange(richTextBox.Document.ContentEnd, richTextBox.Document.ContentEnd);
@@ -70,6 +73,21 @@ namespace AutoBitBot.UI.MainApp.Notifiers
                 richTextBox.ScrollToEnd();
             });
 
+        }
+
+        public Task Notify(NotificationMessage notificationMessage, NotifyAs notifyAs)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task Notify(string message, NotifyAs notifyAs)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task Notify(Exception ex, NotifyAs notifyAs)
+        {
+            throw new NotImplementedException();
         }
     }
 }

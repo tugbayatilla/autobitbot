@@ -108,6 +108,21 @@ namespace AutoBitBot.Business
             return result;
         }
 
+        public async void FetchWallet()
+        {
+            //bittrex call
+            var bittrexManager = BittrexProxy.BittrexApiManagerFactory.Instance.Create();
+            var bittrexBalancesResult = await bittrexManager.GetBalances();
+
+            if (bittrexBalancesResult.Result)
+            {
+                //Wallet
+            }
+
+        }
+
+
+
         public async Task<Object> GetExchangeOverallStatus()
         {
             List<ExchangeOverallCurrentStatusViewModel> result = new List<ExchangeOverallCurrentStatusViewModel>();

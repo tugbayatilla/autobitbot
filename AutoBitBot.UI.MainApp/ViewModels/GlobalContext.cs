@@ -122,26 +122,13 @@ namespace AutoBitBot.UI.MainApp
             if (e.Data is List<BittrexBalanceResponse>)
             {
                 var model = e.Data as List<BittrexBalanceResponse>;
-
-                model.ForEach(p =>
-                {
-                    if (p.Balance != 0)
-                    {
-                        GlobalContext.Instance.Wallet.AddOrUpdate(p);
-                        //this.Wallet.AddOrUpdate(p);
-                    }
-                });
+                GlobalContext.Instance.Wallet.Save(model);
             }
 
             if (e.Data is PoloniexBalanceResponse)
             {
                 var model = e.Data as PoloniexBalanceResponse;
-
-                model.ToList().ForEach(p =>
-                {
-                    GlobalContext.Instance.Wallet.AddOrUpdate(p.Key, p.Value);
-                    //this.Wallet.AddOrUpdate(p.Key, p.Value);
-                });
+                GlobalContext.Instance.Wallet.Save(model);
             }
             #endregion
         }
