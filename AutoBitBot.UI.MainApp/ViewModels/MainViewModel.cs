@@ -45,7 +45,7 @@ namespace AutoBitBot.UI.MainApp.ViewModels
             this.BittrexTickers = new ExchangeTickerObservableCollection();
             this.AllExchangeTickers = new AllExchangeTickerObservableCollection();
             this.ExchangeOverallCurrentStatus = new ExchangeOverallCurrentStatusObservableCollection();
-            this.ExchangeOpenOrders = new ExchangeOpenOrdersObservableCollection();
+            //this.ExchangeOpenOrders = new ExchangeOpenOrdersObservableCollection();
 
             this.BuyAndSell = new DTO.BuyAndSellDTO();
             this.MarketTicker = new DTO.MarketTickerDTO();
@@ -116,11 +116,7 @@ namespace AutoBitBot.UI.MainApp.ViewModels
 
                 #region Exchange
 
-                if (e.BitTask is ExchangeOpenOrdersTask)
-                {
-                    var model = e.Data as ObservableCollection<ExchangeOpenOrdersViewModel>;
-                    this.ExchangeOpenOrders.AddRange(model);
-                }
+               
 
                 #endregion
 
@@ -204,7 +200,7 @@ namespace AutoBitBot.UI.MainApp.ViewModels
         public ExchangeTickerObservableCollection BittrexTickers { get; set; }
         public AllExchangeTickerObservableCollection AllExchangeTickers { get; set; }
         public ExchangeOverallCurrentStatusObservableCollection ExchangeOverallCurrentStatus { get; set; }
-        public ExchangeOpenOrdersObservableCollection ExchangeOpenOrders { get; set; }
+        //public ExchangeOpenOrdersObservableCollection ExchangeOpenOrders { get; set; }
 
 
         public SelectedMarketViewModel SelectedMarket { get; set; }
@@ -223,6 +219,7 @@ namespace AutoBitBot.UI.MainApp.ViewModels
         public ICommand OpenOrderHistoryCommand => new OpenOrderHistoryCommand();
         public ICommand Open_BittrexSellLimitCommand => new Open_BittrexSellLimitCommand();
         public ICommand Open_BittrexBuyLimitCommand => new Open_BittrexBuyLimitCommand();
+        public ICommand Open_BittrexBuyAndSellLimitCommand => new Open_BittrexBuyAndSellLimitCommand();
 
     }
 }

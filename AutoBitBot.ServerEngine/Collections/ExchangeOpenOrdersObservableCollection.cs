@@ -27,7 +27,7 @@ namespace AutoBitBot.UI.MainApp.Collections
             BindingOperations.EnableCollectionSynchronization(this, _locker);
         }
 
-        public void AddRange(IEnumerable<ExchangeOpenOrdersViewModel> models)
+        public void Save(IEnumerable<ExchangeOpenOrdersViewModel> models)
         {
             this.ClearItems();
 

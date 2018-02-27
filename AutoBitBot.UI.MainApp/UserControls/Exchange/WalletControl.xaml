@@ -19,7 +19,7 @@
     <Grid >
         <StackPanel>
            
-            <DataGrid ItemsSource="{Binding Data}" AutoGenerateColumns="False" >
+            <DataGrid ItemsSource="{Binding Data}" AutoGenerateColumns="False" CanUserAddRows="False" >
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Exchange" Binding="{Binding ExchangeName}" />
                     <DataGridTextColumn Header="Currency" Binding="{Binding Currency}" />

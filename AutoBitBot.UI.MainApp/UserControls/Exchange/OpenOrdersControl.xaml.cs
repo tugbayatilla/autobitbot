@@ -1,4 +1,5 @@
 ﻿using AutoBitBot.UI.MainApp.DTO;
+using AutoBitBot.UI.MainApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,9 +26,14 @@ namespace AutoBitBot.UI.MainApp.UserControls
         public OpenOrdersControl()
         {
             InitializeComponent();
-
         }
 
-       
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+
+            this.DataContext = new OpenOrdersViewModel();
+        }
+
     }
 }

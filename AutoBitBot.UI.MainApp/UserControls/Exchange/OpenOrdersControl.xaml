@@ -25,19 +25,27 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
+        <Button Content="{Binding SelectedOrder.OrderId}" 
+                Command="{Binding DeleteOrderCommand}" 
+                CommandParameter="{Binding}"/>
         <DataGrid Grid.Row="1" 
                   x:Name="dg" 
                   CanUserAddRows="False" 
-                  ItemsSource="{Binding ExchangeOpenOrders}" 
+                  ItemsSource="{Binding OpenOrders}" 
                   AutoGenerateColumns="False"  
                   IsReadOnly="True"
                   VirtualizingPanel.IsVirtualizing="True"
                   VirtualizingPanel.IsVirtualizingWhenGrouping="True" 
                   VirtualizingPanel.ScrollUnit ="Item" 
                   VirtualizingPanel.VirtualizationMode="Recycling"
-                  
+                  SelectionMode="Single"
+                  CanUserDeleteRows="False" SelectedItem="{Binding SelectedOrder, Mode=TwoWay}"
                   >
+            <DataGrid.InputBindings>
+                <KeyBinding Key="Delete" Command="{Binding DeleteOrderCommand}" />
+            </DataGrid.InputBindings>
             <DataGrid.Columns>
+
                 <DataGridTextColumn Header="Exchange" Binding="{Binding ExchangeName}" />
                 <DataGridTextColumn Header="Market" Binding="{Binding MarketName}" />
                 <DataGridTextColumn Header="Currency" Binding="{Binding Currency}" />

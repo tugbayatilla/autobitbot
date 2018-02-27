@@ -10,6 +10,8 @@
         <Button Command="{Binding Open_BittrexSellLimitCommand}" CommandParameter="{Binding}">Open Bittrex Sell Window</Button>
         <Separator />
         <Button Command="{Binding Open_BittrexBuyLimitCommand}" CommandParameter="{Binding}">Open Bittrex Buy Window</Button>
+        <Separator />
+        <Button Command="{Binding Open_BittrexBuyAndSellLimitCommand}" CommandParameter="{Binding}">Open Bittrex Buy and Sell Window</Button>
 
     </StackPanel>
 </UserControl>

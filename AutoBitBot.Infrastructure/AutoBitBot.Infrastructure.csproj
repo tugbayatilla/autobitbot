@@ -52,6 +52,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dialog\Class1.cs" />
+    <Compile Include="Dialog\Class2.cs" />
     <Compile Include="Exchanges\ExchangeApiKey.cs" />
     <Compile Include="Exceptions\ApiKeyNotProvidedException.cs" />
     <Compile Include="Exchanges\ViewModels\ExchangeOpenOrdersViewModel.cs" />
