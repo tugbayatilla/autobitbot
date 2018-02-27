@@ -27,7 +27,7 @@ namespace AutoBitBot.UI.MainApp.Commands
             var model = parameter as MainViewModel;
             var uc = new UserControls.KilledTasksControl()
             {
-                DataContext = model.KilledTasks
+                //DataContext = model.KilledTasks
             };
 
             Window window = new Window

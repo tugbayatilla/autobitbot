@@ -15,15 +15,15 @@ using System.Threading.Tasks;
 
 namespace AutoBitBot.ServerEngine.BitTasks
 {
-    public class ExchangeOpenOrdersTask : BitTask
+    public class ExchangeWalletTask : BitTask
     {
-        public ExchangeOpenOrdersTask()
+        public ExchangeWalletTask()
         {
         }
 
         public override long ExecuteAtEvery => 0;
 
-        public override string Name => "Exchange-OpenOrders-Task";
+        public override string Name => "Exchange-Wallet-Task";
 
         public override BitTaskExecutionTypes ExecutionType => BitTaskExecutionTypes.OneTime;
 
@@ -31,7 +31,7 @@ namespace AutoBitBot.ServerEngine.BitTasks
         {
 
             var fetch = Server.CreateFetch(BitTask.DEFAULT_NOTIFY_LOCATION);
-            fetch.OpenOrders();
+            fetch.Wallet();
 
             return null;
         }

@@ -203,6 +203,18 @@ namespace AutoBitBot.BittrexProxy
             });
         }
 
+
+        public async Task<IApiResponse<BittrexCancelOrderResponse>> CancelOrder(String uuid)
+        {
+            var url = BittrexApiUrls.Cancel(ApiKeyModel.ApiKey, ApiKeyModel.Nonce, uuid);
+            return await __handler<BittrexCancelOrderResponse>(url, () =>
+            {
+                var apiSign = Utils.CreateHash(url, ApiKeyModel.SecretKey);
+                SetApiSign(apiSign);
+            });
+        }
+
+
         internal void SetDefaultHeaders()
         {
             httpClient.DefaultRequestHeaders.Clear();

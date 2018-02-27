@@ -21,7 +21,7 @@
         </Grid.RowDefinitions>
         
         
-        <UserControls:AllExchangeTickersControl />
+        <UserControls:ExchangeTickersControl />
         <UserControls:WalletControl Grid.Column="1" />
 
         <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" Grid.ColumnSpan="2" />

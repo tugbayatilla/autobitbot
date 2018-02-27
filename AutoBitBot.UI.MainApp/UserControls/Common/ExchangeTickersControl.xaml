@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="AutoBitBot.UI.MainApp.UserControls.AllExchangeTickersControl"
+﻿<UserControl x:Class="AutoBitBot.UI.MainApp.UserControls.ExchangeTickersControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,7 +6,9 @@
              xmlns:local="clr-namespace:AutoBitBot.UI.MainApp.UserControls"
              xmlns:converters="clr-namespace:AutoBitBot.UI.MainApp.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="200" d:DesignWidth="1000">
+             d:DesignHeight="200" d:DesignWidth="1000"
+             DataContext="{Binding ExchangeTickerContainer}"
+             >
 
     <UserControl.Resources>
         <converters:DateTimeToStringConverter x:Key="DateTimeToStringConverter" />
@@ -14,6 +16,7 @@
         <converters:PercentStringValueConverter x:Key="PercentStringValueConverter"/>
         <converters:ForegroundOldNewPairValueConverter x:Key="ForegroundOldNewPairValueConverter" />
         <converters:ForegroundChangeValueConverter x:Key="ForegroundChangeValueConverter" />
+        
     </UserControl.Resources>
 
     <Grid>
@@ -29,7 +32,12 @@
 
         <TextBox Grid.Row="0" x:Name="SearchTextBox" TextChanged="SearchTextBox_TextChanged" />
 
-        <DataGrid Grid.Row="1" x:Name="dg" CanUserAddRows="False" ItemsSource="{Binding AllExchangeTickers}" AutoGenerateColumns="False"  IsReadOnly="True"
+        <DataGrid Grid.Row="1" 
+                  x:Name="dg" 
+                  CanUserAddRows="False" 
+                  ItemsSource="{Binding Data}" 
+                  AutoGenerateColumns="False"  
+                  IsReadOnly="True"
                   VirtualizingPanel.IsVirtualizing="True"
                   VirtualizingPanel.IsVirtualizingWhenGrouping="True" 
                   VirtualizingPanel.ScrollUnit ="Item" 

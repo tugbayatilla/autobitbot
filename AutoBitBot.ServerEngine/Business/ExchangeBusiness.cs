@@ -109,25 +109,7 @@ namespace AutoBitBot.Business
             return result;
         }
 
-        public async void FetchWallet()
-        {
-            //bittrex call
-            var bittrexManager = BittrexProxy.BittrexApiManagerFactory.Instance.Create(null, notification);
-            var bittrexBalancesResult = await bittrexManager.GetBalances();
-
-            if (bittrexBalancesResult.Result)
-            {
-                Server.Instance.Wallet.Save(bittrexBalancesResult.Data);
-            }
-
-            var poloniexManager = PoloniexProxy.PoloniexApiManagerFactory.Instance.Create(null, notification);
-            var poloniexBalancesResult = await poloniexManager.ReturnBalances();
-            if (poloniexBalancesResult.Result)
-            {
-                Server.Instance.Wallet.Save(poloniexBalancesResult.Data);
-            }
-
-        }
+        
 
 
 

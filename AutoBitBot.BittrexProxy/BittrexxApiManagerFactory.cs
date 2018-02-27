@@ -15,11 +15,11 @@ namespace AutoBitBot.BittrexProxy
     {
         public static readonly BittrexApiManagerFactory Instance = new BittrexApiManagerFactory();
 
-        public readonly HttpClient httpClient;
+        //public readonly HttpClient httpClient;
         
         public BittrexApiManagerFactory()
         {
-            httpClient = new HttpClient();
+            //httpClient = new HttpClient();
         }
 
         public BittrexApiManager Create(ExchangeApiKey apiKeyModel = null, INotification notification = null)
@@ -32,6 +32,8 @@ namespace AutoBitBot.BittrexProxy
             {
                 apiKeyModel = new ExchangeApiKey() { ApiKey = ConfigurationManager.AppSettings["BittrexApiKey"], SecretKey = ConfigurationManager.AppSettings["BittrexApiSecret"] };
             }
+
+            var httpClient = new HttpClient();
 
             return new BittrexApiManager(httpClient, notification) { ApiKeyModel = apiKeyModel };
         }

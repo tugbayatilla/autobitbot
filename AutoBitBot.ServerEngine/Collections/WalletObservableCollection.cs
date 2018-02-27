@@ -13,10 +13,8 @@ using System.Windows.Data;
 
 namespace AutoBitBot.UI.MainApp.Collections
 {
-    public class WalletObservableCollection : ObservableObjectCollection<ExchangeBalanceViewModel>
+    public class WalletObservableCollection : ObservableObjectContainer<ExchangeBalanceViewModel>
     {
-        protected static Object _locker = new object();
-
         public WalletObservableCollection()
         {
             BindingOperations.EnableCollectionSynchronization(this.Data, _locker);
@@ -110,6 +108,5 @@ namespace AutoBitBot.UI.MainApp.Collections
                 return balance;
             }
         }
-
     }
 }

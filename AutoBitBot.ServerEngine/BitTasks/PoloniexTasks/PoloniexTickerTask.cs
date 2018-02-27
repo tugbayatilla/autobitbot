@@ -14,12 +14,12 @@ using System.Threading.Tasks;
 
 namespace AutoBitBot.ServerEngine.BitTasks
 {
-    public class PoloniexReturnTickerTask : BitTask
+    public class PoloniexTickerTask : BitTask
     {
 
         public override long ExecuteAtEvery => 20000;
 
-        public override string Name => "Poloniex-Ticker-All-Task";
+        public override string Name => "Poloniex-Ticker-Task";
 
         public override BitTaskExecutionTypes ExecutionType => BitTaskExecutionTypes.Permanent;
 

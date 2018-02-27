@@ -3,6 +3,7 @@ using AutoBitBot.Infrastructure.Dialog;
 using AutoBitBot.Infrastructure.Exchanges;
 using AutoBitBot.ServerEngine.BitTasks;
 using AutoBitBot.UI.MainApp.Collections;
+using AutoBitBot.UI.MainApp.Infrastructure;
 using AutoBitBot.UI.Presentation;
 using System;
 using System.Collections.Generic;
@@ -16,25 +17,6 @@ namespace AutoBitBot.UI.MainApp.ViewModels
 {
     public class OpenOrdersViewModel : ObservableObject
     {
-        readonly IDialogService dialogService;
-
-        public OpenOrdersViewModel()
-        {
-            OpenOrders = new ExchangeOpenOrdersObservableCollection();
-            dialogService = new DialogService();
-
-            ServerEngine.Server.Instance.TaskExecuted += Instance_TaskExecuted;
-        }
-
-        private void Instance_TaskExecuted(object sender, ServerEngine.BitTaskExecutedEventArgs e)
-        {
-            if (e.BitTask is ExchangeOpenOrdersTask)
-            {
-                var model = e.Data as ObservableCollection<ExchangeOpenOrdersViewModel>;
-                this.OpenOrders.Save(model);
-            }
-        }
-
         ExchangeOpenOrdersViewModel selectedOrder;
         public ExchangeOpenOrdersViewModel SelectedOrder
         {
@@ -47,20 +29,39 @@ namespace AutoBitBot.UI.MainApp.ViewModels
         }
 
 
-        public ExchangeOpenOrdersObservableCollection OpenOrders { get; set; }
+        public OpenOrdersObservableCollection OpenOrders => ServerEngine.Server.Instance.OpenOrders;
+
         public ICommand DeleteOrderCommand =>
-                new RelayCommand(o =>
+                new RelayCommand(async o =>
                 {
-                    var result = dialogService.ShowMessageBox("are you sure bruh?", "sure?", MessageBoxButton.YesNo, MessageBoxIcon.Question);
-
-                    if (result == MessageBoxResult.Yes)
+                    var result = ModernDialogService.ConfirmDialog($@"
+                        Delete Order! Are you sure?
+                        {nameof(SelectedOrder.MarketName)}:{SelectedOrder.MarketName} 
+                        {nameof(SelectedOrder.ExchangeName)}:{SelectedOrder.ExchangeName} 
+                        {nameof(SelectedOrder.Currency)}:{SelectedOrder.Currency} 
+                        ", 
+                        $"Deleting Order - {SelectedOrder.OrderId}");
+                    if (result)
                     {
+                        if(this.SelectedOrder == null)
+                        {
+                            ModernDialogService.InfoDialog("Selection changed. Select order again and delete it", "Info");
+                            return;
+                        }
 
-                        // delete ops
-                        OpenOrders.Remove(SelectedOrder);
-                        SelectedOrder = null;
+                        if (this.SelectedOrder.ExchangeName == Constants.BITTREX)
+                        {
+                            var manager = BittrexProxy.BittrexApiManagerFactory.Instance.Create(null, ServerEngine.Server.Instance.Notification);
+                            var cancelOrderResult = await manager.CancelOrder(this.SelectedOrder.OrderId);
+                            if(cancelOrderResult.Result)
+                            {
+                                // delete ops
+                                OpenOrders.Data.Remove(SelectedOrder);
+                                SelectedOrder = null;
+                                ModernDialogService.InfoDialog("Order Deleted", "Info");
+                            }
+                        }
                     }
-
                 },
                 o =>
                 {

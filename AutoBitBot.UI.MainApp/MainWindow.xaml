@@ -26,11 +26,11 @@
                 <ui:Link DisplayName="{x:Static res:Titles.Bittrex}" Source="/Pages/BittrexPage.xaml"/>
             </ui:LinkGroup.Links>
         </ui:LinkGroup>
-       <ui:LinkGroup DisplayName="Layout" >
+       <!--<ui:LinkGroup DisplayName="Layout" >
             <ui:LinkGroup.Links>
                 <ui:Link DisplayName="Market" Source="/Pages/MarketPage.xaml" />
             </ui:LinkGroup.Links>
-        </ui:LinkGroup>
+        </ui:LinkGroup>-->
         <ui:LinkGroup DisplayName="Settings" >
             <ui:LinkGroup.Links>
                 <ui:Link DisplayName="Task Management" Source="/Pages/TaskManagementPage.xaml" />

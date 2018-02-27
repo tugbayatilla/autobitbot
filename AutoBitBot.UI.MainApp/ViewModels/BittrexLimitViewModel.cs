@@ -23,7 +23,7 @@ namespace AutoBitBot.UI.MainApp.ViewModels
 
         private void Wallet_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            Refresh();
+            FireOnPropertyChangedForAllProperties();
         }
 
         String market, buttonText;

@@ -1,0 +1,59 @@
+﻿<UserControl x:Class="AutoBitBot.UI.MainApp.UserControls.OpenOrdersControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AutoBitBot.UI.MainApp.UserControls"
+             xmlns:server="clr-namespace:AutoBitBot.ServerEngine;assembly=AutoBitBot.ServerEngine"
+             xmlns:converters="clr-namespace:AutoBitBot.UI.MainApp.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <converters:DateTimeToStringConverter x:Key="DateTimeToStringConverter" />
+        <converters:DecimalStringValueConverter x:Key="DecimalStringValueConverter" />
+    </UserControl.Resources>
+
+
+    <Grid>
+        <StackPanel>
+
+            <Button Content="Delete Selected Order"  Command="{Binding DeleteOrderCommand}" />
+            <DataGrid 
+                  x:Name="dg" 
+                  CanUserAddRows="False" 
+                  ItemsSource="{Binding OpenOrders.Data}" 
+                  AutoGenerateColumns="False"  
+                  IsReadOnly="True"
+                  VirtualizingPanel.IsVirtualizing="True"
+                  VirtualizingPanel.IsVirtualizingWhenGrouping="True" 
+                  VirtualizingPanel.ScrollUnit ="Item" 
+                  VirtualizingPanel.VirtualizationMode="Recycling"
+                  SelectionMode="Single"
+                  CanUserDeleteRows="False" SelectedItem="{Binding SelectedOrder, Mode=TwoWay}"
+                  >
+                <DataGrid.InputBindings>
+                    <KeyBinding Key="Delete" Command="{Binding DeleteOrderCommand}" />
+                </DataGrid.InputBindings>
+                <DataGrid.Columns>
+
+                    <DataGridTextColumn Header="Exchange" Binding="{Binding ExchangeName}" />
+                    <DataGridTextColumn Header="Market" Binding="{Binding MarketName}" />
+                    <DataGridTextColumn Header="Currency" Binding="{Binding Currency}" />
+                    <DataGridTextColumn Header="OrderType" Binding="{Binding OrderType}" />
+                    <DataGridTextColumn Header="Rate" Binding="{Binding Rate, Converter={StaticResource DecimalStringValueConverter}}" />
+                    <DataGridTextColumn Header="Amount" Binding="{Binding Amount, Converter={StaticResource DecimalStringValueConverter}}" />
+                    <DataGridTextColumn Header="Total" Binding="{Binding Total, Converter={StaticResource DecimalStringValueConverter}}"/>
+                    <DataGridTextColumn Header="Date" Binding="{Binding OpenDate, Converter={StaticResource DateTimeToStringConverter}}"/>
+                    <DataGridTextColumn Header="OrderId" Binding="{Binding OrderId}"/>
+
+                </DataGrid.Columns>
+            </DataGrid>
+            <TextBlock FontSize="10"  
+                       HorizontalAlignment="Right" 
+                       Foreground="Green" 
+                       Text="{Binding OpenOrders.LastUpdateTime, StringFormat='Last Update: {0}', Converter={StaticResource DateTimeToStringConverter}}" />
+        </StackPanel>
+
+    </Grid>
+</UserControl>

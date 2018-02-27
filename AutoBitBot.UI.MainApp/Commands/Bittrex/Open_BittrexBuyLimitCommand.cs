@@ -30,7 +30,7 @@ namespace AutoBitBot.UI.MainApp.Commands
             var market = "BTC-DOGE"; //selectedMarket'ten cekilmeli.
             var model = parameter as MainViewModel;
 
-            var ticker = model.AllExchangeTickers.FirstOrDefault(p => p.ExchangeName == Constants.BITTREX && p.MarketName == market);
+            var ticker = model.ExchangeTickerContainer.Data.FirstOrDefault(p => p.ExchangeName == Constants.BITTREX && p.MarketName == market);
             if(ticker == null)
             {
                 ticker = new ExchangeTickerViewModel();

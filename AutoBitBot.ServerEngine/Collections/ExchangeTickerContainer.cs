@@ -13,16 +13,42 @@ using System.Windows.Data;
 
 namespace AutoBitBot.UI.MainApp.Collections
 {
-    public class AllExchangeTickerObservableCollection : ObservableCollection<ExchangeTickerViewModel>
+    public class ExchangeTickerContainer : ObservableObjectContainer<ExchangeTickerViewModel>
     {
-        protected static Object _locker = new object();
-
-        public AllExchangeTickerObservableCollection()
+        public ExchangeTickerContainer()
         {
-            BindingOperations.EnableCollectionSynchronization(this, _locker);
+            BindingOperations.EnableCollectionSynchronization(this.Data, _locker);
         }
 
-        public void AddOrUpdate(String marketName, PoloniexTickerResponseDetail responseDetail)
+        public void Save(Object data)
+        {
+            if (data is List<BittrexMarketSummaryResponse>)
+            {
+                var model = data as List<BittrexMarketSummaryResponse>;
+
+                model.ForEach(p =>
+                {
+                    //Dashboard Ticker
+                    this.Save(p);
+                });
+            }
+
+            if (data is PoloniexTickerResponse)
+            {
+                //tickers
+                var model = data as PoloniexTickerResponse;
+
+                model.ToList().ForEach(p =>
+                {
+                    //Dashboard Ticker
+                    this.Save(p.Key, p.Value);
+                });
+
+            }
+        }
+
+
+        public void Save(String marketName, PoloniexTickerResponseDetail responseDetail)
         {
             var poloniex = Constants.POLONIEX;
             //poloniex name to bittrex name standart
@@ -32,16 +58,16 @@ namespace AutoBitBot.UI.MainApp.Collections
             lock (_locker)
             {
                 //dashboard
-                var marketViewModel = this.FirstOrDefault(x => x.MarketName == marketName && x.ExchangeName == poloniex);
-                if (marketViewModel == null) 
+                var marketViewModel = this.Data.FirstOrDefault(x => x.MarketName == marketName && x.ExchangeName == poloniex);
+                if (marketViewModel == null)
                 {
                     // no market, then insert new
                     marketViewModel = new ExchangeTickerViewModel() { MarketName = marketName, ExchangeName = poloniex };
                     ConvertResponseToModel(responseDetail, marketViewModel);
-                    this.Add(marketViewModel);
+                    this.Data.Add(marketViewModel);
                 }
                 else
-                { 
+                {
                     //already has marketwithExchange, update values
                     ConvertResponseToModel(responseDetail, marketViewModel);
                 }
@@ -64,7 +90,7 @@ namespace AutoBitBot.UI.MainApp.Collections
 
 
 
-        public void AddOrUpdate(BittrexMarketSummaryResponse response)
+        public void Save(BittrexMarketSummaryResponse response)
         {
             var bittrex = Constants.BITTREX;
             //poloniex name to bittrex name standart
@@ -74,13 +100,13 @@ namespace AutoBitBot.UI.MainApp.Collections
             lock (_locker)
             {
                 //dashboard
-                var marketViewModel = this.FirstOrDefault(x => x.MarketName == marketName && x.ExchangeName == bittrex);
+                var marketViewModel = this.Data.FirstOrDefault(x => x.MarketName == marketName && x.ExchangeName == bittrex);
                 if (marketViewModel == null)
                 {
                     // no market, then insert new
                     marketViewModel = new ExchangeTickerViewModel() { MarketName = marketName, ExchangeName = bittrex };
                     ConvertResponseToModel(response, marketViewModel);
-                    this.Add(marketViewModel);
+                    this.Data.Add(marketViewModel);
                 }
                 else
                 {

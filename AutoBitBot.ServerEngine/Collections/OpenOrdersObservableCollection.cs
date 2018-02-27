@@ -13,28 +13,22 @@ using System.Windows.Data;
 
 namespace AutoBitBot.UI.MainApp.Collections
 {
-    public class ExchangeOpenOrdersObservableCollection : ObservableCollection<ExchangeOpenOrdersViewModel>
+    public class OpenOrdersObservableCollection : ObservableObjectContainer<ExchangeOpenOrdersViewModel>
     {
-        protected static Object _locker = new object();
-
-        public ExchangeOpenOrdersObservableCollection() 
+        public OpenOrdersObservableCollection() 
         {
-            BindingOperations.EnableCollectionSynchronization(this, _locker);
-        }
-
-        public ExchangeOpenOrdersObservableCollection(IEnumerable<ExchangeOpenOrdersViewModel> models) : base(models)
-        {
-            BindingOperations.EnableCollectionSynchronization(this, _locker);
+            BindingOperations.EnableCollectionSynchronization(this.Data, _locker);
         }
 
         public void Save(IEnumerable<ExchangeOpenOrdersViewModel> models)
         {
-            this.ClearItems();
+            this.Data.Clear();
 
             foreach (var model in models)
             {
-                this.Add(model);
+                this.Data.Add(model);
             }
+            
         }
 
     }

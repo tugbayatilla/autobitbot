@@ -13,15 +13,15 @@ using System.Threading.Tasks;
 
 namespace AutoBitBot.ServerEngine.BitTasks
 {
-    public class BittrexGetMarketSummariesTask : BitTask
+    public class BittrexTickerTask : BitTask
     {
-        public BittrexGetMarketSummariesTask()
+        public BittrexTickerTask()
         {
         }
 
         public override long ExecuteAtEvery => 20000;
 
-        public override string Name => "Bittrex-Ticker-All-Task";
+        public override string Name => "Bittrex-Ticker-Task";
 
         public override BitTaskExecutionTypes ExecutionType => BitTaskExecutionTypes.Permanent;
 

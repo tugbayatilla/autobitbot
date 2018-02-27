@@ -4,6 +4,7 @@ using ArchPM.Core.Notifications;
 using ArchPM.Core.Notifications.Notifiers;
 using AutoBitBot.BittrexProxy.Responses;
 using AutoBitBot.Infrastructure;
+using AutoBitBot.Infrastructure.Exchanges;
 using AutoBitBot.PoloniexProxy.Responses;
 using AutoBitBot.ServerEngine.BitTasks;
 using AutoBitBot.UI.MainApp.Collections;
@@ -11,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -33,6 +35,8 @@ namespace AutoBitBot.ServerEngine
             this.ActiveTasks = new ObservableCollection<BitTask>();
             this.KilledTasks = new ObservableCollection<BitTask>();
             this.Wallet = new WalletObservableCollection();
+            this.OpenOrders = new OpenOrdersObservableCollection();
+
             _lockTasks = new object();
 
             BindingOperations.EnableCollectionSynchronization(this.ActiveTasks, _lockTasks);
@@ -72,10 +76,12 @@ namespace AutoBitBot.ServerEngine
             //server.RegisterInstance(new BittrexGetMarketSummaryTask("BTC-XRP"));
             //server.RegisterInstance(new BittrexGetOpenOrdersTask("BTC-XRP"));
             //server.RegisterInstance(new BittrexGetOrderHistoryTask("BTC-XRP"));
-            RegisterInstance(new BittrexGetMarketSummariesTask());
-            RegisterInstance(new PoloniexWalletTask());
-            RegisterInstance(new BittrexWalletTask());
-            RegisterInstance(new PoloniexReturnTickerTask());
+            //RegisterInstance(new PoloniexWalletTask());
+            //RegisterInstance(new BittrexWalletTask());
+
+            RegisterInstance(new ExchangeWalletTask());
+            RegisterInstance(new PoloniexTickerTask());
+            RegisterInstance(new BittrexTickerTask());
             RegisterInstance(new ExchangeOpenOrdersTask());
 
 
@@ -91,18 +97,22 @@ namespace AutoBitBot.ServerEngine
 
         private void BitTask_Executed(object sender, BitTaskExecutedEventArgs e)
         {
-            if (e.Data is List<BittrexBalanceResponse>)
-            {
-                var model = e.Data as List<BittrexBalanceResponse>;
-                this.Wallet.Save(model);
-            }
+            //if (e.Data is List<BittrexBalanceResponse>)
+            //{
+            //    var model = e.Data as List<BittrexBalanceResponse>;
+            //    this.Wallet.Save(model);
+            //}
 
-            if (e.Data is PoloniexBalanceResponse)
-            {
-                var model = e.Data as PoloniexBalanceResponse;
-                this.Wallet.Save(model);
-            }
-
+            //if (e.Data is PoloniexBalanceResponse)
+            //{
+            //    var model = e.Data as PoloniexBalanceResponse;
+            //    this.Wallet.Save(model);
+            //}
+            //if (e.BitTask is ExchangeOpenOrdersTask)
+            //{
+            //    var model = e.Data as ObservableCollection<ExchangeOpenOrdersViewModel>;
+            //    this.OpenOrders.Save(model);
+            //}
 
 
             TaskExecuted(this, e);
@@ -114,6 +124,10 @@ namespace AutoBitBot.ServerEngine
         public ObservableCollection<BitTask> ActiveTasks { get; private set; }
         public ObservableCollection<BitTask> KilledTasks { get; private set; }
         public WalletObservableCollection Wallet { get; private set; }
+        public OpenOrdersObservableCollection OpenOrders { get; private set; }
+
+
+
         public List<ConfigItem> Config { get; set; }
         public INotification Notification { get; private set; }
         public Boolean Initialized { get; private set; }
@@ -186,10 +200,92 @@ namespace AutoBitBot.ServerEngine
             }
 
             return Task.CompletedTask;
-        } 
+        }
         #endregion
 
+        public Fetch CreateFetch(String notificationLocation)
+        {
+            return new Fetch() { NotificationLocation = notificationLocation };
+        }
 
+        public class Fetch
+        {
+            public String NotificationLocation { get; set; }
+            public Fetch()
+            {
+                this.NotificationLocation = "Fetch";
+            }
+
+            public async void Force(Action action, Func<bool> breakCondition)
+            {
+                while (true)
+                {
+                    action();
+
+                    if (breakCondition())
+                    { break; }
+
+                    var waitTime = 500;
+                    if (waitTime > 0)
+                    {
+                        await Task.Delay((Int32)waitTime);
+                    }
+                }
+            }
+
+
+
+            public async void OpenOrders(Boolean forceFetch = false)
+            {
+                var exchangeBusiness = new Business.ExchangeBusiness(Instance.Notification)
+                {
+                    NotifyLocation = NotificationLocation
+                };
+                while (true)
+                {
+                    var data = await exchangeBusiness.GetExchangeOpenOrderViewModel();
+
+                    Instance.OpenOrders.Save(data);
+                    Instance.OnPropertyChanged(nameof(Instance.OpenOrders));
+
+                    if (data.Count > 0)
+                    { break; }
+                    if (!forceFetch)
+                    { break; }
+                    else
+                    {
+                        var waitTime = 500;
+                        if (waitTime > 0)
+                        {
+                            await Task.Delay((Int32)waitTime);
+                        }
+                    }
+                }
+            }
+
+            public async void Wallet()
+            {
+                //bittrex call
+                var bittrexManager = BittrexProxy.BittrexApiManagerFactory.Instance.Create(null, Instance.Notification);
+                bittrexManager.NotifyLocation = NotificationLocation;
+                var bittrexBalancesResult = await bittrexManager.GetBalances();
+
+                if (bittrexBalancesResult.Result)
+                {
+                    Instance.Wallet.Save(bittrexBalancesResult.Data);
+                }
+
+                var poloniexManager = PoloniexProxy.PoloniexApiManagerFactory.Instance.Create(null, Instance.Notification);
+                poloniexManager.NotifyLocation = NotificationLocation;
+                var poloniexBalancesResult = await poloniexManager.ReturnBalances();
+                if (poloniexBalancesResult.Result)
+                {
+                    Instance.Wallet.Save(poloniexBalancesResult.Data);
+                }
+
+            }
+
+        }
 
 
 

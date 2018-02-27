@@ -1,10 +1,13 @@
-﻿using System;
+﻿using ArchPM.Core.Notifications;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace AutoBitBot.Infrastructure
@@ -51,6 +54,40 @@ namespace AutoBitBot.Infrastructure
             return result;
         }
 
-       
+
+        public static async void RunTillSuccess(this Action action, Int32 waitBeforeTryAgain = 1000, Int32 tryCount = 5, INotification notification = null)
+        {
+            Stopwatch sw = new Stopwatch();
+            Int32 whileTryCount = 0;
+            while (true)
+            {
+                if (tryCount <= whileTryCount)
+                {
+                    break;
+                }
+
+                sw.Restart();
+                action();
+                sw.Stop();
+
+                //no expected result came, wait end try again
+                var waitTime = waitBeforeTryAgain - sw.ElapsedMilliseconds;
+                if (waitTime > 0)
+                {
+                    await Task.Delay((Int32)waitTime);
+                }
+
+                whileTryCount++;
+
+                notification?.Notify($"[RunTillSuccess] waitTime:{waitTime} - whileTryCount:{whileTryCount}", NotifyTo.CONSOLE);
+            }
+            //result.TryCount = whileTryCount;
+
+            await Task.CompletedTask;
+        }
+
+
+
+
     }
 }

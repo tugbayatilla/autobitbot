@@ -36,19 +36,18 @@ namespace AutoBitBot.UI.MainApp.Commands.Bittrex
             {
                 NotifyLocation = notificationLocation
             };
-            await business.Buy(model.Market, model.Quantity, model.Rate);
+            var task = business.Buy(model.Market, model.Quantity, model.Rate);
 
 
-            var exchangeBusiness = new Business.ExchangeBusiness(Server.Instance.Notification)
-            {
-                NotifyLocation = notificationLocation
-            };
-            exchangeBusiness.FetchWallet();
+            var fetch = Server.Instance.CreateFetch(notificationLocation);
+            fetch.Wallet();
+            fetch.OpenOrders();
 
+            await task;
 
             canExecute = true;
             model.ButtonText = originalButtonText;
-            model.Refresh();
+            model.FireOnPropertyChangedForAllProperties();
 
             Server.Instance.Notification.UnregisterNotifier(notificationLocation, notifierOutput.Id);
         }

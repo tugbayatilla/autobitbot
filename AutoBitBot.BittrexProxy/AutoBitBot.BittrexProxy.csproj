@@ -70,6 +70,7 @@
     <Compile Include="Responses\BittrexLimitResponse.cs" />
     <Compile Include="Responses\BittrexMarketResponse.cs" />
     <Compile Include="Responses\BittrexOrderHistoryResponse.cs" />
+    <Compile Include="Responses\BittrexCancelOrderResponse.cs" />
     <Compile Include="Responses\BittrexOrderResponse.cs" />
     <Compile Include="Responses\BittrexTickerResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
