@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Responses\PoloniexBuySellResponse.cs" />
     <Compile Include="Responses\PoloniexOpenOrdersResponseDetail.cs" />
     <Compile Include="Responses\PoloniexOrderTradesResponse.cs" />
     <Compile Include="Responses\PoloniexOpenOrdersResponse.cs" />

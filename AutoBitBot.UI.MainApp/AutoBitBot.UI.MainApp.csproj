@@ -113,6 +113,11 @@
     <Compile Include="Commands\SampleDisabledCommand.cs" />
     <Compile Include="Commands\SampleMsgBoxCommand.cs" />
     <Compile Include="Commands\SampleParameterCommand.cs" />
+    <Compile Include="Notifiers\OutputData.cs" />
+    <Compile Include="Notifiers\OutputDataNotifier.cs" />
+    <Compile Include="UserControls\Global\OutputDataGridControl.xaml.cs">
+      <DependentUpon>OutputDataGridControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\DesignViewModel.cs" />
     <Compile Include="ViewModels\SelectedMarketViewModel.cs" />
     <Compile Include="UserControls\Bittrex\BittrexCommandButtons.xaml.cs">
@@ -574,6 +579,10 @@
     <Page Include="UserControls\Bittrex\BittrexTickersControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Global\OutputDataGridControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\Poloniex\PoloniexTickersControl.xaml">
       <Generator>MSBuild:Compile</Generator>

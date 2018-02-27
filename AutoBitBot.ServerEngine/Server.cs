@@ -25,9 +25,7 @@ namespace AutoBitBot.ServerEngine
     {
         public static readonly Server Instance = new Server();
         public event EventHandler<BitTaskExecutedEventArgs> TaskExecuted = delegate { };
-
         static Object _lockTasks;
-        Dispatcher dispatcher;
 
         public Server()
         {
@@ -46,7 +44,7 @@ namespace AutoBitBot.ServerEngine
             if (Initialized)
                 return;
 
-            this.dispatcher = dispatcher;
+            this.Dispatcher = dispatcher;
 
 
             lock (this)
@@ -119,6 +117,7 @@ namespace AutoBitBot.ServerEngine
         public List<ConfigItem> Config { get; set; }
         public INotification Notification { get; private set; }
         public Boolean Initialized { get; private set; }
+        public Dispatcher Dispatcher { get; private set; }
 
         #endregion
 

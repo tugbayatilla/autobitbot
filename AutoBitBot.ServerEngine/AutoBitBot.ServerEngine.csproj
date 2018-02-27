@@ -70,6 +70,7 @@
     <Compile Include="BitTasks\PoloniexTasks\PoloniexReturnTickerTask.cs" />
     <Compile Include="BitTasks\PoloniexTasks\PoloniexWalletTask.cs" />
     <Compile Include="BitTasks\ExchangeTasks\ExchangeOverallStatusTask.cs" />
+    <Compile Include="Business\PoloniexBusiness.cs" />
     <Compile Include="Business\BittrexBusiness.cs" />
     <Compile Include="Business\ExchangeBusiness.cs" />
     <Compile Include="Collections\AllExchangeTickerObservableCollection.cs" />

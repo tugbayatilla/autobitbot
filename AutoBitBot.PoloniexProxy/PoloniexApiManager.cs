@@ -263,6 +263,47 @@ namespace AutoBitBot.PoloniexProxy
 
         }
 
+        public async Task<IApiResponse<PoloniexBuySellResponse>> Buy(String currencyPair, Decimal rate, Decimal amount)
+        {
+            var url = PoloniexApiUrls.BuyUrl();
+
+            Stopwatch sw = Stopwatch.StartNew();
+            IApiResponse<PoloniexBuySellResponse> result = new PoloniexApiResponse<PoloniexBuySellResponse>();
+            try
+            {
+                String commandName = "returnOrderTrades";
+                String commandText = $"command={commandName}&nonce={ApiKeyModel.Nonce}&currencyPair={currencyPair}&rate={rate}&amount={amount}";
+
+                var apiSign = Utils.CreateHash(commandText, ApiKeyModel.SecretKey);
+                SetApiSignToHeader(ApiKeyModel.ApiKey, apiSign);
+
+                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, url)
+                {
+                    Content = new StringContent(commandText, Encoding.UTF8, "application/x-www-form-urlencoded")
+                };
+
+                var response = await httpClient.SendAsync(request);
+                response.EnsureSuccessStatusCode();
+
+                var data = await response.Content.ReadAsAsync<PoloniexBuySellResponse>();
+                result = PoloniexApiResponse<PoloniexBuySellResponse>.CreateSuccessResponse(data);
+            }
+            catch (Exception ex)
+            {
+                result = PoloniexApiResponse<PoloniexBuySellResponse>.CreateException(ex);
+                notification.Notify(ex, NotifyTo.EVENT_LOG, NotifyLocation);
+            }
+            finally
+            {
+                result.ET = sw.ElapsedMilliseconds;
+                result.RequestedUrl = url;
+
+                //log here: dont use await here. dont want to wait here
+                notification.Notify(result.ApiResponseToString(), NotifyLocation);
+            }
+            return result;
+
+        }
 
 
 

@@ -6,11 +6,13 @@
              xmlns:local="clr-namespace:AutoBitBot.UI.MainApp.UserControls"
              xmlns:viewModel="clr-namespace:AutoBitBot.UI.MainApp.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="150" d:DesignWidth="300" 
+             d:DesignHeight="200" d:DesignWidth="300" 
+             xmlns:globalControls="clr-namespace:AutoBitBot.UI.MainApp.UserControls.Global"
              d:DataContext="{Binding Source={x:Static viewModel:DesignViewModel.Instance}, Path=BittrexLimitViewModel}">
     <Grid Style="{StaticResource ContentRoot}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -43,6 +45,10 @@
                 <Label Content="{Binding Currency}"/>
             </StackPanel>
         </Button>
+
+        <globalControls:OutputDataGridControl Grid.Row="4" Grid.ColumnSpan="2" DataContext="{Binding OutputData}"/>
+
+        
     </Grid>
 
 </UserControl>

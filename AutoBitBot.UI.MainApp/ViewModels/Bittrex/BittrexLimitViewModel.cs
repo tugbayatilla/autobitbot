@@ -1,8 +1,10 @@
 ﻿using AutoBitBot.Infrastructure;
 using AutoBitBot.ServerEngine;
 using AutoBitBot.UI.MainApp.Commands.Bittrex;
+using AutoBitBot.UI.MainApp.Notifiers;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +18,7 @@ namespace AutoBitBot.UI.MainApp.ViewModels
         public BittrexLimitViewModel()
         {
             Server.Instance.Wallet.PropertyChanged += Wallet_PropertyChanged;
+            this.OutputData = new ObservableCollection<OutputData>();
         }
 
         private void Wallet_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -69,6 +72,7 @@ namespace AutoBitBot.UI.MainApp.ViewModels
             get => Server.Instance.Wallet.Get(Constants.BITTREX, this.Currency).Amount;
         }
 
+        public ObservableCollection<OutputData> OutputData { get; set; }
 
         public String ButtonText
         {

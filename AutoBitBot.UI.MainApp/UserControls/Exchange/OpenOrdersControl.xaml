@@ -25,7 +25,6 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-
         <DataGrid Grid.Row="1" 
                   x:Name="dg" 
                   CanUserAddRows="False" 
