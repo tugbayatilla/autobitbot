@@ -4,6 +4,7 @@ using AutoBitBot.BittrexProxy.Responses;
 using AutoBitBot.Infrastructure;
 using AutoBitBot.Infrastructure.Exchanges;
 using AutoBitBot.Infrastructure.Exchanges.ViewModels;
+using AutoBitBot.ServerEngine;
 using AutoBitBot.ServerEngine.BitTasks;
 using System;
 using System.Collections.Generic;
@@ -36,7 +37,7 @@ namespace AutoBitBot.Business
             var bittrexOpenOrdersResult = await bittrexManager.GetOpenOrders();
             if (!bittrexOpenOrdersResult.Result)
             {
-                notification.Notify(new BusinessException(bittrexOpenOrdersResult.Message), NotifyTo.EVENT_LOG, DEFAULT_NOTIFY_LOCATION);
+                notification.Notify(new BusinessException(bittrexOpenOrdersResult.Message), NotifyTo.EVENT_LOG, NotifyLocation);
             }
             else
             {
@@ -50,10 +51,10 @@ namespace AutoBitBot.Business
                         Commission = p.CommissionPaid,
                         Currency = Constants.GetCurrenyFromMarketName(p.Exchange),
                         OpenDate = p.Opened,
-                        OrderId = p.Uuid,
+                        OrderId = p.OrderUuid.ToString(),
                         OrderType = p.OrderType,
-                        Rate = p.Price,
-                        Total = p.Price * p.Quantity
+                        Rate = p.Limit,
+                        Total = p.Limit * p.Quantity
                     });
                 });
             }
@@ -64,7 +65,7 @@ namespace AutoBitBot.Business
             var poloniexOpenOrdersResult = await poloniexManager.ReturnOpenOrdersAll();
             if (!poloniexOpenOrdersResult.Result)
             {
-                notification.Notify(new BusinessException(poloniexOpenOrdersResult.Message), NotifyTo.EVENT_LOG, DEFAULT_NOTIFY_LOCATION);
+                notification.Notify(new BusinessException(poloniexOpenOrdersResult.Message), NotifyTo.EVENT_LOG, NotifyLocation);
             }
             else
             {
@@ -95,7 +96,7 @@ namespace AutoBitBot.Business
                         }
                         else
                         {
-                            notification.Notify(new BusinessException(orderTradeResult.Message), NotifyTo.EVENT_LOG, DEFAULT_NOTIFY_LOCATION);
+                            notification.Notify(new BusinessException(orderTradeResult.Message), NotifyTo.EVENT_LOG, NotifyLocation);
                         }
                     });
 
@@ -111,12 +112,19 @@ namespace AutoBitBot.Business
         public async void FetchWallet()
         {
             //bittrex call
-            var bittrexManager = BittrexProxy.BittrexApiManagerFactory.Instance.Create();
+            var bittrexManager = BittrexProxy.BittrexApiManagerFactory.Instance.Create(null, notification);
             var bittrexBalancesResult = await bittrexManager.GetBalances();
 
             if (bittrexBalancesResult.Result)
             {
-                //Wallet
+                Server.Instance.Wallet.Save(bittrexBalancesResult.Data);
+            }
+
+            var poloniexManager = PoloniexProxy.PoloniexApiManagerFactory.Instance.Create(null, notification);
+            var poloniexBalancesResult = await poloniexManager.ReturnBalances();
+            if (poloniexBalancesResult.Result)
+            {
+                Server.Instance.Wallet.Save(poloniexBalancesResult.Data);
             }
 
         }

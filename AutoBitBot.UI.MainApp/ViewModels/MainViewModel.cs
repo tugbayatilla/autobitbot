@@ -51,11 +51,11 @@ namespace AutoBitBot.UI.MainApp.ViewModels
             this.MarketTicker = new DTO.MarketTickerDTO();
             this.MarketSummary = new ExchangeTickerViewModel();
 
-            GlobalContext.Instance.server.TaskExecuted += Server_TaskExecuted;
+            Server.Instance.TaskExecuted += Server_TaskExecuted;
 
             var notifierOutput = new RichTextBoxNotifier(this.dispatcher, outputRichTextBox);
-            GlobalContext.Instance.Notification.RegisterNotifier(NotifyTo.CONSOLE, notifierOutput);
-            GlobalContext.Instance.Notification.RegisterNotifier(NotifyTo.EVENT_LOG, notifierOutput);
+            Server.Instance.Notification.RegisterNotifier(NotifyTo.CONSOLE, notifierOutput);
+            Server.Instance.Notification.RegisterNotifier(NotifyTo.EVENT_LOG, notifierOutput);
             //GlobalContext.Instance.Notification.RegisterNotifier(Business.BittrexBusiness.DEFAULT_NOTIFY_LOCATION, notifierOutput);
             //GlobalContext.Instance.Notification.RegisterNotifier(BittrexProxy.BittrexApiManager.DEFAULT_NOTIFY_LOCATION, notifierOutput);
 
@@ -194,8 +194,8 @@ namespace AutoBitBot.UI.MainApp.ViewModels
 
 
 
-        public ObservableCollection<BitTask> ActiveTasks => GlobalContext.Instance.ActiveTasks;
-        public ObservableCollection<BitTask> KilledTasks => GlobalContext.Instance.KilledTasks;
+        public ObservableCollection<BitTask> ActiveTasks => Server.Instance.ActiveTasks;
+        public ObservableCollection<BitTask> KilledTasks => Server.Instance.KilledTasks;
         public ObservableCollection<String> Messages { get; private set; }
         public ObservableCollection<DTO.MarketDTO> Markets { get; set; }
         public ObservableCollection<BittrexOpenOrdersResponse> OpenOrders { get; set; }

@@ -30,7 +30,7 @@ namespace AutoBitBot.ServerEngine.BitTasks
         protected override async Task<Object> ExecuteAction(Object parameter)
         {
             var bus = new ExchangeBusiness(this.Notification);
-            bus.NotifyLocation = Constants.TASKS;
+            bus.NotifyLocation = BitTask.DEFAULT_NOTIFY_LOCATION;
 
             var result = await bus.GetExchangeOpenOrderViewModel();
 

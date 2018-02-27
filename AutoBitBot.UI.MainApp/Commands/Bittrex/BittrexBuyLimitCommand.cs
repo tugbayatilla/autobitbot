@@ -1,4 +1,5 @@
 ﻿using AutoBitBot.Infrastructure;
+using AutoBitBot.ServerEngine;
 using AutoBitBot.UI.MainApp.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -23,15 +24,25 @@ namespace AutoBitBot.UI.MainApp.Commands.Bittrex
         {
             canExecute = false;
             var model = parameter as BittrexLimitViewModel;
+            var originalButtonText = model.ButtonText;
             model.ButtonText = "Operating...";
 
-            var business = new Business.BittrexBusiness(GlobalContext.Instance.Notification);
-            business.NotifyLocation = Constants.BITTREX;
-
+            var business = new Business.BittrexBusiness(Server.Instance.Notification)
+            {
+                NotifyLocation = Constants.BITTREX
+            };
             await business.Buy(model.Market, model.Quantity, model.Rate);
-            canExecute = true;
 
-            model.ButtonText = "Buy Limit";
+
+            var exchangeBusiness = new Business.ExchangeBusiness(Server.Instance.Notification)
+            {
+                NotifyLocation = Constants.BITTREX
+            };
+            exchangeBusiness.FetchWallet();
+
+
+            canExecute = true;
+            model.ButtonText = originalButtonText;
             model.Refresh();
         }
     }

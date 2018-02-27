@@ -3,7 +3,6 @@ using AutoBitBot.Infrastructure;
 using AutoBitBot.Infrastructure.Exchanges;
 using AutoBitBot.Infrastructure.Exchanges.ViewModels;
 using AutoBitBot.PoloniexProxy.Responses;
-using AutoBitBot.UI.MainApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

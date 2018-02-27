@@ -100,9 +100,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Collections\ExchangeOpenOrdersObservableCollection.cs" />
-    <Compile Include="Collections\ExchangeOverallCurrentStatusObservableCollection.cs" />
-    <Compile Include="Collections\WalletObservableCollection.cs" />
     <Compile Include="Commands\Bittrex\BittrexBuyLimitCommand.cs" />
     <Compile Include="Commands\Bittrex\BittrexSellLimitCommand.cs" />
     <Compile Include="Commands\Bittrex\Open_BittrexBuyLimitCommand.cs" />
@@ -159,10 +156,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Titles.resx</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Common\AllExchangeOverallCurrentStatusControl.xaml.cs">
+    <Compile Include="UserControls\Exchange\AllExchangeOverallCurrentStatusControl.xaml.cs">
       <DependentUpon>AllExchangeOverallCurrentStatusControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Common\AllExchangeTickersControl.xaml.cs">
+    <Compile Include="UserControls\Exchange\AllExchangeTickersControl.xaml.cs">
       <DependentUpon>AllExchangeTickersControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\Bittrex\BittrexBuyLimitControl.xaml.cs">
@@ -174,21 +171,18 @@
     <Compile Include="UserControls\Bittrex\BittrexFatFingerStarterControl.xaml.cs">
       <DependentUpon>BittrexFatFingerStarterControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Common\ExchangeOpenOrdersControl.xaml.cs">
-      <DependentUpon>ExchangeOpenOrdersControl.xaml</DependentUpon>
+    <Compile Include="UserControls\Exchange\OpenOrdersControl.xaml.cs">
+      <DependentUpon>OpenOrdersControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\Poloniex\PoloniexTickersControl.xaml.cs">
       <DependentUpon>PoloniexTickersControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Collections\ExchangeTickerObservableCollection.cs" />
-    <Compile Include="Collections\AllExchangeTickerObservableCollection.cs" />
     <Compile Include="ViewModels\Bittrex\BittrexLimitViewModel.cs" />
-    <Compile Include="ViewModels\GlobalContext.cs" />
     <Compile Include="ViewModels\SampleFormViewModel.cs" />
     <Compile Include="UserControls\Global\ActiveTasksControl.xaml.cs">
       <DependentUpon>ActiveTasksControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Common\WalletControl.xaml.cs">
+    <Compile Include="UserControls\Exchange\WalletControl.xaml.cs">
       <DependentUpon>WalletControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\Bittrex\BittrexBuyAndSellControl.xaml.cs">
@@ -541,7 +535,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\Common\ExchangeOpenOrdersControl.xaml">
+    <Page Include="UserControls\Exchange\OpenOrdersControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -549,15 +543,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\Common\AllExchangeOverallCurrentStatusControl.xaml">
+    <Page Include="UserControls\Exchange\AllExchangeOverallCurrentStatusControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\Common\WalletControl.xaml">
+    <Page Include="UserControls\Exchange\WalletControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\Common\AllExchangeTickersControl.xaml">
+    <Page Include="UserControls\Exchange\AllExchangeTickersControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

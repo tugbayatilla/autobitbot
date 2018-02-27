@@ -77,17 +77,20 @@ namespace AutoBitBot.UI.MainApp.Notifiers
 
         public Task Notify(NotificationMessage notificationMessage, NotifyAs notifyAs)
         {
-            throw new NotImplementedException();
+            Add(notificationMessage.Body, Colors.Blue);
+            return Task.CompletedTask;
         }
 
         public Task Notify(string message, NotifyAs notifyAs)
         {
-            throw new NotImplementedException();
+            Add(message, Colors.Black);
+            return Task.CompletedTask;
         }
 
         public Task Notify(Exception ex, NotifyAs notifyAs)
         {
-            throw new NotImplementedException();
+            Add(ex.GetAllMessages(true, " "), Colors.Red);
+            return Task.CompletedTask;
         }
     }
 }

@@ -68,10 +68,15 @@
     <Compile Include="BitTasks\BittrexTasks\BittrexSellLimitTask.cs" />
     <Compile Include="BitTasks\ExchangeTasks\ExchangeOpenOrdersTask.cs" />
     <Compile Include="BitTasks\PoloniexTasks\PoloniexReturnTickerTask.cs" />
-    <Compile Include="BitTasks\PoloniexTasks\PoloniexReturnBalancesTask.cs" />
+    <Compile Include="BitTasks\PoloniexTasks\PoloniexWalletTask.cs" />
     <Compile Include="BitTasks\ExchangeTasks\ExchangeOverallStatusTask.cs" />
     <Compile Include="Business\BittrexBusiness.cs" />
     <Compile Include="Business\ExchangeBusiness.cs" />
+    <Compile Include="Collections\AllExchangeTickerObservableCollection.cs" />
+    <Compile Include="Collections\ExchangeOpenOrdersObservableCollection.cs" />
+    <Compile Include="Collections\ExchangeOverallCurrentStatusObservableCollection.cs" />
+    <Compile Include="Collections\ExchangeTickerObservableCollection.cs" />
+    <Compile Include="Collections\WalletObservableCollection.cs" />
     <Compile Include="DecisionMaker.cs" />
     <Compile Include="BitTasks\Enums\BitTaskExecutionTypes.cs" />
     <Compile Include="BitTasks\EventArgs\BitTaskExecutedEventArgs.cs" />
@@ -83,9 +88,8 @@
     <Compile Include="ConfigItem.cs" />
     <Compile Include="BitTasks\BittrexTasks\BittrexBuyLimitTask.cs" />
     <Compile Include="BitTasks\BittrexTasks\BittrexBuyLimitCompletedTask.cs" />
-    <Compile Include="BitTasks\BittrexTasks\BittrexGetBalanceTask.cs" />
+    <Compile Include="BitTasks\BittrexTasks\BittrexWalletTask.cs" />
     <Compile Include="BitTasks\BittrexTasks\BittrexGetTickerTask.cs" />
-    <Compile Include="BitTasks\IBitTask.cs" />
     <Compile Include="PumpDumpPredictor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

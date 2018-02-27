@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using AutoBitBot.ServerEngine;
 
 namespace AutoBitBot.UI.MainApp.Commands
 {
@@ -30,7 +31,7 @@ namespace AutoBitBot.UI.MainApp.Commands
                 DataContext = model
             };
 
-            GlobalContext.Instance.server.RegisterInstanceAndExecute(new BittrexGetOrderHistoryTask("BTC-XRP") { ExplicitlyTerminateAfterExecution = true }, null);
+            Server.Instance.RegisterInstanceAndExecute(new BittrexGetOrderHistoryTask("BTC-XRP") { ExplicitlyTerminateAfterExecution = true }, null);
 
             Window window = new Window
             {

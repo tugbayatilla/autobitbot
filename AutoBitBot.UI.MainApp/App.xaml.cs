@@ -1,4 +1,5 @@
-﻿using AutoBitBot.UI.Presentation;
+﻿using AutoBitBot.ServerEngine;
+using AutoBitBot.UI.Presentation;
 using AutoBitBot.UI.Windows.Controls;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace AutoBitBot.UI.MainApp
         {
             base.OnStartup(e);
 
-            GlobalContext.Instance.Init(App.Current.Dispatcher);
+            Server.Instance.Init(App.Current.Dispatcher);
         }
     }
 }

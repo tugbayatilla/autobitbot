@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="AutoBitBot.UI.MainApp.UserControls.ExchangeOpenOrdersControl"
+﻿<UserControl x:Class="AutoBitBot.UI.MainApp.UserControls.OpenOrdersControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -45,8 +45,7 @@
                 <DataGridTextColumn Header="OrderType" Binding="{Binding OrderType}" />
                 <DataGridTextColumn Header="Rate" Binding="{Binding Rate, Converter={StaticResource DecimalStringValueConverter}}" />
                 <DataGridTextColumn Header="Amount" Binding="{Binding Amount, Converter={StaticResource DecimalStringValueConverter}}" />
-                <DataGridTextColumn Header="Total" Binding="{Binding Low, Converter={StaticResource DecimalStringValueConverter}}"/>
-                <DataGridTextColumn Header="Commission" Binding="{Binding Commission, Converter={StaticResource DecimalStringValueConverter}}"/>
+                <DataGridTextColumn Header="Total" Binding="{Binding Total, Converter={StaticResource DecimalStringValueConverter}}"/>
                 <DataGridTextColumn Header="Date" Binding="{Binding OpenDate, Converter={StaticResource DateTimeToStringConverter}}"/>
                 <DataGridTextColumn Header="OrderId" Binding="{Binding OrderId}"/>
 

@@ -1,4 +1,5 @@
 ﻿using AutoBitBot.Infrastructure;
+using AutoBitBot.ServerEngine;
 using AutoBitBot.UI.MainApp.Commands.Bittrex;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace AutoBitBot.UI.MainApp.ViewModels
     {
         public BittrexLimitViewModel()
         {
-            GlobalContext.Instance.Wallet.PropertyChanged += Wallet_PropertyChanged;
+            Server.Instance.Wallet.PropertyChanged += Wallet_PropertyChanged;
         }
 
         private void Wallet_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -65,7 +66,7 @@ namespace AutoBitBot.UI.MainApp.ViewModels
 
         public Decimal Available
         {
-            get => GlobalContext.Instance.Wallet.Get(Constants.BITTREX, this.Currency).Amount;
+            get => Server.Instance.Wallet.Get(Constants.BITTREX, this.Currency).Amount;
         }
 
 

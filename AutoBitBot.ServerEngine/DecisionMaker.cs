@@ -31,7 +31,7 @@ namespace AutoBitBot.ServerEngine
                 //server.RegisterInstanceAndExecute(task1, model.Bid);
             }
 
-            if (e.BitTask is BittrexGetBalanceTask)
+            if (e.BitTask is BittrexWalletTask)
             {
                 return;
                 //1. notify user 

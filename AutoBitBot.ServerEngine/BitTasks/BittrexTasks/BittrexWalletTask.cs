@@ -3,7 +3,6 @@ using AutoBitBot.BittrexProxy;
 using AutoBitBot.BittrexProxy.Responses;
 using AutoBitBot.Infrastructure;
 using AutoBitBot.Infrastructure.Exchanges;
-using AutoBitBot.PoloniexProxy;
 using AutoBitBot.ServerEngine.Enums;
 using System;
 using System.Collections.Generic;
@@ -14,28 +13,27 @@ using System.Threading.Tasks;
 
 namespace AutoBitBot.ServerEngine.BitTasks
 {
-    public class PoloniexReturnBalancesTask : BitTask
+    public class BittrexWalletTask : BitTask
     {
-        public override long ExecuteAtEvery => 10000;
+        public override long ExecuteAtEvery => 0;
 
-        public override string Name => "Poloniex-User-Balances-Task";
+        public override string Name => "Bittrex-Wallet-Task";
 
-        public override BitTaskExecutionTypes ExecutionType => BitTaskExecutionTypes.Permanent;
+        public override BitTaskExecutionTypes ExecutionType => BitTaskExecutionTypes.OneTime;
 
         protected override async Task<Object> ExecuteAction(Object parameter)
         {
             //fistan: merkezi yap
-            var manager = PoloniexApiManagerFactory.Instance.Create();
+            var manager = BittrexApiManagerFactory.Instance.Create();
 
-            var result = await manager.ReturnBalances();
+            var result = await manager.GetBalances();
 
             if (!result.Result)
             {
-                Notification.Notify($"[{Name}] {result.Message}", Constants.POLONIEX);
+                Notification.Notify($"[{Name}] {result.Message}", Constants.BITTREX, NotifyTo.CONSOLE, BitTask.DEFAULT_NOTIFY_LOCATION);
             }
 
             return result.Data;
-
         }
     }
 }

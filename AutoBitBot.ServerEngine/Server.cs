@@ -1,11 +1,17 @@
 ﻿using ArchPM.Core;
 using ArchPM.Core.Extensions;
 using ArchPM.Core.Notifications;
+using ArchPM.Core.Notifications.Notifiers;
+using AutoBitBot.BittrexProxy.Responses;
 using AutoBitBot.Infrastructure;
+using AutoBitBot.PoloniexProxy.Responses;
+using AutoBitBot.ServerEngine.BitTasks;
+using AutoBitBot.UI.MainApp.Collections;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,81 +23,143 @@ namespace AutoBitBot.ServerEngine
 {
     public class Server : ObservableObject
     {
+        public static readonly Server Instance = new Server();
         public event EventHandler<BitTaskExecutedEventArgs> TaskExecuted = delegate { };
 
-        readonly ObservableCollection<BitTask> activeTasks;
-        readonly ObservableCollection<BitTask> killedTasks;
-        static Object _lock = new Object();
-        readonly INotification notification;
+        static Object _lockTasks;
+        Dispatcher dispatcher;
 
-        public Server(INotification notification)
+        public Server()
         {
             this.Config = new List<ConfigItem>();
-            this.activeTasks = new ObservableCollection<BitTask>();
-            this.killedTasks = new ObservableCollection<BitTask>();
-            this.notification = notification;
+            this.ActiveTasks = new ObservableCollection<BitTask>();
+            this.KilledTasks = new ObservableCollection<BitTask>();
+            this.Wallet = new WalletObservableCollection();
+            _lockTasks = new object();
 
-            BindingOperations.EnableCollectionSynchronization(this.ActiveTasks, _lock);
-            BindingOperations.EnableCollectionSynchronization(this.KilledTasks, _lock);
+            BindingOperations.EnableCollectionSynchronization(this.ActiveTasks, _lockTasks);
+            BindingOperations.EnableCollectionSynchronization(this.KilledTasks, _lockTasks);
         }
 
-        public ObservableCollection<BitTask> ActiveTasks
+        public async void Init(Dispatcher dispatcher)
         {
-            get { return activeTasks; }
+            if (Initialized)
+                return;
+
+            this.dispatcher = dispatcher;
+
+
+            lock (this)
+            {
+                Notification = new NotificationManager();
+                var notifierFile = new LogNotifier();
+                Notification.RegisterNotifier(NotifyTo.CONSOLE, notifierFile);
+                Notification.RegisterNotifier(NotifyTo.EVENT_LOG, notifierFile);
+
+                var bittrexLogFileNotifier = new LogNotifier(new ArchPM.Core.IO.LogToFileManager()
+                {
+                    LogDirectoryPath = Path.Combine(Environment.CurrentDirectory, "Bittrex")
+                });
+                Notification.RegisterNotifier(Constants.BITTREX, bittrexLogFileNotifier);
+
+                var error = new LogNotifier(new ArchPM.Core.IO.LogToFileManager()
+                {
+                    LogDirectoryPath = Path.Combine(Environment.CurrentDirectory, "Error")
+                });
+                Notification.RegisterNotifier(NotifyTo.EVENT_LOG, error);
+            }
+
+            //server.RegisterInstance(new BittrexGetTickerTask("BTC-XRP"));
+            //server.RegisterInstance(new BittrexGetMarketsTask());
+            //server.RegisterInstance(new BittrexGetMarketSummaryTask("BTC-XRP"));
+            //server.RegisterInstance(new BittrexGetOpenOrdersTask("BTC-XRP"));
+            //server.RegisterInstance(new BittrexGetOrderHistoryTask("BTC-XRP"));
+            RegisterInstance(new BittrexGetMarketSummariesTask());
+            RegisterInstance(new PoloniexWalletTask());
+            RegisterInstance(new BittrexWalletTask());
+            RegisterInstance(new PoloniexReturnTickerTask());
+            RegisterInstance(new ExchangeOpenOrdersTask());
+
+
+            Config.Add(new ConfigItem(typeof(BittrexGetTickerTask),
+                new ConfigItem(typeof(BittrexBuyLimitCompletedTask)) { ExecutionTime = ConfigExecutionTimes.AfterExecution },
+                new ConfigItem(typeof(BittrexSellLimitTask)) { ExecutionTime = ConfigExecutionTimes.AfterExecution }, //todo: execute onetime can be set here
+                new ConfigItem(typeof(BittrexSellLimitCompletedTask))));
+
+            await RunAllRegisteredTasksAsync();
+
+            Initialized = true;
         }
 
-        public ObservableCollection<BitTask> KilledTasks
+        private void BitTask_Executed(object sender, BitTaskExecutedEventArgs e)
         {
-            get { return killedTasks; }
+            if (e.Data is List<BittrexBalanceResponse>)
+            {
+                var model = e.Data as List<BittrexBalanceResponse>;
+                this.Wallet.Save(model);
+            }
+
+            if (e.Data is PoloniexBalanceResponse)
+            {
+                var model = e.Data as PoloniexBalanceResponse;
+                this.Wallet.Save(model);
+            }
+
+
+
+            TaskExecuted(this, e);
         }
 
+
+        #region Properties
+
+        public ObservableCollection<BitTask> ActiveTasks { get; private set; }
+        public ObservableCollection<BitTask> KilledTasks { get; private set; }
+        public WalletObservableCollection Wallet { get; private set; }
         public List<ConfigItem> Config { get; set; }
+        public INotification Notification { get; private set; }
+        public Boolean Initialized { get; private set; }
 
+        #endregion
+
+
+        #region Public Methods
         public void RegisterInstance(BitTask bitTask)
         {
-            lock (_lock)
+            bitTask.ThrowExceptionIfNull();
+            bitTask.Notification = this.Notification;
+            bitTask.Executed += BitTask_Executed;
+            bitTask.Server = this;
+            lock (_lockTasks)
             {
-                bitTask.ThrowExceptionIfNull();
-                bitTask.Notification = this.notification;
-                bitTask.Executed += BitTask_Executed;
-                bitTask.Server = this;
-                this.activeTasks.Add(bitTask);
-
-                //PropertyChanged(this, new PropertyChangedEventArgs(nameof(ActiveTasks)));
+                this.ActiveTasks.Add(bitTask);
             }
+            OnPropertyChanged(nameof(ActiveTasks));
         }
-
         public void RegisterInstanceAndExecute(BitTask bitTask, Object parameter)
         {
             RegisterInstance(bitTask);
-            lock (_lock)
+            lock (_lockTasks)
             {
                 bitTask.Execute(parameter);
             }
         }
-
         public BitTask RegisterInstanceAndExecute(Type bitTaskType, Object parameter)
         {
             var item = (BitTask)Activator.CreateInstance(bitTaskType);
             RegisterInstanceAndExecute(item, parameter);
             return item;
         }
-
-        private void BitTask_Executed(object sender, BitTaskExecutedEventArgs e)
-        {
-            TaskExecuted(this, e);
-        }
-
         public void Kill(BitTask bitTask)
         {
-            lock (_lock)
+            lock (_lockTasks)
             {
                 this.ActiveTasks.Remove(bitTask);
                 bitTask.Executed -= BitTask_Executed;
                 bitTask.Dispose();
 
-                killedTasks.Add(bitTask);
-                //PropertyChanged(this, new PropertyChangedEventArgs(nameof(ActiveTasks)));
+                KilledTasks.Add(bitTask);
+                OnPropertyChanged(nameof(ActiveTasks));
             }
 
 
@@ -107,13 +175,11 @@ namespace AutoBitBot.ServerEngine
                   });
             }
         }
-
-
         public Task RunAllRegisteredTasksAsync()
         {
-            lock (_lock)
+            lock (_lockTasks)
             {
-                this.activeTasks.ForEach(p =>
+                this.ActiveTasks.ForEach(p =>
                 {
                     //Guid executionId = Guid.NewGuid();
                     var task = p.Execute(null);
@@ -121,7 +187,21 @@ namespace AutoBitBot.ServerEngine
             }
 
             return Task.CompletedTask;
-        }
+        } 
+        #endregion
+
+
+
+
+
+
+        //Task<Boolean> OpenModal(String message)
+        //{
+        //    var command = new OpenModalCommand();
+        //    command.Execute(message);
+        //    return Task.FromResult<Boolean>((Boolean)command.Result);
+        //}
+
 
     }
 
