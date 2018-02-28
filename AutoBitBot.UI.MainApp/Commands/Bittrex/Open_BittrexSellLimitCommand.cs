@@ -46,6 +46,7 @@ namespace AutoBitBot.UI.MainApp.Commands
                 DataContext = new BittrexLimitViewModel() { Market = market, ButtonText = "Sell Limit", Rate = ticker.Bid.NewValue, LimitType = LimitTypes.Sell }
             };
 
+
             var window = new ModernWindow
             {
                 Style = (Style)App.Current.Resources["BlankWindow"],
@@ -55,6 +56,7 @@ namespace AutoBitBot.UI.MainApp.Commands
                 WindowState = WindowState.Normal,
                 WindowStartupLocation = WindowStartupLocation.CenterScreen
             };
+
 
             window.Show();
         }

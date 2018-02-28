@@ -36,7 +36,7 @@ namespace AutoBitBot.UI.MainApp.Commands.Bittrex
             {
                 NotifyLocation = notificationLocation
             };
-            await business.BuyAndSell(model.Market, model.Quantity, model.Rate, model.ProfitPercent);
+            //await business.BuyAndSell(model.Market, model.Quantity, model.Rate, model.ProfitPercent);
 
 
             var fetch = Server.Instance.CreateFetch(notificationLocation);

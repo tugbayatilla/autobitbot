@@ -23,33 +23,7 @@ namespace AutoBitBot.UI.MainApp.Commands.Bittrex
 
         public async void Execute(object parameter)
         {
-            var notificationLocation = "Bittrex-Buy-Notifier";
-            canExecute = false;
-            var model = parameter as BittrexLimitViewModel;
-            var originalButtonText = model.ButtonText;
-            model.ButtonText = "Operating...";
-
-            var notifierOutput = new OutputDataNotifier(model.OutputData, notificationLocation);
-            Server.Instance.Notification.RegisterNotifier(notificationLocation, notifierOutput);
-
-            var business = new Business.BittrexBusiness(Server.Instance.Notification)
-            {
-                NotifyLocation = notificationLocation
-            };
-            var task = business.Buy(model.Market, model.Quantity, model.Rate);
-
-
-            var fetch = Server.Instance.CreateFetch(notificationLocation);
-            fetch.Wallet();
-            fetch.OpenOrders();
-
-            await task;
-
-            canExecute = true;
-            model.ButtonText = originalButtonText;
-            model.FireOnPropertyChangedForAllProperties();
-
-            Server.Instance.Notification.UnregisterNotifier(notificationLocation, notifierOutput.Id);
+           
         }
     }
 }

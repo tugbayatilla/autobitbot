@@ -6,9 +6,12 @@
              xmlns:local="clr-namespace:AutoBitBot.UI.MainApp.UserControls"
              xmlns:viewModel="clr-namespace:AutoBitBot.UI.MainApp.ViewModels"
              xmlns:globalControls="clr-namespace:AutoBitBot.UI.MainApp.UserControls.Global"
+              
              mc:Ignorable="d" 
              d:DesignHeight="250" d:DesignWidth="300" 
              d:DataContext="{Binding Source={x:Static viewModel:DesignViewModel.Instance}, Path=BittrexLimitViewModel}">
+  
+    
     <Grid Style="{StaticResource ContentRoot}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />

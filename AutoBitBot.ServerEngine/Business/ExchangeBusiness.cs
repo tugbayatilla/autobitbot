@@ -61,48 +61,48 @@ namespace AutoBitBot.Business
 
 
             //poloniex call
-            var poloniexManager = PoloniexProxy.PoloniexApiManagerFactory.Instance.Create();
-            var poloniexOpenOrdersResult = await poloniexManager.ReturnOpenOrdersAll();
-            if (!poloniexOpenOrdersResult.Result)
-            {
-                notification.Notify(new BusinessException(poloniexOpenOrdersResult.Message), NotifyTo.EVENT_LOG, NotifyLocation);
-            }
-            else
-            {
-                var openOrders = poloniexOpenOrdersResult.Data.ToList();
+            //var poloniexManager = PoloniexProxy.PoloniexApiManagerFactory.Instance.Create();
+            //var poloniexOpenOrdersResult = await poloniexManager.ReturnOpenOrdersAll();
+            //if (!poloniexOpenOrdersResult.Result)
+            //{
+            //    notification.Notify(new BusinessException(poloniexOpenOrdersResult.Message), NotifyTo.EVENT_LOG, NotifyLocation);
+            //}
+            //else
+            //{
+            //    var openOrders = poloniexOpenOrdersResult.Data.ToList();
 
-                openOrders.ForEach(openOrder =>
-                {
-                    var orderNumbers = openOrder.Value.Select(p => p.OrderNumber).ToList();
-                    orderNumbers.ForEach(async orderNumber =>
-                    {
-                        var orderTradeResult = await poloniexManager.ReturnOrderTrades(orderNumber);
-                        if (orderTradeResult.Result)
-                        {
-                            var orderTrade = orderTradeResult.Data;
-                            result.Add(new ExchangeOpenOrdersViewModel()
-                            {
-                                ExchangeName = Constants.POLONIEX,
-                                MarketName = openOrder.Key,
-                                Amount = orderTrade.Amount,
-                                Commission = orderTrade.Fee,
-                                Currency = Constants.GetCurrenyFromMarketName(openOrder.Key),
-                                OpenDate = orderTrade.Date,
-                                OrderId = orderNumber.ToString(),
-                                OrderType = orderTrade.type,
-                                Rate = orderTrade.Rate,
-                                Total = orderTrade.Total
-                            });
-                        }
-                        else
-                        {
-                            notification.Notify(new BusinessException(orderTradeResult.Message), NotifyTo.EVENT_LOG, NotifyLocation);
-                        }
-                    });
+            //    openOrders.ForEach(openOrder =>
+            //    {
+            //        var orderNumbers = openOrder.Value.Select(p => p.OrderNumber).ToList();
+            //        orderNumbers.ForEach(async orderNumber =>
+            //        {
+            //            var orderTradeResult = await poloniexManager.ReturnOrderTrades(orderNumber);
+            //            if (orderTradeResult.Result)
+            //            {
+            //                var orderTrade = orderTradeResult.Data;
+            //                result.Add(new ExchangeOpenOrdersViewModel()
+            //                {
+            //                    ExchangeName = Constants.POLONIEX,
+            //                    MarketName = openOrder.Key,
+            //                    Amount = orderTrade.Amount,
+            //                    Commission = orderTrade.Fee,
+            //                    Currency = Constants.GetCurrenyFromMarketName(openOrder.Key),
+            //                    OpenDate = orderTrade.Date,
+            //                    OrderId = orderNumber.ToString(),
+            //                    OrderType = orderTrade.type,
+            //                    Rate = orderTrade.Rate,
+            //                    Total = orderTrade.Total
+            //                });
+            //            }
+            //            else
+            //            {
+            //                notification.Notify(new BusinessException(orderTradeResult.Message), NotifyTo.EVENT_LOG, NotifyLocation);
+            //            }
+            //        });
 
-                });
+            //    });
 
-            }
+            //}
 
 
 

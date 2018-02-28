@@ -15,11 +15,11 @@ namespace AutoBitBot.PoloniexProxy
     {
         public static readonly PoloniexApiManagerFactory Instance = new PoloniexApiManagerFactory();
 
-        public readonly HttpClient httpClient;
+        //public readonly HttpClient httpClient;
         
         public PoloniexApiManagerFactory()
         {
-            httpClient = new HttpClient();
+            //httpClient = new HttpClient();
         }
 
 
@@ -34,6 +34,7 @@ namespace AutoBitBot.PoloniexProxy
                 apiKeyModel = new ExchangeApiKey() { ApiKey = ConfigurationManager.AppSettings["PoloniexApiKey"], SecretKey = ConfigurationManager.AppSettings["PoloniexApiSecret"] };
             }
 
+            var httpClient = new HttpClient();
             return new PoloniexApiManager(httpClient, notification) { ApiKeyModel = apiKeyModel };
         }
 
