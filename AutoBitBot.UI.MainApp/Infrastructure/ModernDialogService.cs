@@ -56,5 +56,13 @@ namespace AutoBitBot.UI.MainApp.Infrastructure
         {
             return ShowDialog(content, title, MessageBoxButton.OK, MessageBoxIcon.Question);
         }
+        public static Boolean ErrorDialog(Object content, String title)
+        {
+            return ShowDialog(content, title, MessageBoxButton.OK, MessageBoxIcon.Error);
+        }
+        public static Boolean WarningDialog(Object content, String title)
+        {
+            return ShowDialog(content, title, MessageBoxButton.OK, MessageBoxIcon.Warning);
+        }
     }
 }

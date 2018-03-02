@@ -2,6 +2,7 @@
 using AutoBitBot.Infrastructure;
 using AutoBitBot.Infrastructure.Exchanges.ViewModels;
 using AutoBitBot.ServerEngine.BitTasks;
+using AutoBitBot.UI.MainApp.Infrastructure;
 using AutoBitBot.UI.MainApp.ViewModels;
 using AutoBitBot.UI.Windows.Controls;
 using System;
@@ -32,10 +33,16 @@ namespace AutoBitBot.UI.MainApp.Commands
 
         public void Execute(object parameter)
         {
-            var market = "BTC-DOGE";
+            var market = ServerEngine.Server.Instance.SelectedMarket;
+            if(market == null)
+            {
+                ModernDialogService.WarningDialog("Select market first", "Warning");
+                return;
+            }
+
             var model = parameter as MainViewModel;
 
-            var ticker = model.ExchangeTickerContainer.Data.FirstOrDefault(p => p.ExchangeName == Constants.BITTREX && p.MarketName == market);
+            var ticker = model.ExchangeTickerContainer.Data.FirstOrDefault(p => p.ExchangeName == market.ExchangeName && p.MarketName == market.MarketName);
             if(ticker == null)
             {
                 ticker = new ExchangeTickerViewModel();
@@ -43,19 +50,20 @@ namespace AutoBitBot.UI.MainApp.Commands
 
             var uc = new UserControls.BittrexBuyAndSellControl()
             {
-                DataContext = new BittrexBuyAndSellLimitViewModel() { Market = market, ButtonText = "Buy And Sell", Rate = ticker.Bid.NewValue, LimitType = LimitTypes.Buy }
+                DataContext = new BittrexBuyAndSellLimitViewModel() { Market = market.MarketName, ButtonText = "Buy And Sell", Rate = ticker.Bid.NewValue, LimitType = LimitTypes.Buy }
             };
 
             var window = new ModernWindow
             {
                 Style = (Style)App.Current.Resources["BlankWindow"],
                 IsTitleVisible = true,
-                Title = "Bittrex Buy And Sell Limit Window",
+                Title = $"{market} Buy And Sell Limit Window",
                 Content = uc,
                 WindowState = WindowState.Normal,
                 WindowStartupLocation = WindowStartupLocation.CenterScreen
             };
 
+            window.Owner = Application.Current.MainWindow;
             window.Show();
         }
     }

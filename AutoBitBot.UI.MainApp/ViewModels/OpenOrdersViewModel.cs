@@ -29,23 +29,23 @@ namespace AutoBitBot.UI.MainApp.ViewModels
         }
 
 
-        public OpenOrdersObservableCollection OpenOrders => ServerEngine.Server.Instance.OpenOrders;
+        public OpenOrdersContainer OpenOrders => ServerEngine.Server.Instance.OpenOrders;
 
-        public ICommand DeleteOrderCommand =>
+        public ICommand CancelOrderCommand =>
                 new RelayCommand(async o =>
                 {
                     var result = ModernDialogService.ConfirmDialog($@"
-                        Delete Order! Are you sure?
+                        Cancel Order! Are you sure?
                         {nameof(SelectedOrder.MarketName)}:{SelectedOrder.MarketName} 
                         {nameof(SelectedOrder.ExchangeName)}:{SelectedOrder.ExchangeName} 
                         {nameof(SelectedOrder.Currency)}:{SelectedOrder.Currency} 
                         ", 
-                        $"Deleting Order - {SelectedOrder.OrderId}");
+                        $"Canceling Order - {SelectedOrder.OrderId}");
                     if (result)
                     {
                         if(this.SelectedOrder == null)
                         {
-                            ModernDialogService.InfoDialog("Selection changed. Select order again and delete it", "Info");
+                            ModernDialogService.InfoDialog("Selection changed. Select order again and cancel it", "Info");
                             return;
                         }
 
@@ -58,7 +58,7 @@ namespace AutoBitBot.UI.MainApp.ViewModels
                                 // delete ops
                                 OpenOrders.Data.Remove(SelectedOrder);
                                 SelectedOrder = null;
-                                ModernDialogService.InfoDialog("Order Deleted", "Info");
+                                ModernDialogService.InfoDialog("Order Canceled", "Info");
                             }
                         }
                     }

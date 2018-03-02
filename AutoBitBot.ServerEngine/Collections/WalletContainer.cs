@@ -13,9 +13,9 @@ using System.Windows.Data;
 
 namespace AutoBitBot.UI.MainApp.Collections
 {
-    public class WalletObservableCollection : ObservableObjectContainer<ExchangeBalanceViewModel>
+    public class WalletContainer : ObservableObjectContainer<ExchangeBalanceViewModel>
     {
-        public WalletObservableCollection()
+        public WalletContainer()
         {
             BindingOperations.EnableCollectionSynchronization(this.Data, _locker);
         }

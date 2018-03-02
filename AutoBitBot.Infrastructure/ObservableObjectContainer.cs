@@ -33,5 +33,16 @@ namespace AutoBitBot.Infrastructure
             }
         }
 
+        T selectedItem;
+        public T SelectedItem
+        {
+            get => selectedItem;
+            set
+            {
+                selectedItem = value;
+                OnPropertyChanged();
+            }
+        }
+
     }
 }

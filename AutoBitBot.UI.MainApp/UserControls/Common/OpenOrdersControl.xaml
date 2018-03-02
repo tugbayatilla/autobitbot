@@ -18,7 +18,7 @@
     <Grid>
         <StackPanel>
 
-            <Button Content="Delete Selected Order"  Command="{Binding DeleteOrderCommand}" />
+            <Button Content="Cancel Selected Order"  Command="{Binding CancelOrderCommand}" />
             <DataGrid 
                   x:Name="dg" 
                   CanUserAddRows="False" 
@@ -33,7 +33,7 @@
                   CanUserDeleteRows="False" SelectedItem="{Binding SelectedOrder, Mode=TwoWay}"
                   >
                 <DataGrid.InputBindings>
-                    <KeyBinding Key="Delete" Command="{Binding DeleteOrderCommand}" />
+                    <KeyBinding Key="Delete" Command="{Binding CancelOrderCommand}" />
                 </DataGrid.InputBindings>
                 <DataGrid.Columns>
 

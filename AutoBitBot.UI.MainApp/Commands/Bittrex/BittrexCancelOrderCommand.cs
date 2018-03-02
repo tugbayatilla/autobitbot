@@ -11,7 +11,7 @@ using System.Windows.Input;
 
 namespace AutoBitBot.UI.MainApp.Commands.Bittrex
 {
-    public class BittrexDeleteOrderCommand : ICommand
+    public class BittrexCancelOrderCommand : ICommand
     {
         Boolean canExecute = true;
         public event EventHandler CanExecuteChanged = delegate { };
@@ -23,7 +23,7 @@ namespace AutoBitBot.UI.MainApp.Commands.Bittrex
 
         public async void Execute(object parameter)
         {
-            var notificationLocation = "Bittrex-Delete-Order-Notifier";
+            var notificationLocation = "Bittrex-Cancel-Order-Notifier";
             canExecute = false;
             var model = parameter as BittrexLimitViewModel;
             var originalButtonText = model.ButtonText;

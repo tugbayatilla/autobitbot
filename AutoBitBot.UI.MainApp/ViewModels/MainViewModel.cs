@@ -23,6 +23,8 @@ using AutoBitBot.Infrastructure;
 using AutoBitBot.PoloniexProxy.Responses;
 using AutoBitBot.UI.MainApp.Collections;
 using AutoBitBot.Infrastructure.Exchanges.ViewModels;
+using AutoBitBot.UI.Presentation;
+using AutoBitBot.UI.MainApp.Infrastructure;
 
 namespace AutoBitBot.UI.MainApp.ViewModels
 {
@@ -63,7 +65,6 @@ namespace AutoBitBot.UI.MainApp.ViewModels
         public ObservableCollection<BitTask> ActiveTasks => Server.Instance.ActiveTasks;
         public ObservableCollection<BitTask> KilledTasks => Server.Instance.KilledTasks;
         public ExchangeTickerContainer ExchangeTickerContainer { get; set; }
-
 
         public ICommand Open_BittrexSellLimitCommand => new Open_BittrexSellLimitCommand();
         public ICommand Open_BittrexBuyLimitCommand => new Open_BittrexBuyLimitCommand();

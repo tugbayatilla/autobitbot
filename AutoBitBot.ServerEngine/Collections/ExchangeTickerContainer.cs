@@ -18,6 +18,23 @@ namespace AutoBitBot.UI.MainApp.Collections
         public ExchangeTickerContainer()
         {
             BindingOperations.EnableCollectionSynchronization(this.Data, _locker);
+            this.PropertyChanged += ExchangeTickerContainer_PropertyChanged;
+        }
+
+        private void ExchangeTickerContainer_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(SelectedItem))
+            {
+                if (this.SelectedItem != null)
+                {
+                    ServerEngine.Server.Instance.SelectedMarket = new ServerEngine.Domain.SelectedMarket()
+                    {
+                        ExchangeName = this.SelectedItem.ExchangeName,
+                        MarketName = this.SelectedItem.MarketName
+                    };
+                    ServerEngine.Server.Instance.FireOnPropertyChangedForProperty(nameof(ServerEngine.Server.Instance.SelectedMarket));
+                }
+            }
         }
 
         public void Save(Object data)

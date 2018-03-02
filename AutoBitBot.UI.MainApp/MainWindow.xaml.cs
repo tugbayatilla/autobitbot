@@ -1,4 +1,5 @@
-﻿using AutoBitBot.UI.Windows.Controls;
+﻿using AutoBitBot.UI.MainApp.Infrastructure;
+using AutoBitBot.UI.Windows.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,9 +24,6 @@ namespace AutoBitBot.UI.MainApp
         public MainWindow()
         {
             InitializeComponent();
-
-
-            
         }
 
         public override void OnApplyTemplate()
@@ -35,6 +33,12 @@ namespace AutoBitBot.UI.MainApp
             RichTextBox output = (RichTextBox)Template.FindName("Output", this);
 
             this.DataContext = new ViewModels.MainViewModel(this.Dispatcher, output);
+        }
+
+        private void ModernWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            var result = ModernDialogService.ConfirmDialog("closing app! are you sure?", "sure?");
+            e.Cancel = !result;
         }
     }
 }

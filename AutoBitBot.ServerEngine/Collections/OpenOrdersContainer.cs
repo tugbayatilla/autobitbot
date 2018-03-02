@@ -13,9 +13,9 @@ using System.Windows.Data;
 
 namespace AutoBitBot.UI.MainApp.Collections
 {
-    public class OpenOrdersObservableCollection : ObservableObjectContainer<ExchangeOpenOrdersViewModel>
+    public class OpenOrdersContainer : ObservableObjectContainer<ExchangeOpenOrdersViewModel>
     {
-        public OpenOrdersObservableCollection() 
+        public OpenOrdersContainer() 
         {
             BindingOperations.EnableCollectionSynchronization(this.Data, _locker);
         }

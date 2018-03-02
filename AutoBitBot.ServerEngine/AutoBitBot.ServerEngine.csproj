@@ -46,6 +46,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -71,19 +72,20 @@
     <Compile Include="BitTasks\PoloniexTasks\PoloniexTickerTask.cs" />
     <Compile Include="BitTasks\PoloniexTasks\PoloniexWalletTask.cs" />
     <Compile Include="BitTasks\ExchangeTasks\ExchangeOverallStatusTask.cs" />
+    <Compile Include="BitTasks\ProcessTasks\LicenceTask.cs" />
     <Compile Include="Business\PoloniexBusiness.cs" />
     <Compile Include="Business\BittrexBusiness.cs" />
     <Compile Include="Business\ExchangeBusiness.cs" />
     <Compile Include="Collections\ExchangeTickerContainer.cs" />
-    <Compile Include="Collections\OpenOrdersObservableCollection.cs" />
+    <Compile Include="Collections\OpenOrdersContainer.cs" />
     <Compile Include="Collections\ExchangeOverallCurrentStatusObservableCollection.cs" />
-    <Compile Include="Collections\ExchangeTickerObservableCollection_.cs" />
-    <Compile Include="Collections\WalletObservableCollection.cs" />
+    <Compile Include="Collections\WalletContainer.cs" />
     <Compile Include="DecisionMaker.cs" />
     <Compile Include="BitTasks\Enums\BitTaskExecutionTypes.cs" />
     <Compile Include="BitTasks\EventArgs\BitTaskExecutedEventArgs.cs" />
     <Compile Include="BitTasks\EventArgs\BitTaskExecutionCompletedEventArgs.cs" />
     <Compile Include="BitTasks\BitTaskResult.cs" />
+    <Compile Include="Domain\SelectedMarket.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="BitTasks\BitTask.cs" />
     <Compile Include="BitTasks\Enums\BitTaskStatus.cs" />
@@ -114,8 +116,6 @@
     <None Include="Key.snk" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="BitTasks\ProcessTasks\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

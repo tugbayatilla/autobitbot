@@ -101,7 +101,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\Bittrex\BittrexBuyAndSellLimitCommand.cs" />
-    <Compile Include="Commands\Bittrex\BittrexDeleteOrderCommand.cs" />
+    <Compile Include="Commands\Bittrex\BittrexCancelOrderCommand.cs" />
     <Compile Include="Commands\Bittrex\BittrexBuyLimitCommand.cs" />
     <Compile Include="Commands\Bittrex\BittrexSellLimitCommand.cs" />
     <Compile Include="Commands\Bittrex\Open_BittrexBuyLimitCommand.cs" />
@@ -119,8 +119,14 @@
     <Compile Include="Infrastructure\ModernDialogService.cs" />
     <Compile Include="Notifiers\OutputData.cs" />
     <Compile Include="Notifiers\OutputDataNotifier.cs" />
+    <Compile Include="UserControls\Common\ButtonsControl.xaml.cs">
+      <DependentUpon>ButtonsControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Common\OutputDataGridControl.xaml.cs">
       <DependentUpon>OutputDataGridControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Common\StaticSelectedMarketControl.xaml.cs">
+      <DependentUpon>StaticSelectedMarketControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\BittrexBuyAndSellLimitViewModel.cs" />
     <Compile Include="ViewModels\DesignViewModel.cs" />
@@ -545,6 +551,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="UserControls\Common\ButtonsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControls\Common\OpenOrdersControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -556,6 +566,10 @@
     <Page Include="UserControls\Common\AllExchangeOverallCurrentStatusControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\Common\StaticSelectedMarketControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\Common\WalletControl.xaml">
       <Generator>MSBuild:Compile</Generator>

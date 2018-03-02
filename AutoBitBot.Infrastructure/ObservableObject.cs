@@ -26,7 +26,8 @@ namespace AutoBitBot.Infrastructure
 
         public void FireOnPropertyChangedForAllProperties()
         {
-            this.Properties().ForEach(p => {
+            this.Properties().ForEach(p =>
+            {
                 if (p.IsPrimitive)
                 {
                     OnPropertyChanged(p.Name);
@@ -34,9 +35,16 @@ namespace AutoBitBot.Infrastructure
 
             });
         }
+
+        public void FireOnPropertyChangedForProperty(String propertyName)
+        {
+            OnPropertyChanged(propertyName);
+        }
+
+
     }
 
-   
+
 
 
 }

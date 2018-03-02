@@ -8,27 +8,35 @@
             x:Class="AutoBitBot.UI.MainApp.Pages.DashboardPage"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800" x:Name="Dashboard">
-    <Grid Style="{StaticResource ContentRoot}">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="9*"/>
-            <ColumnDefinition Width="3*" MaxWidth="350"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="4*" MinHeight="200" MaxHeight="400"/>
-            <RowDefinition Height="5" />
-            <RowDefinition Height="4*" MinHeight="200"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        
-        
-        <UserControls:ExchangeTickersControl />
-        <UserControls:WalletControl Grid.Column="1" />
 
-        <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" Grid.ColumnSpan="2" />
+        <StackPanel Style="{StaticResource ContentRoot}">
+        <UserControls:ButtonsControl />
+        <UserControls:StaticSelectedMarketControl />
 
-        <UserControls:OpenOrdersControl Grid.ColumnSpan="2" Grid.Row="2" />
+        <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="9*"/>
+                    <ColumnDefinition Width="3*" MaxWidth="350"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="4*" MinHeight="200" MaxHeight="400"/>
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="4*" MinHeight="200"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
 
+                <UserControls:ExchangeTickersControl />
+                <UserControls:WalletControl Grid.Column="1" />
 
-    </Grid>
+                <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" Grid.ColumnSpan="2" />
+
+                <UserControls:OpenOrdersControl Grid.ColumnSpan="2" Grid.Row="2" />
+
+
+
+            </Grid>
+        </StackPanel>
+
+       
 </UserControl>

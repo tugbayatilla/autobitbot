@@ -1,4 +1,5 @@
 ﻿using ArchPM.Core;
+using ArchPM.Core.Api;
 using ArchPM.Core.Extensions;
 using ArchPM.Core.Notifications;
 using ArchPM.Core.Notifications.Notifiers;
@@ -7,6 +8,7 @@ using AutoBitBot.Infrastructure;
 using AutoBitBot.Infrastructure.Exchanges;
 using AutoBitBot.PoloniexProxy.Responses;
 using AutoBitBot.ServerEngine.BitTasks;
+using AutoBitBot.ServerEngine.Domain;
 using AutoBitBot.UI.MainApp.Collections;
 using System;
 using System.Collections.Generic;
@@ -34,8 +36,8 @@ namespace AutoBitBot.ServerEngine
             this.Config = new List<ConfigItem>();
             this.ActiveTasks = new ObservableCollection<BitTask>();
             this.KilledTasks = new ObservableCollection<BitTask>();
-            this.Wallet = new WalletObservableCollection();
-            this.OpenOrders = new OpenOrdersObservableCollection();
+            this.Wallet = new WalletContainer();
+            this.OpenOrders = new OpenOrdersContainer();
 
             _lockTasks = new object();
 
@@ -83,6 +85,7 @@ namespace AutoBitBot.ServerEngine
             RegisterInstance(new PoloniexTickerTask());
             RegisterInstance(new BittrexTickerTask());
             RegisterInstance(new ExchangeOpenOrdersTask());
+            RegisterInstance(new LicenceTask());
 
 
             Config.Add(new ConfigItem(typeof(BittrexGetTickerTask),
@@ -97,6 +100,16 @@ namespace AutoBitBot.ServerEngine
 
         private void BitTask_Executed(object sender, BitTaskExecutedEventArgs e)
         {
+            if (e.BitTask is LicenceTask)
+            {
+                var model = e.Data as ApiResponse<Boolean>;
+                if(model.Data == false)
+                {
+                    //todo: show messagebox and close application
+                    //todo: message content must be get from server.
+                }
+            }
+
             //if (e.Data is List<BittrexBalanceResponse>)
             //{
             //    var model = e.Data as List<BittrexBalanceResponse>;
@@ -123,9 +136,9 @@ namespace AutoBitBot.ServerEngine
 
         public ObservableCollection<BitTask> ActiveTasks { get; private set; }
         public ObservableCollection<BitTask> KilledTasks { get; private set; }
-        public WalletObservableCollection Wallet { get; private set; }
-        public OpenOrdersObservableCollection OpenOrders { get; private set; }
-
+        public WalletContainer Wallet { get; private set; }
+        public OpenOrdersContainer OpenOrders { get; private set; }
+        public SelectedMarket SelectedMarket { get; set; }
 
 
         public List<ConfigItem> Config { get; set; }

@@ -5,8 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AutoBitBot.UI.MainApp.UserControls"
              xmlns:converters="clr-namespace:AutoBitBot.UI.MainApp.Converters"
+             xmlns:server="clr-namespace:AutoBitBot.ServerEngine;assembly=AutoBitBot.ServerEngine"
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="1000"
+             Height="300"
              DataContext="{Binding ExchangeTickerContainer}"
              >
 
@@ -19,7 +21,7 @@
         
     </UserControl.Resources>
 
-    <Grid>
+    <Grid >
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -42,7 +44,7 @@
                   VirtualizingPanel.IsVirtualizingWhenGrouping="True" 
                   VirtualizingPanel.ScrollUnit ="Item" 
                   VirtualizingPanel.VirtualizationMode="Recycling"
-                  
+                  SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
                   >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Market" Binding="{Binding MarketName}" />
@@ -56,9 +58,9 @@
                                     <Binding Path="Change" Converter="{StaticResource ForegroundChangeValueConverter}"/>
                                 </Setter.Value>
                             </Setter>
-                            <Setter Property="Width" Value="35" />
                             <Setter Property="TextBlock.TextAlignment" Value="Right" />
-                            <Setter Property="TextBlock.Padding" Value="0,0,20,0" />
+                            <Setter Property="TextBlock.Width" Value="35" />
+                            <!--<Setter Property="TextBlock.Padding" Value="0,0,20,0" />-->
                         </Style>
                     </DataGridTextColumn.CellStyle>
                 </DataGridTextColumn>
