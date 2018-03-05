@@ -29,10 +29,7 @@ namespace AutoBitBot.ServerEngine.BitTasks
 
         protected override async Task<Object> ExecuteAction(Object parameter)
         {
-
-            var fetch = Server.CreateFetch(BitTask.DEFAULT_NOTIFY_LOCATION);
-            fetch.OpenOrders();
-
+            Server.FetchOpenOrders();
             return null;
         }
     }

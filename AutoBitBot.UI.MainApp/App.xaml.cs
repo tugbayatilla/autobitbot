@@ -24,7 +24,17 @@ namespace AutoBitBot.UI.MainApp
         {
             base.OnStartup(e);
 
-            Server.Instance.Init(App.Current.Dispatcher);
+            var expiryDate = DateTime.Parse("2018-04-01");
+            if (expiryDate < DateTime.Now)
+            {
+                MessageBox.Show("Expired!");
+                this.Shutdown(-1);
+            }
+            else
+            {
+
+                Server.Instance.Init(App.Current.Dispatcher);
+            }
         }
     }
 }

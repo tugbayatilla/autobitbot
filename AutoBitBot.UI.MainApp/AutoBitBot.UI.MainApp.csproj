@@ -100,10 +100,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Commands\Bittrex\BittrexBuyAndSellLimitCommand.cs" />
     <Compile Include="Commands\Bittrex\BittrexCancelOrderCommand.cs" />
-    <Compile Include="Commands\Bittrex\BittrexBuyLimitCommand.cs" />
-    <Compile Include="Commands\Bittrex\BittrexSellLimitCommand.cs" />
     <Compile Include="Commands\Bittrex\Open_BittrexBuyLimitCommand.cs" />
     <Compile Include="Commands\Bittrex\Open_BittrexBuyAndSellLimitCommand.cs" />
     <Compile Include="Commands\LoadBalanceCommand.cs" />
@@ -116,6 +113,7 @@
     <Compile Include="Commands\SampleDisabledCommand.cs" />
     <Compile Include="Commands\SampleMsgBoxCommand.cs" />
     <Compile Include="Commands\SampleParameterCommand.cs" />
+    <Compile Include="Infrastructure\LicenceManager.cs" />
     <Compile Include="Infrastructure\ModernDialogService.cs" />
     <Compile Include="Notifiers\OutputData.cs" />
     <Compile Include="Notifiers\OutputDataNotifier.cs" />

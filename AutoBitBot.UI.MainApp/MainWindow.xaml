@@ -24,11 +24,11 @@
                 <ui:Link DisplayName="{x:Static res:Titles.Dashboard}" Source="/Pages/DashboardPage.xaml"/>
             </ui:LinkGroup.Links>
         </ui:LinkGroup>
-        <ui:LinkGroup DisplayName="Exchanges">
+        <!--<ui:LinkGroup DisplayName="Exchanges">
             <ui:LinkGroup.Links>
                 <ui:Link DisplayName="{x:Static res:Titles.Bittrex}" Source="/Pages/BittrexPage.xaml"/>
             </ui:LinkGroup.Links>
-        </ui:LinkGroup>
+        </ui:LinkGroup>-->
        <!--<ui:LinkGroup DisplayName="Layout" >
             <ui:LinkGroup.Links>
                 <ui:Link DisplayName="Market" Source="/Pages/MarketPage.xaml" />
@@ -37,7 +37,7 @@
         <ui:LinkGroup DisplayName="Settings" >
             <ui:LinkGroup.Links>
                 <ui:Link DisplayName="Task Management" Source="/Pages/TaskManagementPage.xaml" />
-                <ui:Link DisplayName="Customization" Source="/Pages/Settings.xaml" />
+                <!--<ui:Link DisplayName="Customization" Source="/Pages/Settings.xaml" />-->
             </ui:LinkGroup.Links>
         </ui:LinkGroup>
         <!--  <ui:LinkGroup DisplayName="Controls" >

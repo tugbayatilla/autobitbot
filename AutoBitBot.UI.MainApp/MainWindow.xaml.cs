@@ -37,8 +37,13 @@ namespace AutoBitBot.UI.MainApp
 
         private void ModernWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            var result = ModernDialogService.ConfirmDialog("closing app! are you sure?", "sure?");
-            e.Cancel = !result;
+            try
+            {
+                var result = ModernDialogService.ConfirmDialog("closing app! are you sure?", "sure?");
+                e.Cancel = !result;
+            }
+            finally
+            { }
         }
     }
 }

@@ -103,7 +103,7 @@ namespace AutoBitBot.ServerEngine
             if (e.BitTask is LicenceTask)
             {
                 var model = e.Data as ApiResponse<Boolean>;
-                if(model.Data == false)
+                if (model.Data == false)
                 {
                     //todo: show messagebox and close application
                     //todo: message content must be get from server.
@@ -216,89 +216,34 @@ namespace AutoBitBot.ServerEngine
         }
         #endregion
 
-        public Fetch CreateFetch(String notificationLocation)
+        public void FetchOpenOrders()
         {
-            return new Fetch() { NotificationLocation = notificationLocation };
+            var bittrexBusiness = new Business.BittrexBusiness(Notification);
+            bittrexBusiness.UpdateOpenOrders();
         }
 
-        public class Fetch
+        public void FetchWallet()
         {
-            public String NotificationLocation { get; set; }
-            public Fetch()
-            {
-                this.NotificationLocation = "Fetch";
-            }
+            var bittrexBusiness = new Business.BittrexBusiness(Notification);
+            bittrexBusiness.UpdateWallet();
 
-            public async void Force(Action action, Func<bool> breakCondition)
-            {
-                while (true)
-                {
-                    action();
+            ////bittrex call
+            //var bittrexManager = BittrexProxy.BittrexApiManagerFactory.Instance.Create(null, Instance.Notification);
+            //var bittrexBalancesResult = await bittrexManager.GetBalances();
 
-                    if (breakCondition())
-                    { break; }
+            //if (bittrexBalancesResult.Result)
+            //{
+            //    Instance.Wallet.Save(bittrexBalancesResult.Data);
+            //}
 
-                    var waitTime = 500;
-                    if (waitTime > 0)
-                    {
-                        await Task.Delay((Int32)waitTime);
-                    }
-                }
-            }
-
-
-
-            public async void OpenOrders(Boolean forceFetch = false)
-            {
-                var exchangeBusiness = new Business.ExchangeBusiness(Instance.Notification)
-                {
-                    NotifyLocation = NotificationLocation
-                };
-                while (true)
-                {
-                    var data = await exchangeBusiness.GetExchangeOpenOrderViewModel();
-
-                    Instance.OpenOrders.Save(data);
-                    Instance.OnPropertyChanged(nameof(Instance.OpenOrders));
-
-                    if (data.Count > 0)
-                    { break; }
-                    if (!forceFetch)
-                    { break; }
-                    else
-                    {
-                        var waitTime = 500;
-                        if (waitTime > 0)
-                        {
-                            await Task.Delay((Int32)waitTime);
-                        }
-                    }
-                }
-            }
-
-            public async void Wallet()
-            {
-                //bittrex call
-                var bittrexManager = BittrexProxy.BittrexApiManagerFactory.Instance.Create(null, Instance.Notification);
-                bittrexManager.NotifyLocation = NotificationLocation;
-                var bittrexBalancesResult = await bittrexManager.GetBalances();
-
-                if (bittrexBalancesResult.Result)
-                {
-                    Instance.Wallet.Save(bittrexBalancesResult.Data);
-                }
-
-                var poloniexManager = PoloniexProxy.PoloniexApiManagerFactory.Instance.Create(null, Instance.Notification);
-                poloniexManager.NotifyLocation = NotificationLocation;
-                var poloniexBalancesResult = await poloniexManager.ReturnBalances();
-                if (poloniexBalancesResult.Result)
-                {
-                    Instance.Wallet.Save(poloniexBalancesResult.Data);
-                }
-
-            }
-
+            //var poloniexManager = PoloniexProxy.PoloniexApiManagerFactory.Instance.Create(null, Instance.Notification);
+            //var poloniexBalancesResult = await poloniexManager.ReturnBalances();
+            //if (poloniexBalancesResult.Result)
+            //{
+            //    Instance.Wallet.Save(poloniexBalancesResult.Data);
+            //}
         }
+
 
 
 
