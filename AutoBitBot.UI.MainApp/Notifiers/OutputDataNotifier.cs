@@ -60,6 +60,12 @@ namespace AutoBitBot.UI.MainApp.Notifiers
         {
             return Notify(ex, NotifyAs.Error);
         }
+
+        public Task Notify(object entity, NotifyAs notifyAs)
+        {
+            var str = Newtonsoft.Json.JsonConvert.SerializeObject(entity);
+            return Notify(str, notifyAs);
+        }
     }
 
 

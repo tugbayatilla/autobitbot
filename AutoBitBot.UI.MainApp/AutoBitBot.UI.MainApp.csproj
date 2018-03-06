@@ -75,8 +75,11 @@
     <AssemblyOriginatorKeyFile>Key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ArchPM.Core, Version=0.2.0.26922, Culture=neutral, PublicKeyToken=a7c5f15bb1b78c45, processorArchitecture=MSIL">
-      <HintPath>..\packages\ArchPM.Core.0.2.0\lib\net45\ArchPM.Core.dll</HintPath>
+    <Reference Include="ArchPM.Core, Version=0.2.1.21449, Culture=neutral, PublicKeyToken=a7c5f15bb1b78c45, processorArchitecture=MSIL">
+      <HintPath>..\packages\ArchPM.Core.0.2.1\lib\net45\ArchPM.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />

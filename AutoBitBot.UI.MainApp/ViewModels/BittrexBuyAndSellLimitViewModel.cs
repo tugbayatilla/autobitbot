@@ -8,6 +8,7 @@ using AutoBitBot.UI.Presentation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -38,7 +39,7 @@ namespace AutoBitBot.UI.MainApp.ViewModels
 
 
         Boolean IsBittrexBuyAndSellLimitCommandRunning = false;
-        ICommand bittrexBuyAndSellLimitCommand;
+        ICommand bittrexBuyAndSellLimitCommand = null;
         public ICommand BittrexBuyAndSellLimitCommand
         {
             get
@@ -48,27 +49,43 @@ namespace AutoBitBot.UI.MainApp.ViewModels
                         bittrexBuyAndSellLimitCommand,
                         IsBittrexBuyAndSellLimitCommandRunning,
                         notificationLocation,
-                        (bus, a, b, c, d) => bus.BuyAndSell(a, b, c, d)
+                        (bus, a, b, c, d) => bus.BuyImmediateAndSellWithProfit(a, b, c, d)
                    );
 
             }
         }
 
-        ICommand CommonCommand(ICommand command, Boolean isRunning, String notificationLocation, Func<BittrexBusiness, String, Decimal, Decimal, Decimal, Task<BittrexLimitResponse>> buyOrSellMethodPredicate, [CallerMemberName] String callerMemberName = "")
+        public override string this[string columnName]
+        {
+            get
+            {
+                Error = base[columnName];
+
+                switch (columnName)
+                {
+                    case nameof(ProfitPercent):
+                        Error = ProfitPercent == 0 ? "Required value" : null;
+                        break;
+                    default:
+                        break;
+                }
+                return Error;
+            }
+        }
+
+        ICommand CommonCommand(ICommand command, Boolean isRunning, String notificationLocation, Action<BittrexBusiness, String, Decimal, Decimal, Decimal> buyOrSellMethodPredicate, [CallerMemberName] String callerMemberName = "")
         {
             if (command == null)
             {
-                command = new RelayCommand(async p =>
+                command = new RelayCommand(p =>
                 {
                     var notifierOutput = new OutputDataNotifier(OutputData, notificationLocation);
+                    var originalButtonText = this.ButtonText;
 
                     try
                     {
                         isRunning = true;
-                        var model = this;
-
-                        var originalButtonText = model.ButtonText;
-                        model.ButtonText = "In Progress";
+                        this.ButtonText = "In Progress";
 
                         Server.Instance.Notification.RegisterNotifier(notificationLocation, notifierOutput);
 
@@ -76,29 +93,7 @@ namespace AutoBitBot.UI.MainApp.ViewModels
                         {
                             NotifyLocation = notificationLocation
                         };
-                        var task = await buyOrSellMethodPredicate(business, model.Market, model.Quantity, model.Rate, model.ProfitPercent);
-                        if (task != null)
-                        {
-                            //todo:null check
-                            var order = await business.CheckOrder(task.uuid);
-
-                            if (order.IsOpen)
-                            {
-                                Server.Instance.Notification.Notify($"[{callerMemberName}] Order is still open.", NotifyTo.CONSOLE, notificationLocation);
-                            }
-                            else
-                            {
-                                Server.Instance.Notification.Notify($"[{callerMemberName}] Order is closed.", NotifyTo.CONSOLE, notificationLocation);
-                            }
-
-                            //var fetch = Server.Instance.CreateFetch(notificationLocation);
-                            //fetch.Wallet();
-                            //fetch.OpenOrders(true);
-                        }
-
-                        model.ButtonText = originalButtonText;
-                        model.FireOnPropertyChangedForAllProperties();
-
+                        buyOrSellMethodPredicate(business, this.Market, this.Quantity, this.Rate, this.ProfitPercent);
                     }
                     catch (Exception ex)
                     {
@@ -107,10 +102,13 @@ namespace AutoBitBot.UI.MainApp.ViewModels
                     finally
                     {
                         isRunning = false;
+                        this.ButtonText = originalButtonText;
+                        this.FireOnPropertyChangedForAllProperties();
+
                         Server.Instance.Notification.UnregisterNotifier(notificationLocation, notifierOutput.Id);
                     }
 
-                }, p => !isRunning);
+                }, p => !isRunning && Error == null);
             }
             return command;
         }

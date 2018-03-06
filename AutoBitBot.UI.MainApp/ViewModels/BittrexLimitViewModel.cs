@@ -8,6 +8,7 @@ using AutoBitBot.UI.Presentation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -18,7 +19,7 @@ using System.Windows.Input;
 
 namespace AutoBitBot.UI.MainApp.ViewModels
 {
-    public class BittrexLimitViewModel : ObservableObject
+    public class BittrexLimitViewModel : ObservableObject, IDataErrorInfo
     {
         public BittrexLimitViewModel()
         {
@@ -125,6 +126,26 @@ namespace AutoBitBot.UI.MainApp.ViewModels
             }
         }
 
+        public string Error { get; protected set; }
+
+        public virtual string this[string columnName]
+        {
+            get
+            {
+                switch (columnName)
+                {
+                    case nameof(Rate):
+                        Error = Rate == 0 ? "Required value" : null;
+                        break;
+                    case nameof(Quantity):
+                        Error = Quantity == 0 ? "Required value" : null;
+                        break;
+                    default:
+                        break;
+                }
+                return Error;
+            }
+        }
 
         ICommand CommonCommand(ICommand command, Boolean isRunning, String notificationLocation, Func<BittrexBusiness, String, Decimal, Decimal, Task<BittrexOrderResponse>> buyOrSellMethodPredicate, [CallerMemberName] String callerMemberName = "")
         {
@@ -133,14 +154,12 @@ namespace AutoBitBot.UI.MainApp.ViewModels
                 command = new RelayCommand(async p =>
                 {
                     var notifierOutput = new OutputDataNotifier(OutputData, notificationLocation);
+                    var originalButtonText = this.ButtonText;
 
                     try
                     {
                         isRunning = true;
-                        var model = this;
-
-                        var originalButtonText = model.ButtonText;
-                        model.ButtonText = "In Progress";
+                        this.ButtonText = "In Progress";
 
                         Server.Instance.Notification.RegisterNotifier(notificationLocation, notifierOutput);
 
@@ -148,23 +167,22 @@ namespace AutoBitBot.UI.MainApp.ViewModels
                         {
                             NotifyLocation = notificationLocation
                         };
-                        await buyOrSellMethodPredicate(business, model.Market, model.Quantity, model.Rate);
-                        
-                        model.ButtonText = originalButtonText;
-                        model.FireOnPropertyChangedForAllProperties();
-
+                        await buyOrSellMethodPredicate(business, this.Market, this.Quantity, this.Rate);
                     }
                     catch (Exception ex)
                     {
-                        Server.Instance.Notification.Notify(ex, NotifyTo.CONSOLE, NotifyTo.EVENT_LOG);
+                        var newEx = new Exception($"[{callerMemberName}]", ex);
+                        Server.Instance.Notification.Notify(newEx, NotifyTo.CONSOLE, NotifyTo.EVENT_LOG, notificationLocation);
                     }
                     finally
                     {
                         isRunning = false;
+                        this.ButtonText = originalButtonText;
+                        this.FireOnPropertyChangedForAllProperties();
                         Server.Instance.Notification.UnregisterNotifier(notificationLocation, notifierOutput.Id);
                     }
 
-                }, p => !isRunning);
+                }, p => !isRunning && Error == null);
             }
             return command;
         }

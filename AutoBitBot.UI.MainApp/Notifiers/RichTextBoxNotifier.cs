@@ -14,6 +14,7 @@ using ArchPM.Core.Extensions;
 
 namespace AutoBitBot.UI.MainApp.Notifiers
 {
+    [Obsolete]
     public class RichTextBoxNotifier : INotifier
     {
         readonly Dispatcher dispatcher;
@@ -91,6 +92,12 @@ namespace AutoBitBot.UI.MainApp.Notifiers
         {
             Add(ex.GetAllMessages(true, " "), Colors.Red);
             return Task.CompletedTask;
+        }
+
+        public Task Notify(object entity, NotifyAs notifyAs)
+        {
+            var str = Newtonsoft.Json.JsonConvert.SerializeObject(entity);
+            return Notify(str, notifyAs);
         }
     }
 }
