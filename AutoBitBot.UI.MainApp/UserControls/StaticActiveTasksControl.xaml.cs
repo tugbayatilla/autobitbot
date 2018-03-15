@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AutoBitBot.UI.MainApp.UserControls.Bittrex
+namespace AutoBitBot.UI.MainApp.UserControls
 {
     /// <summary>
-    /// Interaction logic for BittrexCommandButtons.xaml
+    /// Interaction logic for BitTaskSchedulerControl.xaml
     /// </summary>
-    public partial class BittrexCommandButtons : UserControl
+    public partial class StaticActiveTasksControl : UserControl
     {
-        public BittrexCommandButtons()
+        public StaticActiveTasksControl()
         {
             InitializeComponent();
         }

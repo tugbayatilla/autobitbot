@@ -1,9 +1,11 @@
-﻿<UserControl x:Class="AutoBitBot.UI.MainApp.UserControls.KilledTasksControl"
+﻿<UserControl x:Class="AutoBitBot.UI.MainApp.UserControls.StaticKilledTasksControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AutoBitBot.UI.MainApp.UserControls"
+             xmlns:server="clr-namespace:AutoBitBot.ServerEngine;assembly=AutoBitBot.ServerEngine"
+             DataContext="{Binding Source={x:Static server:Server.Instance}, Path=KilledTasks}"
              xmlns:converters="clr-namespace:AutoBitBot.UI.MainApp.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="700">
@@ -11,7 +13,7 @@
         <converters:DateTimeToStringConverter x:Key="DateTimeToString" />
     </UserControl.Resources>
     <Grid >
-        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding KilledTasks}" >
+        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding}" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
                 <DataGridTextColumn Header="Status" Binding="{Binding Status}" />

@@ -57,22 +57,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BitTasks\BitTaskException.cs" />
-    <Compile Include="BitTasks\BittrexTasks\BittrexFatFinger1MinSignalCollectorTask.cs" />
-    <Compile Include="BitTasks\BittrexTasks\BittrexFatFinger1MinMainTask.cs" />
-    <Compile Include="BitTasks\BittrexTasks\BittrexTickerTask.cs" />
+    <Compile Include="BitTasks\Tasks\BittrexTickerTask.cs" />
     <Compile Include="BitTasks\Enums\BitTaskWorkingTimes.cs" />
-    <Compile Include="BitTasks\BittrexTasks\BittrexGetOrderHistoryTask.cs" />
-    <Compile Include="BitTasks\BittrexTasks\BittrexGetOpenOrdersTask.cs" />
-    <Compile Include="BitTasks\BittrexTasks\BittrexGetMarketSummaryTask.cs" />
-    <Compile Include="BitTasks\BittrexTasks\BittrexGetMarketsTask.cs" />
-    <Compile Include="BitTasks\BittrexTasks\BittrexSellLimitCompletedTask.cs" />
-    <Compile Include="BitTasks\BittrexTasks\BittrexSellLimitTask.cs" />
-    <Compile Include="BitTasks\ExchangeTasks\ExchangeWalletTask.cs" />
-    <Compile Include="BitTasks\ExchangeTasks\ExchangeOpenOrdersTask.cs" />
-    <Compile Include="BitTasks\PoloniexTasks\PoloniexTickerTask.cs" />
-    <Compile Include="BitTasks\PoloniexTasks\PoloniexWalletTask.cs" />
-    <Compile Include="BitTasks\ExchangeTasks\ExchangeOverallStatusTask.cs" />
-    <Compile Include="BitTasks\ProcessTasks\LicenceTask.cs" />
+    <Compile Include="BitTasks\Tasks\BittrexOpenOrdersTask.cs" />
+    <Compile Include="BitTasks\Tasks\PoloniexTickerTask.cs" />
+    <Compile Include="BitTasks\Tasks\PoloniexWalletTask.cs" />
+    <Compile Include="BitTasks\Tasks\LicenceTask.cs" />
     <Compile Include="Business\PoloniexBusiness.cs" />
     <Compile Include="Business\BittrexBusiness.cs" />
     <Compile Include="Business\ExchangeBusiness.cs" />
@@ -87,13 +77,10 @@
     <Compile Include="BitTasks\BitTaskResult.cs" />
     <Compile Include="Domain\SelectedMarket.cs" />
     <Compile Include="Server.cs" />
-    <Compile Include="BitTasks\BitTask.cs" />
+    <Compile Include="BitTasks\Tasks\BitTask.cs" />
     <Compile Include="BitTasks\Enums\BitTaskStatus.cs" />
     <Compile Include="ConfigItem.cs" />
-    <Compile Include="BitTasks\BittrexTasks\BittrexBuyLimitTask.cs" />
-    <Compile Include="BitTasks\BittrexTasks\BittrexBuyLimitCompletedTask.cs" />
-    <Compile Include="BitTasks\BittrexTasks\BittrexWalletTask.cs" />
-    <Compile Include="BitTasks\BittrexTasks\BittrexGetTickerTask.cs" />
+    <Compile Include="BitTasks\Tasks\BittrexWalletTask.cs" />
     <Compile Include="PumpDumpPredictor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

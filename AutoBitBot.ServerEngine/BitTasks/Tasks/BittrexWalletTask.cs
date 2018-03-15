@@ -15,25 +15,21 @@ namespace AutoBitBot.ServerEngine.BitTasks
 {
     public class BittrexWalletTask : BitTask
     {
-        public override long ExecuteAtEvery => 0;
+        public override long ExecuteAtEvery => 22000;
 
         public override string Name => "Bittrex-Wallet-Task";
 
-        public override BitTaskExecutionTypes ExecutionType => BitTaskExecutionTypes.OneTime;
+        public override BitTaskExecutionTypes ExecutionType => BitTaskExecutionTypes.Permanent;
 
         protected override async Task<Object> ExecuteAction(Object parameter)
         {
             //fistan: merkezi yap
-            var manager = BittrexApiManagerFactory.Instance.Create();
+            var bittrexBusiness = new Business.BittrexBusiness(Notification);
+            await bittrexBusiness.UpdateWallet();
 
-            var result = await manager.GetBalances();
+            Notification.Notify($"[{Name}] Wallet Updated!", Constants.BITTREX, NotifyTo.CONSOLE, BitTask.DEFAULT_NOTIFY_LOCATION);
 
-            if (!result.Result)
-            {
-                Notification.Notify($"[{Name}] {result.Message}", Constants.BITTREX, NotifyTo.CONSOLE, BitTask.DEFAULT_NOTIFY_LOCATION);
-            }
-
-            return result.Data;
+            return null;
         }
     }
 }

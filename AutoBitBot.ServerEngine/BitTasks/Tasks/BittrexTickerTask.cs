@@ -2,7 +2,6 @@
 using AutoBitBot.BittrexProxy;
 using AutoBitBot.BittrexProxy.Responses;
 using AutoBitBot.Infrastructure;
-using AutoBitBot.Infrastructure.Exchanges;
 using AutoBitBot.ServerEngine.Enums;
 using System;
 using System.Collections.Generic;
@@ -14,17 +13,11 @@ using System.Threading.Tasks;
 
 namespace AutoBitBot.ServerEngine.BitTasks
 {
-    public class BittrexGetOpenOrdersTask : BitTask
+    public class BittrexTickerTask : BitTask
     {
-        readonly String market;
-        public BittrexGetOpenOrdersTask(String market)
-        {
-            this.market = market;
-        }
+        public override long ExecuteAtEvery => 20000;
 
-        public override long ExecuteAtEvery => 30000;
-
-        public override string Name => "BittrexGetOpenOrdersTask";
+        public override string Name => "Bittrex-Ticker-Task";
 
         public override BitTaskExecutionTypes ExecutionType => BitTaskExecutionTypes.Permanent;
 
@@ -33,15 +26,18 @@ namespace AutoBitBot.ServerEngine.BitTasks
             //fistan: merkezi yap
             var manager = BittrexApiManagerFactory.Instance.Create();
 
-            var result = await manager.GetOpenOrders(market);
+            var result = await manager.GetMarketSummaries();
 
-            if (!result.Result)
+            if (result.Result)
             {
-                Notification.Notify($"[{Name}] {result.Message}");
+                Notification.Notify($"[{Name}] Ticker Updated!", Constants.BITTREX, NotifyTo.CONSOLE, BitTask.DEFAULT_NOTIFY_LOCATION);
+            }
+            else
+            {
+                Notification.Notify($"[{Name}] Ticker Failed!", Constants.BITTREX, NotifyTo.CONSOLE, BitTask.DEFAULT_NOTIFY_LOCATION);
             }
 
             return result.Data;
-
         }
     }
 }

@@ -19,7 +19,7 @@ namespace AutoBitBot.ServerEngine.BitTasks
     public class LicenceTask : BitTask
     {
 
-        public override long ExecuteAtEvery => 60000;
+        public override long ExecuteAtEvery => 1800000; //30dk
 
         public override string Name => "Licence-Task";
 

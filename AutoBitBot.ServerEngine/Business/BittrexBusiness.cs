@@ -80,7 +80,7 @@ namespace AutoBitBot.Business
         }
 
 
-        public async void BuyImmediateAndSellWithProfit(String market, Decimal quantity, Decimal rate, Decimal profitPercent)
+        public async Task BuyImmediateAndSellWithProfit(String market, Decimal quantity, Decimal rate, Decimal profitPercent)
         {
             notification.Notify($"[Bittrex][{nameof(BuyImmediateAndSellWithProfit)}] {nameof(market)}:{market},{nameof(quantity)}:{quantity}, {nameof(rate)}:{rate}, {nameof(profitPercent)}:{profitPercent}", NotifyLocation);
 
@@ -98,7 +98,7 @@ namespace AutoBitBot.Business
             Decimal sellRate = tickerResult.Data.Ask;
             Decimal sellQuantity = sellPrice / sellRate;
 
-            Sell(market, sellQuantity, sellRate);
+            await Sell(market, sellQuantity, sellRate);
         }
 
 
@@ -169,16 +169,13 @@ namespace AutoBitBot.Business
             {
                 if (orderResponse.IsOpen)
                 {
-                    Server.Instance.Notification.Notify($"{header}[InProgress] Order is still open.", NotifyTo.CONSOLE, NotifyLocation);
+                    notification.Notify($"{header}[InProgress] Order is still open.", NotifyTo.CONSOLE, NotifyLocation);
                 }
                 else
                 {
                     notification.Notify($"{header}[Completed]: {market}|{quantity}|{rate} {sw.ElapsedMilliseconds}ms", NotifyLocation);
                 }
             }
-
-            UpdateWallet();
-            UpdateOpenOrders();
 
             return orderResponse;
         }
@@ -192,9 +189,6 @@ namespace AutoBitBot.Business
             var waitTime = 2000;
             var orderResponse = await CheckOrder(buyResponse.uuid, waitTime, 10000);
             sw.Stop();
-
-            UpdateWallet();
-            UpdateOpenOrders();
 
             notification.Notify($"[Bittrex][BuyImmediate][Completed]: {market}|{quantity}|{rate} {sw.ElapsedMilliseconds}ms", NotifyLocation);
 
@@ -296,7 +290,7 @@ namespace AutoBitBot.Business
         }
 
 
-        public async void UpdateWallet()
+        public async Task UpdateWallet()
         {
             var balanceResult = await Manager.GetBalances();
 
@@ -305,8 +299,6 @@ namespace AutoBitBot.Business
                 await Server.Instance.Wallet.Save(balanceResult.Data);
             }
         }
-
-
         public async void UpdateOpenOrders()
         {
             var result = new List<ExchangeOpenOrdersViewModel>();
@@ -336,5 +328,11 @@ namespace AutoBitBot.Business
             }
 
         }
+        public void Update()
+        {
+            UpdateWallet();
+            UpdateOpenOrders();
+        }
+
     }
 }

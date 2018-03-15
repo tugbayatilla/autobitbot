@@ -18,9 +18,9 @@ namespace AutoBitBot.UI.MainApp.UserControls
     /// <summary>
     /// Interaction logic for BitTaskSchedulerControl.xaml
     /// </summary>
-    public partial class KilledTasksControl : UserControl
+    public partial class StaticKilledTasksControl : UserControl
     {
-        public KilledTasksControl()
+        public StaticKilledTasksControl()
         {
             InitializeComponent();
         }

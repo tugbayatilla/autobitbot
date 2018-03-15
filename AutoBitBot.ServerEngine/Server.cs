@@ -1,6 +1,7 @@
 ﻿using ArchPM.Core;
 using ArchPM.Core.Api;
 using ArchPM.Core.Extensions;
+using ArchPM.Core.IO;
 using ArchPM.Core.Notifications;
 using ArchPM.Core.Notifications.Notifiers;
 using AutoBitBot.BittrexProxy.Responses;
@@ -60,17 +61,17 @@ namespace AutoBitBot.ServerEngine
                 Notification.RegisterNotifier(NotifyTo.CONSOLE, notifierFile);
                 Notification.RegisterNotifier(NotifyTo.EVENT_LOG, notifierFile);
 
-                var bittrexLogFileNotifier = new LogNotifier(new ArchPM.Core.IO.LogToFileManager()
-                {
-                    LogDirectoryPath = Path.Combine(Environment.CurrentDirectory, "Bittrex")
-                });
-                Notification.RegisterNotifier(Constants.BITTREX, bittrexLogFileNotifier);
+                Notification.RegisterNotifier(Constants.BITTREX,
+                    new LogNotifier(new LogToFileManager()
+                    {
+                        LogDirectoryPath = Path.Combine(Environment.CurrentDirectory, "Bittrex")
+                    }));
 
-                var error = new LogNotifier(new ArchPM.Core.IO.LogToFileManager()
-                {
-                    LogDirectoryPath = Path.Combine(Environment.CurrentDirectory, "Error")
-                });
-                Notification.RegisterNotifier(NotifyTo.EVENT_LOG, error);
+                Notification.RegisterNotifier(NotifyTo.EVENT_LOG,
+                    new LogNotifier(new LogToFileManager()
+                    {
+                        LogDirectoryPath = Path.Combine(Environment.CurrentDirectory, "Error")
+                    }));
             }
 
             //server.RegisterInstance(new BittrexGetTickerTask("BTC-XRP"));
@@ -81,17 +82,20 @@ namespace AutoBitBot.ServerEngine
             //RegisterInstance(new PoloniexWalletTask());
             //RegisterInstance(new BittrexWalletTask());
 
-            RegisterInstance(new ExchangeWalletTask());
-            RegisterInstance(new PoloniexTickerTask());
+            RegisterInstance(new BittrexWalletTask());
             RegisterInstance(new BittrexTickerTask());
-            RegisterInstance(new ExchangeOpenOrdersTask());
+            RegisterInstance(new BittrexOpenOrdersTask());
+
+            //RegisterInstance(new PoloniexTickerTask());
+
+            //RegisterInstance(new ExchangeOpenOrdersTask());
             RegisterInstance(new LicenceTask());
 
 
-            Config.Add(new ConfigItem(typeof(BittrexGetTickerTask),
-                new ConfigItem(typeof(BittrexBuyLimitCompletedTask)) { ExecutionTime = ConfigExecutionTimes.AfterExecution },
-                new ConfigItem(typeof(BittrexSellLimitTask)) { ExecutionTime = ConfigExecutionTimes.AfterExecution }, //todo: execute onetime can be set here
-                new ConfigItem(typeof(BittrexSellLimitCompletedTask))));
+            //Config.Add(new ConfigItem(typeof(BittrexGetTickerTask),
+            //    new ConfigItem(typeof(BittrexBuyLimitCompletedTask)) { ExecutionTime = ConfigExecutionTimes.AfterExecution },
+            //    new ConfigItem(typeof(BittrexSellLimitTask)) { ExecutionTime = ConfigExecutionTimes.AfterExecution }, //todo: execute onetime can be set here
+            //    new ConfigItem(typeof(BittrexSellLimitCompletedTask))));
 
             await RunAllRegisteredTasksAsync();
 
@@ -222,27 +226,28 @@ namespace AutoBitBot.ServerEngine
             bittrexBusiness.UpdateOpenOrders();
         }
 
-        public void FetchWallet()
-        {
-            var bittrexBusiness = new Business.BittrexBusiness(Notification);
-            bittrexBusiness.UpdateWallet();
+        //public void FetchWallet()
+        //{
+        //    //var bittrexBusiness = new Business.BittrexBusiness(Notification);
+        //    //bittrexBusiness.UpdateWallet();
 
-            ////bittrex call
-            //var bittrexManager = BittrexProxy.BittrexApiManagerFactory.Instance.Create(null, Instance.Notification);
-            //var bittrexBalancesResult = await bittrexManager.GetBalances();
 
-            //if (bittrexBalancesResult.Result)
-            //{
-            //    Instance.Wallet.Save(bittrexBalancesResult.Data);
-            //}
+        //    ////bittrex call
+        //    //var bittrexManager = BittrexProxy.BittrexApiManagerFactory.Instance.Create(null, Instance.Notification);
+        //    //var bittrexBalancesResult = await bittrexManager.GetBalances();
 
-            //var poloniexManager = PoloniexProxy.PoloniexApiManagerFactory.Instance.Create(null, Instance.Notification);
-            //var poloniexBalancesResult = await poloniexManager.ReturnBalances();
-            //if (poloniexBalancesResult.Result)
-            //{
-            //    Instance.Wallet.Save(poloniexBalancesResult.Data);
-            //}
-        }
+        //    //if (bittrexBalancesResult.Result)
+        //    //{
+        //    //    Instance.Wallet.Save(bittrexBalancesResult.Data);
+        //    //}
+
+        //    //var poloniexManager = PoloniexProxy.PoloniexApiManagerFactory.Instance.Create(null, Instance.Notification);
+        //    //var poloniexBalancesResult = await poloniexManager.ReturnBalances();
+        //    //if (poloniexBalancesResult.Result)
+        //    //{
+        //    //    Instance.Wallet.Save(poloniexBalancesResult.Data);
+        //    //}
+        //}
 
 
 

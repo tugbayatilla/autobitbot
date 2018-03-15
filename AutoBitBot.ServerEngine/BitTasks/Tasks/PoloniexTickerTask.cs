@@ -2,7 +2,6 @@
 using AutoBitBot.BittrexProxy;
 using AutoBitBot.BittrexProxy.Responses;
 using AutoBitBot.Infrastructure;
-using AutoBitBot.Infrastructure.Exchanges;
 using AutoBitBot.PoloniexProxy;
 using AutoBitBot.ServerEngine.Enums;
 using System;
@@ -10,32 +9,33 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AutoBitBot.ServerEngine.BitTasks
 {
-    public class PoloniexWalletTask : BitTask
+    public class PoloniexTickerTask : BitTask
     {
-        public override long ExecuteAtEvery => 0;
 
-        public override string Name => "Poloniex-Wallet-Task";
+        public override long ExecuteAtEvery => 20000;
 
-        public override BitTaskExecutionTypes ExecutionType => BitTaskExecutionTypes.OneTime;
+        public override string Name => "Poloniex-Ticker-Task";
+
+        public override BitTaskExecutionTypes ExecutionType => BitTaskExecutionTypes.Permanent;
 
         protected override async Task<Object> ExecuteAction(Object parameter)
         {
             //fistan: merkezi yap
             var manager = PoloniexApiManagerFactory.Instance.Create();
 
-            var result = await manager.ReturnBalances();
+            var result = await manager.ReturnTicker();
 
             if (!result.Result)
             {
-                Notification.Notify($"[{Name}] {result.Message}", Constants.POLONIEX, NotifyTo.CONSOLE, BitTask.DEFAULT_NOTIFY_LOCATION);
+                Notification.Notify($"[{Name}] Ticker Updated!", Constants.POLONIEX, NotifyTo.CONSOLE, BitTask.DEFAULT_NOTIFY_LOCATION);
             }
 
             return result.Data;
-
         }
     }
 }

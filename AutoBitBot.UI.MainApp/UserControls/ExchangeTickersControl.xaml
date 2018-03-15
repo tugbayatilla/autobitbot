@@ -32,7 +32,24 @@
         </Grid.ColumnDefinitions>
 
 
-        <TextBox Grid.Row="0" x:Name="SearchTextBox" TextChanged="SearchTextBox_TextChanged" />
+        <TextBox  />
+
+        <Grid  Grid.Row="0">
+            <TextBox x:Name="SearchTextBox" TextChanged="SearchTextBox_TextChanged" />
+            <TextBlock IsHitTestVisible="False" Text="Enter Search Term Here" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Foreground="DarkGray">
+                <TextBlock.Style>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Text, ElementName=SearchTextBox}" Value="">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </Grid>
+
 
         <DataGrid Grid.Row="1" 
                   x:Name="dg" 

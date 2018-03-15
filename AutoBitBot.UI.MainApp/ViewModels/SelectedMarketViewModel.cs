@@ -11,7 +11,7 @@ namespace AutoBitBot.UI.MainApp.DTO
     public class SelectedMarketViewModel : ObservableObject
     {
         String market, currency;
-        Decimal lastBid, lastAsk, quantity;
+        Decimal lastBid, lastAsk;
 
         public String Market
         {

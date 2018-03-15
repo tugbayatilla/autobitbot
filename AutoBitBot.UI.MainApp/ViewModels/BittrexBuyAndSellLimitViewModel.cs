@@ -94,6 +94,8 @@ namespace AutoBitBot.UI.MainApp.ViewModels
                             NotifyLocation = notificationLocation
                         };
                         buyOrSellMethodPredicate(business, this.Market, this.Quantity, this.Rate, this.ProfitPercent);
+
+                        business.Update();
                     }
                     catch (Exception ex)
                     {

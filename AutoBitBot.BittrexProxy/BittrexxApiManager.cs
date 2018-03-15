@@ -69,7 +69,7 @@ namespace AutoBitBot.BittrexProxy
                 result.RequestedUrl = url;
 
                 //log here: dont use await here. dont want to wait here
-                notification.Notify(result.ApiResponseToString(), NotifyTo.CONSOLE, NotifyLocation);
+                notification.Notify(result.ApiResponseToString(), NotifyLocation);
             }
             return result;
         }

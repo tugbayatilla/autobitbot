@@ -35,9 +35,9 @@
         </TextBlock>
 
         <Label Grid.Row="1" Grid.Column="0" Content="Rate" HorizontalAlignment="Left" />
-        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Rate, ValidatesOnDataErrors=True}"></TextBox>
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Rate}"></TextBox>
         <Label Grid.Row="2" Grid.Column="0" Content="Quantity" HorizontalAlignment="Left" />
-        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Quantity, ValidatesOnDataErrors=True}"></TextBox>
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Quantity}"></TextBox>
 
         <Button Command="{Binding BittrexBuyLimitCommand}" CommandParameter="{Binding}" Grid.Row="3" Grid.ColumnSpan="2">
             <StackPanel Orientation="Horizontal">

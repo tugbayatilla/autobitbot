@@ -15,6 +15,9 @@
     <Grid>
         <DataGrid 
                   ItemsSource="{Binding}" 
+                  IsReadOnly="True"
+                  VirtualizingPanel.IsVirtualizing="True"
+                  VirtualizingPanel.IsVirtualizingWhenGrouping="True" 
                       AutoGenerateColumns="False" 
                       CanUserAddRows="False" 
                       EnableRowVirtualization="True"  

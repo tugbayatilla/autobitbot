@@ -93,7 +93,7 @@ namespace AutoBitBot.UI.MainApp.ViewModels
         }
 
         Boolean IsBittrexSellLimitCommandRunning = false;
-        ICommand bittrexSellLimitCommand;
+        ICommand bittrexSellLimitCommand = null;
         public ICommand BittrexSellLimitCommand
         {
             get
@@ -110,7 +110,7 @@ namespace AutoBitBot.UI.MainApp.ViewModels
         }
 
         Boolean IsBittrexBuyLimitCommandRunning = false;
-        ICommand bittrexBuyLimitCommand;
+        ICommand bittrexBuyLimitCommand = null;
         public ICommand BittrexBuyLimitCommand
         {
             get
@@ -168,6 +168,8 @@ namespace AutoBitBot.UI.MainApp.ViewModels
                             NotifyLocation = notificationLocation
                         };
                         await buyOrSellMethodPredicate(business, this.Market, this.Quantity, this.Rate);
+                        business.Update();
+
                     }
                     catch (Exception ex)
                     {

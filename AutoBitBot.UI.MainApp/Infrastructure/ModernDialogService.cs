@@ -1,4 +1,5 @@
 ﻿using AutoBitBot.Infrastructure.Dialog;
+using AutoBitBot.UI.Presentation;
 using AutoBitBot.UI.Windows.Controls;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace AutoBitBot.UI.MainApp.Infrastructure
         {
             var dlg = new ModernDialog
             {
+                Resources = new System.Windows.ResourceDictionary() { Source = AppearanceManager.LightThemeSource },
                 Title = title,
                 Content = content
             };

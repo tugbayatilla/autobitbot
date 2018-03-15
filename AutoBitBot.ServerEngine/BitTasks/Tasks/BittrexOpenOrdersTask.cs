@@ -15,21 +15,22 @@ using System.Threading.Tasks;
 
 namespace AutoBitBot.ServerEngine.BitTasks
 {
-    public class ExchangeOpenOrdersTask : BitTask
+    public class BittrexOpenOrdersTask : BitTask
     {
-        public ExchangeOpenOrdersTask()
-        {
-        }
+        public override long ExecuteAtEvery => 5000;
 
-        public override long ExecuteAtEvery => 0;
+        public override string Name => "Bittrex-OpenOrders-Task";
 
-        public override string Name => "Exchange-OpenOrders-Task";
-
-        public override BitTaskExecutionTypes ExecutionType => BitTaskExecutionTypes.OneTime;
+        public override BitTaskExecutionTypes ExecutionType => BitTaskExecutionTypes.Permanent;
 
         protected override async Task<Object> ExecuteAction(Object parameter)
         {
-            Server.FetchOpenOrders();
+            var bittrexBusiness = new Business.BittrexBusiness(Notification);
+            bittrexBusiness.UpdateOpenOrders();
+
+
+            Notification.Notify($"[{Name}] OpenOrders Updated!", Constants.BITTREX, NotifyTo.CONSOLE, BitTask.DEFAULT_NOTIFY_LOCATION);
+
             return null;
         }
     }

@@ -24,7 +24,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationRevision>3</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -103,44 +103,26 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Commands\Bittrex\BittrexCancelOrderCommand.cs" />
-    <Compile Include="Commands\Bittrex\Open_BittrexBuyLimitCommand.cs" />
-    <Compile Include="Commands\Bittrex\Open_BittrexBuyAndSellLimitCommand.cs" />
-    <Compile Include="Commands\LoadBalanceCommand.cs" />
-    <Compile Include="Commands\Bittrex\Open_BittrexSellLimitCommand.cs" />
-    <Compile Include="Commands\OpenBuyAndSellCommand.cs" />
-    <Compile Include="Commands\OpenKilledTasksCommand.cs" />
-    <Compile Include="Commands\OpenMarketsCommand.cs" />
     <Compile Include="Commands\OpenModalCommand.cs" />
-    <Compile Include="Commands\OpenOrderHistoryCommand.cs" />
-    <Compile Include="Commands\SampleDisabledCommand.cs" />
-    <Compile Include="Commands\SampleMsgBoxCommand.cs" />
-    <Compile Include="Commands\SampleParameterCommand.cs" />
     <Compile Include="Infrastructure\LicenceManager.cs" />
     <Compile Include="Infrastructure\ModernDialogService.cs" />
     <Compile Include="Notifiers\OutputData.cs" />
     <Compile Include="Notifiers\OutputDataNotifier.cs" />
-    <Compile Include="UserControls\Common\ButtonsControl.xaml.cs">
+    <Compile Include="UserControls\ButtonsControl.xaml.cs">
       <DependentUpon>ButtonsControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Common\OutputDataGridControl.xaml.cs">
+    <Compile Include="UserControls\OutputDataGridControl.xaml.cs">
       <DependentUpon>OutputDataGridControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Common\StaticSelectedMarketControl.xaml.cs">
+    <Compile Include="UserControls\StaticSelectedMarketControl.xaml.cs">
       <DependentUpon>StaticSelectedMarketControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\BittrexBuyAndSellLimitViewModel.cs" />
     <Compile Include="ViewModels\DesignViewModel.cs" />
     <Compile Include="ViewModels\OpenOrdersViewModel.cs" />
     <Compile Include="ViewModels\SelectedMarketViewModel.cs" />
-    <Compile Include="UserControls\Bittrex\BittrexCommandButtons.xaml.cs">
-      <DependentUpon>BittrexCommandButtons.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Bittrex\BittrexSellLimitControl.xaml.cs">
+    <Compile Include="UserControls\BittrexSellLimitControl.xaml.cs">
       <DependentUpon>BittrexSellLimitControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Bittrex\BittrexMarketInfo.xaml.cs">
-      <DependentUpon>BittrexMarketInfo.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\DateTimeToStringConverter.cs" />
     <Compile Include="Converters\PercentStringValueConverter.cs" />
@@ -173,58 +155,49 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Titles.resx</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Common\AllExchangeOverallCurrentStatusControl.xaml.cs">
+    <Compile Include="UserControls\AllExchangeOverallCurrentStatusControl.xaml.cs">
       <DependentUpon>AllExchangeOverallCurrentStatusControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Common\ExchangeTickersControl.xaml.cs">
+    <Compile Include="UserControls\ExchangeTickersControl.xaml.cs">
       <DependentUpon>ExchangeTickersControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Bittrex\BittrexBuyLimitControl.xaml.cs">
+    <Compile Include="UserControls\BittrexBuyLimitControl.xaml.cs">
       <DependentUpon>BittrexBuyLimitControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Bittrex\BittrexTickersControl.xaml.cs">
-      <DependentUpon>BittrexTickersControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Bittrex\BittrexFatFingerStarterControl.xaml.cs">
+    <Compile Include="UserControls\BittrexFatFingerStarterControl.xaml.cs">
       <DependentUpon>BittrexFatFingerStarterControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Common\OpenOrdersControl.xaml.cs">
+    <Compile Include="UserControls\OpenOrdersControl.xaml.cs">
       <DependentUpon>OpenOrdersControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Poloniex\PoloniexTickersControl.xaml.cs">
+    <Compile Include="UserControls\PoloniexTickersControl.xaml.cs">
       <DependentUpon>PoloniexTickersControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\BittrexLimitViewModel.cs" />
     <Compile Include="ViewModels\SampleFormViewModel.cs" />
-    <Compile Include="UserControls\Common\ActiveTasksControl.xaml.cs">
-      <DependentUpon>ActiveTasksControl.xaml</DependentUpon>
+    <Compile Include="UserControls\StaticActiveTasksControl.xaml.cs">
+      <DependentUpon>StaticActiveTasksControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Common\WalletControl.xaml.cs">
+    <Compile Include="UserControls\WalletControl.xaml.cs">
       <DependentUpon>WalletControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Bittrex\BittrexBuyAndSellControl.xaml.cs">
+    <Compile Include="UserControls\BittrexBuyAndSellControl.xaml.cs">
       <DependentUpon>BittrexBuyAndSellControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Common\KilledTasksControl.xaml.cs">
-      <DependentUpon>KilledTasksControl.xaml</DependentUpon>
+    <Compile Include="UserControls\StaticKilledTasksControl.xaml.cs">
+      <DependentUpon>StaticKilledTasksControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Bittrex\BittrexMarketsControl.xaml.cs">
-      <DependentUpon>BittrexMarketsControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Bittrex\BittrexMarketSummaryControl.xaml.cs">
+    <Compile Include="UserControls\BittrexMarketSummaryControl.xaml.cs">
       <DependentUpon>BittrexMarketSummaryControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Bittrex\BittrexMarketOpenOrdersControl.xaml.cs">
+    <Compile Include="UserControls\BittrexMarketOpenOrdersControl.xaml.cs">
       <DependentUpon>BittrexMarketOpenOrdersControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Bittrex\BittrexMarketOrderHistoryControl.xaml.cs">
+    <Compile Include="UserControls\BittrexMarketOrderHistoryControl.xaml.cs">
       <DependentUpon>BittrexMarketOrderHistoryControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Common\OutputControl.xaml.cs">
+    <Compile Include="UserControls\OutputControl.xaml.cs">
       <DependentUpon>OutputControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Bittrex\BittrexMarketTickerControl.xaml.cs">
-      <DependentUpon>BittrexMarketTickerControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Page Include="Assets\Icons\appbar.add.xaml">
@@ -327,15 +300,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\Bittrex\BittrexCommandButtons.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\Bittrex\BittrexSellLimitControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UserControls\Bittrex\BittrexMarketInfo.xaml">
+    <Page Include="UserControls\BittrexSellLimitControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -552,83 +517,71 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\Common\ButtonsControl.xaml">
+    <Page Include="UserControls\ButtonsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\Common\OpenOrdersControl.xaml">
+    <Page Include="UserControls\OpenOrdersControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\Common\ActiveTasksControl.xaml">
+    <Page Include="UserControls\StaticActiveTasksControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\Common\AllExchangeOverallCurrentStatusControl.xaml">
+    <Page Include="UserControls\AllExchangeOverallCurrentStatusControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\Common\StaticSelectedMarketControl.xaml">
+    <Page Include="UserControls\StaticSelectedMarketControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\Common\WalletControl.xaml">
+    <Page Include="UserControls\WalletControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\Common\ExchangeTickersControl.xaml">
+    <Page Include="UserControls\ExchangeTickersControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\Bittrex\BittrexBuyLimitControl.xaml">
+    <Page Include="UserControls\BittrexBuyLimitControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\Bittrex\BittrexBuyAndSellControl.xaml">
+    <Page Include="UserControls\BittrexBuyAndSellControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\Bittrex\BittrexFatFingerStarterControl.xaml">
+    <Page Include="UserControls\BittrexFatFingerStarterControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\Common\KilledTasksControl.xaml">
+    <Page Include="UserControls\StaticKilledTasksControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\Bittrex\BittrexTickersControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UserControls\Common\OutputDataGridControl.xaml">
+    <Page Include="UserControls\OutputDataGridControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\Poloniex\PoloniexTickersControl.xaml">
+    <Page Include="UserControls\PoloniexTickersControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\Bittrex\BittrexMarketsControl.xaml">
+    <Page Include="UserControls\BittrexMarketSummaryControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\Bittrex\BittrexMarketSummaryControl.xaml">
+    <Page Include="UserControls\BittrexMarketOpenOrdersControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\Bittrex\BittrexMarketOpenOrdersControl.xaml">
+    <Page Include="UserControls\BittrexMarketOrderHistoryControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\Bittrex\BittrexMarketOrderHistoryControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UserControls\Common\OutputControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UserControls\Bittrex\BittrexMarketTickerControl.xaml">
+    <Page Include="UserControls\OutputControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

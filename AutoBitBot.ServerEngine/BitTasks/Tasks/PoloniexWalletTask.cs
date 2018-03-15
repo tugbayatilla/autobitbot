@@ -3,41 +3,35 @@ using AutoBitBot.BittrexProxy;
 using AutoBitBot.BittrexProxy.Responses;
 using AutoBitBot.Infrastructure;
 using AutoBitBot.Infrastructure.Exchanges;
+using AutoBitBot.PoloniexProxy;
 using AutoBitBot.ServerEngine.Enums;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace AutoBitBot.ServerEngine.BitTasks
 {
-    public class BittrexGetOrderHistoryTask : BitTask
+    public class PoloniexWalletTask : BitTask
     {
-        readonly String market;
-        public BittrexGetOrderHistoryTask(String market)
-        {
-            this.market = market;
-        }
+        public override long ExecuteAtEvery => 0;
 
-        public override long ExecuteAtEvery => 10000;
+        public override string Name => "Poloniex-Wallet-Task";
 
-        public override string Name => "Bittrex-OrderHistory-Task";
-
-        public override BitTaskExecutionTypes ExecutionType => BitTaskExecutionTypes.Permanent;
+        public override BitTaskExecutionTypes ExecutionType => BitTaskExecutionTypes.OneTime;
 
         protected override async Task<Object> ExecuteAction(Object parameter)
         {
             //fistan: merkezi yap
-            var manager = BittrexApiManagerFactory.Instance.Create();
+            var manager = PoloniexApiManagerFactory.Instance.Create();
 
-            var result = await manager.GetOrderHistory(market);
+            var result = await manager.ReturnBalances();
 
             if (!result.Result)
             {
-                Notification.Notify($"[{Name}] {result.Message}");
+                Notification.Notify($"[{Name}] Wallet Updated!", Constants.POLONIEX, NotifyTo.CONSOLE, BitTask.DEFAULT_NOTIFY_LOCATION);
             }
 
             return result.Data;
