@@ -60,6 +60,7 @@
     <Compile Include="BitTasks\Tasks\BittrexTickerTask.cs" />
     <Compile Include="BitTasks\Enums\BitTaskWorkingTimes.cs" />
     <Compile Include="BitTasks\Tasks\BittrexOpenOrdersTask.cs" />
+    <Compile Include="BitTasks\Tasks\BittrexMarketsInfoTask.cs" />
     <Compile Include="BitTasks\Tasks\PoloniexTickerTask.cs" />
     <Compile Include="BitTasks\Tasks\PoloniexWalletTask.cs" />
     <Compile Include="BitTasks\Tasks\LicenceTask.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="Collections\ExchangeTickerContainer.cs" />
     <Compile Include="Collections\OpenOrdersContainer.cs" />
     <Compile Include="Collections\ExchangeOverallCurrentStatusObservableCollection.cs" />
+    <Compile Include="Collections\MarketsInfoContainer.cs" />
     <Compile Include="Collections\WalletContainer.cs" />
     <Compile Include="DecisionMaker.cs" />
     <Compile Include="BitTasks\Enums\BitTaskExecutionTypes.cs" />

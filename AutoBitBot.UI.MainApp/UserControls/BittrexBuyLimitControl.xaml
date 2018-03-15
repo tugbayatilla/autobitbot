@@ -6,16 +6,29 @@
              xmlns:local="clr-namespace:AutoBitBot.UI.MainApp.UserControls"
              xmlns:viewModel="clr-namespace:AutoBitBot.UI.MainApp.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="200" d:DesignWidth="300" 
+             d:DesignHeight="350" d:DesignWidth="400" 
              xmlns:globalControls="clr-namespace:AutoBitBot.UI.MainApp.UserControls.Global"
+             xmlns:converters="clr-namespace:AutoBitBot.UI.MainApp.Converters"
              d:DataContext="{Binding Source={x:Static viewModel:DesignViewModel.Instance}, Path=BittrexLimitViewModel}">
+
+    <UserControl.Resources>
+        <converters:DecimalStringValueConverter x:Key="DecimalStringValueConverter"/>
+
+        <Style TargetType="Label" x:Key="decimalLabel" BasedOn="{StaticResource {x:Type Label}}">
+            <Setter Property="HorizontalContentAlignment" Value="Right" />
+            <Setter Property="Margin" Value="0,0,10,0"/>
+        </Style>
+        
+    </UserControl.Resources>
+
+    
     <Grid Style="{StaticResource ContentRoot}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="80" />
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="200"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition  Width="4*" MaxWidth="250"/>
@@ -23,16 +36,47 @@
             <ColumnDefinition Width="*" MaxWidth="100"/>
         </Grid.ColumnDefinitions>
         <TextBlock >
+            <StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Market: "/>
                 <Label Content="{Binding Market, Mode=OneTime}" />
             </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                <Label Content="Lowest Ask: "/>
+                <Label Content="{Binding Rate, Mode=OneTime, Converter={StaticResource DecimalStringValueConverter}}" />
+            </StackPanel>
+                </StackPanel>
         </TextBlock>
-        <TextBlock Grid.Column="1" 
-                   HorizontalAlignment="Right" >
-                <Run Text="Available"/>
-                <Run Text="{Binding Available, Mode=OneWay}"/>
-        </TextBlock>
+        <StackPanel Grid.Column="1" >
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="7*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="16"/>
+                    <RowDefinition Height="16"/>
+                    <RowDefinition Height="16"/>
+                    <RowDefinition Height="16"/>
+                </Grid.RowDefinitions>
+                <Label Style="{StaticResource ResourceKey=decimalLabel}" Content="{Binding Available, Converter={StaticResource DecimalStringValueConverter}, Mode=OneWay}" Grid.Column="1" Grid.Row="0"/>
+                <Label Style="{StaticResource ResourceKey=decimalLabel}" Content="{Binding AvailableBTC, Converter={StaticResource DecimalStringValueConverter}, Mode=OneWay}" Grid.Column="1" Grid.Row="1" />
+                <Label Style="{StaticResource ResourceKey=decimalLabel}" Content="{Binding MinTradeSize, Converter={StaticResource DecimalStringValueConverter}, Mode=OneWay}" Grid.Column="1" Grid.Row="2"/>
+                <Label Style="{StaticResource ResourceKey=decimalLabel}" Content="{Binding Fee, Converter={StaticResource DecimalStringValueConverter}, Mode=OneWay}" Grid.Column="1" Grid.Row="3"/>
+
+                <Label Content="Available: "/>
+                <Label Content="Available: " Grid.Row="1"/>
+                <Label Content="MinTrade: " Grid.Row="2"/>
+                <Label Content="Fee: " Grid.Row="3"/>
+                <Label Content="{Binding Currency, Mode=OneWay}" Grid.Column="2"/>
+                <Label Content="{Binding BaseCurrency, Mode=OneWay}" Grid.Column="2" Grid.Row="1"/>
+                <Label Content="{Binding Currency, Mode=OneWay}" Grid.Column="2" Grid.Row="2"/>
+                <Label Content="{Binding BaseCurrency, Mode=OneWay}" Grid.Column="2" Grid.Row="3"/>
+            </Grid>
+
+        </StackPanel>
 
         <Label Grid.Row="1" Grid.Column="0" Content="Rate" HorizontalAlignment="Left" />
         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Rate}"></TextBox>
@@ -49,7 +93,7 @@
 
         <globalControls:OutputDataGridControl Grid.Row="4" Grid.ColumnSpan="2" DataContext="{Binding OutputData}"/>
 
-        
+
     </Grid>
 
 </UserControl>

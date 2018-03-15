@@ -50,7 +50,12 @@ namespace AutoBitBot.UI.MainApp.ViewModels
 
         public String Currency
         {
-            get => Constants.GetCurrenyFromMarketName(this.Market, LimitType);
+            get => Server.Instance.MarketsInfo.Get(this.Market).Currency;
+        }
+
+        public String BaseCurrency
+        {
+            get => Server.Instance.MarketsInfo.Get(this.Market).BaseCurrency;
         }
 
         public LimitTypes LimitType { get; set; }
@@ -78,6 +83,21 @@ namespace AutoBitBot.UI.MainApp.ViewModels
         public Decimal Available
         {
             get => Server.Instance.Wallet.Get(Constants.BITTREX, this.Currency).Amount;
+        }
+
+        public Decimal MinTradeSize
+        {
+            get => Server.Instance.MarketsInfo.Get(this.Market).MinTradeSize;
+        }
+
+        public Decimal Fee
+        {
+            get => Server.Instance.MarketsInfo.Get(this.Market).Fee;
+        }
+
+        public Decimal AvailableBTC
+        {
+            get => (Available * Rate) - Fee;
         }
 
         public ObservableCollection<OutputData> OutputData { get; set; }

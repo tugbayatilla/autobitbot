@@ -39,6 +39,7 @@ namespace AutoBitBot.ServerEngine
             this.KilledTasks = new ObservableCollection<BitTask>();
             this.Wallet = new WalletContainer();
             this.OpenOrders = new OpenOrdersContainer();
+            this.MarketsInfo = new MarketsInfoContainer();
 
             _lockTasks = new object();
 
@@ -85,11 +86,12 @@ namespace AutoBitBot.ServerEngine
             RegisterInstance(new BittrexWalletTask());
             RegisterInstance(new BittrexTickerTask());
             RegisterInstance(new BittrexOpenOrdersTask());
+            RegisterInstance(new BittrexMarketsInfoTask());
 
             //RegisterInstance(new PoloniexTickerTask());
 
             //RegisterInstance(new ExchangeOpenOrdersTask());
-            RegisterInstance(new LicenceTask());
+            //RegisterInstance(new LicenceTask());
 
 
             //Config.Add(new ConfigItem(typeof(BittrexGetTickerTask),
@@ -112,6 +114,12 @@ namespace AutoBitBot.ServerEngine
                     //todo: show messagebox and close application
                     //todo: message content must be get from server.
                 }
+            }
+
+            if (e.BitTask is BittrexMarketsInfoTask)
+            {
+                var model = e.Data as List<BittrexMarketResponse>;
+                this.MarketsInfo.Save(model);
             }
 
             //if (e.Data is List<BittrexBalanceResponse>)
@@ -142,6 +150,7 @@ namespace AutoBitBot.ServerEngine
         public ObservableCollection<BitTask> KilledTasks { get; private set; }
         public WalletContainer Wallet { get; private set; }
         public OpenOrdersContainer OpenOrders { get; private set; }
+        public MarketsInfoContainer MarketsInfo { get; private set; }
         public SelectedMarket SelectedMarket { get; set; }
 
 

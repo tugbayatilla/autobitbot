@@ -22,11 +22,14 @@ namespace AutoBitBot.UI.MainApp.Collections
 
         public void Save(IEnumerable<ExchangeOpenOrdersViewModel> models)
         {
-            this.Data.Clear();
-
-            foreach (var model in models)
+            lock (_locker)
             {
-                this.Data.Add(model);
+                this.Data.Clear();
+
+                foreach (var model in models)
+                {
+                    this.Data.Add(model);
+                }
             }
             
         }

@@ -102,7 +102,7 @@ namespace AutoBitBot.UI.MainApp.Collections
                 var balance = this.Data.FirstOrDefault(p => p.Currency == currency && p.ExchangeName == exchangeName);
                 if (balance == null)
                 {
-                    balance = new ExchangeBalanceViewModel() { Amount = -1 };
+                    balance = new ExchangeBalanceViewModel();
 
                 }
                 return balance;
