@@ -94,7 +94,7 @@ namespace AutoBitBot.Business
             }
 
             Decimal totalExpense = buyResult.CommissionPaid + (buyResult.Quantity * buyResult.Limit);
-            Decimal sellPrice = totalExpense + totalExpense.CalculateProfit(profitPercent);
+            Decimal sellPrice = totalExpense + ((totalExpense * profitPercent) / 100.0M);
             Decimal sellRate = tickerResult.Data.Ask;
             Decimal sellQuantity = sellPrice / sellRate;
 

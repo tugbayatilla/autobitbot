@@ -79,7 +79,7 @@ namespace AutoBitBot.Business
             notification.Notify($"[Poloniex][Buy][{transactionId}][Order Given]: uuid={buyResult.Data.uuid}", NotifyLocation);
 
             var waitTime = 2000;
-            var orderResult = await MakeSureOrderFulfilled(LimitTypes.Buy, manager, buyResult.Data.uuid, waitTime, 10000);
+            var orderResult = await MakeSureOrderFulfilled(LimitTypes.BuyImmediate, manager, buyResult.Data.uuid, waitTime, 10000);
 
             notification.Notify($"[Poloniex][Buy][{transactionId}][Order Fulfilled/Completed]: uuid={orderResult.Data.OrderUuid} Time:{waitTime * orderResult.TryCount}", NotifyLocation);
             return true;

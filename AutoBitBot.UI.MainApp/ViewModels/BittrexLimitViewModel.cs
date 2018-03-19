@@ -1,4 +1,5 @@
-﻿using ArchPM.Core.Notifications;
+﻿using ArchPM.Core.Extensions;
+using ArchPM.Core.Notifications;
 using AutoBitBot.BittrexProxy.Responses;
 using AutoBitBot.Business;
 using AutoBitBot.Infrastructure;
@@ -90,6 +91,11 @@ namespace AutoBitBot.UI.MainApp.ViewModels
             get => Server.Instance.MarketsInfo.Get(this.Market).MinTradeSize;
         }
 
+        public Decimal MinTradeSizeBTC
+        {
+            get => (MinTradeSize * Rate) - Fee;
+        }
+
         public Decimal Fee
         {
             get => Server.Instance.MarketsInfo.Get(this.Market).Fee;
@@ -112,39 +118,54 @@ namespace AutoBitBot.UI.MainApp.ViewModels
             }
         }
 
-        Boolean IsBittrexSellLimitCommandRunning = false;
-        ICommand bittrexSellLimitCommand = null;
-        public ICommand BittrexSellLimitCommand
-        {
-            get
-            {
-                String notificationLocation = "Bittrex-SellImmediate-Command";
+        Boolean isRunning = false;
+        public ICommand BittrexLimitCommand => new RelayCommand(async p =>
+         {
+             String notificationLocation = $"Bittrex-{this.LimitType.GetName()}-Command";
 
-                return CommonCommand(
-                        bittrexSellLimitCommand,
-                        IsBittrexSellLimitCommandRunning,
-                        notificationLocation,
-                        (bus, a, b, c) => bus.SellImmediate(a, b, c)
-                   );
-            }
-        }
+             var notifierOutput = new OutputDataNotifier(OutputData, notificationLocation);
+             var originalButtonText = this.ButtonText;
 
-        Boolean IsBittrexBuyLimitCommandRunning = false;
-        ICommand bittrexBuyLimitCommand = null;
-        public ICommand BittrexBuyLimitCommand
-        {
-            get
-            {
-                String notificationLocation = "Bittrex-BuyImmediate-Command";
-                return CommonCommand(
-                        bittrexBuyLimitCommand,
-                        IsBittrexBuyLimitCommandRunning,
-                        notificationLocation,
-                        (bus, a, b, c) => bus.BuyImmediate(a, b, c)
-                   );
+             try
+             {
+                 isRunning = true;
+                 this.ButtonText = "In Progress";
 
-            }
-        }
+                 Server.Instance.Notification.RegisterNotifier(notificationLocation, notifierOutput);
+
+                 var business = new BittrexBusiness(Server.Instance.Notification)
+                 {
+                     NotifyLocation = notificationLocation
+                 };
+
+                 if (this.LimitType == LimitTypes.BuyImmediate)
+                 {
+                     await business.BuyImmediate(this.Market, this.Quantity, this.Rate);
+                 }
+                 else if (this.LimitType == LimitTypes.SellImmediate)
+                 {
+                     await business.SellImmediate(this.Market, this.Quantity, this.Rate);
+                 }
+
+                 business.Update();
+
+             }
+             catch (Exception ex)
+             {
+                 var newEx = new Exception($"[{this.LimitType.GetName()}Command]", ex);
+                 Server.Instance.Notification.Notify(newEx, NotifyTo.EVENT_LOG, notificationLocation);
+             }
+             finally
+             {
+                 isRunning = false;
+                 this.ButtonText = originalButtonText;
+                 this.FireOnPropertyChangedForAllProperties();
+                 Server.Instance.Notification.UnregisterNotifier(notificationLocation, notifierOutput.Id);
+             }
+
+         }, p => !isRunning && Error == null);
+
+
 
         public string Error { get; protected set; }
 
@@ -165,48 +186,6 @@ namespace AutoBitBot.UI.MainApp.ViewModels
                 }
                 return Error;
             }
-        }
-
-        ICommand CommonCommand(ICommand command, Boolean isRunning, String notificationLocation, Func<BittrexBusiness, String, Decimal, Decimal, Task<BittrexOrderResponse>> buyOrSellMethodPredicate, [CallerMemberName] String callerMemberName = "")
-        {
-            if (command == null)
-            {
-                command = new RelayCommand(async p =>
-                {
-                    var notifierOutput = new OutputDataNotifier(OutputData, notificationLocation);
-                    var originalButtonText = this.ButtonText;
-
-                    try
-                    {
-                        isRunning = true;
-                        this.ButtonText = "In Progress";
-
-                        Server.Instance.Notification.RegisterNotifier(notificationLocation, notifierOutput);
-
-                        var business = new BittrexBusiness(Server.Instance.Notification)
-                        {
-                            NotifyLocation = notificationLocation
-                        };
-                        await buyOrSellMethodPredicate(business, this.Market, this.Quantity, this.Rate);
-                        business.Update();
-
-                    }
-                    catch (Exception ex)
-                    {
-                        var newEx = new Exception($"[{callerMemberName}]", ex);
-                        Server.Instance.Notification.Notify(newEx, NotifyTo.CONSOLE, NotifyTo.EVENT_LOG, notificationLocation);
-                    }
-                    finally
-                    {
-                        isRunning = false;
-                        this.ButtonText = originalButtonText;
-                        this.FireOnPropertyChangedForAllProperties();
-                        Server.Instance.Notification.UnregisterNotifier(notificationLocation, notifierOutput.Id);
-                    }
-
-                }, p => !isRunning && Error == null);
-            }
-            return command;
         }
 
     };

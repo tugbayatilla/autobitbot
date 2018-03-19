@@ -8,8 +8,9 @@ namespace AutoBitBot.Infrastructure
 
     public enum LimitTypes
     {
-        Buy,
-        Sell
+        BuyImmediate,
+        SellImmediate,
+        SellImmediatelyAfterBuy
     }
 
     public static class Constants
@@ -39,16 +40,16 @@ namespace AutoBitBot.Infrastructure
             return name.Replace("_", "-");
         }
 
-        public static String GetCurrenyFromMarketName(String marketName, LimitTypes limitType = LimitTypes.Sell)
+        public static String GetCurrenyFromMarketName(String marketName, LimitTypes limitType = LimitTypes.SellImmediate)
         {
             Int32 index = marketName.IndexOfAny(new char[] { '-', '_' });
             if (index != -1)
             {
                 switch (limitType)
                 {
-                    case LimitTypes.Buy:
+                    case LimitTypes.BuyImmediate:
                         return marketName.Substring(0, index);
-                    case LimitTypes.Sell:
+                    case LimitTypes.SellImmediate:
                         return marketName.Substring(index + 1);
                     default:
                         break;

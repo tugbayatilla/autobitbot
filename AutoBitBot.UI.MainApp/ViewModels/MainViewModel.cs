@@ -26,6 +26,7 @@ using AutoBitBot.UI.Presentation;
 using AutoBitBot.UI.MainApp.Infrastructure;
 using System.Windows;
 using AutoBitBot.UI.Windows.Controls;
+using ArchPM.Core.Extensions;
 
 namespace AutoBitBot.UI.MainApp.ViewModels
 {
@@ -72,139 +73,73 @@ namespace AutoBitBot.UI.MainApp.ViewModels
 
 
 
-        public ICommand Open_BittrexSellLimitCommand
+        public ICommand Open_BittrexSellLimitCommand => BittrexLimitCommand(LimitTypes.SellImmediate);
+        public ICommand Open_BittrexBuyLimitCommand => BittrexLimitCommand(LimitTypes.BuyImmediate);
+        public ICommand Open_BittrexBuyAndSellLimitCommand => BittrexLimitCommand(LimitTypes.SellImmediatelyAfterBuy);
+
+        ICommand BittrexLimitCommand(LimitTypes limitType)
         {
-            get
+            return new RelayCommand(parameter =>
             {
-                return new RelayCommand(parameter =>
+
+                var selectedMarket = ServerEngine.Server.Instance.SelectedMarket;
+                if (selectedMarket == null)
                 {
+                    ModernDialogService.WarningDialog("Select market first", "Warning");
+                    return;
+                }
 
-                    var selectedMarket = ServerEngine.Server.Instance.SelectedMarket;
-                    if (selectedMarket == null)
-                    {
-                        ModernDialogService.WarningDialog("Select market first", "Warning");
-                        return;
-                    }
+                var model = parameter as MainViewModel;
 
-                    var model = parameter as MainViewModel;
-
-                    var ticker = model.ExchangeTickerContainer.Data.FirstOrDefault(p => p.ExchangeName == selectedMarket.ExchangeName && p.MarketName == selectedMarket.MarketName);
-                    if (ticker == null)
-                    {
-                        ticker = new ExchangeTickerViewModel();
-                    }
-
-                    var uc = new UserControls.BittrexSellLimitControl()
-                    {
-                        DataContext = new BittrexLimitViewModel() { Market = selectedMarket.MarketName, ButtonText = "Sell Limit", Rate = ticker.Bid.NewValue, LimitType = LimitTypes.Sell }
-                    };
-
-                    var window = new ModernWindow
-                    {
-                        Style = (Style)App.Current.Resources["BlankWindow"],
-                        //Resources = new ResourceDictionary() { Source = AppearanceManager.LightThemeSource },
-                        IsTitleVisible = true,
-                        Title = $"{selectedMarket} Sell Limit Window",
-                        Content = uc,
-                        WindowState = WindowState.Normal,
-                        WindowStartupLocation = WindowStartupLocation.CenterScreen
-                    };
-
-                    window.Owner = Application.Current.MainWindow;
-                    window.Show();
-
-                });
-
-            }
-        }
-        public ICommand Open_BittrexBuyLimitCommand
-        {
-            get
-            {
-                return new RelayCommand(parameter =>
+                var ticker = model.ExchangeTickerContainer.Data.FirstOrDefault(p => p.ExchangeName == selectedMarket.ExchangeName && p.MarketName == selectedMarket.MarketName);
+                if (ticker == null)
                 {
+                    ticker = new ExchangeTickerViewModel();
+                }
 
-                    var selectedMarket = ServerEngine.Server.Instance.SelectedMarket;
-                    if (selectedMarket == null)
-                    {
-                        ModernDialogService.WarningDialog("Select market first", "Warning");
-                        return;
-                    }
-
-                    var model = parameter as MainViewModel;
-
-                    var ticker = model.ExchangeTickerContainer.Data.FirstOrDefault(p => p.ExchangeName == selectedMarket.ExchangeName && p.MarketName == selectedMarket.MarketName);
-                    if (ticker == null)
-                    {
-                        ticker = new ExchangeTickerViewModel();
-                    }
-
-                    var uc = new UserControls.BittrexBuyLimitControl()
-                    {
-                        DataContext = new BittrexLimitViewModel() { Market = selectedMarket.MarketName, ButtonText = "Buy Limit", Rate = ticker.Ask.NewValue, LimitType = LimitTypes.Buy }
-                    };
-
-                    var window = new ModernWindow
-                    {
-                        Style = (Style)App.Current.Resources["BlankWindow"],
-                        //Resources = new ResourceDictionary() { Source = AppearanceManager.LightThemeSource },
-                        IsTitleVisible = true,
-                        Title = $"{selectedMarket} Buy Limit Window",
-                        Content = uc,
-                        WindowState = WindowState.Normal,
-                        WindowStartupLocation = WindowStartupLocation.CenterScreen,
-                    };
-
-                    window.Owner = Application.Current.MainWindow;
-                    window.Show();
-
-                });
-            }
-        }
-        public ICommand Open_BittrexBuyAndSellLimitCommand
-        {
-            get
-            {
-                return new RelayCommand(parameter =>
+                Object context = null;
+                if (limitType == LimitTypes.BuyImmediate || limitType == LimitTypes.SellImmediate)
                 {
-
-                    var market = ServerEngine.Server.Instance.SelectedMarket;
-                    if (market == null)
+                    context = new UserControls.BittrexLimitControl()
                     {
-                        ModernDialogService.WarningDialog("Select market first", "Warning");
-                        return;
-                    }
-
-                    var model = parameter as MainViewModel;
-
-                    var ticker = model.ExchangeTickerContainer.Data.FirstOrDefault(p => p.ExchangeName == market.ExchangeName && p.MarketName == market.MarketName);
-                    if (ticker == null)
-                    {
-                        ticker = new ExchangeTickerViewModel();
-                    }
-
-                    var uc = new UserControls.BittrexBuyAndSellControl()
-                    {
-                        DataContext = new BittrexBuyAndSellLimitViewModel() { Market = market.MarketName, ButtonText = "Buy And Sell", Rate = ticker.Bid.NewValue, LimitType = LimitTypes.Buy }
+                        DataContext = new BittrexLimitViewModel()
+                        {
+                            Market = selectedMarket.MarketName,
+                            ButtonText = limitType.GetName(),
+                            Rate = (limitType == LimitTypes.BuyImmediate) ? ticker.Ask.NewValue : ticker.Bid.NewValue,
+                            LimitType = limitType
+                        }
                     };
-
-                    var window = new ModernWindow
+                }
+                else if(limitType == LimitTypes.SellImmediatelyAfterBuy)
+                {
+                    context = new UserControls.BittrexBuyAndSellControl()
                     {
-                        Style = (Style)App.Current.Resources["BlankWindow"],
-                        //Resources = new ResourceDictionary() { Source = AppearanceManager.LightThemeSource },
-                        IsTitleVisible = true,
-                        Title = $"{market} Buy And Sell Limit Window",
-                        Content = uc,
-                        WindowState = WindowState.Normal,
-                        WindowStartupLocation = WindowStartupLocation.CenterScreen
+                        DataContext = new BittrexBuyAndSellLimitViewModel() {
+                            Market = selectedMarket.MarketName,
+                            ButtonText = "Buy And Sell",
+                            Rate = ticker.Bid.NewValue,
+                            LimitType = LimitTypes.BuyImmediate }
                     };
+                }
 
-                    window.Owner = Application.Current.MainWindow;
-                    window.Show();
+                var window = new ModernWindow
+                {
+                    Style = (Style)App.Current.Resources["BlankWindow"],
+                    //Resources = new ResourceDictionary() { Source = AppearanceManager.LightThemeSource },
+                    IsTitleVisible = true,
+                    Title = $"{selectedMarket} {limitType.GetName()} Window",
+                    Content = context,
+                    WindowState = WindowState.Normal,
+                    WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                };
 
+                window.Owner = Application.Current.MainWindow;
+                window.Show();
 
-                });
-            }
+            });
         }
+
+
     }
 }

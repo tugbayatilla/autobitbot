@@ -121,9 +121,6 @@
     <Compile Include="ViewModels\DesignViewModel.cs" />
     <Compile Include="ViewModels\OpenOrdersViewModel.cs" />
     <Compile Include="ViewModels\SelectedMarketViewModel.cs" />
-    <Compile Include="UserControls\BittrexSellLimitControl.xaml.cs">
-      <DependentUpon>BittrexSellLimitControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Converters\DateTimeToStringConverter.cs" />
     <Compile Include="Converters\PercentStringValueConverter.cs" />
     <Compile Include="Converters\DecimalStringValueConverter.cs" />
@@ -161,8 +158,8 @@
     <Compile Include="UserControls\ExchangeTickersControl.xaml.cs">
       <DependentUpon>ExchangeTickersControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\BittrexBuyLimitControl.xaml.cs">
-      <DependentUpon>BittrexBuyLimitControl.xaml</DependentUpon>
+    <Compile Include="UserControls\BittrexLimitControl.xaml.cs">
+      <DependentUpon>BittrexLimitControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\BittrexFatFingerStarterControl.xaml.cs">
       <DependentUpon>BittrexFatFingerStarterControl.xaml</DependentUpon>
@@ -297,10 +294,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Content\ControlsStylesButton.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UserControls\BittrexSellLimitControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -545,7 +538,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\BittrexBuyLimitControl.xaml">
+    <Page Include="UserControls\BittrexLimitControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

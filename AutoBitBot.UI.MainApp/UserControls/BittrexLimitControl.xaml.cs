@@ -1,5 +1,4 @@
-﻿using AutoBitBot.UI.MainApp.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,13 +18,11 @@ namespace AutoBitBot.UI.MainApp.UserControls
     /// <summary>
     /// Interaction logic for ImmediatelySellAfterBuyControl.xaml
     /// </summary>
-    public partial class BittrexSellLimitControl : UserControl
+    public partial class BittrexLimitControl : UserControl
     {
-        public BittrexSellLimitControl()
+        public BittrexLimitControl()
         {
             InitializeComponent();
         }
-
-
     }
 }
