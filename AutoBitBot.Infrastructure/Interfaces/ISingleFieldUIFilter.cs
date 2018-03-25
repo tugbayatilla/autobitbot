@@ -14,4 +14,6 @@ namespace AutoBitBot.Infrastructure.Interfaces
     public interface ISingleFieldUIFilter : ISingleFieldUIFilter<String>
     {
     }
+
+
 }

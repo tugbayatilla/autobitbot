@@ -24,5 +24,10 @@ namespace AutoBitBot.UI.MainApp.UserControls
         {
             InitializeComponent();
         }
+
+        private void Label_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            QuantityTextbox.Text = ((Label)sender).Content.ToString();
+        }
     }
 }

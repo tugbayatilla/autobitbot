@@ -75,29 +75,13 @@ namespace AutoBitBot.ServerEngine
                     }));
             }
 
-            //server.RegisterInstance(new BittrexGetTickerTask("BTC-XRP"));
-            //server.RegisterInstance(new BittrexGetMarketsTask());
-            //server.RegisterInstance(new BittrexGetMarketSummaryTask("BTC-XRP"));
-            //server.RegisterInstance(new BittrexGetOpenOrdersTask("BTC-XRP"));
-            //server.RegisterInstance(new BittrexGetOrderHistoryTask("BTC-XRP"));
-            //RegisterInstance(new PoloniexWalletTask());
-            //RegisterInstance(new BittrexWalletTask());
-
             RegisterInstance(new BittrexWalletTask());
             RegisterInstance(new BittrexTickerTask());
             RegisterInstance(new BittrexOpenOrdersTask());
             RegisterInstance(new BittrexMarketsInfoTask());
 
-            //RegisterInstance(new PoloniexTickerTask());
-
-            //RegisterInstance(new ExchangeOpenOrdersTask());
             //RegisterInstance(new LicenceTask());
 
-
-            //Config.Add(new ConfigItem(typeof(BittrexGetTickerTask),
-            //    new ConfigItem(typeof(BittrexBuyLimitCompletedTask)) { ExecutionTime = ConfigExecutionTimes.AfterExecution },
-            //    new ConfigItem(typeof(BittrexSellLimitTask)) { ExecutionTime = ConfigExecutionTimes.AfterExecution }, //todo: execute onetime can be set here
-            //    new ConfigItem(typeof(BittrexSellLimitCompletedTask))));
 
             await RunAllRegisteredTasksAsync();
 

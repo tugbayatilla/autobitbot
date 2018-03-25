@@ -17,8 +17,34 @@
         <Style TargetType="Label" x:Key="decimalLabel" BasedOn="{StaticResource {x:Type Label}}">
             <Setter Property="HorizontalContentAlignment" Value="Right" />
             <Setter Property="Margin" Value="0,0,10,0"/>
+
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="MouseLeftButtonDown">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimation To="Yellow" Duration="0" 
+                            Storyboard.TargetProperty="Background.Color"/>
+                            
+                        </Storyboard>
+                    </BeginStoryboard>
+                    
+                </EventTrigger>
+                <EventTrigger RoutedEvent="MouseLeftButtonUp">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <ColorAnimation To="Transparent" Duration="0" 
+                            Storyboard.TargetProperty="Background.Color"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Cursor" Value="Hand" />
+                </Trigger>
+               
+            </Style.Triggers>
+
         </Style>
-        
+
     </UserControl.Resources>
 
     
@@ -60,13 +86,11 @@
                     <RowDefinition Height="16"/>
                     <RowDefinition Height="16"/>
                     <RowDefinition Height="16"/>
-                    <RowDefinition Height="16"/>
                 </Grid.RowDefinitions>
-                <Label Style="{StaticResource ResourceKey=decimalLabel}" Content="{Binding Available, Converter={StaticResource DecimalStringValueConverter}, Mode=OneWay}" Grid.Column="1" Grid.Row="0"/>
-                <Label Style="{StaticResource ResourceKey=decimalLabel}" Content="{Binding AvailableBTC, Converter={StaticResource DecimalStringValueConverter}, Mode=OneWay}" Grid.Column="1" Grid.Row="1" />
-                <Label Style="{StaticResource ResourceKey=decimalLabel}" Content="{Binding MinTradeSize, Converter={StaticResource DecimalStringValueConverter}, Mode=OneWay}" Grid.Column="1" Grid.Row="2"/>
-                <Label Style="{StaticResource ResourceKey=decimalLabel}" Content="{Binding MinTradeSizeBTC, Converter={StaticResource DecimalStringValueConverter}, Mode=OneWay}" Grid.Column="1" Grid.Row="3"/>
-                <Label Style="{StaticResource ResourceKey=decimalLabel}" Content="{Binding Fee, Converter={StaticResource DecimalStringValueConverter}, Mode=OneWay}" Grid.Column="1" Grid.Row="4"/>
+                <Label MouseUp="Label_MouseUp" Style="{StaticResource ResourceKey=decimalLabel}" Content="{Binding Available, Converter={StaticResource DecimalStringValueConverter}, Mode=OneWay}" Grid.Column="1" Grid.Row="0"/>
+                <Label MouseUp="Label_MouseUp" Style="{StaticResource ResourceKey=decimalLabel}" Content="{Binding AvailableBTC, Converter={StaticResource DecimalStringValueConverter}, Mode=OneWay}" Grid.Column="1" Grid.Row="1" />
+                <Label MouseUp="Label_MouseUp" Style="{StaticResource ResourceKey=decimalLabel}" Content="{Binding MinTradeSize, Converter={StaticResource DecimalStringValueConverter}, Mode=OneWay}" Grid.Column="1" Grid.Row="2"/>
+                <Label MouseUp="Label_MouseUp" Style="{StaticResource ResourceKey=decimalLabel}" Content="{Binding MinTradeSizeBTC, Converter={StaticResource DecimalStringValueConverter}, Mode=OneWay}" Grid.Column="1" Grid.Row="3"/>
 
                 <Label Content="Available: "/>
                 <Label Content="Available: " Grid.Row="1"/>
@@ -76,8 +100,6 @@
                 <Label Content="{Binding BaseCurrency, Mode=OneWay}" Grid.Column="2" Grid.Row="1"/>
                 <Label Content="{Binding Currency, Mode=OneWay}" Grid.Column="2" Grid.Row="2"/>
                 <Label Content="{Binding BaseCurrency, Mode=OneWay}" Grid.Column="2" Grid.Row="3"/>
-                <Label Content="{Binding BaseCurrency, Mode=OneWay}" Grid.Column="2" Grid.Row="4"/>
-                <Label Content="Fee: " Grid.Row="4"/>
             </Grid>
 
         </StackPanel>
@@ -85,7 +107,7 @@
         <Label Grid.Row="1" Grid.Column="0" Content="Rate" HorizontalAlignment="Left" />
         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Rate}"></TextBox>
         <Label Grid.Row="2" Grid.Column="0" Content="Quantity" HorizontalAlignment="Left" />
-        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Quantity}"></TextBox>
+        <TextBox x:Name="QuantityTextbox" Grid.Row="2" Grid.Column="1" Text="{Binding Quantity}"></TextBox>
 
         <Button Command="{Binding BittrexLimitCommand}" Grid.Row="3" Grid.ColumnSpan="2">
             <StackPanel Orientation="Horizontal">

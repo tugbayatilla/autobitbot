@@ -18,7 +18,7 @@
         <converters:PercentStringValueConverter x:Key="PercentStringValueConverter"/>
         <converters:ForegroundOldNewPairValueConverter x:Key="ForegroundOldNewPairValueConverter" />
         <converters:ForegroundChangeValueConverter x:Key="ForegroundChangeValueConverter" />
-        
+
     </UserControl.Resources>
 
     <Grid >
@@ -35,19 +35,36 @@
         <TextBox  />
 
         <Grid  Grid.Row="0">
-            <TextBox x:Name="SearchTextBox" TextChanged="SearchTextBox_TextChanged" />
-            <TextBlock IsHitTestVisible="False" Text="Enter Search Term Here" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Foreground="DarkGray">
-                <TextBlock.Style>
-                    <Style TargetType="{x:Type TextBlock}">
-                        <Setter Property="Visibility" Value="Collapsed"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Text, ElementName=SearchTextBox}" Value="">
-                                <Setter Property="Visibility" Value="Visible"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBlock.Style>
-            </TextBlock>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="100" />
+                </Grid.ColumnDefinitions>
+                <Grid>
+                    <TextBox x:Name="SearchTextBox" TextChanged="SearchTextBox_TextChanged" />
+                    <TextBlock IsHitTestVisible="False" Text="Enter Search Term Here" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0" Foreground="DarkGray">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Text, ElementName=SearchTextBox}" Value="">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Grid>
+                <ComboBox x:Name="MarketNamePrefixCombo"  Grid.Column="1" SelectionChanged="ComboBox_SelectionChanged">
+                    <ComboBox.Items>
+                        <ComboBoxItem Content="All" />
+                        <ComboBoxItem Content="BTC" IsSelected="True" />
+                        
+                    </ComboBox.Items>
+                </ComboBox>
+
+            </Grid>
+
         </Grid>
 
 
@@ -61,7 +78,8 @@
                   VirtualizingPanel.IsVirtualizingWhenGrouping="True" 
                   VirtualizingPanel.ScrollUnit ="Item" 
                   VirtualizingPanel.VirtualizationMode="Recycling"
-                  SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                  SelectedItem="{Binding SelectedItem, Mode=TwoWay}" 
+                  
                   >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Market" Binding="{Binding MarketName}" />

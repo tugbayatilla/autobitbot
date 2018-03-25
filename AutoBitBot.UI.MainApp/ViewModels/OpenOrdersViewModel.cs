@@ -34,13 +34,14 @@ namespace AutoBitBot.UI.MainApp.ViewModels
         public ICommand CancelOrderCommand =>
                 new RelayCommand(async o =>
                 {
-                    var result = ModernDialogService.ConfirmDialog($@"
-                        Cancel Order! Are you sure?
-                        {nameof(SelectedOrder.MarketName)}:{SelectedOrder.MarketName} 
-                        {nameof(SelectedOrder.ExchangeName)}:{SelectedOrder.ExchangeName} 
-                        {nameof(SelectedOrder.Currency)}:{SelectedOrder.Currency} 
-                        ", 
-                        $"Canceling Order - {SelectedOrder.OrderId}");
+                    //var result = ModernDialogService.ConfirmDialog($@"
+                    //    Cancel Order! Are you sure?
+                    //    {nameof(SelectedOrder.MarketName)}:{SelectedOrder.MarketName} 
+                    //    {nameof(SelectedOrder.ExchangeName)}:{SelectedOrder.ExchangeName} 
+                    //    {nameof(SelectedOrder.Currency)}:{SelectedOrder.Currency} 
+                    //    ", 
+                    //    $"Canceling Order - {SelectedOrder.OrderId}");
+                    var result = true;
                     if (result)
                     {
                         if(this.SelectedOrder == null)

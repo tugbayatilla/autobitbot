@@ -31,6 +31,16 @@ namespace AutoBitBot.UI.MainApp.UserControls
         {
             InitializeComponent();
 
+            var dpd = DependencyPropertyDescriptor.FromProperty(ItemsControl.ItemsSourceProperty, typeof(DataGrid));
+            if (dpd != null)
+            {
+                dpd.AddValueChanged(dg, (s,e)=> {
+
+                    ComboBox_SelectionChanged(MarketNamePrefixCombo, null);
+
+                });
+            }
+
         }
 
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -38,7 +48,31 @@ namespace AutoBitBot.UI.MainApp.UserControls
             TextBox t = (TextBox)sender;
             string filter = t.Text;
 
+            var prefix = (MarketNamePrefixCombo.SelectedValue as ComboBoxItem).Content.ToString();
+
+            if (prefix != "All")
+            {
+                filter = $"{prefix}-{filter}";
+            }
+
             SingleFieldDataGridFilterMediator.SingleFieldFilter<ExchangeTickerViewModel>(filter, dg);
         }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox cb = sender as ComboBox;
+
+            var selected = (cb.SelectedValue as ComboBoxItem).Content.ToString();
+            if (selected != "All")
+            {
+                SingleFieldDataGridFilterMediator.SingleFieldFilter<ExchangeTickerViewModel>(selected, dg);
+            }
+            else
+            {
+                SingleFieldDataGridFilterMediator.ResetFilter(dg);
+            }
+
+        }
+
     }
 }

@@ -83,7 +83,7 @@ namespace AutoBitBot.UI.MainApp.ViewModels
 
         public Decimal Available
         {
-            get => Server.Instance.Wallet.Get(Constants.BITTREX, this.Currency).Amount;
+            get => Server.Instance.Wallet.Get(Constants.BITTREX, this.Currency).Available;
         }
 
         public Decimal MinTradeSize

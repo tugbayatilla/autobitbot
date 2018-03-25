@@ -171,7 +171,6 @@
       <DependentUpon>PoloniexTickersControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\BittrexLimitViewModel.cs" />
-    <Compile Include="ViewModels\SampleFormViewModel.cs" />
     <Compile Include="UserControls\StaticActiveTasksControl.xaml.cs">
       <DependentUpon>StaticActiveTasksControl.xaml</DependentUpon>
     </Compile>
@@ -313,10 +312,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Content\ControlsStylesSampleForm.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Content\ControlsStylesSlider.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -402,9 +397,6 @@
     </Compile>
     <Compile Include="Content\ControlsStylesProgressBar.xaml.cs">
       <DependentUpon>ControlsStylesProgressBar.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Content\ControlsStylesSampleForm.xaml.cs">
-      <DependentUpon>ControlsStylesSampleForm.xaml</DependentUpon>
     </Compile>
     <Compile Include="Content\ControlsStylesSlider.xaml.cs">
       <DependentUpon>ControlsStylesSlider.xaml</DependentUpon>

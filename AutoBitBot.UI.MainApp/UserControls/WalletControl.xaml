@@ -23,7 +23,8 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Exchange" Binding="{Binding ExchangeName}" />
                     <DataGridTextColumn Header="Currency" Binding="{Binding Currency}" />
-                    <DataGridTextColumn Header="Amount" Binding="{Binding Amount, Converter={StaticResource CoinPriceStringValueConverter}}" />
+                    <DataGridTextColumn Header="Balance" Binding="{Binding Balance, Converter={StaticResource CoinPriceStringValueConverter}}" />
+                    <DataGridTextColumn Header="Available" Binding="{Binding Available, Converter={StaticResource CoinPriceStringValueConverter}}" />
                 </DataGrid.Columns>
             </DataGrid>
             <TextBlock FontSize="10" 

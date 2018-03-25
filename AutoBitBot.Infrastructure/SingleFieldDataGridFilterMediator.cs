@@ -14,6 +14,11 @@ namespace AutoBitBot.Infrastructure
     {
         public static void SingleFieldFilter<T>(String filter, DataGrid dataGrid) where T : class, ISingleFieldUIFilter
         {
+            if (dataGrid == null)
+            {
+                return;
+            }
+
             if (filter.Length < 3 && filter.Length != 0)
             {
                 return;
@@ -44,8 +49,23 @@ namespace AutoBitBot.Infrastructure
             }
         }
 
+        public static void ResetFilter(DataGrid dataGrid)
+        {
+            if (dataGrid == null)
+            {
+                return;
+            }
+
+            ICollectionView collectionView = CollectionViewSource.GetDefaultView(dataGrid.ItemsSource);
+            collectionView.Filter = null;
+        }
+
+
         public static void Filter<T>(String filter, DataGrid dataGrid, Func<T, String> searchPattern) where T : class
         {
+            if (dataGrid == null)
+            { return; }
+
             if (filter.Length < 3 && filter.Length != 0)
             {
                 return;
@@ -79,6 +99,10 @@ namespace AutoBitBot.Infrastructure
                 };
             }
         }
+
+
+
+
 
     }
 }

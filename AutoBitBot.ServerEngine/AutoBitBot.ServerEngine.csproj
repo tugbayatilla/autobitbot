@@ -72,7 +72,6 @@
     <Compile Include="Collections\ExchangeOverallCurrentStatusObservableCollection.cs" />
     <Compile Include="Collections\MarketsInfoContainer.cs" />
     <Compile Include="Collections\WalletContainer.cs" />
-    <Compile Include="DecisionMaker.cs" />
     <Compile Include="BitTasks\Enums\BitTaskExecutionTypes.cs" />
     <Compile Include="BitTasks\EventArgs\BitTaskExecutedEventArgs.cs" />
     <Compile Include="BitTasks\EventArgs\BitTaskExecutionCompletedEventArgs.cs" />
@@ -83,7 +82,6 @@
     <Compile Include="BitTasks\Enums\BitTaskStatus.cs" />
     <Compile Include="ConfigItem.cs" />
     <Compile Include="BitTasks\Tasks\BittrexWalletTask.cs" />
-    <Compile Include="PumpDumpPredictor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

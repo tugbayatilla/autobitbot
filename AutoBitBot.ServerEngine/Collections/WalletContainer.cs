@@ -39,12 +39,13 @@ namespace AutoBitBot.UI.MainApp.Collections
                             var item = this.Data.FirstOrDefault(x => x.Currency == response.Currency && x.ExchangeName == bittrex);
                             if (item == null)
                             {
-                                item = new ExchangeBalanceViewModel() { ExchangeName = bittrex, Currency = response.Currency, Amount = response.Balance };
+                                item = new ExchangeBalanceViewModel() { ExchangeName = bittrex, Currency = response.Currency, Balance = response.Balance, Available = response.Available };
                                 this.Data.Add(item);
                             }
                             else
                             {
-                                item.Amount = response.Balance;
+                                item.Balance = response.Balance;
+                                item.Available = response.Available;
                             }
                         }
 
@@ -80,12 +81,13 @@ namespace AutoBitBot.UI.MainApp.Collections
                         var item = this.Data.FirstOrDefault(x => x.Currency == response.Key && x.ExchangeName == poloniex);
                         if (item == null)
                         {
-                            item = new ExchangeBalanceViewModel() { ExchangeName = poloniex, Currency = response.Key, Amount = price };
+                            item = new ExchangeBalanceViewModel() { ExchangeName = poloniex, Currency = response.Key, Available = price, Balance = price };
                             this.Data.Add(item);
                         }
                         else
                         {
-                            item.Amount = price;
+                            item.Balance = price;
+                            item.Available = price;
                         }
                     }
                 }

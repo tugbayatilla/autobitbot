@@ -12,13 +12,20 @@
     <UserControl.Resources>
         <converters:DateTimeToStringConverter x:Key="DateTimeToStringConverter" />
         <converters:DecimalStringValueConverter x:Key="DecimalStringValueConverter" />
+
+        <Style TargetType="Button" x:Name="CancelButtonStyle" BasedOn="{StaticResource {ComponentResourceKey TypeInTargetAssembly={x:Type DataGrid}, ResourceId=DataGridSelectAllButtonStyle}}">
+            <Setter Property="Foreground" Value="Red"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
     </UserControl.Resources>
 
+    
+    
 
     <Grid>
         <StackPanel>
 
-            <Button Content="Cancel Selected Order"  Command="{Binding CancelOrderCommand}" />
+            <Button Content="Cancel Selected Order"  Command="{Binding CancelOrderCommand}" Style="{StaticResource {x:Type Button}}"   />
             <DataGrid 
                   x:Name="dg" 
                   CanUserAddRows="False" 

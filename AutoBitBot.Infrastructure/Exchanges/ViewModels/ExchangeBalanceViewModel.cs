@@ -9,7 +9,7 @@ namespace AutoBitBot.Infrastructure.Exchanges.ViewModels
     public class ExchangeBalanceViewModel : ObservableObject
     {
         String exchangeName, currency;
-        Decimal amount;
+        Decimal balance, available;
 
         public String ExchangeName
         {
@@ -31,12 +31,22 @@ namespace AutoBitBot.Infrastructure.Exchanges.ViewModels
             }
         }
 
-        public Decimal Amount
+        public Decimal Balance
         {
-            get => amount;
+            get => balance;
             set
             {
-                amount = value;
+                balance = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Decimal Available
+        {
+            get => available;
+            set
+            {
+                available = value;
                 OnPropertyChanged();
             }
         }
