@@ -27,17 +27,29 @@ using AutoBitBot.UI.MainApp.Infrastructure;
 using System.Windows;
 using AutoBitBot.UI.Windows.Controls;
 using ArchPM.Core.Extensions;
+using System.Deployment.Application;
 
 namespace AutoBitBot.UI.MainApp.ViewModels
 {
-    public class MainViewModel : INotifyPropertyChanged
+    public class MainWindowViewModel : ObservableObject
     {
-        public event PropertyChangedEventHandler PropertyChanged = delegate { };
-
         readonly RichTextBox outputRichTextBox;
         readonly Dispatcher dispatcher;
 
-        public MainViewModel(Dispatcher dispatcher, RichTextBox outputRichTextBox)
+        public String ApplicationVersion {
+            get
+            {
+                var result = "";
+                if (ApplicationDeployment.IsNetworkDeployed)
+                {
+                    result = string.Format("Autobitbot - v{0}", ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString(4));
+                }
+
+                return result;
+            }
+        }
+
+        public MainWindowViewModel(Dispatcher dispatcher, RichTextBox outputRichTextBox)
         {
             this.dispatcher = dispatcher;
             this.outputRichTextBox = outputRichTextBox;
@@ -89,7 +101,7 @@ namespace AutoBitBot.UI.MainApp.ViewModels
                     return;
                 }
 
-                var model = parameter as MainViewModel;
+                var model = parameter as MainWindowViewModel;
 
                 var ticker = model.ExchangeTickerContainer.Data.FirstOrDefault(p => p.ExchangeName == selectedMarket.ExchangeName && p.MarketName == selectedMarket.MarketName);
                 if (ticker == null)

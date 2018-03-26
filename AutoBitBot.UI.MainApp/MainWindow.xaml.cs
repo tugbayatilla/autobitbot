@@ -32,7 +32,7 @@ namespace AutoBitBot.UI.MainApp
 
             RichTextBox output = (RichTextBox)Template.FindName("Output", this);
 
-            this.DataContext = new ViewModels.MainViewModel(this.Dispatcher, output);
+            this.DataContext = new ViewModels.MainWindowViewModel(this.Dispatcher, output);
         }
 
         private void ModernWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)

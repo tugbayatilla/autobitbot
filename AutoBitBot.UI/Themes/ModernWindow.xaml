@@ -157,17 +157,28 @@
                                                              LinkGroups="{TemplateBinding MenuLinkGroups}" />
                                     </Grid>
 
-                                    <!-- content frame -->
-                                    <Grid Grid.Row="3" Grid.RowSpan="2" >
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="10*"/>
-                                            <RowDefinition Height="5"/>
-                                            <RowDefinition Height="2*" MaxHeight="500" MinHeight="50"/>
-                                        </Grid.RowDefinitions>
-                                        <controls:ModernFrame Grid.Row="0" x:Name="ContentFrame" Margin="42,8,16,16"  Source="{Binding ContentSource, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" ContentLoader="{TemplateBinding ContentLoader}"/>
-                                        <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" />
-                                        <RichTextBox x:Name="Output" Grid.Row="2" Height="Auto" IsReadOnly="True" Foreground="Gray"></RichTextBox>
-                                    </Grid>
+                                    <DockPanel Grid.Row="3" Grid.RowSpan="2" >
+                                        <StatusBar DockPanel.Dock="Bottom">
+                                            <StatusBarItem>
+                                                <TextBlock Name="lblVersion" Foreground="Red" Text="{Binding ApplicationVersion, Mode=OneTime}" />
+                                            </StatusBarItem>
+                                        </StatusBar>
+
+                                        <!-- content frame -->
+                                        <Grid >
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="10*"/>
+                                                <RowDefinition Height="5"/>
+                                                <RowDefinition Height="2*" MaxHeight="500" MinHeight="50"/>
+                                            </Grid.RowDefinitions>
+                                            <controls:ModernFrame Grid.Row="0" x:Name="ContentFrame" Margin="42,8,16,16"  Source="{Binding ContentSource, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" ContentLoader="{TemplateBinding ContentLoader}"/>
+                                            <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" />
+                                            <RichTextBox x:Name="Output" Grid.Row="2" Height="Auto" IsReadOnly="True" Foreground="Gray"></RichTextBox>
+                                        </Grid>
+
+                                    </DockPanel>
+
+                                   
 
                                     <!-- resize grip -->
                                     <Grid Grid.Row="2" x:Name="ResizeGrip" Background="Transparent" Visibility="Collapsed" HorizontalAlignment="Right" VerticalAlignment="Bottom" WindowChrome.ResizeGripDirection="BottomRight">
