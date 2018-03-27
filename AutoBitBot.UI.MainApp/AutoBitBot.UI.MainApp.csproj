@@ -27,7 +27,9 @@
     <InstallUrl>http://autobitbot.site/</InstallUrl>
     <ProductName>Autobitbot</ProductName>
     <PublisherName>ArchPM</PublisherName>
-    <ApplicationRevision>2</ApplicationRevision>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
+    <WebPage>publish.htm</WebPage>
+    <ApplicationRevision>3</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -57,7 +59,7 @@
     </StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Resources\app.ico</ApplicationIcon>
+    <ApplicationIcon>app.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>6FDE668A1882C02909B032FF608869BFD82E5A79</ManifestCertificateThumbprint>
@@ -89,6 +91,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -108,15 +111,40 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\OpenModalCommand.cs" />
+    <Compile Include="Content\SettingsUserExchangeKeysUserControl.xaml.cs">
+      <DependentUpon>SettingsUserExchangeKeysUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Infrastructure\BittrexUserExchangeKeys.cs" />
     <Compile Include="Infrastructure\LicenceManager.cs" />
-    <Compile Include="Infrastructure\ModernDialogService.cs" />
+    <Compile Include="Infrastructure\NotificationModernDialogService.cs" />
     <Compile Include="Notifiers\OutputData.cs" />
     <Compile Include="Notifiers\OutputDataNotifier.cs" />
-    <Compile Include="Resources\AppInfo.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AppInfo.resx</DependentUpon>
-    </Compile>
+    <Compile Include="ServerEngine\BitTasks\BitTaskException.cs" />
+    <Compile Include="ServerEngine\BitTasks\BitTaskResult.cs" />
+    <Compile Include="ServerEngine\BitTasks\Enums\BitTaskExecutionTypes.cs" />
+    <Compile Include="ServerEngine\BitTasks\Enums\BitTaskStatus.cs" />
+    <Compile Include="ServerEngine\BitTasks\Enums\BitTaskWorkingTimes.cs" />
+    <Compile Include="ServerEngine\BitTasks\EventArgs\BitTaskExecutedEventArgs.cs" />
+    <Compile Include="ServerEngine\BitTasks\EventArgs\BitTaskExecutionCompletedEventArgs.cs" />
+    <Compile Include="ServerEngine\BitTasks\Tasks\BitTask.cs" />
+    <Compile Include="ServerEngine\BitTasks\Tasks\BittrexMarketsInfoTask.cs" />
+    <Compile Include="ServerEngine\BitTasks\Tasks\BittrexOpenOrdersTask.cs" />
+    <Compile Include="ServerEngine\BitTasks\Tasks\BittrexTickerTask.cs" />
+    <Compile Include="ServerEngine\BitTasks\Tasks\BittrexWalletTask.cs" />
+    <Compile Include="ServerEngine\BitTasks\Tasks\LicenceTask.cs" />
+    <Compile Include="ServerEngine\BitTasks\Tasks\PoloniexTickerTask.cs" />
+    <Compile Include="ServerEngine\BitTasks\Tasks\PoloniexWalletTask.cs" />
+    <Compile Include="ServerEngine\Business\BittrexBusiness.cs" />
+    <Compile Include="ServerEngine\Business\ExchangeBusiness.cs" />
+    <Compile Include="ServerEngine\Business\PoloniexBusiness.cs" />
+    <Compile Include="ServerEngine\Collections\ExchangeOverallCurrentStatusObservableCollection.cs" />
+    <Compile Include="ServerEngine\Collections\ExchangeTickerContainer.cs" />
+    <Compile Include="ServerEngine\Collections\MarketsInfoContainer.cs" />
+    <Compile Include="ServerEngine\Collections\OpenOrdersContainer.cs" />
+    <Compile Include="ServerEngine\Collections\WalletContainer.cs" />
+    <Compile Include="ServerEngine\ConfigItem.cs" />
+    <Compile Include="ServerEngine\Domain\SelectedMarket.cs" />
+    <Compile Include="ServerEngine\Server.cs" />
     <Compile Include="UserControls\ButtonsControl.xaml.cs">
       <DependentUpon>ButtonsControl.xaml</DependentUpon>
     </Compile>
@@ -145,22 +173,6 @@
     <Compile Include="DTO\MarketTickerDTO.cs" />
     <Compile Include="Infrastructure\TextConverter.cs" />
     <Compile Include="Notifiers\RichTextBoxNotifier.cs" />
-    <Compile Include="Pages\BittrexPage.xaml.cs">
-      <DependentUpon>BittrexPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\TaskManagementPage.xaml.cs">
-      <DependentUpon>TaskManagementPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\Messages.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Messages.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\Titles.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Titles.resx</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\AllExchangeOverallCurrentStatusControl.xaml.cs">
       <DependentUpon>AllExchangeOverallCurrentStatusControl.xaml</DependentUpon>
     </Compile>
@@ -353,6 +365,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Content\SettingsUserExchangeKeysUserControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Content\SettingsAppearance.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -434,7 +450,8 @@
     <Compile Include="Content\SettingsAppearance.xaml.cs">
       <DependentUpon>SettingsAppearance.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Content\SettingsAppearanceViewModel.cs" />
+    <Compile Include="ViewModels\SettingsUserExchangeKeysViewModel.cs" />
+    <Compile Include="ViewModels\SettingsAppearanceViewModel.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -448,14 +465,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\ControlsStyles.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pages\BittrexPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pages\TaskManagementPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -627,18 +636,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\AppInfo.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>AppInfo.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Messages.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Messages.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Titles.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Titles.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="AutoBitBot.UI.MainApp_TemporaryKey.pfx" />
     <None Include="Key.snk" />
@@ -649,7 +647,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Icons\background.kitty.png" />
@@ -669,10 +669,6 @@
       <Project>{08e103b7-8fdb-4acf-9881-df90ba707912}</Project>
       <Name>AutoBitBot.PoloniexProxy</Name>
     </ProjectReference>
-    <ProjectReference Include="..\AutoBitBot.ServerEngine\AutoBitBot.ServerEngine.csproj">
-      <Project>{90a542cd-1f99-4f3a-9052-496546349799}</Project>
-      <Name>AutoBitBot.ServerEngine</Name>
-    </ProjectReference>
     <ProjectReference Include="..\AutoBitBot.UI\AutoBitBot.UI.csproj">
       <Project>{d58d7907-ddc8-4b40-a0f0-d20fafd96434}</Project>
       <Name>AutoBitBot.UI</Name>
@@ -691,7 +687,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\app.ico" />
+    <EmbeddedResource Include="app.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

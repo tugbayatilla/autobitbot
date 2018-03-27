@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exchanges\ViewModels\MarketInfoViewModel.cs" />
+    <Compile Include="Interfaces\IUserExchangeKeys.cs" />
     <Compile Include="ObservableObjectContainer.cs" />
     <Compile Include="Dialog\Class1.cs" />
     <Compile Include="Dialog\Class2.cs" />

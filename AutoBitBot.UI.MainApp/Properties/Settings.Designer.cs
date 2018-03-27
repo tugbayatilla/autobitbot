@@ -12,7 +12,7 @@ namespace AutoBitBot.UI.MainApp.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.5.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.6.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -20,6 +20,79 @@ namespace AutoBitBot.UI.MainApp.Properties {
         public static Settings Default {
             get {
                 return defaultInstance;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("a072da5f4593438daabf0636ba0f85c4")]
+        public string BittrexApiKey {
+            get {
+                return ((string)(this["BittrexApiKey"]));
+            }
+            set {
+                this["BittrexApiKey"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("4f3c6873f98041afb56d2ae9d6f2e290")]
+        public string BittrexApiSecret {
+            get {
+                return ((string)(this["BittrexApiSecret"]));
+            }
+            set {
+                this["BittrexApiSecret"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2018-03-01")]
+        public global::System.DateTime BittrexLastUpdateTime {
+            get {
+                return ((global::System.DateTime)(this["BittrexLastUpdateTime"]));
+            }
+            set {
+                this["BittrexLastUpdateTime"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("IN5X8J1S-IQDKE5W5-Y3VWPUO2-8OD53P2C")]
+        public string PoloniexApiKey {
+            get {
+                return ((string)(this["PoloniexApiKey"]));
+            }
+            set {
+                this["PoloniexApiKey"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("a51b23749e1dcac9a75c22b404acd5ba890a092c80bfafa5ba6e2796e02a9db78923ea86374502fea" +
+            "770934c7abbfbe4ba9a21f83ee72aa1e6774e313a847789")]
+        public string PoloniexApiSecret {
+            get {
+                return ((string)(this["PoloniexApiSecret"]));
+            }
+            set {
+                this["PoloniexApiSecret"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2018-03-01")]
+        public global::System.DateTime PoloniexLastUpdateTime {
+            get {
+                return ((global::System.DateTime)(this["PoloniexLastUpdateTime"]));
+            }
+            set {
+                this["PoloniexLastUpdateTime"] = value;
             }
         }
     }

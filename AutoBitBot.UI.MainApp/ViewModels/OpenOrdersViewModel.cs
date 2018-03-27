@@ -46,7 +46,7 @@ namespace AutoBitBot.UI.MainApp.ViewModels
                     {
                         if(this.SelectedOrder == null)
                         {
-                            ModernDialogService.InfoDialog("Selection changed. Select order again and cancel it", "Info");
+                            NotificationModernDialogService.InfoDialog("Selection changed. Select order again and cancel it", "Info");
                             return;
                         }
 
@@ -59,7 +59,7 @@ namespace AutoBitBot.UI.MainApp.ViewModels
                                 // delete ops
                                 OpenOrders.Data.Remove(SelectedOrder);
                                 SelectedOrder = null;
-                                ModernDialogService.InfoDialog("Order Canceled", "Info");
+                                NotificationModernDialogService.InfoDialog("Order Canceled", "Info");
                             }
                         }
                     }

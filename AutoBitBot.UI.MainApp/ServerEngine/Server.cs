@@ -11,6 +11,7 @@ using AutoBitBot.PoloniexProxy.Responses;
 using AutoBitBot.ServerEngine.BitTasks;
 using AutoBitBot.ServerEngine.Domain;
 using AutoBitBot.UI.MainApp.Collections;
+using AutoBitBot.UI.MainApp.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

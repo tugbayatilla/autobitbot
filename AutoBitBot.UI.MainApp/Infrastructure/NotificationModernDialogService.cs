@@ -10,7 +10,7 @@ using System.Windows.Controls;
 
 namespace AutoBitBot.UI.MainApp.Infrastructure
 {
-    public class ModernDialogService
+    public class NotificationModernDialogService
     {
 
         public static Boolean ShowDialog(Object content, String title, MessageBoxButton buttons, MessageBoxIcon icon)

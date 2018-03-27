@@ -3,18 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:server="clr-namespace:AutoBitBot.ServerEngine;assembly=AutoBitBot.ServerEngine"
+             xmlns:server="clr-namespace:AutoBitBot.ServerEngine"
              xmlns:converters="clr-namespace:AutoBitBot.UI.MainApp.Converters"
               DataContext="{Binding Source={x:Static server:Server.Instance}, Path=Wallet}"
              mc:Ignorable="d" 
              d:DesignHeight="132" d:DesignWidth="300"
              >
-
-    <UserControl.Resources>
-        <converters:DateTimeToStringConverter x:Key="DateTimeToStringConverter" />
-        <converters:DecimalStringValueConverter x:Key="CoinPriceStringValueConverter"/>
-    
-    </UserControl.Resources>
 
     <Grid >
         <StackPanel>
@@ -27,10 +21,7 @@
                     <DataGridTextColumn Header="Available" Binding="{Binding Available, Converter={StaticResource CoinPriceStringValueConverter}}" />
                 </DataGrid.Columns>
             </DataGrid>
-            <TextBlock FontSize="10" 
-                       HorizontalAlignment="Right" 
-                       Foreground="Green" 
-                       Text="{Binding LastUpdateTime, StringFormat='Last Update: {0}', Converter={StaticResource DateTimeToStringConverter}}" />
+            <TextBlock Style="{StaticResource LastUpdateTimeStyle}" />
         </StackPanel>
     </Grid>
 </UserControl>

@@ -1,15 +1,46 @@
 ﻿<Application x:Class="AutoBitBot.UI.MainApp.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="clr-namespace:AutoBitBot.UI.MainApp.Converters"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+        
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+
+                <ResourceDictionary>
+                    <converters:DateTimeToStringConverter x:Key="DateTimeToStringConverter" />
+                    <converters:DecimalStringValueConverter x:Key="CoinPriceStringValueConverter"/>
+                </ResourceDictionary>
+                
                 <ResourceDictionary Source="/AutoBitBot.UI;component/Assets/ModernUI.xaml" />
                 <ResourceDictionary Source="/AutoBitBot.UI;component/Assets/ModernUI.Dark.xaml" />
+
+                <ResourceDictionary>
+                    <Style TargetType="TextBlock" x:Key="LastUpdateTimeStyle">
+                        <Setter Property="FontSize" Value="10"/>
+                        <Setter Property="HorizontalAlignment" Value="Right"/>
+                        <Setter Property="Foreground" Value="Green"/>
+                        <Setter Property="Text" Value="{Binding LastUpdateTime, StringFormat='Last Update: {0}', Converter={StaticResource DateTimeToStringConverter}}" />
+                    </Style>
+                    
+                    <!--<Style TargetType="TextBlock" BasedOn="{StaticResource LastUpdateTimeStyle}" x:Key="BittrexLastUpdateTimeStyle">
+                        <Setter Property="Text" Value="{Binding BittrexLastUpdateTime, StringFormat='Last Update: {0}', Converter={StaticResource DateTimeToStringConverter}}" />
+                    </Style>
+                    <Style TargetType="TextBlock" BasedOn="{StaticResource LastUpdateTimeStyle}" x:Key="PoloniexLastUpdateTimeStyle">
+                        <Setter Property="Text" Value="{Binding PoloniexLastUpdateTime, StringFormat='Last Update: {0}', Converter={StaticResource DateTimeToStringConverter}}" />
+                    </Style>-->
+                    
+                </ResourceDictionary>
+                
             </ResourceDictionary.MergedDictionaries>
 
+           
             
         </ResourceDictionary>
+
+       
+        
+        
     </Application.Resources>
 </Application>

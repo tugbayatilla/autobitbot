@@ -97,7 +97,7 @@ namespace AutoBitBot.UI.MainApp.ViewModels
                 var selectedMarket = ServerEngine.Server.Instance.SelectedMarket;
                 if (selectedMarket == null)
                 {
-                    ModernDialogService.WarningDialog("Select market first", "Warning");
+                    NotificationModernDialogService.WarningDialog("Select market first", "Warning");
                     return;
                 }
 

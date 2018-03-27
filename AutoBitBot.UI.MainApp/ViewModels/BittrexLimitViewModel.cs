@@ -4,6 +4,7 @@ using AutoBitBot.BittrexProxy.Responses;
 using AutoBitBot.Business;
 using AutoBitBot.Infrastructure;
 using AutoBitBot.ServerEngine;
+using AutoBitBot.UI.MainApp.Infrastructure;
 using AutoBitBot.UI.MainApp.Notifiers;
 using AutoBitBot.UI.Presentation;
 using System;
@@ -133,7 +134,7 @@ namespace AutoBitBot.UI.MainApp.ViewModels
 
                  Server.Instance.Notification.RegisterNotifier(notificationLocation, notifierOutput);
 
-                 var business = new BittrexBusiness(Server.Instance.Notification)
+                 var business = new BittrexBusiness(Server.Instance.Notification, new BittrexUserExchangeKeys())
                  {
                      NotifyLocation = notificationLocation
                  };

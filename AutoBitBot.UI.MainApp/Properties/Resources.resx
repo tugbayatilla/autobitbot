@@ -117,11 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="app" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\app.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Dashboard" xml:space="preserve">
     <value>DASHBOARD</value>
+  </data>
+  <data name="AllExchangeTickers" xml:space="preserve">
+    <value>ALL EXCHANGE TICKERS</value>
+  </data>
+  <data name="Bittrex" xml:space="preserve">
+    <value>BITTREX</value>
+  </data>
+  <data name="BittrexTickers" xml:space="preserve">
+    <value>BITTREX TICKERS</value>
+  </data>
+  <data name="Dashboard1" xml:space="preserve">
+    <value>DASHBOARD</value>
+  </data>
+  <data name="Poloniex" xml:space="preserve">
+    <value>POLONIEX</value>
+  </data>
+  <data name="PoloniexTickers" xml:space="preserve">
+    <value>POLONIEX TICKERS</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="app" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\app.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

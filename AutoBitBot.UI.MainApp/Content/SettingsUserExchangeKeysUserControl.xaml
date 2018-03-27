@@ -1,0 +1,37 @@
+﻿<UserControl x:Class="AutoBitBot.UI.MainApp.Content.SettingsUserExchangeKeysUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ui="http://autobitbot.com/UI"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="300">
+    <Grid>
+        <ScrollViewer>
+            <StackPanel x:Name="Panel" MinWidth="150">
+                <TextBlock Text="USER KEYS" Style="{StaticResource Heading1}" Margin="0,0,0,8" />
+                <Separator></Separator>
+                
+                <TextBlock Text="Bittrex" Style="{StaticResource Heading2}" Margin="0,0,0,8" />
+                <Label Content="ApiKey"/>
+                <TextBox Text="{Binding BittrexApiKey}"></TextBox>
+                <Label Content="SecretKey"/>
+                <TextBox Text="{Binding BittrexSecretKey}"></TextBox>
+                <!--<TextBlock Style="{StaticResource BittrexLastUpdateTimeStyle}" />-->
+
+                <Separator />
+
+                <TextBlock Text="Poloniex" Style="{StaticResource Heading2}" Margin="0,0,0,8" />
+                <Label Content="ApiKey"/>
+                <TextBox Text="{Binding PoloniexApiKey}"></TextBox>
+                <Label Content="SecretKey"/>
+                <TextBox Text="{Binding PoloniexSecretKey}"></TextBox>
+                <!--<TextBlock Style="{StaticResource PoloniexLastUpdateTimeStyle}" />-->
+                
+                <Separator/>
+                
+                <Button Content="Save" Command="{Binding SaveCommand}" />
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

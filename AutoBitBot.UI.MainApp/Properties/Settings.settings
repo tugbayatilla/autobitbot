@@ -1,7 +1,24 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="uri:settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="AutoBitBot.UI.MainApp.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="BittrexApiKey" Type="System.String" Scope="User">
+      <Value Profile="(Default)">a072da5f4593438daabf0636ba0f85c4</Value>
+    </Setting>
+    <Setting Name="BittrexApiSecret" Type="System.String" Scope="User">
+      <Value Profile="(Default)">4f3c6873f98041afb56d2ae9d6f2e290</Value>
+    </Setting>
+    <Setting Name="BittrexLastUpdateTime" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)">2018-03-01</Value>
+    </Setting>
+    <Setting Name="PoloniexApiKey" Type="System.String" Scope="User">
+      <Value Profile="(Default)">IN5X8J1S-IQDKE5W5-Y3VWPUO2-8OD53P2C</Value>
+    </Setting>
+    <Setting Name="PoloniexApiSecret" Type="System.String" Scope="User">
+      <Value Profile="(Default)">a51b23749e1dcac9a75c22b404acd5ba890a092c80bfafa5ba6e2796e02a9db78923ea86374502fea770934c7abbfbe4ba9a21f83ee72aa1e6774e313a847789</Value>
+    </Setting>
+    <Setting Name="PoloniexLastUpdateTime" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)">2018-03-01</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>

@@ -39,7 +39,7 @@ namespace AutoBitBot.UI.MainApp
         {
             try
             {
-                var result = ModernDialogService.ConfirmDialog("closing app! are you sure?", "sure?");
+                var result = NotificationModernDialogService.ConfirmDialog("closing app! are you sure?", "sure?");
                 e.Cancel = !result;
             }
             finally

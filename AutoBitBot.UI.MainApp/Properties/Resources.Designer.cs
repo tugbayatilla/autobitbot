@@ -61,6 +61,15 @@ namespace AutoBitBot.UI.MainApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ALL EXCHANGE TICKERS.
+        /// </summary>
+        public static string AllExchangeTickers {
+            get {
+                return ResourceManager.GetString("AllExchangeTickers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         public static System.Drawing.Icon app {
@@ -71,11 +80,56 @@ namespace AutoBitBot.UI.MainApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to BITTREX.
+        /// </summary>
+        public static string Bittrex {
+            get {
+                return ResourceManager.GetString("Bittrex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BITTREX TICKERS.
+        /// </summary>
+        public static string BittrexTickers {
+            get {
+                return ResourceManager.GetString("BittrexTickers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DASHBOARD.
         /// </summary>
         public static string Dashboard {
             get {
                 return ResourceManager.GetString("Dashboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DASHBOARD.
+        /// </summary>
+        public static string Dashboard1 {
+            get {
+                return ResourceManager.GetString("Dashboard1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to POLONIEX.
+        /// </summary>
+        public static string Poloniex {
+            get {
+                return ResourceManager.GetString("Poloniex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to POLONIEX TICKERS.
+        /// </summary>
+        public static string PoloniexTickers {
+            get {
+                return ResourceManager.GetString("PoloniexTickers", resourceCulture);
             }
         }
     }
