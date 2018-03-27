@@ -1,4 +1,5 @@
-﻿using ArchPM.Core.Notifications;
+﻿using ArchPM.Core;
+using ArchPM.Core.Notifications;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -36,6 +37,8 @@ namespace AutoBitBot.Infrastructure
 
         public static String CreateHash(String data, String secretKey)
         {
+            secretKey.ThrowExceptionIf(p => String.IsNullOrEmpty(p), "SecretKey not given!");
+
             byte[] secretKeyBytes = Encoding.UTF8.GetBytes(secretKey);
             byte[] dataBytes = Encoding.UTF8.GetBytes(data);
             byte[] hash = null;

@@ -8,6 +8,7 @@ using AutoBitBot.Infrastructure;
 using AutoBitBot.Infrastructure.Exchanges;
 using AutoBitBot.Infrastructure.Interfaces;
 using AutoBitBot.ServerEngine;
+using AutoBitBot.UI.MainApp.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -22,7 +23,6 @@ namespace AutoBitBot.Business
     {
         public const String DEFAULT_NOTIFY_LOCATION = "BittrexBusiness";
         readonly INotification notification;
-        readonly IUserExchangeKeys userExchangeKeys;
         BittrexApiManager _manager;
 
         public BittrexApiManager Manager
@@ -31,17 +31,17 @@ namespace AutoBitBot.Business
             {
                 if (_manager == null)
                 {
-                    _manager = BittrexApiManagerFactory.Instance.Create(null, notification);
+                    var apiKey = new ExchangeApiKey() { ApiKey = UI.MainApp.Properties.Settings.Default.BittrexApiKey, SecretKey = UI.MainApp.Properties.Settings.Default.BittrexApiSecret };
+                    _manager = BittrexApiManagerFactory.Instance.Create(apiKey, notification);
                     _manager.NotifyLocation = this.NotifyLocation;
                 }
                 return _manager;
             }
         }
 
-        public BittrexBusiness(INotification notification, IUserExchangeKeys userExchangeKeys)
+        public BittrexBusiness(INotification notification)
         {
             this.notification = notification;
-            this.userExchangeKeys = userExchangeKeys;
             this.NotifyLocation = DEFAULT_NOTIFY_LOCATION;
         }
 
@@ -64,9 +64,7 @@ namespace AutoBitBot.Business
             var calculatedQuantity = (reservedAccount / 3M) / calculatedRate;
 
 
-            var apiKeyModel = new ExchangeApiKey() { ApiKey = userExchangeKeys.ApiKey, SecretKey = userExchangeKeys.SecretKey };
-            var manager = BittrexProxy.BittrexApiManagerFactory.Instance.Create(apiKeyModel);
-            var buyLimitResult = await manager.BuyLimit(new BittrexProxy.BittrexBuyLimitArgs() { Market = market, Rate = calculatedRate, Quantity = calculatedQuantity });
+            var buyLimitResult = await Manager.BuyLimit(new BittrexProxy.BittrexBuyLimitArgs() { Market = market, Rate = calculatedRate, Quantity = calculatedQuantity });
             if (!buyLimitResult.Result)
             {
                 throw new BittrexProxy.BittrexException(buyLimitResult.Message);
@@ -74,7 +72,7 @@ namespace AutoBitBot.Business
 
 
             //loop check
-            var orderResult = await manager.GetOrder(buyLimitResult.Data.uuid);
+            var orderResult = await Manager.GetOrder(buyLimitResult.Data.uuid);
             if (!orderResult.Result)
             {
                 throw new BittrexProxy.BittrexException(orderResult.Message);
@@ -213,7 +211,6 @@ namespace AutoBitBot.Business
         {
             IApiResponse<BittrexOrderResponse> orderResult = null;
             Int32 whileTryCount = 0;
-            var manager = BittrexApiManagerFactory.Instance.Create();
             while (true)
             {
                 if (tryCount <= whileTryCount)
@@ -223,7 +220,7 @@ namespace AutoBitBot.Business
 
                 //make sure order fulfilled
                 //loop check
-                orderResult = await manager.GetOrder(uuid);
+                orderResult = await Manager.GetOrder(uuid);
                 if (orderResult.Result)
                 {
                     notification.Notify($"[Bittrex][CheckOrder][Success]: uuid={uuid} try:{whileTryCount}", NotifyLocation);
@@ -250,7 +247,6 @@ namespace AutoBitBot.Business
         {
             IApiResponse<BittrexOrderResponse> orderResult = null;
             Int32 whileTryCount = 0;
-            var manager = BittrexApiManagerFactory.Instance.Create();
             while (true)
             {
                 if (tryCount <= whileTryCount)
@@ -260,7 +256,7 @@ namespace AutoBitBot.Business
 
                 //make sure order fulfilled
                 //loop check
-                orderResult = await manager.GetOrder(uuid);
+                orderResult = await Manager.GetOrder(uuid);
                 if (orderResult.Result)
                 {
                     if (condition(orderResult.Data))
@@ -301,6 +297,10 @@ namespace AutoBitBot.Business
             {
                 await Server.Instance.Wallet.Save(balanceResult.Data);
             }
+            else
+            {
+                notification.Notify(balanceResult.Message, NotifyAs.Error, NotifyTo.EVENT_LOG);
+            }
         }
         public async void UpdateOpenOrders()
         {
@@ -328,6 +328,10 @@ namespace AutoBitBot.Business
                 });
 
                 Server.Instance.OpenOrders.Save(result);
+            }
+            else
+            {
+                notification.Notify(openOrdersResult.Message, NotifyAs.Error, NotifyTo.EVENT_LOG);
             }
 
         }

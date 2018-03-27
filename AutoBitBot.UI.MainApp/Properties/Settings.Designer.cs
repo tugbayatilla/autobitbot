@@ -25,7 +25,7 @@ namespace AutoBitBot.UI.MainApp.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("a072da5f4593438daabf0636ba0f85c4")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string BittrexApiKey {
             get {
                 return ((string)(this["BittrexApiKey"]));
@@ -37,7 +37,7 @@ namespace AutoBitBot.UI.MainApp.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("4f3c6873f98041afb56d2ae9d6f2e290")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string BittrexApiSecret {
             get {
                 return ((string)(this["BittrexApiSecret"]));
@@ -61,7 +61,7 @@ namespace AutoBitBot.UI.MainApp.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("IN5X8J1S-IQDKE5W5-Y3VWPUO2-8OD53P2C")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string PoloniexApiKey {
             get {
                 return ((string)(this["PoloniexApiKey"]));
@@ -73,8 +73,7 @@ namespace AutoBitBot.UI.MainApp.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("a51b23749e1dcac9a75c22b404acd5ba890a092c80bfafa5ba6e2796e02a9db78923ea86374502fea" +
-            "770934c7abbfbe4ba9a21f83ee72aa1e6774e313a847789")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string PoloniexApiSecret {
             get {
                 return ((string)(this["PoloniexApiSecret"]));

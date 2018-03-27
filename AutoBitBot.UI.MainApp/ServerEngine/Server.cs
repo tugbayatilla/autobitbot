@@ -205,7 +205,7 @@ namespace AutoBitBot.ServerEngine
 
         public void FetchOpenOrders()
         {
-            var bittrexBusiness = new Business.BittrexBusiness(Notification, new BittrexUserExchangeKeys());
+            var bittrexBusiness = new Business.BittrexBusiness(Notification);
             bittrexBusiness.UpdateOpenOrders();
         }
 

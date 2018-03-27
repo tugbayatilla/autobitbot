@@ -23,7 +23,8 @@ namespace AutoBitBot.ServerEngine.BitTasks
 
         protected override async Task<Object> ExecuteAction(Object parameter)
         {
-            var manager = BittrexApiManagerFactory.Instance.Create();
+            var apiKey = new ExchangeApiKey() { ApiKey = UI.MainApp.Properties.Settings.Default.BittrexApiKey, SecretKey = UI.MainApp.Properties.Settings.Default.BittrexApiSecret };
+            var manager = BittrexApiManagerFactory.Instance.Create(apiKey);
 
             var result = await manager.GetMarkets();
 

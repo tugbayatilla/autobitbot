@@ -25,7 +25,7 @@ namespace AutoBitBot.ServerEngine.BitTasks
         protected override async Task<Object> ExecuteAction(Object parameter)
         {
             //fistan: merkezi yap
-            var bittrexBusiness = new Business.BittrexBusiness(Notification, new BittrexUserExchangeKeys());
+            var bittrexBusiness = new Business.BittrexBusiness(Notification);
             await bittrexBusiness.UpdateWallet();
 
             Notification.Notify($"[{Name}] Wallet Updated!", Constants.BITTREX, NotifyTo.CONSOLE, BitTask.DEFAULT_NOTIFY_LOCATION);

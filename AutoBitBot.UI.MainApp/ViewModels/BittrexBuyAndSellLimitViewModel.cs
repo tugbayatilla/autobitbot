@@ -90,7 +90,7 @@ namespace AutoBitBot.UI.MainApp.ViewModels
 
                         Server.Instance.Notification.RegisterNotifier(notificationLocation, notifierOutput);
 
-                        var business = new BittrexBusiness(Server.Instance.Notification, new BittrexUserExchangeKeys())
+                        var business = new BittrexBusiness(Server.Instance.Notification)
                         {
                             NotifyLocation = notificationLocation
                         };

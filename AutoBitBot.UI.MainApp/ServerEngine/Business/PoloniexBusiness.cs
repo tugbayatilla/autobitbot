@@ -64,7 +64,8 @@ namespace AutoBitBot.Business
             notification.Notify($"[Poloniex][Buy][{transactionId}][Order Starting...]: @{market}, {nameof(quantity)} is {quantity} with {nameof(rate)}:{rate}", NotifyLocation);
 
             //calculations
-            var manager = BittrexApiManagerFactory.Instance.Create();
+                    var apiKey = new ExchangeApiKey() { ApiKey = UI.MainApp.Properties.Settings.Default.BittrexApiKey, SecretKey = UI.MainApp.Properties.Settings.Default.BittrexApiSecret };
+            var manager = BittrexApiManagerFactory.Instance.Create(apiKey);
             manager.NotifyLocation = this.NotifyLocation;
 
             //todo: make it global

@@ -26,7 +26,7 @@ namespace AutoBitBot.ServerEngine.BitTasks
 
         protected override async Task<Object> ExecuteAction(Object parameter)
         {
-            var bittrexBusiness = new BittrexBusiness(Notification, new BittrexUserExchangeKeys());
+            var bittrexBusiness = new BittrexBusiness(Notification);
             bittrexBusiness.UpdateOpenOrders();
 
 

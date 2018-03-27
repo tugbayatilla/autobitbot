@@ -2,6 +2,7 @@
 using AutoBitBot.BittrexProxy;
 using AutoBitBot.BittrexProxy.Responses;
 using AutoBitBot.Infrastructure;
+using AutoBitBot.Infrastructure.Exchanges;
 using AutoBitBot.ServerEngine.Enums;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,8 @@ namespace AutoBitBot.ServerEngine.BitTasks
         protected override async Task<Object> ExecuteAction(Object parameter)
         {
             //fistan: merkezi yap
-            var manager = BittrexApiManagerFactory.Instance.Create();
+                    var apiKey = new ExchangeApiKey() { ApiKey = UI.MainApp.Properties.Settings.Default.BittrexApiKey, SecretKey = UI.MainApp.Properties.Settings.Default.BittrexApiSecret };
+            var manager = BittrexApiManagerFactory.Instance.Create(apiKey);
 
             var result = await manager.GetMarketSummaries();
 
