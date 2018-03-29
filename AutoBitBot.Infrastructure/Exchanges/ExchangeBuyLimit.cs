@@ -8,5 +8,6 @@ namespace AutoBitBot.Infrastructure.Exchanges
 {
     public class ExchangeBuyLimit : ExchangeLimit
     {
+        public String OrderId { get; set; }
     }
 }

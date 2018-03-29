@@ -53,7 +53,7 @@ namespace AutoBitBot.UI.MainApp.ViewModels
         {
             this.dispatcher = dispatcher;
             this.outputRichTextBox = outputRichTextBox;
-            this.ExchangeTickerContainer = new ExchangeTickerContainer();
+            //this.ExchangeTickerContainer = new TickerContainer();
 
             Server.Instance.TaskExecuted += Server_TaskExecuted;
 
@@ -67,10 +67,10 @@ namespace AutoBitBot.UI.MainApp.ViewModels
         private void Server_TaskExecuted(object sender, BitTaskExecutedEventArgs e)
         {
             //tickers
-            if (e.BitTask is BittrexTickerTask || e.BitTask is PoloniexTickerTask)
-            {
-                this.ExchangeTickerContainer.Save(e.Data);
-            }
+            //if (e.BitTask is BittrexTickerTask || e.BitTask is PoloniexTickerTask)
+            //{
+            //    this.ExchangeTickerContainer.Save(e.Data);
+            //}
 
         }
 
@@ -78,7 +78,7 @@ namespace AutoBitBot.UI.MainApp.ViewModels
 
         //public ObservableCollection<BitTask> ActiveTasks => Server.Instance.ActiveTasks;
         //public ObservableCollection<BitTask> KilledTasks => Server.Instance.KilledTasks;
-        public ExchangeTickerContainer ExchangeTickerContainer { get; set; }
+        public TickerContainer ExchangeTickerContainer => Server.Instance.TickerContainer;
 
 
 
@@ -87,7 +87,7 @@ namespace AutoBitBot.UI.MainApp.ViewModels
 
         public ICommand Open_BittrexSellLimitCommand => BittrexLimitCommand(LimitTypes.SellImmediate);
         public ICommand Open_BittrexBuyLimitCommand => BittrexLimitCommand(LimitTypes.BuyImmediate);
-        public ICommand Open_BittrexBuyAndSellLimitCommand => BittrexLimitCommand(LimitTypes.SellImmediatelyAfterBuy);
+        public ICommand Open_BittrexBuyAndSellLimitCommand => BittrexLimitCommand(LimitTypes.SellImmediateAfterBuy);
 
         ICommand BittrexLimitCommand(LimitTypes limitType)
         {
@@ -106,7 +106,7 @@ namespace AutoBitBot.UI.MainApp.ViewModels
                 var ticker = model.ExchangeTickerContainer.Data.FirstOrDefault(p => p.ExchangeName == selectedMarket.ExchangeName && p.MarketName == selectedMarket.MarketName);
                 if (ticker == null)
                 {
-                    ticker = new ExchangeTickerViewModel();
+                    ticker = new ExchangeTicker();
                 }
 
                 Object context = null;
@@ -123,7 +123,7 @@ namespace AutoBitBot.UI.MainApp.ViewModels
                         }
                     };
                 }
-                else if(limitType == LimitTypes.SellImmediatelyAfterBuy)
+                else if(limitType == LimitTypes.SellImmediateAfterBuy)
                 {
                     context = new UserControls.BittrexBuyAndSellControl()
                     {

@@ -1,4 +1,5 @@
 ﻿using ArchPM.Core.Notifications;
+using AutoBitBot.Adaptors;
 using AutoBitBot.BittrexProxy;
 using AutoBitBot.BittrexProxy.Responses;
 using AutoBitBot.Business;
@@ -26,11 +27,12 @@ namespace AutoBitBot.ServerEngine.BitTasks
 
         protected override async Task<Object> ExecuteAction(Object parameter)
         {
-            var bittrexBusiness = new BittrexBusiness(Notification);
-            bittrexBusiness.UpdateOpenOrders();
+            var adaptor = Server.Create<BittrexAdaptor>();
+            var result = await adaptor.GetOpenOrders();
 
+            Server.OpenOrders.Save(result);
 
-            Notification.Notify($"[{Name}] OpenOrders Updated!", Constants.BITTREX, NotifyTo.CONSOLE, BitTask.DEFAULT_NOTIFY_LOCATION);
+            Notification.Notify($"[{Name}] OpenOrders Saving...", Constants.BITTREX, NotifyTo.CONSOLE, BitTask.DEFAULT_NOTIFY_LOCATION);
 
             return null;
         }

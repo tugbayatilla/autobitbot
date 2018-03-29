@@ -39,22 +39,41 @@ namespace AutoBitBot.UI.MainApp.ViewModels
         }
 
 
-        Boolean IsBittrexBuyAndSellLimitCommandRunning = false;
-        ICommand bittrexBuyAndSellLimitCommand = null;
-        public ICommand BittrexBuyAndSellLimitCommand
-        {
-            get
+        public ICommand BittrexBuyAndSellLimitCommand=>
+            new RelayCommand(async p =>
             {
-                String notificationLocation = "Bittrex-BuyAndSellLimit-Command";
-                return CommonCommand(
-                        bittrexBuyAndSellLimitCommand,
-                        IsBittrexBuyAndSellLimitCommandRunning,
-                        notificationLocation,
-                        (bus, a, b, c, d) => bus.BuyImmediateAndSellWithProfit(a, b, c, d)
-                   );
+                var notificationLocation = "BittrexBuyAndSellLimitViewModel";
+                var notifierOutput = new OutputDataNotifier(OutputData, notificationLocation);
+                var originalButtonText = this.ButtonText;
 
-            }
-        }
+                try
+                {
+                    this.ButtonText = "In Progress";
+
+                    Server.Instance.Notification.RegisterNotifier(notificationLocation, notifierOutput);
+
+                    var business = new BittrexBusiness()
+                    {
+                        NotifyLocation = notificationLocation
+                    };
+                    await business.BuyImmediateAndSellWithProfit(this.Market, this.Quantity, this.Rate, this.ProfitPercent);
+
+                    business.UpdateWallet();
+                    business.UpdateOpenOrders();
+                }
+                catch (Exception ex)
+                {
+                    Server.Instance.Notification.Notify(ex, NotifyTo.CONSOLE, NotifyTo.EVENT_LOG);
+                }
+                finally
+                {
+                    this.ButtonText = originalButtonText;
+                    this.FireOnPropertyChangedForAllProperties();
+
+                    Server.Instance.Notification.UnregisterNotifier(notificationLocation, notifierOutput.Id);
+                }
+
+            }, p => Error == null);
 
         public override string this[string columnName]
         {
@@ -74,47 +93,7 @@ namespace AutoBitBot.UI.MainApp.ViewModels
             }
         }
 
-        ICommand CommonCommand(ICommand command, Boolean isRunning, String notificationLocation, Action<BittrexBusiness, String, Decimal, Decimal, Decimal> buyOrSellMethodPredicate, [CallerMemberName] String callerMemberName = "")
-        {
-            if (command == null)
-            {
-                command = new RelayCommand(p =>
-                {
-                    var notifierOutput = new OutputDataNotifier(OutputData, notificationLocation);
-                    var originalButtonText = this.ButtonText;
-
-                    try
-                    {
-                        isRunning = true;
-                        this.ButtonText = "In Progress";
-
-                        Server.Instance.Notification.RegisterNotifier(notificationLocation, notifierOutput);
-
-                        var business = new BittrexBusiness(Server.Instance.Notification)
-                        {
-                            NotifyLocation = notificationLocation
-                        };
-                        buyOrSellMethodPredicate(business, this.Market, this.Quantity, this.Rate, this.ProfitPercent);
-
-                        business.Update();
-                    }
-                    catch (Exception ex)
-                    {
-                        Server.Instance.Notification.Notify(ex, NotifyTo.CONSOLE, NotifyTo.EVENT_LOG);
-                    }
-                    finally
-                    {
-                        isRunning = false;
-                        this.ButtonText = originalButtonText;
-                        this.FireOnPropertyChangedForAllProperties();
-
-                        Server.Instance.Notification.UnregisterNotifier(notificationLocation, notifierOutput.Id);
-                    }
-
-                }, p => !isRunning && Error == null);
-            }
-            return command;
-        }
+      
 
 
     }

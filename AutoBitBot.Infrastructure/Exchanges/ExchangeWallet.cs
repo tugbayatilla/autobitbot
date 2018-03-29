@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AutoBitBot.Infrastructure.Exchanges.ViewModels
 {
-    public class ExchangeBalanceViewModel : ObservableObject
+    public class ExchangeWallet : ObservableObject
     {
         String exchangeName, currency;
         Decimal balance, available;

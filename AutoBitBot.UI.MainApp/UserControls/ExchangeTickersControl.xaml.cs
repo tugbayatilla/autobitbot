@@ -55,7 +55,7 @@ namespace AutoBitBot.UI.MainApp.UserControls
                 filter = $"{prefix}-{filter}";
             }
 
-            SingleFieldDataGridFilterMediator.SingleFieldFilter<ExchangeTickerViewModel>(filter, dg);
+            SingleFieldDataGridFilterMediator.SingleFieldFilter<ExchangeTicker>(filter, dg);
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -65,7 +65,7 @@ namespace AutoBitBot.UI.MainApp.UserControls
             var selected = (cb.SelectedValue as ComboBoxItem).Content.ToString();
             if (selected != "All")
             {
-                SingleFieldDataGridFilterMediator.SingleFieldFilter<ExchangeTickerViewModel>(selected, dg);
+                SingleFieldDataGridFilterMediator.SingleFieldFilter<ExchangeTicker>(selected, dg);
             }
             else
             {

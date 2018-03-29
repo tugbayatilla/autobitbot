@@ -55,13 +55,14 @@
   <ItemGroup>
     <Compile Include="Exchanges\ViewModels\MarketInfoViewModel.cs" />
     <Compile Include="Interfaces\IUserExchangeKeys.cs" />
+    <Compile Include="LimitTypes.cs" />
     <Compile Include="ObservableObjectContainer.cs" />
     <Compile Include="Dialog\Class1.cs" />
     <Compile Include="Dialog\Class2.cs" />
     <Compile Include="Exchanges\ExchangeApiKey.cs" />
     <Compile Include="Exceptions\ApiKeyNotProvidedException.cs" />
     <Compile Include="Exchanges\ViewModels\ExchangeOpenOrdersViewModel.cs" />
-    <Compile Include="Exchanges\ViewModels\ExchangeBalanceViewModel.cs" />
+    <Compile Include="Exchanges\ExchangeWallet.cs" />
     <Compile Include="Exchanges\ExchangeSellLimitArguments.cs" />
     <Compile Include="Exchanges\ExchangeSellLimit.cs" />
     <Compile Include="Exchanges\ExchangeBuyLimit.cs" />
@@ -70,13 +71,13 @@
     <Compile Include="Exchanges\ExchangeCurrency.cs" />
     <Compile Include="Exchanges\ExchangeMarket.cs" />
     <Compile Include="Exchanges\ExchangeMarketHistory.cs" />
-    <Compile Include="Exchanges\ExchangeMarketOpenOrder.cs" />
+    <Compile Include="Exchanges\ExchangeOpenOrder.cs" />
     <Compile Include="Exchanges\ExchangeMarketSummary.cs" />
     <Compile Include="Exchanges\ExchangeOrder.cs" />
     <Compile Include="Exchanges\ExchangeOrderHistory.cs" />
     <Compile Include="Exchanges\ViewModels\ExchangeOverallCurrentStatusViewModel.cs" />
-    <Compile Include="Exchanges\ViewModels\ExchangeTickerViewModel.cs" />
-    <Compile Include="Exchanges\IExchangeOps.cs" />
+    <Compile Include="Exchanges\ExchangeTicker.cs" />
+    <Compile Include="Exchanges\IExchangeAdaptor.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Interfaces\ISingleFieldUIFilter.cs" />
     <Compile Include="ObservableObject.cs" />

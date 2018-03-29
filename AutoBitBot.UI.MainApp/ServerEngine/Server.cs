@@ -35,12 +35,13 @@ namespace AutoBitBot.ServerEngine
 
         public Server()
         {
-            this.Config = new List<ConfigItem>();
+            //this.Config = new List<ConfigItem>();
             this.ActiveTasks = new ObservableCollection<BitTask>();
             this.KilledTasks = new ObservableCollection<BitTask>();
             this.Wallet = new WalletContainer();
             this.OpenOrders = new OpenOrdersContainer();
-            this.MarketsInfo = new MarketsInfoContainer();
+            this.MarketsInfo = new MarketsContainer();
+            this.TickerContainer = new TickerContainer();
 
             _lockTasks = new object();
 
@@ -68,7 +69,7 @@ namespace AutoBitBot.ServerEngine
             RegisterInstance(new BittrexWalletTask());
             RegisterInstance(new BittrexTickerTask());
             RegisterInstance(new BittrexOpenOrdersTask());
-            RegisterInstance(new BittrexMarketsInfoTask());
+            RegisterInstance(new BittrexMarketsTask());
 
             //RegisterInstance(new LicenceTask());
 
@@ -90,11 +91,11 @@ namespace AutoBitBot.ServerEngine
                 }
             }
 
-            if (e.BitTask is BittrexMarketsInfoTask)
-            {
-                var model = e.Data as List<BittrexMarketResponse>;
-                this.MarketsInfo.Save(model);
-            }
+            //if (e.BitTask is BittrexMarketsTask)
+            //{
+            //    var model = e.Data as List<BittrexMarketResponse>;
+            //    this.MarketsInfo.Save(model);
+            //}
 
             //if (e.Data is List<BittrexBalanceResponse>)
             //{
@@ -124,11 +125,12 @@ namespace AutoBitBot.ServerEngine
         public ObservableCollection<BitTask> KilledTasks { get; private set; }
         public WalletContainer Wallet { get; private set; }
         public OpenOrdersContainer OpenOrders { get; private set; }
-        public MarketsInfoContainer MarketsInfo { get; private set; }
+        public MarketsContainer MarketsInfo { get; private set; }
         public SelectedMarket SelectedMarket { get; set; }
+        public TickerContainer TickerContainer { get; set; }
 
 
-        public List<ConfigItem> Config { get; set; }
+        //public List<ConfigItem> Config { get; set; }
         public INotification Notification { get; private set; }
         public Boolean Initialized { get; private set; }
         public Dispatcher Dispatcher { get; private set; }
@@ -176,17 +178,17 @@ namespace AutoBitBot.ServerEngine
             }
 
 
-            //check next task
-            var wfItem = Config.FirstOrDefault(p => p.Task == bitTask.GetType());
-            if (wfItem != null)
-            {
-                wfItem.NextItems.Where(p => p.ExecutionTime == ConfigExecutionTimes.AfterKill).ForEach(p =>
-                  {
-                      var item = (BitTask)Activator.CreateInstance(p.Task);
-                      item.ExecutionId = bitTask.ExecutionId;
-                      RegisterInstanceAndExecute(item, bitTask.LastResult);
-                  });
-            }
+            ////check next task
+            //var wfItem = Config.FirstOrDefault(p => p.Task == bitTask.GetType());
+            //if (wfItem != null)
+            //{
+            //    wfItem.NextItems.Where(p => p.ExecutionTime == ConfigExecutionTimes.AfterKill).ForEach(p =>
+            //      {
+            //          var item = (BitTask)Activator.CreateInstance(p.Task);
+            //          item.ExecutionId = bitTask.ExecutionId;
+            //          RegisterInstanceAndExecute(item, bitTask.LastResult);
+            //      });
+            //}
         }
         public Task RunAllRegisteredTasksAsync()
         {
@@ -203,45 +205,12 @@ namespace AutoBitBot.ServerEngine
         }
         #endregion
 
-        public void FetchOpenOrders()
+        
+        public IExchangeAdaptor Create<T>() where T : class, IExchangeAdaptor
         {
-            var bittrexBusiness = new Business.BittrexBusiness(Notification);
-            bittrexBusiness.UpdateOpenOrders();
+            return Adaptors.AdaptorFactory.Create<T>(this.Notification);
         }
 
-        //public void FetchWallet()
-        //{
-        //    //var bittrexBusiness = new Business.BittrexBusiness(Notification);
-        //    //bittrexBusiness.UpdateWallet();
-
-
-        //    ////bittrex call
-        //    //var bittrexManager = BittrexProxy.BittrexApiManagerFactory.Instance.Create(null, Instance.Notification);
-        //    //var bittrexBalancesResult = await bittrexManager.GetBalances();
-
-        //    //if (bittrexBalancesResult.Result)
-        //    //{
-        //    //    Instance.Wallet.Save(bittrexBalancesResult.Data);
-        //    //}
-
-        //    //var poloniexManager = PoloniexProxy.PoloniexApiManagerFactory.Instance.Create(null, Instance.Notification);
-        //    //var poloniexBalancesResult = await poloniexManager.ReturnBalances();
-        //    //if (poloniexBalancesResult.Result)
-        //    //{
-        //    //    Instance.Wallet.Save(poloniexBalancesResult.Data);
-        //    //}
-        //}
-
-
-
-
-
-        //Task<Boolean> OpenModal(String message)
-        //{
-        //    var command = new OpenModalCommand();
-        //    command.Execute(message);
-        //    return Task.FromResult<Boolean>((Boolean)command.Result);
-        //}
 
 
     }

@@ -1,4 +1,5 @@
 ﻿using ArchPM.Core.Notifications;
+using AutoBitBot.Adaptors;
 using AutoBitBot.BittrexProxy;
 using AutoBitBot.BittrexProxy.Responses;
 using AutoBitBot.Infrastructure;
@@ -24,13 +25,14 @@ namespace AutoBitBot.ServerEngine.BitTasks
 
         protected override async Task<Object> ExecuteAction(Object parameter)
         {
-            //fistan: merkezi yap
-            var bittrexBusiness = new Business.BittrexBusiness(Notification);
-            await bittrexBusiness.UpdateWallet();
+            var adaptor = Server.Create<BittrexAdaptor>();
+            var result = await adaptor.GetWallet();
 
-            Notification.Notify($"[{Name}] Wallet Updated!", Constants.BITTREX, NotifyTo.CONSOLE, BitTask.DEFAULT_NOTIFY_LOCATION);
+            Server.Wallet.Save(result);
 
-            return null;
+            Notification.Notify($"[{Name}] Wallet Updating...", Constants.BITTREX, NotifyTo.CONSOLE, BitTask.DEFAULT_NOTIFY_LOCATION);
+
+            return result;
         }
     }
 }

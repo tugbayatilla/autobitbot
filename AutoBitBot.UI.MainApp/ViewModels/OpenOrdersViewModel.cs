@@ -17,8 +17,8 @@ namespace AutoBitBot.UI.MainApp.ViewModels
 {
     public class OpenOrdersViewModel : ObservableObject
     {
-        ExchangeOpenOrdersViewModel selectedOrder;
-        public ExchangeOpenOrdersViewModel SelectedOrder
+        ExchangeOpenOrder selectedOrder;
+        public ExchangeOpenOrder SelectedOrder
         {
             get => selectedOrder;
             set

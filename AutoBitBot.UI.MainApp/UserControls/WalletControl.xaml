@@ -12,7 +12,7 @@
 
     <Grid >
         <StackPanel>
-           
+            <TextBlock Style="{StaticResource LastUpdateTimeStyle}" />
             <DataGrid ItemsSource="{Binding Data}" AutoGenerateColumns="False" CanUserAddRows="False" >
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Exchange" Binding="{Binding ExchangeName}" />
@@ -21,7 +21,6 @@
                     <DataGridTextColumn Header="Available" Binding="{Binding Available, Converter={StaticResource CoinPriceStringValueConverter}}" />
                 </DataGrid.Columns>
             </DataGrid>
-            <TextBlock Style="{StaticResource LastUpdateTimeStyle}" />
         </StackPanel>
     </Grid>
 </UserControl>

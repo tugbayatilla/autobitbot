@@ -13,14 +13,18 @@ using System.Windows.Data;
 
 namespace AutoBitBot.UI.MainApp.Collections
 {
-    public class OpenOrdersContainer : ObservableObjectContainer<ExchangeOpenOrder>
+    public class MarketsContainer : ObservableObjectContainer<ExchangeMarket>
     {
-        public OpenOrdersContainer() 
+        public MarketsContainer()
         {
             BindingOperations.EnableCollectionSynchronization(this.Data, _locker);
         }
 
-        public void Save(IEnumerable<ExchangeOpenOrder> models)
+        /// <summary>
+        /// Saves the specified bittrex balance response. Adds or Updates
+        /// </summary>
+        /// <param name="bittrexBalanceResponse">The bittrex balance response.</param>
+        public void Save(IEnumerable<ExchangeMarket> models)
         {
             Task.Factory.StartNew(() =>
             {
@@ -33,10 +37,21 @@ namespace AutoBitBot.UI.MainApp.Collections
                         this.Data.Add(model);
                     }
                 }
-            }).ContinueWith(p=> { p.Dispose(); });
-
-            
+            }).ContinueWith(p => { p.Dispose(); });
         }
 
+
+        public ExchangeMarket Get(String marketName)
+        {
+            lock (_locker)
+            {
+                var balance = this.Data.FirstOrDefault(p => p.MarketName == marketName);
+                if (balance == null)
+                {
+                    balance = new ExchangeMarket();
+                }
+                return balance;
+            }
+        }
     }
 }

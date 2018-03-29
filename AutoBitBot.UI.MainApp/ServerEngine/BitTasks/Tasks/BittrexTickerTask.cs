@@ -1,4 +1,5 @@
 ﻿using ArchPM.Core.Notifications;
+using AutoBitBot.Adaptors;
 using AutoBitBot.BittrexProxy;
 using AutoBitBot.BittrexProxy.Responses;
 using AutoBitBot.Infrastructure;
@@ -24,22 +25,14 @@ namespace AutoBitBot.ServerEngine.BitTasks
 
         protected override async Task<Object> ExecuteAction(Object parameter)
         {
-            //fistan: merkezi yap
-                    var apiKey = new ExchangeApiKey() { ApiKey = UI.MainApp.Properties.Settings.Default.BittrexApiKey, SecretKey = UI.MainApp.Properties.Settings.Default.BittrexApiSecret };
-            var manager = BittrexApiManagerFactory.Instance.Create(apiKey);
+            var adaptor = Server.Create<BittrexAdaptor>();
+            var result = await adaptor.GetTickers();
 
-            var result = await manager.GetMarketSummaries();
+            Server.TickerContainer.Save(result);
 
-            if (result.Result)
-            {
-                Notification.Notify($"[{Name}] Ticker Updated!", Constants.BITTREX, NotifyTo.CONSOLE, BitTask.DEFAULT_NOTIFY_LOCATION);
-            }
-            else
-            {
-                Notification.Notify($"[{Name}] Ticker Failed!", Constants.BITTREX, NotifyTo.CONSOLE, BitTask.DEFAULT_NOTIFY_LOCATION);
-            }
+            Notification.Notify($"[{Name}] Ticker Updated!", Constants.BITTREX, NotifyTo.CONSOLE, BitTask.DEFAULT_NOTIFY_LOCATION);
 
-            return result.Data;
+            return result;
         }
     }
 }

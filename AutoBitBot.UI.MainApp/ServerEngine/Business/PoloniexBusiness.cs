@@ -73,7 +73,7 @@ namespace AutoBitBot.Business
 
             if (!buyResult.Result)
             {
-                var ex = new BittrexException(String.Concat($"[Buy][{transactionId}][Order Failed]: ", buyResult.Message));
+                var ex = new BittrexApiException(String.Concat($"[Buy][{transactionId}][Order Failed]: ", buyResult.Message));
                 notification.Notify(ex, NotifyLocation, NotifyTo.CONSOLE, NotifyTo.EVENT_LOG, NotifyLocation);
                 return false;
             }
@@ -110,7 +110,7 @@ namespace AutoBitBot.Business
                 var orderResult = await manager.GetOrder(uuid);
                 if (!orderResult.Result)
                 {
-                    var ex = new BittrexException($"uuid:{uuid} failed! " + orderResult.Message);
+                    var ex = new BittrexApiException($"uuid:{uuid} failed! " + orderResult.Message);
                     notification.Notify(ex, NotifyLocation, NotifyTo.CONSOLE, NotifyTo.EVENT_LOG, NotifyLocation);
                 }
                 else

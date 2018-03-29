@@ -6,12 +6,7 @@ using System.Web;
 namespace AutoBitBot.Infrastructure
 {
 
-    public enum LimitTypes
-    {
-        BuyImmediate,
-        SellImmediate,
-        SellImmediatelyAfterBuy
-    }
+   
 
     public static class Constants
     {

@@ -94,17 +94,12 @@ namespace AutoBitBot.UI.MainApp.ViewModels
 
         public Decimal MinTradeSizeBTC
         {
-            get => (MinTradeSize * Rate) - Fee;
-        }
-
-        public Decimal Fee
-        {
-            get => Server.Instance.MarketsInfo.Get(this.Market).Fee;
+            get => (MinTradeSize * Rate);
         }
 
         public Decimal AvailableBTC
         {
-            get => (Available * Rate) - Fee;
+            get => (Available * Rate);
         }
 
         public ObservableCollection<OutputData> OutputData { get; set; }
@@ -134,7 +129,7 @@ namespace AutoBitBot.UI.MainApp.ViewModels
 
                  Server.Instance.Notification.RegisterNotifier(notificationLocation, notifierOutput);
 
-                 var business = new BittrexBusiness(Server.Instance.Notification)
+                 var business = new BittrexBusiness()
                  {
                      NotifyLocation = notificationLocation
                  };
@@ -148,7 +143,8 @@ namespace AutoBitBot.UI.MainApp.ViewModels
                      await business.SellImmediate(this.Market, this.Quantity, this.Rate);
                  }
 
-                 business.Update();
+                 business.UpdateWallet();
+                 business.UpdateOpenOrders();
 
              }
              catch (Exception ex)

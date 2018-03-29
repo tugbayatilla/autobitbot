@@ -32,7 +32,7 @@ namespace AutoBitBot.BittrexProxy
 
             var httpClient = new HttpClient();
 
-            return new BittrexApiManager(httpClient, notification) { ApiKeyModel = apiKeyModel };
+            return new BittrexApiManager(httpClient, notification) { ExchangeApiKey = apiKeyModel };
         }
 
     }

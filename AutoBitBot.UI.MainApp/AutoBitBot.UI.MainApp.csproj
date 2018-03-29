@@ -110,6 +110,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Adaptors\AdaptorFactory.cs" />
+    <Compile Include="Adaptors\ExchangeAdaptorException.cs" />
+    <Compile Include="Adaptors\BittrexAdaptor.cs" />
     <Compile Include="Commands\OpenModalCommand.cs" />
     <Compile Include="Content\SettingsUserExchangeKeysUserControl.xaml.cs">
       <DependentUpon>SettingsUserExchangeKeysUserControl.xaml</DependentUpon>
@@ -127,19 +130,16 @@
     <Compile Include="ServerEngine\BitTasks\EventArgs\BitTaskExecutedEventArgs.cs" />
     <Compile Include="ServerEngine\BitTasks\EventArgs\BitTaskExecutionCompletedEventArgs.cs" />
     <Compile Include="ServerEngine\BitTasks\Tasks\BitTask.cs" />
-    <Compile Include="ServerEngine\BitTasks\Tasks\BittrexMarketsInfoTask.cs" />
+    <Compile Include="ServerEngine\BitTasks\Tasks\BittrexMarketsTask.cs" />
     <Compile Include="ServerEngine\BitTasks\Tasks\BittrexOpenOrdersTask.cs" />
     <Compile Include="ServerEngine\BitTasks\Tasks\BittrexTickerTask.cs" />
     <Compile Include="ServerEngine\BitTasks\Tasks\BittrexWalletTask.cs" />
     <Compile Include="ServerEngine\BitTasks\Tasks\LicenceTask.cs" />
-    <Compile Include="ServerEngine\BitTasks\Tasks\PoloniexTickerTask.cs" />
-    <Compile Include="ServerEngine\BitTasks\Tasks\PoloniexWalletTask.cs" />
     <Compile Include="ServerEngine\Business\BittrexBusiness.cs" />
     <Compile Include="ServerEngine\Business\ExchangeBusiness.cs" />
     <Compile Include="ServerEngine\Business\PoloniexBusiness.cs" />
-    <Compile Include="ServerEngine\Collections\ExchangeOverallCurrentStatusObservableCollection.cs" />
-    <Compile Include="ServerEngine\Collections\ExchangeTickerContainer.cs" />
-    <Compile Include="ServerEngine\Collections\MarketsInfoContainer.cs" />
+    <Compile Include="ServerEngine\Collections\TickerContainer.cs" />
+    <Compile Include="ServerEngine\Collections\MarketsContainer.cs" />
     <Compile Include="ServerEngine\Collections\OpenOrdersContainer.cs" />
     <Compile Include="ServerEngine\Collections\WalletContainer.cs" />
     <Compile Include="ServerEngine\ConfigItem.cs" />
