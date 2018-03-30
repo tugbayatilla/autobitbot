@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AutoBitBot.UI.MainApp.UserControls.Global
+namespace AutoBitBot.UI.Windows.Controls
 {
     /// <summary>
     /// Interaction logic for OutputDataGridControl.xaml

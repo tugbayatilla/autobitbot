@@ -36,8 +36,11 @@
     <AssemblyOriginatorKeyFile>Key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ArchPM.Core, Version=0.2.1.21449, Culture=neutral, PublicKeyToken=a7c5f15bb1b78c45, processorArchitecture=MSIL">
-      <HintPath>..\packages\ArchPM.Core.0.2.1\lib\net45\ArchPM.Core.dll</HintPath>
+    <Reference Include="ArchPM.Core, Version=0.2.2.25899, Culture=neutral, PublicKeyToken=a7c5f15bb1b78c45, processorArchitecture=MSIL">
+      <HintPath>..\packages\ArchPM.Core.0.2.2\lib\net45\ArchPM.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -53,7 +56,20 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BitTasks\BitTask.cs" />
+    <Compile Include="BitTasks\BitTaskException.cs" />
+    <Compile Include="BitTasks\BitTaskResult.cs" />
+    <Compile Include="BitTasks\Enums\BitTaskExecutionTypes.cs" />
+    <Compile Include="BitTasks\Enums\BitTaskStatus.cs" />
+    <Compile Include="BitTasks\Enums\BitTaskWorkingTimes.cs" />
+    <Compile Include="BitTasks\EventArgs\BitTaskExecutedEventArgs.cs" />
+    <Compile Include="BitTasks\EventArgs\BitTaskExecutionCompletedEventArgs.cs" />
+    <Compile Include="Collections\MarketsContainer.cs" />
+    <Compile Include="Collections\OpenOrdersContainer.cs" />
+    <Compile Include="Collections\TickerContainer.cs" />
+    <Compile Include="Collections\WalletContainer.cs" />
     <Compile Include="Exchanges\ViewModels\MarketInfoViewModel.cs" />
+    <Compile Include="Interfaces\IServer.cs" />
     <Compile Include="Interfaces\IUserExchangeKeys.cs" />
     <Compile Include="LimitTypes.cs" />
     <Compile Include="ObservableObjectContainer.cs" />
@@ -82,8 +98,11 @@
     <Compile Include="Interfaces\ISingleFieldUIFilter.cs" />
     <Compile Include="ObservableObject.cs" />
     <Compile Include="OldNewPair.cs" />
+    <Compile Include="OutputData.cs" />
+    <Compile Include="OutputDataNotifier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="SelectedMarket.cs" />
     <Compile Include="SingleFieldDataGridFilterMediator.cs" />
     <Compile Include="TransactionOperationType.cs" />
     <Compile Include="Utils.cs" />

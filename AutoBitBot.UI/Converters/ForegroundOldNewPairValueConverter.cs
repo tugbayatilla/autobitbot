@@ -1,5 +1,4 @@
-﻿using AutoBitBot.UI.MainApp.DTO;
-using AutoBitBot.ServerEngine;
+﻿using AutoBitBot.ServerEngine;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -11,7 +10,7 @@ using System.Windows;
 using System.Windows.Data;
 using AutoBitBot.Infrastructure;
 
-namespace AutoBitBot.UI.MainApp.Converters
+namespace AutoBitBot.UI.Converters
 {
     public class ForegroundOldNewPairValueConverter : IValueConverter
     {

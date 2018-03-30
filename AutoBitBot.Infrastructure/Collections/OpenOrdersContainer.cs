@@ -1,8 +1,6 @@
-﻿using AutoBitBot.BittrexProxy.Responses;
-using AutoBitBot.Infrastructure;
+﻿using AutoBitBot.Infrastructure;
 using AutoBitBot.Infrastructure.Exchanges;
 using AutoBitBot.Infrastructure.Exchanges.ViewModels;
-using AutoBitBot.PoloniexProxy.Responses;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

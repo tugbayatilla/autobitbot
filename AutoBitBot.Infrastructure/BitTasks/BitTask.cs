@@ -1,6 +1,7 @@
 ﻿using ArchPM.Core;
 using ArchPM.Core.Extensions;
 using ArchPM.Core.Notifications;
+using AutoBitBot.Infrastructure.Interfaces;
 using AutoBitBot.ServerEngine.Enums;
 using System;
 using System.Collections.Generic;
@@ -43,7 +44,7 @@ namespace AutoBitBot.ServerEngine
             this.ExplicitlyTerminateAfterExecution = false;
         }
 
-        public Server Server { get; set; }
+        public IServer Server { get; set; }
 
         #region Properties
 
@@ -300,7 +301,7 @@ namespace AutoBitBot.ServerEngine
                     this.Status = BitTaskStatus.Failed;
                     this.FailedMessage = ex.GetAllMessages(false, " ");
 
-                    Notification.Notify(ex, NotifyTo.EVENT_LOG, DEFAULT_NOTIFY_LOCATION);
+                    Notification.Notify(new BitTaskException($"[{this.Name}]", ex), NotifyTo.EVENT_LOG, DEFAULT_NOTIFY_LOCATION);
                 }
 
                 if (this.KillAfterExecution)

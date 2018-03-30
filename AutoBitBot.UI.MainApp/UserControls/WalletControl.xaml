@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:server="clr-namespace:AutoBitBot.ServerEngine"
-             xmlns:converters="clr-namespace:AutoBitBot.UI.MainApp.Converters"
               DataContext="{Binding Source={x:Static server:Server.Instance}, Path=Wallet}"
              mc:Ignorable="d" 
              d:DesignHeight="132" d:DesignWidth="300"

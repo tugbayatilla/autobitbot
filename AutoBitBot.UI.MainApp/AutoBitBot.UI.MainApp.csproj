@@ -80,11 +80,11 @@
     <AssemblyOriginatorKeyFile>Key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ArchPM.Core, Version=0.2.1.21449, Culture=neutral, PublicKeyToken=a7c5f15bb1b78c45, processorArchitecture=MSIL">
-      <HintPath>..\packages\ArchPM.Core.0.2.1\lib\net45\ArchPM.Core.dll</HintPath>
+    <Reference Include="ArchPM.Core, Version=0.2.2.25899, Culture=neutral, PublicKeyToken=a7c5f15bb1b78c45, processorArchitecture=MSIL">
+      <HintPath>..\packages\ArchPM.Core.0.2.2\lib\net45\ArchPM.Core.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -120,36 +120,18 @@
     <Compile Include="Infrastructure\BittrexUserExchangeKeys.cs" />
     <Compile Include="Infrastructure\LicenceManager.cs" />
     <Compile Include="Infrastructure\NotificationModernDialogService.cs" />
-    <Compile Include="Notifiers\OutputData.cs" />
-    <Compile Include="Notifiers\OutputDataNotifier.cs" />
-    <Compile Include="ServerEngine\BitTasks\BitTaskException.cs" />
-    <Compile Include="ServerEngine\BitTasks\BitTaskResult.cs" />
-    <Compile Include="ServerEngine\BitTasks\Enums\BitTaskExecutionTypes.cs" />
-    <Compile Include="ServerEngine\BitTasks\Enums\BitTaskStatus.cs" />
-    <Compile Include="ServerEngine\BitTasks\Enums\BitTaskWorkingTimes.cs" />
-    <Compile Include="ServerEngine\BitTasks\EventArgs\BitTaskExecutedEventArgs.cs" />
-    <Compile Include="ServerEngine\BitTasks\EventArgs\BitTaskExecutionCompletedEventArgs.cs" />
-    <Compile Include="ServerEngine\BitTasks\Tasks\BitTask.cs" />
-    <Compile Include="ServerEngine\BitTasks\Tasks\BittrexMarketsTask.cs" />
-    <Compile Include="ServerEngine\BitTasks\Tasks\BittrexOpenOrdersTask.cs" />
-    <Compile Include="ServerEngine\BitTasks\Tasks\BittrexTickerTask.cs" />
-    <Compile Include="ServerEngine\BitTasks\Tasks\BittrexWalletTask.cs" />
-    <Compile Include="ServerEngine\BitTasks\Tasks\LicenceTask.cs" />
+    <Compile Include="ServerEngine\BitTasks\BittrexMarketsTask.cs" />
+    <Compile Include="ServerEngine\BitTasks\BittrexOpenOrdersTask.cs" />
+    <Compile Include="ServerEngine\BitTasks\BittrexTickerTask.cs" />
+    <Compile Include="ServerEngine\BitTasks\BittrexWalletTask.cs" />
+    <Compile Include="ServerEngine\BitTasks\LicenceTask.cs" />
     <Compile Include="ServerEngine\Business\BittrexBusiness.cs" />
     <Compile Include="ServerEngine\Business\ExchangeBusiness.cs" />
     <Compile Include="ServerEngine\Business\PoloniexBusiness.cs" />
-    <Compile Include="ServerEngine\Collections\TickerContainer.cs" />
-    <Compile Include="ServerEngine\Collections\MarketsContainer.cs" />
-    <Compile Include="ServerEngine\Collections\OpenOrdersContainer.cs" />
-    <Compile Include="ServerEngine\Collections\WalletContainer.cs" />
     <Compile Include="ServerEngine\ConfigItem.cs" />
-    <Compile Include="ServerEngine\Domain\SelectedMarket.cs" />
     <Compile Include="ServerEngine\Server.cs" />
     <Compile Include="UserControls\ButtonsControl.xaml.cs">
       <DependentUpon>ButtonsControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\OutputDataGridControl.xaml.cs">
-      <DependentUpon>OutputDataGridControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\StaticSelectedMarketControl.xaml.cs">
       <DependentUpon>StaticSelectedMarketControl.xaml</DependentUpon>
@@ -158,12 +140,6 @@
     <Compile Include="ViewModels\DesignViewModel.cs" />
     <Compile Include="ViewModels\OpenOrdersViewModel.cs" />
     <Compile Include="ViewModels\SelectedMarketViewModel.cs" />
-    <Compile Include="Converters\DateTimeToStringConverter.cs" />
-    <Compile Include="Converters\PercentStringValueConverter.cs" />
-    <Compile Include="Converters\DecimalStringValueConverter.cs" />
-    <Compile Include="Converters\ForegroundChangeValueConverter.cs" />
-    <Compile Include="Converters\ForegroundBitTaskStatusChangedValueConverter.cs" />
-    <Compile Include="Converters\ForegroundOldNewPairValueConverter.cs" />
     <Compile Include="DTO\BalanceDTO.cs" />
     <Compile Include="DTO\BitTaskDTO.cs" />
     <Compile Include="DTO\BuyLimitDTO.cs" />
@@ -172,7 +148,6 @@
     <Compile Include="DTO\MarketDTO.cs" />
     <Compile Include="DTO\MarketTickerDTO.cs" />
     <Compile Include="Infrastructure\TextConverter.cs" />
-    <Compile Include="Notifiers\RichTextBoxNotifier.cs" />
     <Compile Include="UserControls\AllExchangeOverallCurrentStatusControl.xaml.cs">
       <DependentUpon>AllExchangeOverallCurrentStatusControl.xaml</DependentUpon>
     </Compile>
@@ -188,9 +163,6 @@
     <Compile Include="UserControls\OpenOrdersControl.xaml.cs">
       <DependentUpon>OpenOrdersControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\PoloniexTickersControl.xaml.cs">
-      <DependentUpon>PoloniexTickersControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ViewModels\BittrexLimitViewModel.cs" />
     <Compile Include="UserControls\StaticActiveTasksControl.xaml.cs">
       <DependentUpon>StaticActiveTasksControl.xaml</DependentUpon>
@@ -203,9 +175,6 @@
     </Compile>
     <Compile Include="UserControls\StaticKilledTasksControl.xaml.cs">
       <DependentUpon>StaticKilledTasksControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\BittrexMarketSummaryControl.xaml.cs">
-      <DependentUpon>BittrexMarketSummaryControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\BittrexMarketOpenOrdersControl.xaml.cs">
       <DependentUpon>BittrexMarketOpenOrdersControl.xaml</DependentUpon>
@@ -564,18 +533,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControls\OutputDataGridControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControls\PoloniexTickersControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UserControls\BittrexMarketSummaryControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="UserControls\BittrexMarketOpenOrdersControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -689,5 +646,6 @@
   <ItemGroup>
     <EmbeddedResource Include="app.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

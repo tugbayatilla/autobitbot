@@ -3,17 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:AutoBitBot.UI.MainApp.UserControls"
-             xmlns:globalControls="clr-namespace:AutoBitBot.UI.MainApp.UserControls.Global"
-             xmlns:converters="clr-namespace:AutoBitBot.UI.MainApp.Converters"
+             xmlns:ui="http://autobitbot.com/UI"
              mc:Ignorable="d" 
              xmlns:viewModel="clr-namespace:AutoBitBot.UI.MainApp.ViewModels"
              d:DataContext="{Binding Source={x:Static viewModel:DesignViewModel.Instance}, Path=BittrexLimitViewModel}"
              d:DesignHeight="350" d:DesignWidth="400" >
 
     <UserControl.Resources>
-
-        <converters:DecimalStringValueConverter x:Key="DecimalStringValueConverter"/>
 
         <Style TargetType="Label" x:Key="decimalLabel" BasedOn="{StaticResource {x:Type Label}}">
             <Setter Property="HorizontalContentAlignment" Value="Right" />
@@ -121,7 +117,7 @@
             </StackPanel>
         </Button>
 
-        <globalControls:OutputDataGridControl Grid.Row="5" Grid.ColumnSpan="2" DataContext="{Binding OutputData}"/>
+        <ui:OutputDataGridControl Grid.Row="5" Grid.ColumnSpan="2" DataContext="{Binding OutputData}"/>
 
 
     </Grid>

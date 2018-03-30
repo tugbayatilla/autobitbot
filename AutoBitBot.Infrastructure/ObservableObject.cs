@@ -11,7 +11,13 @@ namespace AutoBitBot.Infrastructure
 {
     public abstract class ObservableObject : INotifyPropertyChanged
     {
+        public ObservableObject()
+        {
+            this.OutputData = new ObservableCollection<OutputData>();
+        }
+
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
+        public ObservableCollection<OutputData> OutputData { get; set; }
 
         public DateTime LastUpdateTime => DateTime.Now;
 

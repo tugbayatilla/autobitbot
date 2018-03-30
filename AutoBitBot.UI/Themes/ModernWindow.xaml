@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:res="clr-namespace:AutoBitBot.UI.Resources"
                     xmlns:controls="clr-namespace:AutoBitBot.UI.Windows.Controls"
-                    xmlns:navigation="clr-namespace:AutoBitBot.UI.Windows.Navigation">
+                    xmlns:navigation="clr-namespace:AutoBitBot.UI.Windows.Navigation"
+                    >
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/AutoBitBot.UI;component/Assets/Button.xaml" />
@@ -173,7 +174,8 @@
                                             </Grid.RowDefinitions>
                                             <controls:ModernFrame Grid.Row="0" x:Name="ContentFrame" Margin="42,8,16,16"  Source="{Binding ContentSource, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" ContentLoader="{TemplateBinding ContentLoader}"/>
                                             <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" />
-                                            <RichTextBox x:Name="Output" Grid.Row="2" Height="Auto" IsReadOnly="True" Foreground="Gray"></RichTextBox>
+                                            <controls:OutputDataGridControl Grid.Row="2" DataContext="{Binding OutputData}"/>
+
                                         </Grid>
 
                                     </DockPanel>

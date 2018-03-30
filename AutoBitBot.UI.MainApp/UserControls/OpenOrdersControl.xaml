@@ -3,15 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:AutoBitBot.UI.MainApp.UserControls"
              xmlns:server="clr-namespace:AutoBitBot.ServerEngine;assembly=AutoBitBot.ServerEngine"
-             xmlns:converters="clr-namespace:AutoBitBot.UI.MainApp.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="800">
 
     <UserControl.Resources>
-        <converters:DateTimeToStringConverter x:Key="DateTimeToStringConverter" />
-        <converters:DecimalStringValueConverter x:Key="DecimalStringValueConverter" />
 
         <Style TargetType="Button" x:Name="CancelButtonStyle" BasedOn="{StaticResource {ComponentResourceKey TypeInTargetAssembly={x:Type DataGrid}, ResourceId=DataGridSelectAllButtonStyle}}">
             <Setter Property="Foreground" Value="Red"/>

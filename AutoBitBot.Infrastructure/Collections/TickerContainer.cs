@@ -1,8 +1,6 @@
-﻿using AutoBitBot.BittrexProxy.Responses;
-using AutoBitBot.Infrastructure;
+﻿using AutoBitBot.Infrastructure;
 using AutoBitBot.Infrastructure.Exchanges;
 using AutoBitBot.Infrastructure.Exchanges.ViewModels;
-using AutoBitBot.PoloniexProxy.Responses;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -23,18 +21,18 @@ namespace AutoBitBot.UI.MainApp.Collections
 
         private void ExchangeTickerContainer_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(SelectedItem))
-            {
-                if (this.SelectedItem != null)
-                {
-                    ServerEngine.Server.Instance.SelectedMarket = new ServerEngine.Domain.SelectedMarket()
-                    {
-                        ExchangeName = this.SelectedItem.ExchangeName,
-                        MarketName = this.SelectedItem.MarketName
-                    };
-                    ServerEngine.Server.Instance.FireOnPropertyChangedForProperty(nameof(ServerEngine.Server.Instance.SelectedMarket));
-                }
-            }
+            //if (e.PropertyName == nameof(SelectedItem))
+            //{
+            //    if (this.SelectedItem != null)
+            //    {
+            //        ServerEngine.Server.Instance.SelectedMarket = new ServerEngine.Domain.SelectedMarket()
+            //        {
+            //            ExchangeName = this.SelectedItem.ExchangeName,
+            //            MarketName = this.SelectedItem.MarketName
+            //        };
+            //        ServerEngine.Server.Instance.FireOnPropertyChangedForProperty(nameof(ServerEngine.Server.Instance.SelectedMarket));
+            //    }
+            //}
         }
 
         public void Save(IEnumerable<ExchangeTicker> tickers)

@@ -6,19 +6,15 @@
              xmlns:local="clr-namespace:AutoBitBot.UI.MainApp.UserControls"
              xmlns:server="clr-namespace:AutoBitBot.ServerEngine"
              DataContext="{Binding Source={x:Static server:Server.Instance}, Path=KilledTasks}"
-             xmlns:converters="clr-namespace:AutoBitBot.UI.MainApp.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="700">
-    <UserControl.Resources>
-        <converters:DateTimeToStringConverter x:Key="DateTimeToString" />
-    </UserControl.Resources>
     <Grid >
         <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding}" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
                 <DataGridTextColumn Header="Status" Binding="{Binding Status}" />
-                <DataGridTextColumn Header="NextExecutionTime" Binding="{Binding NextExecutionTime, Converter={StaticResource DateTimeToString}}" />
-                <DataGridTextColumn Header="LastExecutionTime" Binding="{Binding LastExecutionTime, Converter={StaticResource DateTimeToString}}" />
+                <DataGridTextColumn Header="NextExecutionTime" Binding="{Binding NextExecutionTime, Converter={StaticResource DateTimeToStringConverter}}" />
+                <DataGridTextColumn Header="LastExecutionTime" Binding="{Binding LastExecutionTime, Converter={StaticResource DateTimeToStringConverter}}" />
                 <DataGridTextColumn Header="ExecuteAtEvery" Binding="{Binding ExecuteAtEvery}" />
                 <DataGridTextColumn Header="ExecutionCount" Binding="{Binding ExecutionCount}" />
                 <DataGridTextColumn Header="ExecutionType" Binding="{Binding ExecutionType}" />

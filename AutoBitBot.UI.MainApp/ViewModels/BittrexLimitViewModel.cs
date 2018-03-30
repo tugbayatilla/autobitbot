@@ -26,7 +26,6 @@ namespace AutoBitBot.UI.MainApp.ViewModels
         public BittrexLimitViewModel()
         {
             Server.Instance.Wallet.PropertyChanged += Wallet_PropertyChanged;
-            this.OutputData = new ObservableCollection<OutputData>();
 
         }
 
@@ -101,8 +100,6 @@ namespace AutoBitBot.UI.MainApp.ViewModels
         {
             get => (Available * Rate);
         }
-
-        public ObservableCollection<OutputData> OutputData { get; set; }
 
         public String ButtonText
         {

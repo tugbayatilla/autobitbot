@@ -36,7 +36,8 @@ namespace AutoBitBot.UI.MainApp.ViewModels
         readonly RichTextBox outputRichTextBox;
         readonly Dispatcher dispatcher;
 
-        public String ApplicationVersion {
+        public String ApplicationVersion
+        {
             get
             {
                 var result = "";
@@ -52,16 +53,12 @@ namespace AutoBitBot.UI.MainApp.ViewModels
         public MainWindowViewModel(Dispatcher dispatcher, RichTextBox outputRichTextBox)
         {
             this.dispatcher = dispatcher;
-            this.outputRichTextBox = outputRichTextBox;
+            //this.outputRichTextBox = outputRichTextBox;
             //this.ExchangeTickerContainer = new TickerContainer();
 
             Server.Instance.TaskExecuted += Server_TaskExecuted;
-
-            //todo: change this
-            var notifierOutput = new RichTextBoxNotifier(this.dispatcher, outputRichTextBox);
+            var notifierOutput = new OutputDataNotifier(OutputData, NotifyTo.CONSOLE);
             Server.Instance.Notification.RegisterNotifier(NotifyTo.CONSOLE, notifierOutput);
-            Server.Instance.Notification.RegisterNotifier(NotifyTo.EVENT_LOG, notifierOutput);
-
         }
 
         private void Server_TaskExecuted(object sender, BitTaskExecutedEventArgs e)
@@ -123,15 +120,17 @@ namespace AutoBitBot.UI.MainApp.ViewModels
                         }
                     };
                 }
-                else if(limitType == LimitTypes.SellImmediateAfterBuy)
+                else if (limitType == LimitTypes.SellImmediateAfterBuy)
                 {
                     context = new UserControls.BittrexBuyAndSellControl()
                     {
-                        DataContext = new BittrexBuyAndSellLimitViewModel() {
+                        DataContext = new BittrexBuyAndSellLimitViewModel()
+                        {
                             Market = selectedMarket.MarketName,
                             ButtonText = "Buy And Sell",
                             Rate = ticker.Bid.NewValue,
-                            LimitType = LimitTypes.BuyImmediate }
+                            LimitType = LimitTypes.BuyImmediate
+                        }
                     };
                 }
 

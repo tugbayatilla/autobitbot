@@ -7,6 +7,7 @@ using ArchPM.Core.Notifications.Notifiers;
 using AutoBitBot.BittrexProxy.Responses;
 using AutoBitBot.Infrastructure;
 using AutoBitBot.Infrastructure.Exchanges;
+using AutoBitBot.Infrastructure.Interfaces;
 using AutoBitBot.PoloniexProxy.Responses;
 using AutoBitBot.ServerEngine.BitTasks;
 using AutoBitBot.ServerEngine.Domain;
@@ -27,7 +28,7 @@ using System.Windows.Threading;
 
 namespace AutoBitBot.ServerEngine
 {
-    public class Server : ObservableObject
+    public class Server : ObservableObject, IServer
     {
         public static readonly Server Instance = new Server();
         public event EventHandler<BitTaskExecutedEventArgs> TaskExecuted = delegate { };
@@ -57,7 +58,7 @@ namespace AutoBitBot.ServerEngine
             this.Dispatcher = dispatcher;
 
 
-            lock (this)
+            lock (_lockTasks)
             {
                 Notification = new NotificationManager();
                 var notifierFile = new LogNotifier();
@@ -127,7 +128,7 @@ namespace AutoBitBot.ServerEngine
         public OpenOrdersContainer OpenOrders { get; private set; }
         public MarketsContainer MarketsInfo { get; private set; }
         public SelectedMarket SelectedMarket { get; set; }
-        public TickerContainer TickerContainer { get; set; }
+        public TickerContainer TickerContainer { get; private set; }
 
 
         //public List<ConfigItem> Config { get; set; }
