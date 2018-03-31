@@ -64,11 +64,11 @@
     <Compile Include="BitTasks\Enums\BitTaskWorkingTimes.cs" />
     <Compile Include="BitTasks\EventArgs\BitTaskExecutedEventArgs.cs" />
     <Compile Include="BitTasks\EventArgs\BitTaskExecutionCompletedEventArgs.cs" />
-    <Compile Include="Collections\MarketsContainer.cs" />
-    <Compile Include="Collections\OpenOrdersContainer.cs" />
-    <Compile Include="Collections\TickerContainer.cs" />
-    <Compile Include="Collections\WalletContainer.cs" />
-    <Compile Include="Exchanges\ViewModels\MarketInfoViewModel.cs" />
+    <Compile Include="ConnectionStatusTypes.cs" />
+    <Compile Include="Containers\MarketsContainer.cs" />
+    <Compile Include="Containers\OpenOrdersContainer.cs" />
+    <Compile Include="Containers\TickerContainer.cs" />
+    <Compile Include="Containers\WalletContainer.cs" />
     <Compile Include="Interfaces\IServer.cs" />
     <Compile Include="Interfaces\IUserExchangeKeys.cs" />
     <Compile Include="LimitTypes.cs" />
@@ -77,7 +77,6 @@
     <Compile Include="Dialog\Class2.cs" />
     <Compile Include="Exchanges\ExchangeApiKey.cs" />
     <Compile Include="Exceptions\ApiKeyNotProvidedException.cs" />
-    <Compile Include="Exchanges\ViewModels\ExchangeOpenOrdersViewModel.cs" />
     <Compile Include="Exchanges\ExchangeWallet.cs" />
     <Compile Include="Exchanges\ExchangeSellLimitArguments.cs" />
     <Compile Include="Exchanges\ExchangeSellLimit.cs" />
@@ -91,7 +90,6 @@
     <Compile Include="Exchanges\ExchangeMarketSummary.cs" />
     <Compile Include="Exchanges\ExchangeOrder.cs" />
     <Compile Include="Exchanges\ExchangeOrderHistory.cs" />
-    <Compile Include="Exchanges\ViewModels\ExchangeOverallCurrentStatusViewModel.cs" />
     <Compile Include="Exchanges\ExchangeTicker.cs" />
     <Compile Include="Exchanges\IExchangeAdaptor.cs" />
     <Compile Include="Extensions.cs" />

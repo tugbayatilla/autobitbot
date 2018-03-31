@@ -1,6 +1,7 @@
 ﻿using ArchPM.Core;
 using ArchPM.Core.Extensions;
 using ArchPM.Core.Notifications;
+using AutoBitBot.Infrastructure;
 using AutoBitBot.Infrastructure.Interfaces;
 using AutoBitBot.ServerEngine.Enums;
 using System;
@@ -18,13 +19,12 @@ namespace AutoBitBot.ServerEngine
     /// <summary>
     /// 
     /// </summary>
-    public abstract class BitTask : INotifyPropertyChanged, IDisposable
+    public abstract class BitTask : ObservableObject
     {
 
         public const String DEFAULT_NOTIFY_LOCATION = "BitTask";
 
         public event EventHandler<BitTaskExecutedEventArgs> Executed = delegate { };
-        public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
         /// <summary>
         /// The sw
@@ -62,7 +62,7 @@ namespace AutoBitBot.ServerEngine
         /// <value>
         /// The execute at every.
         /// </value>
-        public abstract Int64 ExecuteAtEvery { get; }
+        public virtual Int64 ExecuteAtEvery { get; protected set; }
 
         public abstract BitTaskExecutionTypes ExecutionType { get; }
 
@@ -81,8 +81,8 @@ namespace AutoBitBot.ServerEngine
             private set
             {
                 lastExecutionTime = value;
-                PropertyChanged(this, new PropertyChangedEventArgs(nameof(LastExecutionTime)));
-                PropertyChanged(this, new PropertyChangedEventArgs(nameof(NextExecutionTime)));
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(NextExecutionTime));
             }
         }
 
@@ -103,7 +103,7 @@ namespace AutoBitBot.ServerEngine
             private set
             {
                 lastResult = value;
-                PropertyChanged(this, new PropertyChangedEventArgs(nameof(LastResult)));
+                OnPropertyChanged();
             }
         }
 
@@ -114,7 +114,7 @@ namespace AutoBitBot.ServerEngine
             private set
             {
                 lastResultAsync = value;
-                PropertyChanged(this, new PropertyChangedEventArgs(nameof(LastResultAsync)));
+                OnPropertyChanged();
             }
         }
 
@@ -125,8 +125,8 @@ namespace AutoBitBot.ServerEngine
             private set
             {
                 elapsedTime = value;
-                PropertyChanged(this, new PropertyChangedEventArgs(nameof(ElapsedTime)));
-                PropertyChanged(this, new PropertyChangedEventArgs(nameof(WaitTime)));
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(WaitTime));
             }
         }
 
@@ -145,7 +145,7 @@ namespace AutoBitBot.ServerEngine
             private set
             {
                 executionCount = value;
-                PropertyChanged(this, new PropertyChangedEventArgs(nameof(ExecutionCount)));
+                OnPropertyChanged();
             }
         }
 
@@ -163,7 +163,7 @@ namespace AutoBitBot.ServerEngine
             private set
             {
                 status = value;
-                PropertyChanged(this, new PropertyChangedEventArgs(nameof(Status)));
+                OnPropertyChanged();
             }
         }
 
@@ -180,7 +180,7 @@ namespace AutoBitBot.ServerEngine
             private set
             {
                 killAfterExecution = value;
-                PropertyChanged(this, new PropertyChangedEventArgs(nameof(KillAfterExecution)));
+                OnPropertyChanged();
             }
         }
 
@@ -197,7 +197,7 @@ namespace AutoBitBot.ServerEngine
             private set
             {
                 failedMessage = value;
-                PropertyChanged(this, new PropertyChangedEventArgs(nameof(FailedMessage)));
+                OnPropertyChanged();
             }
         }
 

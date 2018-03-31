@@ -25,7 +25,7 @@ namespace AutoBitBot.Infrastructure.Interfaces
         MarketsContainer MarketsInfo { get; }
         SelectedMarket SelectedMarket { get; set; }
         TickerContainer TickerContainer { get;  }
-
+        ConnectionStatusTypes ConnectionStatus { get; set; }
 
         INotification Notification { get; }
         Boolean Initialized { get; }

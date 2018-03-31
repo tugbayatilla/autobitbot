@@ -117,9 +117,9 @@
     <Compile Include="Content\SettingsUserExchangeKeysUserControl.xaml.cs">
       <DependentUpon>SettingsUserExchangeKeysUserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Infrastructure\BittrexUserExchangeKeys.cs" />
     <Compile Include="Infrastructure\LicenceManager.cs" />
     <Compile Include="Infrastructure\NotificationModernDialogService.cs" />
+    <Compile Include="ServerEngine\BitTasks\SystemCheckConnectionTask.cs" />
     <Compile Include="ServerEngine\BitTasks\BittrexMarketsTask.cs" />
     <Compile Include="ServerEngine\BitTasks\BittrexOpenOrdersTask.cs" />
     <Compile Include="ServerEngine\BitTasks\BittrexTickerTask.cs" />
@@ -140,14 +140,6 @@
     <Compile Include="ViewModels\DesignViewModel.cs" />
     <Compile Include="ViewModels\OpenOrdersViewModel.cs" />
     <Compile Include="ViewModels\SelectedMarketViewModel.cs" />
-    <Compile Include="DTO\BalanceDTO.cs" />
-    <Compile Include="DTO\BitTaskDTO.cs" />
-    <Compile Include="DTO\BuyLimitDTO.cs" />
-    <Compile Include="DTO\BuyAndSellDTO.cs" />
-    <Compile Include="DTO\OldNewPair.cs" />
-    <Compile Include="DTO\MarketDTO.cs" />
-    <Compile Include="DTO\MarketTickerDTO.cs" />
-    <Compile Include="Infrastructure\TextConverter.cs" />
     <Compile Include="UserControls\AllExchangeOverallCurrentStatusControl.xaml.cs">
       <DependentUpon>AllExchangeOverallCurrentStatusControl.xaml</DependentUpon>
     </Compile>

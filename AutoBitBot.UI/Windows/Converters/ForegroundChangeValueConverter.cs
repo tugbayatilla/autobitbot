@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
-namespace AutoBitBot.UI.Converters
+namespace AutoBitBot.UI.Windows.Converters
 {
     public class ForegroundChangeValueConverter : IValueConverter
     {

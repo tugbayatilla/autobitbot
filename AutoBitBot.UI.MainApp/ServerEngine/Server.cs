@@ -45,9 +45,10 @@ namespace AutoBitBot.ServerEngine
             this.TickerContainer = new TickerContainer();
 
             _lockTasks = new object();
-
             BindingOperations.EnableCollectionSynchronization(this.ActiveTasks, _lockTasks);
             BindingOperations.EnableCollectionSynchronization(this.KilledTasks, _lockTasks);
+
+            
         }
 
         public async void Init(Dispatcher dispatcher)
@@ -58,24 +59,24 @@ namespace AutoBitBot.ServerEngine
             this.Dispatcher = dispatcher;
 
 
-            lock (_lockTasks)
-            {
-                Notification = new NotificationManager();
-                var notifierFile = new LogNotifier();
-                Notification.RegisterNotifier(NotifyTo.CONSOLE, notifierFile);
-                Notification.RegisterNotifier(NotifyTo.EVENT_LOG, notifierFile);
-                Notification.RegisterNotifier(Constants.BITTREX, notifierFile);
-            }
+            Notification = new NotificationManager();
+            var logNotifier = new LogNotifier();
+            Notification.RegisterNotifier(NotifyTo.CONSOLE, logNotifier);
+            Notification.RegisterNotifier(NotifyTo.EVENT_LOG, logNotifier);
+            Notification.RegisterNotifier(Constants.BITTREX, logNotifier);
 
             RegisterInstance(new BittrexWalletTask());
             RegisterInstance(new BittrexTickerTask());
             RegisterInstance(new BittrexOpenOrdersTask());
             RegisterInstance(new BittrexMarketsTask());
-
+            RegisterInstance(new SystemCheckConnectionTask());
             //RegisterInstance(new LicenceTask());
 
+            this.ConnectionStatus = ConnectionStatusTypes.Connecting;
 
             await RunAllRegisteredTasksAsync();
+
+
 
             Initialized = true;
         }
@@ -135,6 +136,13 @@ namespace AutoBitBot.ServerEngine
         public INotification Notification { get; private set; }
         public Boolean Initialized { get; private set; }
         public Dispatcher Dispatcher { get; private set; }
+
+        ConnectionStatusTypes connectionStatus;
+        public ConnectionStatusTypes ConnectionStatus
+        {
+            get => connectionStatus;
+            set { connectionStatus = value; OnPropertyChanged(); }
+        }
 
         #endregion
 

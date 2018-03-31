@@ -33,7 +33,6 @@ namespace AutoBitBot.UI.MainApp.ViewModels
 {
     public class MainWindowViewModel : ObservableObject
     {
-        readonly RichTextBox outputRichTextBox;
         readonly Dispatcher dispatcher;
 
         public String ApplicationVersion
@@ -50,36 +49,31 @@ namespace AutoBitBot.UI.MainApp.ViewModels
             }
         }
 
-        public MainWindowViewModel(Dispatcher dispatcher, RichTextBox outputRichTextBox)
+        
+
+        public MainWindowViewModel(Dispatcher dispatcher)
         {
             this.dispatcher = dispatcher;
             //this.outputRichTextBox = outputRichTextBox;
             //this.ExchangeTickerContainer = new TickerContainer();
 
-            Server.Instance.TaskExecuted += Server_TaskExecuted;
-            var notifierOutput = new OutputDataNotifier(OutputData, NotifyTo.CONSOLE);
-            Server.Instance.Notification.RegisterNotifier(NotifyTo.CONSOLE, notifierOutput);
+            Server.Instance.PropertyChanged += Instance_PropertyChanged;
+
+            Server.Instance.Notification.RegisterNotifier(NotifyTo.CONSOLE, new OutputDataNotifier(OutputData, NotifyTo.CONSOLE));
+            Server.Instance.Notification.RegisterNotifier(NotifyTo.EVENT_LOG, new OutputDataNotifier(OutputData, NotifyTo.EVENT_LOG));
         }
 
-        private void Server_TaskExecuted(object sender, BitTaskExecutedEventArgs e)
+        private void Instance_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            //tickers
-            //if (e.BitTask is BittrexTickerTask || e.BitTask is PoloniexTickerTask)
-            //{
-            //    this.ExchangeTickerContainer.Save(e.Data);
-            //}
-
+            if(e.PropertyName == nameof(ConnectionStatus))
+            {
+                OnPropertyChanged(nameof(ConnectionStatus));
+            }
         }
 
 
-
-        //public ObservableCollection<BitTask> ActiveTasks => Server.Instance.ActiveTasks;
-        //public ObservableCollection<BitTask> KilledTasks => Server.Instance.KilledTasks;
         public TickerContainer ExchangeTickerContainer => Server.Instance.TickerContainer;
-
-
-
-
+        public ConnectionStatusTypes ConnectionStatus => Server.Instance.ConnectionStatus;
 
 
         public ICommand Open_BittrexSellLimitCommand => BittrexLimitCommand(LimitTypes.SellImmediate);

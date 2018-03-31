@@ -10,7 +10,7 @@ using System.Windows;
 using System.Windows.Data;
 using AutoBitBot.Infrastructure;
 
-namespace AutoBitBot.UI.Converters
+namespace AutoBitBot.UI.Windows.Converters
 {
     public class ForegroundOldNewPairValueConverter : IValueConverter
     {

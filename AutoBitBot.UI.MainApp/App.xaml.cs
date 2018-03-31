@@ -8,6 +8,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Navigation;
 
 namespace AutoBitBot.UI.MainApp
 {
@@ -38,9 +39,9 @@ namespace AutoBitBot.UI.MainApp
             }
             else
             {
-
                 Server.Instance.Init(App.Current.Dispatcher);
             }
         }
+
     }
 }

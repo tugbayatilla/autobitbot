@@ -79,6 +79,7 @@ namespace AutoBitBot.Adaptors
             if (!response.Result)
             {
                 response.Errors.ForEach(p => { Notification.Notify(p.Message, NotifyAs.Error, NotifyTo.EVENT_LOG); });
+                throw new ExchangeAdaptorException($"Unable to fetch Bittrex Markets. {response.Message}");
             }
             else
             {
@@ -125,6 +126,7 @@ namespace AutoBitBot.Adaptors
             if (!response.Result)
             {
                 response.Errors.ForEach(p => { Notification.Notify(p.Message, NotifyAs.Error, NotifyTo.EVENT_LOG); });
+                throw new ExchangeAdaptorException($"Unable to fetch Bittrex Tickers. {response.Message}");
             }
             else
             {
@@ -162,6 +164,7 @@ namespace AutoBitBot.Adaptors
             if (!response.Result)
             {
                 response.Errors.ForEach(p => { Notification.Notify(p.Message, NotifyAs.Error, NotifyTo.EVENT_LOG); });
+                throw new ExchangeAdaptorException($"Unable to fetch Bittrex Wallet. {response.Message}");
             }
             else
             {

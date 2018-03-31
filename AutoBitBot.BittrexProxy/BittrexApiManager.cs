@@ -58,6 +58,11 @@ namespace AutoBitBot.BittrexProxy
                 result = BittrexApiResponse<T>.CreateSuccessResponse(default(T));
                 result = await response.Content.ReadAsAsync<BittrexApiResponse<T>>();
             }
+            catch(HttpRequestException ex)
+            {
+                var bex = new BittrexApiException("Connection Failed to Bittrex!", ex);
+                result = BittrexApiResponse<T>.CreateException(bex);
+            }
             catch (Exception ex)
             {
                 var bex = new BittrexApiException("Failed Bittrex ", ex);
@@ -69,7 +74,7 @@ namespace AutoBitBot.BittrexProxy
                 result.RequestedUrl = url;
 
                 //log here: dont use await here. dont want to wait here
-                notification.Notify(result.ApiResponseToString(), NotifyLocation);
+                notification.Notify(result.ApiResponseToString(), NotifyAs.Error, NotifyTo.EVENT_LOG, NotifyLocation);
             }
             return result;
         }

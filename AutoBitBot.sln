@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoBitBot.UI", "AutoBitBot
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoBitBot.PoloniexProxy", "AutoBitBot.PoloniexProxy\AutoBitBot.PoloniexProxy.csproj", "{08E103B7-8FDB-4ACF-9881-DF90BA707912}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Proxies", "Proxies", "{9949609F-C38F-4B95-9748-61DF68FF9674}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +44,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CF48750D-7FC6-4271-BE14-6F34F0B966EE} = {9949609F-C38F-4B95-9748-61DF68FF9674}
+		{08E103B7-8FDB-4ACF-9881-DF90BA707912} = {9949609F-C38F-4B95-9748-61DF68FF9674}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BDC1518A-65D0-459B-BB69-11EA45BDBC1A}

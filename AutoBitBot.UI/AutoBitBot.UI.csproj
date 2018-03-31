@@ -53,13 +53,15 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Converters\ForegroundNotifyAsConverter.cs" />
-    <Compile Include="Converters\DateTimeToStringConverter.cs" />
-    <Compile Include="Converters\DecimalStringValueConverter.cs" />
-    <Compile Include="Converters\ForegroundBitTaskStatusChangedValueConverter.cs" />
-    <Compile Include="Converters\ForegroundChangeValueConverter.cs" />
-    <Compile Include="Converters\ForegroundOldNewPairValueConverter.cs" />
-    <Compile Include="Converters\PercentStringValueConverter.cs" />
+    <Compile Include="Windows\Converters\TextConnectionStatusConverter.cs" />
+    <Compile Include="Windows\Converters\ForegroundConnectionStatusConverter.cs" />
+    <Compile Include="Windows\Converters\ForegroundNotifyAsConverter.cs" />
+    <Compile Include="Windows\Converters\DateTimeToStringConverter.cs" />
+    <Compile Include="Windows\Converters\DecimalStringValueConverter.cs" />
+    <Compile Include="Windows\Converters\ForegroundBitTaskStatusChangedValueConverter.cs" />
+    <Compile Include="Windows\Converters\ForegroundChangeValueConverter.cs" />
+    <Compile Include="Windows\Converters\ForegroundOldNewPairValueConverter.cs" />
+    <Compile Include="Windows\Converters\PercentStringValueConverter.cs" />
     <Compile Include="IDEDesignTimeHelper.cs" />
     <Compile Include="Presentation\AppearanceManager.cs" />
     <Compile Include="Presentation\CommandBase.cs" />

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace AutoBitBot.UI.Converters
+namespace AutoBitBot.UI.Windows.Converters
 {
     public class DecimalStringValueConverter : IValueConverter
     {

@@ -161,7 +161,10 @@
                                     <DockPanel Grid.Row="3" Grid.RowSpan="2" >
                                         <StatusBar DockPanel.Dock="Bottom">
                                             <StatusBarItem>
-                                                <TextBlock Name="lblVersion" Foreground="Red" Text="{Binding ApplicationVersion, Mode=OneTime}" />
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Foreground="Red" Text="{Binding ApplicationVersion, Mode=OneTime}" />
+                                                    <TextBlock Foreground="{Binding ConnectionStatus, Converter={StaticResource ForegroundConnectionStatusConverter}}" Text="{Binding ConnectionStatus, Converter={StaticResource TextConnectionStatusConverter}}" />
+                                                </StackPanel>
                                             </StatusBarItem>
                                         </StatusBar>
 

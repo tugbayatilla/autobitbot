@@ -8,24 +8,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace AutoBitBot.UI.Converters
+namespace AutoBitBot.UI.Windows.Converters
 {
     public class ForegroundNotifyAsConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var nas = EnumManager<NotifyAs>.TryParse(value as String, NotifyAs.Message);
-
-            switch (nas)
+            if (value is NotifyAs)
             {
-                case NotifyAs.Message:
-                default:
-                    return "Orange";
-                case NotifyAs.Warning:
-                    return "Yellow";
-                case NotifyAs.Error:
-                    return "Red";
+                switch ((NotifyAs)value)
+                {
+                    case NotifyAs.Message:
+                    default:
+                        return "Orange";
+                    case NotifyAs.Warning:
+                        return "Yellow";
+                    case NotifyAs.Error:
+                        return "Red";
+                }
             }
+            return null;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

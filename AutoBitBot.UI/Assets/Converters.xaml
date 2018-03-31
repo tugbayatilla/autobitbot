@@ -9,4 +9,15 @@
     <converters:ToUpperConverter x:Key="ToUpperConverter" />
     <converters:ToLowerConverter x:Key="ToLowerConverter" />
 
+    <converters:DateTimeToStringConverter x:Key="DateTimeToStringConverter" />
+    <converters:DecimalStringValueConverter x:Key="CoinPriceStringValueConverter"/>
+    <converters:DecimalStringValueConverter x:Key="DecimalStringValueConverter"/>
+    <converters:PercentStringValueConverter x:Key="PercentStringValueConverter"/>
+    <converters:ForegroundOldNewPairValueConverter x:Key="ForegroundOldNewPairValueConverter" />
+    <converters:ForegroundChangeValueConverter x:Key="ForegroundChangeValueConverter" />
+    <converters:ForegroundBitTaskStatusChangedValueConverter x:Key="ForegroundBitTaskStatusChangedValueConverter"/>
+    <converters:ForegroundNotifyAsConverter x:Key="ForegroundNotifyAsConverter"/>
+    <converters:ForegroundConnectionStatusConverter x:Key="ForegroundConnectionStatusConverter"/>
+    <converters:TextConnectionStatusConverter x:Key="TextConnectionStatusConverter"/>
+
 </ResourceDictionary>

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
@@ -90,7 +91,27 @@ namespace AutoBitBot.Infrastructure
         }
 
 
-
+        public static bool CheckForInternetConnection(String url = null)
+        {
+            try
+            {
+                if(String.IsNullOrEmpty(url))
+                {
+                    url = "http://google.com";
+                }
+                using (var client = new WebClient())
+                {
+                    using (client.OpenRead(url))
+                    {
+                        return true;
+                    }
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
 
     }
 }

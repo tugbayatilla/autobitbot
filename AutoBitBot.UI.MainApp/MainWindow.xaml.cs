@@ -24,16 +24,9 @@ namespace AutoBitBot.UI.MainApp
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = new ViewModels.MainWindowViewModel(this.Dispatcher);
         }
 
-        public override void OnApplyTemplate()
-        {
-            base.OnApplyTemplate();
-
-            RichTextBox output = (RichTextBox)Template.FindName("Output", this);
-
-            this.DataContext = new ViewModels.MainWindowViewModel(this.Dispatcher, output);
-        }
 
         private void ModernWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
