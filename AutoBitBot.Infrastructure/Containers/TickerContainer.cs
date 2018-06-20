@@ -11,44 +11,46 @@ using System.Windows.Data;
 
 namespace AutoBitBot.UI.MainApp.Collections
 {
-    public class TickerContainer : ObservableObjectContainer<ExchangeTicker>
+    public class TickerViewModelContainer : ObservableObjectCollection<ExchangeTicker>
     {
-        public TickerContainer()
+        protected static Object _locker = new object();
+
+        public TickerViewModelContainer() : base()
         {
             BindingOperations.EnableCollectionSynchronization(this.Data, _locker);
-            this.PropertyChanged += ExchangeTickerContainer_PropertyChanged;
         }
 
-        private void ExchangeTickerContainer_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        public void Save(Object data)
         {
-            //if (e.PropertyName == nameof(SelectedItem))
-            //{
-            //    if (this.SelectedItem != null)
-            //    {
-            //        ServerEngine.Server.Instance.SelectedMarket = new ServerEngine.Domain.SelectedMarket()
-            //        {
-            //            ExchangeName = this.SelectedItem.ExchangeName,
-            //            MarketName = this.SelectedItem.MarketName
-            //        };
-            //        ServerEngine.Server.Instance.FireOnPropertyChangedForProperty(nameof(ServerEngine.Server.Instance.SelectedMarket));
-            //    }
-            //}
+            if (data is IEnumerable<ExchangeTicker>)
+            {
+                Save(data as IEnumerable<ExchangeTicker>);
+            }
         }
 
         public void Save(IEnumerable<ExchangeTicker> tickers)
         {
             Task.Factory.StartNew(() =>
             {
-                foreach (var ticker in tickers)
+                lock (_locker)
                 {
-                    lock (_locker)
+                    foreach (var ticker in tickers)
                     {
                         var item = this.Data.FirstOrDefault(x => x.ExchangeName == ticker.ExchangeName && x.MarketName == ticker.MarketName);
                         if (item != null)
                         {
-                            this.Data.Remove(item);
+                            if (item.Ask != ticker.Ask
+                            || item.Bid != ticker.Bid
+                            || item.BaseVolume != ticker.BaseVolume
+                            || item.Last != ticker.Last)
+                            {
+                                this.Data[this.Data.IndexOf(item)] = ticker; //change old value
+                            }
                         }
-                        this.Data.Add(ticker);
+                        else
+                        {
+                            this.Data.Add(ticker);
+                        }
                     }
                 }
             }).ContinueWith(p => { p.Dispose(); });

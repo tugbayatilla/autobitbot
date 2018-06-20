@@ -70,11 +70,9 @@
     <Compile Include="Containers\TickerContainer.cs" />
     <Compile Include="Containers\WalletContainer.cs" />
     <Compile Include="Interfaces\IServer.cs" />
-    <Compile Include="Interfaces\IUserExchangeKeys.cs" />
     <Compile Include="LimitTypes.cs" />
-    <Compile Include="ObservableObjectContainer.cs" />
-    <Compile Include="Dialog\Class1.cs" />
-    <Compile Include="Dialog\Class2.cs" />
+    <Compile Include="Dialog\IDialogService.cs" />
+    <Compile Include="Dialog\DialogService.cs" />
     <Compile Include="Exchanges\ExchangeApiKey.cs" />
     <Compile Include="Exceptions\ApiKeyNotProvidedException.cs" />
     <Compile Include="Exchanges\ExchangeWallet.cs" />
@@ -101,8 +99,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="SelectedMarket.cs" />
-    <Compile Include="SingleFieldDataGridFilterMediator.cs" />
-    <Compile Include="TransactionOperationType.cs" />
     <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>

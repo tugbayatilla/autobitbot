@@ -8,9 +8,11 @@ using System.Windows.Data;
 
 namespace AutoBitBot.UI.MainApp.Collections
 {
-    public class MarketsContainer : ObservableObjectContainer<ExchangeMarket>
+    public class MarketsContainer : ObservableObjectCollection<ExchangeMarket>
     {
-        public MarketsContainer()
+        protected static Object _locker = new object();
+
+        public MarketsContainer() : base()
         {
             BindingOperations.EnableCollectionSynchronization(this.Data, _locker);
         }

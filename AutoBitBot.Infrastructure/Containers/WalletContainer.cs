@@ -8,8 +8,10 @@ using System.Windows.Data;
 
 namespace AutoBitBot.UI.MainApp.Collections
 {
-    public class WalletContainer : ObservableObjectContainer<ExchangeWallet>
+    public class WalletContainer : ObservableObjectCollection<ExchangeWallet>
     {
+        protected static Object _locker = new object();
+
         public WalletContainer()
         {
             BindingOperations.EnableCollectionSynchronization(this.Data, _locker);

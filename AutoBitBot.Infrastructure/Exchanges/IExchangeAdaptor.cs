@@ -17,7 +17,6 @@ namespace AutoBitBot.Infrastructure.Exchanges
         /// The name.
         /// </value>
         String Name { get; }
-        String NotifyLocation { get; set; }
         INotification Notification { get; }
 
         Task<ExchangeBuyLimit> Buy(ExchangeBuyLimitArguments buyLimitArguments);

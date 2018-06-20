@@ -19,12 +19,12 @@ namespace AutoBitBot.UI.MainApp.Notifiers
     public class OutputDataNotifier : INotifier
     {
         static object _locker = new object();
-        readonly IList<OutputData> observable;
+        readonly IList<LogData> observable;
         readonly String notificationLocation;
 
         public Guid Id { get; private set; }
 
-        public OutputDataNotifier(IList<OutputData> observable, String notificationLocation)
+        public OutputDataNotifier(IList<LogData> observable, String notificationLocation)
         {
             this.Id = Guid.NewGuid();
             this.observable = observable;
@@ -36,21 +36,21 @@ namespace AutoBitBot.UI.MainApp.Notifiers
         public Task Notify(NotificationMessage notificationMessage, NotifyAs notifyAs)
         {
             lock(_locker)
-                observable.Add(new OutputData() { Message = notificationMessage.Body, NotifyAs = notifyAs, NotifyTo = notificationLocation });
+                observable.Add(new LogData() { Message = notificationMessage.Body, NotifyAs = notifyAs, NotifyTo = notificationLocation });
             return Task.CompletedTask;
         }
 
         public Task Notify(string message, NotifyAs notifyAs)
         {
             lock(_locker)
-                observable.Add(new OutputData() { Message = message, NotifyAs = notifyAs, NotifyTo = notificationLocation });
+                observable.Add(new LogData() { Message = message, NotifyAs = notifyAs, NotifyTo = notificationLocation });
             return Task.CompletedTask;
         }
 
         public Task Notify(Exception ex, NotifyAs notifyAs)
         {
             lock(_locker)
-                observable.Add(new OutputData() { Message = ex.GetAllMessages(false, " "), NotifyAs = notifyAs, NotifyTo = notificationLocation });
+                observable.Add(new LogData() { Message = ex.GetAllMessages(false, " "), NotifyAs = notifyAs, NotifyTo = notificationLocation });
             return Task.CompletedTask;
         }
 

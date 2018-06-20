@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AutoBitBot.Infrastructure.Exchanges
 {
-    public class ExchangeTicker : ObservableObject, ISingleFieldUIFilter
+    public class ExchangeTicker : ObservableObject
     {
         Decimal high, low, volume, prevDay, baseValume, change;
         OldNewPair<Decimal> last, bid, ask;
@@ -27,7 +27,7 @@ namespace AutoBitBot.Infrastructure.Exchanges
             set
             {
                 exchangeName = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -37,7 +37,7 @@ namespace AutoBitBot.Infrastructure.Exchanges
             set
             {
                 marketName = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
         public Decimal High
@@ -46,8 +46,8 @@ namespace AutoBitBot.Infrastructure.Exchanges
             set
             {
                 high = value;
-                OnPropertyChanged(nameof(High));
-                OnPropertyChanged(nameof(Range));
+                RaisePropertyChanged(nameof(High));
+                RaisePropertyChanged(nameof(Range));
 
             }
         }
@@ -57,8 +57,8 @@ namespace AutoBitBot.Infrastructure.Exchanges
             set
             {
                 low = value;
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(Range));
+                RaisePropertyChanged();
+                RaisePropertyChanged(nameof(Range));
 
             }
         }
@@ -73,7 +73,7 @@ namespace AutoBitBot.Infrastructure.Exchanges
             set
             {
                 volume = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
 
             }
         }
@@ -84,7 +84,7 @@ namespace AutoBitBot.Infrastructure.Exchanges
             set
             {
                 baseValume = value;
-                OnPropertyChanged(nameof(BaseVolume));
+                RaisePropertyChanged(nameof(BaseVolume));
 
             }
         }
@@ -94,8 +94,8 @@ namespace AutoBitBot.Infrastructure.Exchanges
             set
             {
                 prevDay = value;
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(Change));
+                RaisePropertyChanged();
+                RaisePropertyChanged(nameof(Change));
             }
         }
         public OldNewPair<Decimal> Last
@@ -104,11 +104,11 @@ namespace AutoBitBot.Infrastructure.Exchanges
             set
             {
                 last = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
                 last.EscaladeChangeAction = () =>
                 {
-                    OnPropertyChanged(nameof(Last));
-                    OnPropertyChanged(nameof(Change));
+                    RaisePropertyChanged(nameof(Last));
+                    RaisePropertyChanged(nameof(Change));
                 };
             }
         }
@@ -118,10 +118,10 @@ namespace AutoBitBot.Infrastructure.Exchanges
             set
             {
                 bid = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
                 bid.EscaladeChangeAction = () =>
                 {
-                    OnPropertyChanged(nameof(Bid));
+                    RaisePropertyChanged(nameof(Bid));
                 };
 
             }
@@ -132,10 +132,10 @@ namespace AutoBitBot.Infrastructure.Exchanges
             set
             {
                 ask = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
                 ask.EscaladeChangeAction = () =>
                 {
-                    OnPropertyChanged(nameof(Ask));
+                    RaisePropertyChanged(nameof(Ask));
                 };
 
             }
@@ -149,7 +149,7 @@ namespace AutoBitBot.Infrastructure.Exchanges
             set
             {
                 openBuyOrders = value;
-                OnPropertyChanged(nameof(OpenBuyOrders));
+                RaisePropertyChanged(nameof(OpenBuyOrders));
 
             }
         }
@@ -159,7 +159,7 @@ namespace AutoBitBot.Infrastructure.Exchanges
             set
             {
                 openSellOrders = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
 
             }
         }
@@ -170,7 +170,7 @@ namespace AutoBitBot.Infrastructure.Exchanges
         //    set
         //    {
         //        change = value;
-        //        OnPropertyChanged();
+        //        RaisePropertyChanged();
 
         //    }
         //}

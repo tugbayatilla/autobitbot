@@ -18,7 +18,7 @@ namespace AutoBitBot.Infrastructure.Exchanges
             set
             {
                 marketName = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -28,7 +28,7 @@ namespace AutoBitBot.Infrastructure.Exchanges
             set
             {
                 currency = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -38,7 +38,7 @@ namespace AutoBitBot.Infrastructure.Exchanges
             set
             {
                 baseCurrency = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -48,7 +48,7 @@ namespace AutoBitBot.Infrastructure.Exchanges
             set
             {
                 minTraceSize = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -58,7 +58,7 @@ namespace AutoBitBot.Infrastructure.Exchanges
             set
             {
                 isActive = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 

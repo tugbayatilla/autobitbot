@@ -81,8 +81,8 @@ namespace AutoBitBot.ServerEngine
             private set
             {
                 lastExecutionTime = value;
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(NextExecutionTime));
+                RaisePropertyChanged();
+                RaisePropertyChanged(nameof(NextExecutionTime));
             }
         }
 
@@ -103,7 +103,7 @@ namespace AutoBitBot.ServerEngine
             private set
             {
                 lastResult = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -114,7 +114,7 @@ namespace AutoBitBot.ServerEngine
             private set
             {
                 lastResultAsync = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -125,8 +125,8 @@ namespace AutoBitBot.ServerEngine
             private set
             {
                 elapsedTime = value;
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(WaitTime));
+                RaisePropertyChanged();
+                RaisePropertyChanged(nameof(WaitTime));
             }
         }
 
@@ -145,7 +145,7 @@ namespace AutoBitBot.ServerEngine
             private set
             {
                 executionCount = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -163,7 +163,7 @@ namespace AutoBitBot.ServerEngine
             private set
             {
                 status = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -180,7 +180,7 @@ namespace AutoBitBot.ServerEngine
             private set
             {
                 killAfterExecution = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -197,7 +197,7 @@ namespace AutoBitBot.ServerEngine
             private set
             {
                 failedMessage = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
