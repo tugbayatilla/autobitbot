@@ -25,19 +25,19 @@ namespace AutoBitBot.UI.MainApp
         {
             base.OnStartup(e);
 
-            var today = DateTime.Parse("2018-03-26");
-            var expiryDate = DateTime.Parse("2018-04-09");
-            if (expiryDate < DateTime.Now)
-            {
-                MessageBox.Show("Expired!");
-                this.Shutdown(-1);
-            }
-            else if (DateTime.Now < today)
-            {
-                MessageBox.Show("Fraud!");
-                this.Shutdown(-1);
-            }
-            else
+            //var today = DateTime.Parse("2018-03-26");
+            //var expiryDate = DateTime.Parse("2018-04-09");
+            //if (expiryDate < DateTime.Now)
+            //{
+            //    MessageBox.Show("Expired!");
+            //    this.Shutdown(-1);
+            //}
+            //else if (DateTime.Now < today)
+            //{
+            //    MessageBox.Show("Fraud!");
+            //    this.Shutdown(-1);
+            //}
+            //else
             {
                 Server.Instance.Init(App.Current.Dispatcher);
             }

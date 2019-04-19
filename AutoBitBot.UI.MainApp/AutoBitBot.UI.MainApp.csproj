@@ -62,10 +62,10 @@
     <ApplicationIcon>app.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>6FDE668A1882C02909B032FF608869BFD82E5A79</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>5908123DF5923A0BF22AFB197AA4672569B38765</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>AutoBitBot.UI.MainApp_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>AutoBitBot.UI.MainApp_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -587,7 +587,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <None Include="AutoBitBot.UI.MainApp_TemporaryKey.pfx" />
     <None Include="Key.snk" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
