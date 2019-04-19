@@ -11,17 +11,11 @@ namespace AutoBitBot.Infrastructure
 {
     public abstract class ObservableObject : INotifyPropertyChanged
     {
-        public ObservableObject()
-        {
-            this.OutputData = new ObservableCollection<OutputData>();
-        }
-
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
-        public ObservableCollection<OutputData> OutputData { get; set; }
 
         public DateTime LastUpdateTime => DateTime.Now;
 
-        protected void OnPropertyChanged([System.Runtime.CompilerServices.CallerMemberName] String propertyName = "")
+        protected void RaisePropertyChanged([System.Runtime.CompilerServices.CallerMemberName] String propertyName = "")
         {
             if (String.IsNullOrEmpty(propertyName))
                 return;
@@ -30,27 +24,43 @@ namespace AutoBitBot.Infrastructure
             PropertyChanged(this, new PropertyChangedEventArgs(nameof(LastUpdateTime)));
         }
 
-        public void FireOnPropertyChangedForAllProperties()
+        public void Refresh()
         {
-            this.Properties().ForEach(p =>
-            {
+            this.Properties().ForEach(p => {
                 if (p.IsPrimitive)
                 {
-                    OnPropertyChanged(p.Name);
+                    RaisePropertyChanged(p.Name);
                 }
 
             });
         }
-
-        public void FireOnPropertyChangedForProperty(String propertyName)
-        {
-            OnPropertyChanged(propertyName);
-        }
-
-
     }
 
+    public class ObservableObjectCollection<T> : ObservableObject
+    {
+        public ObservableObjectCollection()
+        {
+            this.Data = new ObservableCollection<T>();
+            this.Data.CollectionChanged += Data_CollectionChanged;
+        }
 
+        private void Data_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            RaisePropertyChanged(nameof(Data));
+        }
+
+        ObservableCollection<T> data;
+        public ObservableCollection<T> Data
+        {
+            get => data;
+            set
+            {
+                data = value;
+                RaisePropertyChanged();
+            }
+        }
+
+    }
 
 
 }

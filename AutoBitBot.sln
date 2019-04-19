@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2026
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoBitBot.UI.MainApp", "AutoBitBot.UI.MainApp\AutoBitBot.UI.MainApp.csproj", "{29A6CD8A-27BE-45B2-88E3-67FF3B7F03B9}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoBitBot.Infrastructure", "AutoBitBot.Infrastructure\AutoBitBot.Infrastructure.csproj", "{588870FF-1117-4DD7-AF92-E5EB653F93BF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoBitBot.BittrexProxy", "AutoBitBot.BittrexProxy\AutoBitBot.BittrexProxy.csproj", "{CF48750D-7FC6-4271-BE14-6F34F0B966EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoBitBot.UI", "AutoBitBot.UI\AutoBitBot.UI.csproj", "{D58D7907-DDC8-4B40-A0F0-D20FAFD96434}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoBitBot.PoloniexProxy", "AutoBitBot.PoloniexProxy\AutoBitBot.PoloniexProxy.csproj", "{08E103B7-8FDB-4ACF-9881-DF90BA707912}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Proxies", "Proxies", "{9949609F-C38F-4B95-9748-61DF68FF9674}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoBitBot.BittrexProxy.Adaptor", "AutoBitBot.BittrexProxy.Adaptor\AutoBitBot.BittrexProxy.Adaptor.csproj", "{778D1E50-7140-49DD-A1F2-BCAAA93705B2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoBitBot.PoloniexProxy.Adaptor", "AutoBitBot.PoloniexProxy.Adaptor\AutoBitBot.PoloniexProxy.Adaptor.csproj", "{3F20AFF5-2D91-42F0-9608-E6A6D508E4F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +21,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{29A6CD8A-27BE-45B2-88E3-67FF3B7F03B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{29A6CD8A-27BE-45B2-88E3-67FF3B7F03B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{29A6CD8A-27BE-45B2-88E3-67FF3B7F03B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{29A6CD8A-27BE-45B2-88E3-67FF3B7F03B9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{588870FF-1117-4DD7-AF92-E5EB653F93BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{588870FF-1117-4DD7-AF92-E5EB653F93BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{588870FF-1117-4DD7-AF92-E5EB653F93BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,14 +29,18 @@ Global
 		{CF48750D-7FC6-4271-BE14-6F34F0B966EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF48750D-7FC6-4271-BE14-6F34F0B966EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF48750D-7FC6-4271-BE14-6F34F0B966EE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D58D7907-DDC8-4B40-A0F0-D20FAFD96434}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D58D7907-DDC8-4B40-A0F0-D20FAFD96434}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D58D7907-DDC8-4B40-A0F0-D20FAFD96434}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D58D7907-DDC8-4B40-A0F0-D20FAFD96434}.Release|Any CPU.Build.0 = Release|Any CPU
 		{08E103B7-8FDB-4ACF-9881-DF90BA707912}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{08E103B7-8FDB-4ACF-9881-DF90BA707912}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{08E103B7-8FDB-4ACF-9881-DF90BA707912}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{08E103B7-8FDB-4ACF-9881-DF90BA707912}.Release|Any CPU.Build.0 = Release|Any CPU
+		{778D1E50-7140-49DD-A1F2-BCAAA93705B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{778D1E50-7140-49DD-A1F2-BCAAA93705B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{778D1E50-7140-49DD-A1F2-BCAAA93705B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{778D1E50-7140-49DD-A1F2-BCAAA93705B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F20AFF5-2D91-42F0-9608-E6A6D508E4F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F20AFF5-2D91-42F0-9608-E6A6D508E4F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F20AFF5-2D91-42F0-9608-E6A6D508E4F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F20AFF5-2D91-42F0-9608-E6A6D508E4F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,6 +48,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{CF48750D-7FC6-4271-BE14-6F34F0B966EE} = {9949609F-C38F-4B95-9748-61DF68FF9674}
 		{08E103B7-8FDB-4ACF-9881-DF90BA707912} = {9949609F-C38F-4B95-9748-61DF68FF9674}
+		{778D1E50-7140-49DD-A1F2-BCAAA93705B2} = {9949609F-C38F-4B95-9748-61DF68FF9674}
+		{3F20AFF5-2D91-42F0-9608-E6A6D508E4F9} = {9949609F-C38F-4B95-9748-61DF68FF9674}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BDC1518A-65D0-459B-BB69-11EA45BDBC1A}

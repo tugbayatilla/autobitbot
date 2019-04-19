@@ -5,9 +5,6 @@ using System.Web;
 
 namespace AutoBitBot.Infrastructure
 {
-
-   
-
     public static class Constants
     {
         public static IEnumerable<String> GetExchangeNames()

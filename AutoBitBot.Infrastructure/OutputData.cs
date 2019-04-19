@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AutoBitBot.Infrastructure
 {
-    public class OutputData : ObservableObject
+    public class LogData
     {
         public DateTime Time => DateTime.Now;
         public String Message { get; set; }

@@ -11,8 +11,11 @@ using System.Windows.Data;
 
 namespace AutoBitBot.UI.MainApp.Collections
 {
-    public class OpenOrdersContainer : ObservableObjectContainer<ExchangeOpenOrder>
+    public class OpenOrdersContainer : ObservableObjectCollection<ExchangeOpenOrder>
     {
+
+        protected static Object _locker = new object();
+
         public OpenOrdersContainer() 
         {
             BindingOperations.EnableCollectionSynchronization(this.Data, _locker);

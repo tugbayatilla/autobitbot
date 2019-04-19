@@ -24,7 +24,7 @@ namespace AutoBitBot.Infrastructure.Interfaces
         OpenOrdersContainer OpenOrders { get;  }
         MarketsContainer MarketsInfo { get; }
         SelectedMarket SelectedMarket { get; set; }
-        TickerContainer TickerContainer { get;  }
+        TickerViewModelContainer TickerContainer { get;  }
         ConnectionStatusTypes ConnectionStatus { get; set; }
 
         INotification Notification { get; }

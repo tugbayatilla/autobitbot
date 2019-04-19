@@ -18,7 +18,7 @@ namespace AutoBitBot.Infrastructure.Exchanges
             set
             {
                 exchangeName = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -28,7 +28,7 @@ namespace AutoBitBot.Infrastructure.Exchanges
             set
             {
                 marketName = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -38,7 +38,7 @@ namespace AutoBitBot.Infrastructure.Exchanges
             set
             {
                 currency = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -48,7 +48,7 @@ namespace AutoBitBot.Infrastructure.Exchanges
             set
             {
                 orderType = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -58,7 +58,7 @@ namespace AutoBitBot.Infrastructure.Exchanges
             set
             {
                 orderId = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -68,7 +68,7 @@ namespace AutoBitBot.Infrastructure.Exchanges
             set
             {
                 rate = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -78,7 +78,7 @@ namespace AutoBitBot.Infrastructure.Exchanges
             set
             {
                 amount = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -88,7 +88,7 @@ namespace AutoBitBot.Infrastructure.Exchanges
             set
             {
                 total = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -98,7 +98,7 @@ namespace AutoBitBot.Infrastructure.Exchanges
             set
             {
                 openDate = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
     }

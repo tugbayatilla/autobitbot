@@ -23,8 +23,8 @@ namespace AutoBitBot.Infrastructure
             {
                 oldValue = newValue;
                 newValue = value;
-                OnPropertyChanged(nameof(NewValue));
-                OnPropertyChanged(nameof(OldValue));
+                RaisePropertyChanged(nameof(NewValue));
+                RaisePropertyChanged(nameof(OldValue));
 
                 EscaladeChangeAction?.Invoke();
             }

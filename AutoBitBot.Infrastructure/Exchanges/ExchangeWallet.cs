@@ -17,7 +17,7 @@ namespace AutoBitBot.Infrastructure.Exchanges.ViewModels
             set
             {
                 exchangeName = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -27,7 +27,7 @@ namespace AutoBitBot.Infrastructure.Exchanges.ViewModels
             set
             {
                 currency = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -37,7 +37,7 @@ namespace AutoBitBot.Infrastructure.Exchanges.ViewModels
             set
             {
                 balance = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -47,7 +47,7 @@ namespace AutoBitBot.Infrastructure.Exchanges.ViewModels
             set
             {
                 available = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
